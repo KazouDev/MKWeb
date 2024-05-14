@@ -1,5 +1,4 @@
 <?php
-
     include('connect_params.php');
 
     try {
@@ -10,4 +9,5 @@
         die();
     }
 
+    print_r($db);
 ?>
