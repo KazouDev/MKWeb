@@ -1,0 +1,130 @@
+@import url("setup.css");
+// Variables
+$myFont: 'Plus Jakarta San', sans-serif;
+$mainViolet: #5669FF;
+$mainJeune: #FFD33C;
+$mainNoir: #222222;
+$mainGris: #878787;
+$mainBlanc: #FFFFFF;
+
+$hoverViolet: #9AA5FF;
+$selectedViolet: #273EFC;
+$selectedBlanc: #E1EBF4;
+
+$boutonPink: #DD69FA;
+$boutonGreen: #79DA7D;
+$boutonRouge: #FF6258;
+
+$h1Size: 4rem;
+$h2Size: 2.25rem;
+$h3Size: 2rem;
+$h4Size: 1.5rem;
+$h5Size: 1.25rem;
+$h55Size: 1rem;
+$h6Size: 0.75rem;
+
+$lightWeight: 300;
+$normalWeight: 400;
+$semiboldWeight: 600;
+$boldWeight: 700;
+$lineHeight: 1.5;
+
+
+.connect-container {
+    display: flex;
+}
+.connect__photo{
+    width: 670px;
+    flex-shrink: 0;
+}
+.connect__from {
+    padding: 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 30px;
+}
+.connect__from h1{
+    font-style: $semiboldWeight;
+    font-size: $h2Size;
+    letter-spacing: 0.0225rem;
+    
+}
+.connect__from  p{
+    font-size: $h5Size;
+    line-height: 160%; 
+    letter-spacing: 0.0125rem;
+}
+.connect__input{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+.connect__input label{
+    font-size: $h55Size;
+}
+.connect__input input{
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #222;
+    background: #FFF;
+}
+.connect__input input::placeholder{
+    color: rgba(34, 34, 34, 0.50);
+    font-size: $h55Size;
+}
+.connect__from  .mdp_oublie{
+    align-self: flex-end;
+    color: $mainViolet;
+}
+.connect__from input[type="submit"]{
+    background-color: $mainViolet;
+    border-radius: 0.75rem;
+    width: 100%;
+    padding: 1rem;
+    color: $mainBlanc;
+    font-size: $h5Size;
+    cursor: pointer;
+}
+.p_ligne{
+    font-size: $h55Size;
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+.p_ligne::before,
+.p_ligne::after{
+    content: "";
+        position: absolute;
+        top: 50%;
+        width: 45%;
+        height: 1px;
+        background-color: $mainNoir; 
+}
+.p_ligne::before {
+    left: 0;
+}
+.p_ligne::after {
+    right: 0;
+}
+.connect__google {
+}
+.connect__face {
+}
+.connect__face, .connect__google {
+    display: flex;
+    gap: 1rem;
+    padding: 0.75rem;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    
+}
+.connect__face img, .connect__google img{
+    width: 1.75rem;
+    
+}
