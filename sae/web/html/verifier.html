@@ -78,8 +78,12 @@
             dropdownContent.style.display = 'inline-flex';
         }
         function hideDropdownContent() {
-            if (!dropdownBtn.matches(':hover') && !dropdownContent.matches(':hover')) {
+            const dropdownContent = document.getElementById('departments-dropdown');
+            const communesDropdown = document.getElementById('communes-dropdown');
+
+            if (!dropdownBtn.matches(':hover') && !dropdownContent.matches(':hover') && !communesDropdown.matches(':hover')) {
                 dropdownContent.style.display = 'none';
+                communesDropdown.style.display = 'none';
             }
         }
         dropdownBtn.addEventListener('mouseenter', showDropdownContent);
