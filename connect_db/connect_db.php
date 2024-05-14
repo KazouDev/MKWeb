@@ -1,6 +1,6 @@
 <?php
     include('connect_param.php');
-
+    phpinfo();
     try {
         $db = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     } 
@@ -9,5 +9,5 @@
         die();
     }
 
-    print_r($db);
+    print_r($db->query);
 ?>
