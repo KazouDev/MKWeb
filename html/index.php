@@ -1,3 +1,3 @@
 <?php 
-    require "../connect_db.php";
+    require "../connect_db/connect_db.php";
 ?>
