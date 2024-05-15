@@ -348,6 +348,14 @@ $lineHeight: 1.5;
     color: $mainBlanc;
     padding: 0.8rem 4rem;
 }
+#reset{
+    cursor: pointer;
+    align-self: stretch;
+    border-radius: 0.5rem;
+    background-color: $selectedBlanc;
+    color: $mainNoir;
+    padding: 0.8rem 4rem;
+}
 .logement__res h2{
     font-size: $h5Size;
     max-width: 17rem;
@@ -394,6 +402,7 @@ $lineHeight: 1.5;
 }
 
 .details__top {
+    min-width: 50rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -422,15 +431,25 @@ $lineHeight: 1.5;
 .logement__proposNote {
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
-.logement__propose ul{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    height: 8rem;
+.logement__propose{
+    width: 70%;
+    ul{
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 15rem;
+        column-gap: 7rem;
+        row-gap: 1rem;
+    }
+    a{
+        color: $mainViolet;
+    }
 
     li{
-        
+        list-style-type: square;
     }
 }
 .proposition {
