@@ -99,7 +99,7 @@
     font-size: 0.75rem;
   }
   .header__connexion, #header__info {
-    padding: 5px 10px !important;
+    padding: 3px 10px !important;
   }
   .user__photo {
     display: none;

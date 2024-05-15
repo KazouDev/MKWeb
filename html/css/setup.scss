@@ -30,12 +30,19 @@ $boldWeight: 700;
 $lineHeight: 1.5;
 
 // Page Setup
+.wrapper{
+    position: relative;
+  min-height: 100vh;
+}
+footer{
+    margin-top: 50px;
+}
 body {
     font-family: $myFont;
     color: $mainNoir;
     line-height: $lineHeight;
 }
-
+a{cursor: pointer;}
 .wrapper {
     overflow: hidden;
     display: flex;
@@ -45,6 +52,8 @@ body {
 header{
     position: relative;
 }
+
+
 [class*="__container"] {
     max-width: 1280px;
     margin: 0 auto;

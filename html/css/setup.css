@@ -1,8 +1,21 @@
 @import url("reset.css");
+.wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
+footer {
+  margin-top: 50px;
+}
+
 body {
   font-family: "Plus Jakarta San", sans-serif;
   color: #222222;
   line-height: 1.5;
+}
+
+a {
+  cursor: pointer;
 }
 
 .wrapper {
