@@ -1,5 +1,5 @@
 <?php 
-function request($sql){
+function request($sql, $uniq = false){
 require "connect_db/connect_param.php";
 
 try {
@@ -10,7 +10,12 @@ try {
   $requete = $connexion->prepare($sql);
 
   $requete->execute();
-  $results = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+  if ($uniq){
+    $results = $requete->fetch(PDO::FETCH_ASSOC);
+  } else {
+    $results = $requete->fetchAll(PDO::FETCH_ASSOC);
+  }
 
   $connexion = null;
   return $results;
@@ -20,6 +25,23 @@ try {
   echo "Error : ".$e;
   return false;
 }
+}
+
+function client_connected(){
+  if (isset($_SESSION) && isset($_SESSION["client_id"])){
+    return $_SESSION["client_id"];
+  } else {
+    false;
+  }
+}
+
+function connected_or_redirect(){
+  if (isset($_SESSION) && isset($_SESSION["client_id"])){
+    return $_SESSION["client_id"];
+  } else {
+    header("Location: login.php");
+    exit();
+  }
 }
 
 ?>
