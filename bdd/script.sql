@@ -388,3 +388,27 @@ INSERT INTO _reservation_prix_par_nuit (prix,nb_nuit,id_reservation)
 VALUES
 (180,6,1),
 (200,6,2);
+
+
+INSERT INTO _image(src,principale,alt,id_logement)
+VALUES
+('/images/logement/1/salon2.png',true,'salon',1),
+('/images/logement/2/maison.png',true,'maison',2),
+('/images/logement/3/chambre2.png',true,'chambre',3);
+
+
+INSERT INTO _image(src,alt,id_logement)
+VALUES
+('/images/logement/1/chambre2.png','chambre',1),
+('/images/logement/1/cuisine.png','cuisine',1),
+('/images/logement/1/lit.png','lit',1),
+('/images/logement/1/table.png','table',1),
+('/images/logement/2/chambre.png','chambre',2),
+('/images/logement/2/cuisine.png','cuisine',2),
+('/images/logement/2/piscine.png','lit',2),
+('/images/logement/2/salon.png','table',2),
+('/images/logement/2/terasse.png','table',2),
+('/images/logement/3/chambre.png','cuisine',3),
+('/images/logement/3/cuisine.png','lit',3),
+('/images/logement/3/salon.png','table',3),
+('/images/logement/3/sdb.png','table',3);

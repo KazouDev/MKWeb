@@ -234,27 +234,6 @@
     align-items: center;
   }
 }
-.logement-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.logement__reserver {
-  padding-top: 5%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-#logement__reserver {
-  display: none;
-}
-
-#logement__verifier {
-  position: sticky;
-  top: 10px;
-}
-
 .logement__res {
   display: inline-flex;
   flex-direction: column;
@@ -325,15 +304,6 @@
   padding: 0.8rem 4rem;
 }
 
-#reset {
-  cursor: pointer;
-  align-self: stretch;
-  border-radius: 0.5rem;
-  background-color: #E1EBF4;
-  color: #222222;
-  padding: 0.8rem 4rem;
-}
-
 .logement__res h2 {
   font-size: 1.25rem;
   max-width: 17rem;
@@ -382,58 +352,4 @@
 #logement__reserver h2 span {
   font-size: 1.5rem;
   font-weight: 600;
-}
-
-.details__top {
-  min-width: 50rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
-}
-.details__top .details__nom {
-  display: flex;
-  gap: 0.3rem;
-}
-.details__top .details__nom h2, .details__top .details__nom p {
-  font-weight: 600;
-  font-size: 1.5rem;
-}
-.details__top .details__features {
-  display: flex;
-  gap: 0.5rem;
-}
-.details__top .details__features .feature:not(:last-child) {
-  padding-right: 0.5rem;
-  border-right: 2px solid #878787;
-}
-.details__top h3 {
-  font-weight: 600;
-  font-size: 1.25rem;
-}
-
-.logement__proposNote {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.logement__propose {
-  width: 70%;
-}
-.logement__propose ul {
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  height: 15rem;
-  -moz-column-gap: 7rem;
-       column-gap: 7rem;
-  row-gap: 1rem;
-}
-.logement__propose a {
-  color: #5669FF;
-}
-.logement__propose li {
-  list-style-type: square;
 }/*# sourceMappingURL=logement.css.map */

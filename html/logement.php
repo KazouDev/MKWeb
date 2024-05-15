@@ -1,19 +1,20 @@
 <?php
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
+
 require_once "../utils.php";
 
 $id = 1;
 $sql = 'SELECT src FROM sae._image WHERE id_logement = ' . $id;
 $res = request($sql);
 
-define('FRAIS_TVA',1.01);
-define('TAUX_TVA',1);
+define('FRAIS',1.01);
+define('TAUX',1);
 
 if(!$res):
     echo 'indispo';
 else:
+   
     if(isset($_POST['verif_dispo'])){
+
         $sql = 'SELECT r.date_debut, r.date_fin FROM sae._reservation r';
         $sql .= ' WHERE r.id_logement = ' . $id . 'AND r.annulation = false';
         $ret = request($sql);
@@ -23,6 +24,7 @@ else:
             $dispo = true;
             $reservArr = (new DateTime($_POST['reservArr']))->format('Y-m-d');
             $reservDep = (new DateTime($_POST['reservDep']))->format('Y-m-d');
+         
            foreach($ret as $val){
                 $date_debut = $val['date_debut'];
                 $date_fin = $val['date_fin'];
@@ -115,15 +117,26 @@ else:
                             </form>
                             <?php
                              if(isset($dispo) && $dispo):
+                               
                                 $sql = 'SELECT base_tarif FROM sae._logement';
                                 $sql .= ' WHERE id = ' . $id;
-                                $res = request($sql);
-
-                                $interval =  strtotime($reservDep) - strtotime($reservArr);
-                              
+                                $res = request($sql,1);
+                                $base_tarif = $res['base_tarif'];
                                 
-                                var_dump($interval);
+                               
+                                $reservArrDate = new DateTime($reservArr);
+                                $reservDepDate = new DateTime($reservDep);
+
+                                $interval = $reservArrDate->diff($reservDepDate);   
+                                $base_tarif = $res['base_tarif'];
+                                $jour = $interval->days;
+                                
+                                $prix_ht = $base_tarif * (empty($jour) ? 1 : $jour);
+                                $nuit = empty($jour) ? 0 : $jour - 1;
+                                $frais = ($prix_ht * FRAIS) - $prix_ht;
+                                $taxe = $nuit * TAUX;
                             
+                                $prix_ttc = $prix_ht + $frais + $taxe;
                             ?>
                                 <form action="" method="POST">
                                 <div class="logement__res" id="logement__reserver">
@@ -150,32 +163,32 @@ else:
                                                 <div class="ttc__jours">
                                                     <p id="prix__TTC" class="calcules__under"><?=$base_tarif?></p>
                                                     <p class="calcules__under">€  x</p>
-                                                    <p id="nb_jours" class="calcules__under"><?= 14?></p>
+                                                    <p id="nb_jours" class="calcules__under"><?= $jour?></p>
                                                     <p class="calcules__under">jours</p>
                                                 </div>
                                                 <div class="ttc_prix">
-                                                    <p id="prix__total">1430</p>
-                                                    <p>€  TTC</p>
+                                                    <p id="prix__total"><?= $prix_ht?></p>
+                                                    <p>€  HT</p>
                                                 </div>
                                             </div>
                                             <div class="calcules__ligne">
                                                 <p class="calcules__under">Frais</p>
                                                 <div class="frais">
-                                                    <p id="frais__total">14,3 </p>
+                                                    <p id="frais__total"><?=$frais?> </p>
                                                     <p>€</p>
                                                 </div>
                                             </div>
                                             <div class="calcules__ligne">
                                                 <p class="calcules__under">Taxes</p>
                                                 <div class="frais">
-                                                    <p id="taxes__total">14,4 </p>
+                                                    <p id="taxes__total"><?=$taxe?> </p>
                                                     <p>€</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="logement__total-ttc">
                                             <p>Total TTC</p>
-                                            <p><span id="tot-ttc">1 458,7 </span>€</p>
+                                            <p><span id="tot-ttc"><?=$prix_ttc?> </span>€</p>
                                         </div>
                                         <input type="submit" value="Réserver">
                                         <input type="submit" id="reset" name="annuler" value="Annuler">
