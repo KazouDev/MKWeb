@@ -83,7 +83,9 @@ $lineHeight: 1.5;
     color: $mainViolet;
     text-decoration: underline;
 }
-
+#CmdMenuClose, #CmdMenu, #fermerMenu{
+    cursor: pointer;
+}
 .header__form {
     display: flex;
     align-items: center;
@@ -98,7 +100,9 @@ $lineHeight: 1.5;
     border: 1px solid #222;
     font-weight: $normalWeight;
 }
-
+.header__connexion,  #header__info{
+    cursor: pointer;
+}
 .header__connexion:hover,  #header__info:hover  {
     border: 1px solid $mainViolet;
     background-color: $mainViolet;

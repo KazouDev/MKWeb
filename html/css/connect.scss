@@ -139,3 +139,21 @@ $lineHeight: 1.5;
     width: 1.75rem;
     
 }
+.connect__from h1 img{
+    width: 40px;
+}
+@media (max-width: 800px){
+    .connect__photo{
+        display: none;
+    }
+    .connect__from{
+        width: 80%;
+        padding: 3rem 0rem;
+        gap: 10px;
+    }
+    .connect__from h1{
+        font-size: $h4Size;        
+    }
+
+    
+}

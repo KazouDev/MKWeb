@@ -39,9 +39,7 @@ $lineHeight: 1.5;
     justify-content: space-between;
     margin-bottom: 1.7rem;
 }
-#logement__rate{
-    
-}
+
 .nom h1{
     font-size: $h2Size;
     font-weight: $semiboldWeight;
@@ -265,10 +263,23 @@ $lineHeight: 1.5;
 
 }
 .logement-container {
+    display: flex;
+    justify-content: space-between;
 }
-.logement__details {
-}
+
 .logement__reserver {
+    padding-top: 5%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    
+}
+#logement__reserver{
+    display: none;
+}
+#logement__verifier{
+    position: sticky;
+    top: 10px;
 }
 .logement__res  {
     display: inline-flex;
@@ -337,6 +348,14 @@ $lineHeight: 1.5;
     color: $mainBlanc;
     padding: 0.8rem 4rem;
 }
+#reset{
+    cursor: pointer;
+    align-self: stretch;
+    border-radius: 0.5rem;
+    background-color: $selectedBlanc;
+    color: $mainNoir;
+    padding: 0.8rem 4rem;
+}
 .logement__res h2{
     font-size: $h5Size;
     max-width: 17rem;
@@ -380,4 +399,68 @@ $lineHeight: 1.5;
         
     }
 
+}
+
+.details__top {
+    min-width: 50rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    .details__nom{
+        display:flex;
+        gap: 0.3rem;
+        h2, p{
+            font-weight: $semiboldWeight;
+            font-size: $h4Size;
+        }
+    }
+    .details__features{
+        display: flex;
+        gap: 0.5rem;
+        .feature:not(:last-child){
+            padding-right: 0.5rem;
+            border-right: 2px solid #878787;
+        }
+    }
+    h3{
+        font-weight: $semiboldWeight;
+        font-size: $h5Size;
+    }
+}
+.logement__proposNote {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.logement__propose{
+    width: 70%;
+    ul{
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 15rem;
+        column-gap: 7rem;
+        row-gap: 1rem;
+    }
+    a{
+        color: $mainViolet;
+    }
+
+    li{
+        list-style-type: square;
+    }
+}
+.proposition {
+}
+.logement__note {
+}
+.details__stars {
+}
+.fas {
+}
+.fa-star {
+}
+.fa-lg {
 }
