@@ -1,3 +1,6 @@
+<?php
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,39 +14,7 @@
 </head>
 <body>
     <div class="wrapper">
-        <header class="header">
-            <div class="header__container">
-                <div class="header__nav">
-                    <div class="header__logo">
-                        <a href=""><img src="img/trisquel.webp" alt="Logo trisquel"></a>
-                        <a href="" class="header__name">ALHaiZ Breizh</a>
-                    </div>
-                    <nav class="header__menu" id="LeMenu">
-                        <ul class="menu__list" id="menu__list">
-                            <li class="menu__item">
-                                <a href="" class="menu__link">Logements</a>
-                            </li>
-                            <li class="menu__item">
-                                <a href="" class="menu__link">À propos</a>
-                            </li>
-                            <li class="menu__item">
-                                <a href="" class="menu__link">Contact</a>
-                            </li>
-                            <li class="menu__item hide">
-                                <a href="" class="menu__link" style="color: #5669FF;">Connexion</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="header__form">
-                    <a href=""><i class="fa-regular fa-eye-slash" style="color: #222222;"></i></a>
-                    <div class="header__connexion"><a href="">Connexion</a></div>                    
-                </div>
-                <img src="img/menu.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
-                <img src="img/fermer.webp" alt="Fermer le menu" id="CmdMenuClose">
-
-            </div>
-        </header>
+       <?php require_once 'header.php';?>
         <main class="main">
             <div class="main__container logement">
                 <div class="logement__top">
