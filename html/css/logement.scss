@@ -1,5 +1,4 @@
 @import url("setup.css");
-
 // Variables
 $myFont: 'Plus Jakarta San', sans-serif;
 $mainViolet: #5669FF;
@@ -30,63 +29,355 @@ $semiboldWeight: 600;
 $boldWeight: 700;
 $lineHeight: 1.5;
 
-.card_container {
+.main__container.logement {
     display: flex;
     flex-direction: column;
-    width: 325px;
-    background-color: $mainBlanc;
+    gap: 1.6rem;
+}
+.logement__nom {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.7rem;
+}
+#logement__rate{
+    
+}
+.nom h1{
+    font-size: $h2Size;
+    font-weight: $semiboldWeight;
+}
+.nom {
+    display: inline-flex;
+    gap: 1rem;
+    align-items: center;
+}
+.stars {
+        display: flex;
+        flex-direction: row ;
+        gap: 1rem;
+
+        i {
+            color: $mainJeune;
+        }
+}
+#logement__rate__valuernote{
+    color: #101010;
+    font-size: $h4Size;
+    font-weight: $semiboldWeight;
+}
+.retour img, .partager img{
+    width: 2.5rem;
+    height: 2.5rem;
+}
+.partager{
+    display: inline-flex;
+    gap: 0.3rem;
+    align-items: center;
+}
+.partager a{
+    font-size: $h4Size;
+    text-decoration: underline;
+    font-weight: $lightWeight;
+}
+.partager a:hover{
+    color: $mainViolet;
+}
+.logement__adr {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logement__adr h2{
+    font-size: $h4Size;
+    font-weight: $lightWeight;
+}
+.logement__adr a{
+    color: $mainBlanc;
+    padding: 0.5rem 2rem;
+    font-size: $h5Size;
     border-radius: 0.75rem;
-    box-shadow: 4px 4px 16px rgba(18, 18, 18, 0.06);
+    background: #5669FF;
+}
+.logement__adr a:hover{
+    background-color: $hoverViolet;
+}
+.logement__photos {
+    display: flex;
+    justify-content: space-between;
+}
+.photo__grille {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+.photo__grille img{
+    width: 100%; 
+    height: auto; 
+    max-width: 21.875rem; 
+    max-height: 15.625rem; 
+    object-fit: cover;
+}
+#main__photo{
+    width: 40%;
+    height: auto; 
+    max-width: 36.75rem; 
+    max-height: 33.4375rem; 
+    object-fit: cover;
+}
+@media (max-width: 1200px){
 
-    img {
-        border-radius: 0.75rem 0.75rem 0 0;
+    .photo__grille img{
+        max-width: 15rem; 
+        max-height:12rem;
     }
 
-    .logement__wrapper_description {
-        margin: 1rem;
-
-        .logement__titre {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            .logement__nom {
-                color: $mainNoir;
-                font-size: $h55Size;
-                font-weight: $semiboldWeight;
-            }
-
-            .logement__note {
-                display: flex;
-                align-items: center;
-                font-size: $h55Size;
-                font-weight: $semiboldWeight;
-
-                i {
-                    margin-right: 0.5rem;
-                    color: $mainJeune;
-                }
-            }
-        }
-
-        .logement__localisation {
-            color: $mainGris;
-            font-size: $h55Size;
-            font-weight: $semiboldWeight;
-        }
-
-        .logement__prix__alignement {
-            display: flex;
-
-            h1 {
-                margin-right: 0.3rem;
-
-                &.logement__prix {
-                    font-size: $h55Size;
-                    font-weight: $semiboldWeight;
-                    color: $mainViolet;
-                }
-            }
-        }
+}
+@media (max-width: 800px){
+    .stars i{
+        font-size: 15px;
     }
+    .logement__adr a{
+        padding: 0.5rem 1rem;
+        font-size: $h55Size;
+    }
+    .logement__adr h2{
+        font-size: $h5Size;
+    }
+    .retour img, .partager img{
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    .partager a{
+        font-size: $h5Size;
+    }
+    .nom h1{
+        font-size: $h3Size;
+    }
+
+    .photo__grille img{
+        max-width: 10rem;
+        max-height: 8rem; 
+    }
+    #main__photo{
+        width: 50%;
+    }
+
+}
+
+@media (max-width: 600px){
+    .stars {
+        gap: 0.5rem;
+    }
+#logement__rate__valuernote{
+    font-size: $h6Size;
+    font-weight: $normalWeight;
+}
+    .logement__adr a{
+        padding: 0.5rem 0.7rem;
+        font-size: $h6Size;
+    }
+    .nom{
+        gap: 0.5rem;
+    }
+    .logement__adr h2{
+        font-size: $h6Size;
+    }
+    .retour img{
+        display: none;
+    } 
+    .partager img{
+        width: 1rem;
+        height: 1rem;
+    }
+    .partager a{
+        font-size: $h6Size;
+    }
+    .nom h1{
+        font-size: $h5Size;
+    }
+
+    .photo__grille img{
+        max-width: 8rem;
+        max-height: 6rem; 
+    }
+    #main__photo{
+        width: 50%;
+    }
+    .photo__grille {
+        gap: 0.5rem;
+    }
+    
+
+}
+@media (max-width: 550px){
+    .logement__photos {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .photo__grille img{
+        width: 49%;
+        height: auto;
+        max-width: none;
+        max-height: 8rem; 
+    }
+    #main__photo{
+        width: 100%;
+        max-height: 15rem;
+    }
+    .photo__grille {
+        justify-content: space-between;
+    }
+
+}
+@media (max-width: 425px){
+    .logement__nom {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+    .nom h1{
+        font-size: $h55Size;
+    }
+    .stars i{
+        font-size: 10px;
+    }
+
+
+    .photo__grille img{
+        width: 45%;
+        height: auto;
+        max-width: none;
+        max-height: 6rem;
+       
+    }
+    #main__photo{
+        width: 100%;
+        height: auto;
+        max-width: none;
+        max-height: 8rem;
+        
+    }
+
+    .logement__photos{
+        align-items: center;
+    }
+
+}
+.logement-container {
+}
+.logement__details {
+}
+.logement__reserver {
+}
+.logement__res  {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid #878787;
+    box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.12);
+    gap: 1.5rem;
+}
+.res__fromulaire{
+    border: 1px solid #222;
+    border-radius: 0.5rem;
+    
+    
+    
+    
+
+}
+.logement__res form,.res__fromulaire {
+    display: flex;
+    flex-direction: column;
+}
+.logement__res form{
+    gap: 1.5rem;
+}
+.res__dates {
+    padding: 0.4rem 0.7rem;
+    display: flex;
+    border-bottom: 1px solid #222;
+
+}
+.res__arrive, .res__dep, .res__voy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    padding: 0.5rem 1rem 0.3rem 0.6rem;
+    label{
+        font-weight: $semiboldWeight;
+        font-size: 0.5rem;
+        text-transform: uppercase; 
+    }
+    input{
+        color: #909090;
+        font-weight: $lightWeight;
+    }
+
+}
+.res__voy input{
+    width: 100%;
+    padding: 0.5rem;
+}
+.res__dep {
+    border-left: 1px solid #222;
+}
+.res__voy {
+    padding: 0.4rem 0.7rem;
+}
+.logement__res input[type="submit"]{
+    cursor: pointer;
+    align-self: stretch;
+    border-radius: 0.5rem;
+    background-color: $mainViolet;
+    color: $mainBlanc;
+    padding: 0.8rem 4rem;
+}
+.logement__res h2{
+    font-size: $h5Size;
+    max-width: 17rem;
+    font-weight: $lightWeight;
+    
+}
+.logement__calcules {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #878787;
+}
+.calcules__ligne, .logement__total-ttc {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.calcules__under{
+    text-decoration: underline;
+}
+.ttc__jours {
+    display: flex;
+}
+.ttc_prix {
+    display: flex;
+}
+.frais {
+    display: flex;
+}
+.logement__total-ttc {
+    display: flex;
+    font-weight: $semiboldWeight;
+}
+#logement__reserver h2{
+    font-size: $h5Size;
+    span{
+        font-size: $h4Size;
+        font-weight: $semiboldWeight;
+        
+    }
+
 }
