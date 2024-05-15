@@ -49,7 +49,7 @@
             <div class="main__container">
                 <div class="connect-container">
                     <div class="connect__from">
-                        <h1>Bienvenue  👋</h1>
+                        <h1>Bienvenue <img src="img/hello.webp" alt="Hello"></h1>
                         <p>Plongez dans l'authenticité bretonne en choisissant parmi une gamme de logements uniques.</p>
                         <form method="POST" action="">
                             <div class="connect__input">
@@ -60,6 +60,7 @@
                                 <label for="connect__pass">Mot de passe</label>
                                 <input type="password" name="password" id="connect__pass" placeholder="Saisissez un mot de passe">
                             </div>
+
                             <a class="mdp_oublie" href="">Mot de passe oublié ?</a>
 
                             <?php if ($status): ?> <p class="login_invalid">Identifiant invalide !</p> <?php endif; ?>
@@ -69,42 +70,14 @@
                         <p class="p_ligne">Ou</p>
                         <div class="connect__google"><img src="../img/google.webp" alt="Google"><a href="">Continuer avec Google</a></div>
                         <div class="connect__face"><img src="../img/facebook.webp" alt="Facebook"><a href="">Continuer avec Facebook</a></div>
-                        <p style="align-self: center;">Vous n'avez pas de compte ?  <a href="" style="color: #5669FF;">S'inscrire</a></p>
+                        <p style="align-self: center; text-align:center;">Vous n'avez pas de compte ?  <a href="" style="color: #5669FF;">S'inscrire</a></p>
                     </div>
                     <img class="connect__photo" src="../img/sea.webp" alt="Sea">
                 </div>
             </div>
 
         </main>
-        <footer class="footer">
-            <div class="footer__container">
-                <nav class="footer__menu">
-                    <ul class="footer__menu__list">
-                        <li class="footer__menu__item">© 2024 ALHalZ Breizh</li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Confidentialité</a>
-                        </li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Conditions générales</a>
-                        </li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Mentions légales</a>
-                        </li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Accessibilité</a>
-                        </li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Ajouter mon établissement</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </footer>
+        <?php require_once "footer.php" ?>
     </div>
     <script src="../js/script.js"></script>
 </body>
