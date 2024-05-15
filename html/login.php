@@ -4,10 +4,13 @@
 
     $status = false;
 
+    // Si déjà connecté on renvoie sur l'acceuil.
     if (isset($_SESSION["client_id"])){
         header('Location: index.php');
         exit;
     }   
+
+    // Si le formulaie à était envoyé 
 
     if (isset($_POST["email"]) && isset($_POST["password"])){
         $email = strtolower($_POST["email"]);
@@ -17,9 +20,11 @@
         WHERE email = '$email'";
                 
         $result = request($query, true);
+        // Si aucun compte trouvé
         if (empty($result)) {
             $status = true;
         } else {
+            // On vérifie les mot de passe.
             if (password_verify($_POST["password"], $result["mot_de_passe"])){
                 $_SESSION["client_id"] = $result["id"];
                 header('Location: index.php');
