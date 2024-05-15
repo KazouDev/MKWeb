@@ -56,6 +56,11 @@ $lineHeight: 1.5;
     line-height: 160%; 
     letter-spacing: 0.0125rem;
 }
+
+.connect__from form {
+    width: 100%;
+}
+
 .connect__input{
     width: 100%;
     display: flex;
@@ -110,6 +115,10 @@ $lineHeight: 1.5;
 }
 .p_ligne::after {
     right: 0;
+}
+.connect__from .login_invalid {
+    font-size: 1.15em;
+    color: $boutonRouge;
 }
 .connect__google {
 }

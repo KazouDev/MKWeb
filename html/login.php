@@ -2,10 +2,12 @@
     require_once "../utils.php";
     session_start();
 
+    $status = false;
+
     if (isset($_SESSION["client_id"])){
         header('Location: index.php');
         exit;
-    }
+    }   
 
     if (isset($_POST["email"]) && isset($_POST["password"])){
         $email = strtolower($_POST["email"]);
@@ -13,20 +15,17 @@
         $query = "SELECT sae._utilisateur.id, mot_de_passe FROM sae._compte_client 
         INNER JOIN sae._utilisateur ON sae._compte_client.id = sae._utilisateur.id 
         WHERE email = '$email'";
-
-        echo $query."<br>";
-        
-        $result = request($query);
+                
+        $result = request($query, true);
         if (empty($result)) {
-            echo "Aucun email trouvé";
+            $status = true;
         } else {
-            echo $_POST["password"];
             if (password_verify($_POST["password"], $result["mot_de_passe"])){
                 $_SESSION["client_id"] = $result["id"];
                 header('Location: index.php');
                 exit; 
             } else {
-                echo "failed";
+                $status = true;
             }
         }
     }
@@ -62,6 +61,9 @@
                                 <input type="password" name="password" id="connect__pass" placeholder="Saisissez un mot de passe">
                             </div>
                             <a class="mdp_oublie" href="">Mot de passe oublié ?</a>
+
+                            <?php if ($status): ?> <p class="login_invalid">Identifiant invalide !</p> <?php endif; ?>
+
                             <input type="submit" value="Se connecter">
                         </form>
                         <p class="p_ligne">Ou</p>

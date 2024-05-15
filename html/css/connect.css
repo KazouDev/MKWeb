@@ -29,6 +29,10 @@
   letter-spacing: 0.0125rem;
 }
 
+.connect__from form {
+  width: 100%;
+}
+
 .connect__input {
   width: 100%;
   display: flex;
@@ -97,6 +101,11 @@
 
 .p_ligne::after {
   right: 0;
+}
+
+.connect__from .login_invalid {
+  font-size: 1.15em;
+  color: #FF6258;
 }
 
 .connect__face, .connect__google {
