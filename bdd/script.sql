@@ -314,7 +314,6 @@ VALUES
 
 INSERT INTO _utilisateur (nom, prenom, date_naissance, civilite, pseudo, mot_de_passe, photo_profile, email, telephone, id_adresse) 
 VALUES 
-<<<<<<< HEAD
 ('Lefevre', 'Sophie', '1990-11-07', 'Mme', 'SophieLef', '$2y$12$uwSKgb4oHcXPBteO3Vz3lO7Sjinlda1rQ/JX.rR0XyRBRX2uXFW9e', '/img/compte/sophie.jpg', 'sophie.lefevre@gmail.com', '0678901234', 1),
 ('Baptiste', 'Jean', '1987-09-15', 'Mr', 'JB1987', '$2y$12$NQVqgljWIIfzI.Moi3vG.ODcrki9uSRR98HvKwRgAr5VSfQ524/PK', '/img/compte/jean.jpg', 'jean.baptiste@gmail.com', '0698765432', 2),
 ('Dubois', 'Marie', '2000-06-18', 'Mme', 'MarieD', '$2y$12$QrmUnkU5D8GP3FErKET0suHFMnQ5hkNueEE3IIOZaDG0QRA4snrXu', '/img/compte/marie.jpg', 'marie.dubois@gmail.com', '0623456789', 3);
@@ -329,22 +328,6 @@ VALUES
 ('Durand', 'Marie', '1990-06-25', 'Mme', 'MarieD', '$2y$12$XTeyD.U5pwOEvpKREoDdjuRezdcddiYedsjgCdlsm6KhOHoeBEwzW', '/img/compte/marie.jpg', 'marie.durand@gmail.com', '0612345678', 6),
 ('Girard', 'Paul', '1978-08-20', 'Mr', 'PaulG', '$2y$12$H2Vag2nlVMOyzfd0D3xRluNdkM0IigMBsdkJmR.eDzGXHawhefhdO', '/img/compte/paul.jpg', 'paul.girard@gmail.com', '0678904567', 7),
 ('Martin', 'Luc', '1972-03-28', 'Mme', 'LucM', '$2y$12$0/fP5Kw4u/za805iegm0.uF6flHQTwr1FRdjt2Lm9ZcNyyiHQaExS', '/img/compte/luc.jpg', 'luc.martin@gmail.com', '0678901357', 8);
-=======
-('Lefevre', 'Sophie', '1990-11-07', 'Mme', 'SophieLef', 'Lefevre@123', '/img/compte/sophie.jpg', 'sophie.lefevre@gmail.com', '0678901234', 1),
-('Baptiste', 'Jean', '1987-09-15', 'Mr', 'JB1987', 'JB1987Pass', '/img/compte/jean.jpg', 'jean.baptiste@gmail.com', '0698765432', 2),
-('Dubois', 'Marie', '2000-06-18', 'Mme', 'MarieD', 'Dubois2020!', '/img/compte/marie.jpg', 'marie.dubois@gmail.com', '0623456789', 3);
-
-INSERT INTO _utilisateur (nom, prenom, date_naissance, civilite, pseudo, mot_de_passe, photo_profile, email, telephone, id_adresse) 
-VALUES 
-('Dupuis', 'Emma', '1975-09-22', 'Mme', 'EmmaD', 'AdminPass', '/img/compte/emma.jpg', 'emma.dupuis@gmail.com', '0678901234', 4);
-
-INSERT INTO _utilisateur (nom, prenom, date_naissance, civilite, pseudo, mot_de_passe, photo_profile, email, telephone, id_adresse) 
-VALUES 
-('Leclerc', 'Pierre', '1983-12-10', 'Mr', 'PierreLeclerc', 'Pierre123', '/img/compte/pierre.jpg', 'pierre.leclerc@gmail.com', '0678901234', 5),
-('Durand', 'Marie', '1990-06-25', 'Mme', 'MarieD', 'Marie456', '/img/compte/marie.jpg', 'marie.durand@gmail.com', '0612345678', 6),
-('Girard', 'Paul', '1978-08-20', 'Mr', 'PaulG', 'Paul1980', '/img/compte/paul.jpg', 'paul.girard@gmail.com', '0678904567', 7),
-('Martin', 'Luc', '1972-03-28', 'Mme', 'LucM', 'Luc1972', '/img/compte/luc.jpg', 'luc.martin@gmail.com', '0678901357', 8);
->>>>>>> 3b319973ff874adc1b63ea4f9b9febf0648b492d
 
 INSERT INTO _compte_client (id) VALUES (1), (2), (3);
 
@@ -406,10 +389,6 @@ VALUES
 (180,6,1),
 (200,6,2);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 3b319973ff874adc1b63ea4f9b9febf0648b492d
 INSERT INTO _image(src,principale,alt,id_logement)
 VALUES
 ('/images/logement/1/salon2.png',true,'salon',1),
@@ -431,10 +410,6 @@ VALUES
 ('/images/logement/3/chambre.png','cuisine',3),
 ('/images/logement/3/cuisine.png','lit',3),
 ('/images/logement/3/salon.png','table',3),
-<<<<<<< HEAD
-('/images/logement/3/sdb.png','table',3);
-=======
 ('/images/logement/3/sdb.png','table',3);
 
 SELECT insert_cal(1, '2024-05-11', 150, 'V');
->>>>>>> 3b319973ff874adc1b63ea4f9b9febf0648b492d
