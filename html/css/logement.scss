@@ -39,9 +39,7 @@ $lineHeight: 1.5;
     justify-content: space-between;
     margin-bottom: 1.7rem;
 }
-#logement__rate{
-    
-}
+
 .nom h1{
     font-size: $h2Size;
     font-weight: $semiboldWeight;
@@ -265,10 +263,23 @@ $lineHeight: 1.5;
 
 }
 .logement-container {
+    display: flex;
+    justify-content: space-between;
 }
-.logement__details {
-}
+
 .logement__reserver {
+    padding-top: 5%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    
+}
+#logement__reserver{
+    display: none;
+}
+#logement__verifier{
+    position: sticky;
+    top: 10px;
 }
 .logement__res  {
     display: inline-flex;
@@ -347,10 +358,17 @@ $lineHeight: 1.5;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.6rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #878787;
 }
-.calcules__ligne {
+.calcules__ligne, .logement__total-ttc {
+    width: 100%;
     display: flex;
     justify-content: space-between;
+}
+.calcules__under{
+    text-decoration: underline;
 }
 .ttc__jours {
     display: flex;
@@ -363,6 +381,7 @@ $lineHeight: 1.5;
 }
 .logement__total-ttc {
     display: flex;
+    font-weight: $semiboldWeight;
 }
 #logement__reserver h2{
     font-size: $h5Size;
@@ -372,4 +391,57 @@ $lineHeight: 1.5;
         
     }
 
+}
+
+.details__top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    .details__nom{
+        display:flex;
+        gap: 0.3rem;
+        h2, p{
+            font-weight: $semiboldWeight;
+            font-size: $h4Size;
+        }
+    }
+    .details__features{
+        display: flex;
+        gap: 0.5rem;
+        .feature:not(:last-child){
+            padding-right: 0.5rem;
+            border-right: 2px solid #878787;
+        }
+    }
+    h3{
+        font-weight: $semiboldWeight;
+        font-size: $h5Size;
+    }
+}
+.logement__proposNote {
+    display: flex;
+    justify-content: space-between;
+}
+.logement__propose ul{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 8rem;
+
+    li{
+        
+    }
+}
+.proposition {
+}
+.logement__note {
+}
+.details__stars {
+}
+.fas {
+}
+.fa-star {
+}
+.fa-lg {
 }

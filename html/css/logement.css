@@ -234,6 +234,27 @@
     align-items: center;
   }
 }
+.logement-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.logement__reserver {
+  padding-top: 5%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+#logement__reserver {
+  display: none;
+}
+
+#logement__verifier {
+  position: sticky;
+  top: 10px;
+}
+
 .logement__res {
   display: inline-flex;
   flex-direction: column;
@@ -314,11 +335,19 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 0.6rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #878787;
 }
 
-.calcules__ligne {
+.calcules__ligne, .logement__total-ttc {
+  width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.calcules__under {
+  text-decoration: underline;
 }
 
 .ttc__jours {
@@ -335,6 +364,7 @@
 
 .logement__total-ttc {
   display: flex;
+  font-weight: 600;
 }
 
 #logement__reserver h2 {
@@ -343,4 +373,43 @@
 #logement__reserver h2 span {
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+.details__top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.details__top .details__nom {
+  display: flex;
+  gap: 0.3rem;
+}
+.details__top .details__nom h2, .details__top .details__nom p {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.details__top .details__features {
+  display: flex;
+  gap: 0.5rem;
+}
+.details__top .details__features .feature:not(:last-child) {
+  padding-right: 0.5rem;
+  border-right: 2px solid #878787;
+}
+.details__top h3 {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.logement__proposNote {
+  display: flex;
+  justify-content: space-between;
+}
+
+.logement__propose ul {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 8rem;
 }/*# sourceMappingURL=logement.css.map */

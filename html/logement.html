@@ -67,7 +67,7 @@
                     </div>
                     <div class="logement__adr">
                         <h2 id="logement__adresse">Pléneuf-Val-André, Côtes-d'Armor</h2>
-                        <a href="">Réserver</a>
+                        <a href="#logement__verifier">Réserver</a>
                     </div>
                 </div>
                 <div class="logement__photos">
@@ -80,7 +80,51 @@
                     <img src="img/log5.webp" alt="Logement" id="main__photo">
                 </div>
                 <div class="logement-container">
-                    <div class="logement__details"></div>
+                    <div class="logement__details">
+                        <div class="details__top">
+                            <div class="details__nom"><h2 id="log__nom">Ô gîte de la plage</h2><p>-</p> <h2 id="log__details">chalet contemporain de 40m2</h2></div>
+                            <div class="details__features" id="features">
+                                <div class="feature">Chalet</div>
+                                <div class="feature">T1</div>
+                                <div class="feature">40m²</div>
+                                <div class="feature">2 voyageurs</div>
+                                <div class="feature">2 voyageurs</div>
+                                <div class="feature">1 lit double</div>
+                            </div>
+                            <h3>Ce logement vous propose</h3>
+                            <div class="logement__proposNote">
+                                <div class="logement__propose">
+                                    <ul>
+                                        <li class="proposition">Vue sur la baie</li>
+                                        <li class="proposition">Accès plage </li>
+                                        <li class="proposition">Wifi</li>
+                                        <li class="proposition">Télévision</li>
+                                        <li class="proposition">Lave-linge</li>
+                                        <li class="proposition">Vue sur l'océan</li>
+                                        <li class="proposition">Cuisine</li>
+                                        <li class="proposition">Parking gratuit sur place</li>
+                                        <li class="proposition">Ascenseur</li>
+                                        <li class="proposition">Sèche-linge</li>
+                                    </ul>
+                                    <a href="">Conditions d’annulation</a>
+                                </div>
+                                <div class="logement__note">
+                                    <h2 id="note">4.8</h2>
+                                    <div class="details__stars" id="logement__rate__details">
+                                        <i class="fas fa-star fa-lg" id="1star_details"></i>
+                                        <i class="fas fa-star fa-lg" id="2star_details"></i>
+                                        <i class="fas fa-star fa-lg" id="3star_details"></i>
+                                        <i class="fas fa-star fa-lg" id="4star_details"></i>
+                                        <i class="fas fa-star fa-lg" id="5star_details"></i>
+                                    </div>
+                                    <h3><span id="nb_comment">21</span>Commentaires</h3>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="logement__reserver">
                         <div class="logement__res" id="logement__verifier">
                             <h2>Indiquez les dates pour voir les tarifs</h2>
@@ -127,10 +171,10 @@
                                 <div class="logement__calcules">
                                     <div class="calcules__ligne">
                                         <div class="ttc__jours">
-                                            <p id="prix__TTC">286</p>
-                                            <p>€  x</p>
-                                            <p id="nb_jours">5</p>
-                                            <p>jours</p>
+                                            <p id="prix__TTC" class="calcules__under">286</p>
+                                            <p class="calcules__under">€  x</p>
+                                            <p id="nb_jours" class="calcules__under">5</p>
+                                            <p class="calcules__under">jours</p>
                                         </div>
                                         <div class="ttc_prix">
                                             <p id="prix__total">1430</p>
@@ -138,14 +182,14 @@
                                         </div>
                                     </div>
                                     <div class="calcules__ligne">
-                                        <p>Frais</p>
+                                        <p class="calcules__under">Frais</p>
                                         <div class="frais">
                                             <p id="frais__total">14,3 </p>
                                             <p>€</p>
                                         </div>
                                     </div>
                                     <div class="calcules__ligne">
-                                        <p>Taxes</p>
+                                        <p class="calcules__under">Taxes</p>
                                         <div class="frais">
                                             <p id="taxes__total">14,4 </p>
                                             <p>€</p>
@@ -156,7 +200,7 @@
                                     <p>Total TTC</p>
                                     <p><span id="tot-ttc">1 458,7 </span>€</p>
                                 </div>
-                                <input type="submit" value="Demander un devis">
+                                <input type="submit" value="Réserver">
 
                             </form>
                         </div>
