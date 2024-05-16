@@ -43,7 +43,12 @@
     $rep_note_hote = request($query_note_hote)[0];
 
     $titre_logement =  $rep_logement['titre'] ;
-    $moyenne_note = round($rep_note['avg'], 1);
+    $moyenne_note = $rep_note['avg'];
+    if (isset($moyenne_note)) {
+        $moyenne_note = round($moyenne_note, 1);
+    }
+    
+
     $ville = $rep_logement['ville'];
     $departement = $rep_logement['departement'];
     $accroche = $rep_logement['accroche'];
@@ -58,7 +63,10 @@
     $description = $rep_logement['description'];
     $nom_hote = $rep_hote['nom'];
     $prenom_hote = $rep_hote['prenom'];
-    $note_hote = round($rep_note_hote['avg'], 1);
+    $note_hote = $rep_note_hote['avg'];
+    if (isset($note_hote)) {
+        $note_hote = round($note_hote, 1);
+    }
 
     $liste_amenagement = [];
     foreach($rep_amenagement as $cle => $amenagements){
@@ -338,12 +346,17 @@
                             </script>
                             <div class="environs__details">
                                 <h3>Environs de l'établissement</h3>
-                                <?php foreach($liste_activite as $act => $distance) { ?>
-                                    <div class="environs__ligne">
-                                        <p class="environ"><?php echo $act?></p>
-                                        <p class="dest"><?php echo $distance?></p>
-                                    </div>
-                                <?php } ?>
+                                <?php if (empty($liste_activite)) { ?> 
+                                    <div class="environs__ligne">Il n'y a rien à proxmité.</div>
+                                <?php } else { ?>
+                                    <?php foreach($liste_activite as $act => $distance) { ?>
+                                        <div class="environs__ligne">
+                                            <p class="environ"><?php echo $act?></p>
+                                            <p class="dest"><?php echo $distance?></p>
+                                        </div>
+                                    <?php } ?>
+                                <?php }?>  
+                                
                             </div>
                         </div>
                         <div class="avis">
