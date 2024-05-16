@@ -1,0 +1,60 @@
+@import url("setup.css");
+.main__container {
+  width: 100%;
+}
+.main__container .top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.main__container .top > div {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.main__container .top > div img {
+  max-width: 2.5em;
+  margin-left: 1.1em;
+}
+.main__container h1 {
+  text-align: left;
+  font-size: 2.25rem;
+  font-weight: 600;
+}
+
+section {
+  border-radius: 0.75rem;
+  border: #222222 1px solid;
+  box-shadow: 4px 4px 10px rgba(27, 27, 27, 0.319);
+  padding: 1rem;
+}
+section form {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+section form .info_gen__input {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+section form .info_gen__input .input__input {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+section form .info_gen__input .input__input input {
+  width: 45%;
+}
+section form .info_gen__input input,
+section form .info_gen__input select,
+section form .info_gen__input option {
+  width: 100%;
+}/*# sourceMappingURL=creer-logement.css.map */

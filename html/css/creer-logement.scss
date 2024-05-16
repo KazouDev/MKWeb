@@ -1,0 +1,101 @@
+@import url("setup.css");
+// Variables
+$myFont: "Plus Jakarta San", sans-serif;
+$mainViolet: #5669ff;
+$mainJeune: #ffd33c;
+$mainNoir: #222222;
+$mainGris: #878787;
+$mainBlanc: #ffffff;
+
+$hoverViolet: #9aa5ff;
+$selectedViolet: #273efc;
+$selectedBlanc: #e1ebf4;
+
+$boutonPink: #dd69fa;
+$boutonGreen: #79da7d;
+$boutonRouge: #ff6258;
+
+$h1Size: 4rem;
+$h2Size: 2.25rem;
+$h3Size: 2rem;
+$h4Size: 1.5rem;
+$h5Size: 1.25rem;
+$h55Size: 1rem;
+$h6Size: 0.75rem;
+
+$sizeIcone: 2.5em;
+$sizeLogement: 21em;
+
+$lightWeight: 300;
+$normalWeight: 400;
+$semiboldWeight: 600;
+$boldWeight: 700;
+$lineHeight: 1.5;
+
+.main__container {
+  width: 100%;
+
+  .top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+
+    > div {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+
+      img {
+        max-width: $sizeIcone;
+        margin-left: 1.1em;
+      }
+    }
+  }
+
+  h1 {
+    text-align: left;
+    font-size: $h2Size;
+    font-weight: $semiboldWeight;
+  }
+}
+
+section {
+  border-radius: 0.75rem;
+  border: $mainNoir 1px solid;
+  box-shadow: 4px 4px 10px rgba(27, 27, 27, 0.319);
+  padding: 1rem;
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .info_gen__input {
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: flex-start;
+      gap: 0.5rem;
+
+      .input__input {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        input {
+          width: 45%;
+        }
+      }
+
+      input,
+      select,
+      option {
+        width: 100%;
+      }
+    }
+  }
+}

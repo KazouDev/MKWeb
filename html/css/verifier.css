@@ -1,13 +1,4 @@
 @import url("setup.css");
-.main {
-  padding-top: 20%;
-}
-
-.main__container {
-  width: 1280px;
-  margin: 0 auto;
-}
-
 .checkLogement {
   border-radius: 0.625rem;
   background: #FFF;
@@ -141,16 +132,15 @@ label.dropdown-element:hover {
 
 #departments-dropdown {
   position: absolute;
-  top: -10px;
+  top: -20px;
 }
 
 #communs-dropdown-container {
   position: absolute;
-  top: -10px;
+  top: -20px;
   left: 230px;
 }
 
 .drops {
-  min-height: 150px;
   position: relative;
 }/*# sourceMappingURL=verifier.css.map */

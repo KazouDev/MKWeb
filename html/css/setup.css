@@ -1,11 +1,19 @@
 @import url("reset.css");
 .wrapper {
-  position: relative;
-  min-height: 100vh;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-footer {
-  margin-top: 50px;
+main {
+  flex: 1;
+  padding-bottom: 3rem;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
 }
 
 body {
@@ -18,34 +26,32 @@ a {
   cursor: pointer;
 }
 
-.wrapper {
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
 header {
   position: relative;
+  margin-bottom: 2rem;
 }
 
-[class*=__container] {
+[class*="__container"] {
   max-width: 1280px;
   margin: 0 auto;
 }
 
 @media (max-width: 1199.98px) {
-  [class*=__container] {
+  [class*="__container"] {
     max-width: 970px;
   }
 }
 @media (max-width: 991.98px) {
-  [class*=__container] {
+  [class*="__container"] {
     max-width: 750px;
   }
 }
 @media (max-width: 767.98px) {
-  [class*=__container] {
+  [class*="__container"] {
     max-width: none;
     padding: 0px 0.75rem;
   }
-}/*# sourceMappingURL=setup.css.map */
+  header {
+    margin-bottom: 1rem;
+  }
+} /*# sourceMappingURL=setup.css.map */
