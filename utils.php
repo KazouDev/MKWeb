@@ -29,9 +29,9 @@ try {
 
 function client_connected(){
   if (isset($_SESSION) && isset($_SESSION["client_id"])){
-    return $_SESSION["client_id"]; unset($_SESSION["client_id"])
+    return $_SESSION["client_id"];
   } else {
-    false;
+    return false;
   }
 }
 
@@ -48,7 +48,7 @@ function buisness_connected(){
   if (isset($_SESSION) && isset($_SESSION["buisness_id"])){
     return $_SESSION["buisness_id"];
   } else {
-    false;
+    return false;
   }
 }
 
