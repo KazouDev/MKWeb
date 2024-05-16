@@ -1,8 +1,8 @@
 <?php 
     session_start();
-    require "../utils.php";
+    require "../../utils.php";
 
-    client_connected_or_redirect();
+    buisness_connected_or_redirect();
 ?>
 <!DOCTYPE html>
 <html lang="en">

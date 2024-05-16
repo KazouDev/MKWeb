@@ -125,7 +125,7 @@ CREATE TABLE _logement (
   id_proprietaire INT NOT NULL,
   id_adresse INT NOT NULL,
   titre VARCHAR(255) NOT NULL,
-  description VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
   accroche VARCHAR(255) NOT NULL,
   base_tarif FLOAT NOT NULL,
   surface INT NOT NULL,
@@ -314,20 +314,20 @@ VALUES
 
 INSERT INTO _utilisateur (nom, prenom, date_naissance, civilite, pseudo, mot_de_passe, photo_profile, email, telephone, id_adresse) 
 VALUES 
-('Lefevre', 'Sophie', '1990-11-07', 'Mme', 'SophieLef', '$2y$12$jYDUHuq.9HNshudlY2lIJ.MJ07CGjXkw8f.AiHMAIx93UU37RwEaS', '/img/compte/sophie.jpg', 'sophie.lefevre@gmail.com', '0678901234', 1), -- Lefevre123
-('Baptiste', 'Jean', '1987-09-15', 'Mr', 'JB1987', '$2y$12$EoZB4iAL2B9.xp4Hw0aOkeXvcX5ptAwpsHfXP9oMZXmu5OBekiKRm', '/img/compte/jean.jpg', 'jean.baptiste@gmail.com', '0698765432', 2), -- Baptiste123
-('Dubois', 'Marie', '2000-06-18', 'Mme', 'MarieD', '$2y$12$M8ioo/oioeGxLGgOiiZlqOPlrXskeyD7G80wA1XS7nxAHMG8dITm2', '/img/compte/marie.jpg', 'marie.dubois@gmail.com', '0623456789', 3); -- Dubois123
+('Lefevre', 'Sophie', '1990-11-07', 'Mme', 'SophieLef', '$2y$12$uwSKgb4oHcXPBteO3Vz3lO7Sjinlda1rQ/JX.rR0XyRBRX2uXFW9e', '/img/compte/sophie.jpg', 'sophie.lefevre@gmail.com', '0678901234', 1),
+('Baptiste', 'Jean', '1987-09-15', 'Mr', 'JB1987', '$2y$12$NQVqgljWIIfzI.Moi3vG.ODcrki9uSRR98HvKwRgAr5VSfQ524/PK', '/img/compte/jean.jpg', 'jean.baptiste@gmail.com', '0698765432', 2),
+('Dubois', 'Marie', '2000-06-18', 'Mme', 'MarieD', '$2y$12$QrmUnkU5D8GP3FErKET0suHFMnQ5hkNueEE3IIOZaDG0QRA4snrXu', '/img/compte/marie.jpg', 'marie.dubois@gmail.com', '0623456789', 3);
 
 INSERT INTO _utilisateur (nom, prenom, date_naissance, civilite, pseudo, mot_de_passe, photo_profile, email, telephone, id_adresse) 
 VALUES 
-('Dupuis', 'Emma', '1975-09-22', 'Mme', 'EmmaD', '$2y$12$Gw9cIL0DerzqB4Lr9wkJ8u4ES7R6/r3shjKpacbNiY3xQLiOAWqFW', '/img/compte/emma.jpg', 'emma.dupuis@gmail.com', '0678901234', 4); -- Depuis123
+('Dupuis', 'Emma', '1975-09-22', 'Mme', 'EmmaD', '$2y$12$2Rna9n68jFqjPNsP/pKgyuPXNsjQoyAswG6WwDEcK.YuwNBFux9LW', '/img/compte/emma.jpg', 'emma.dupuis@gmail.com', '0678901234', 4);
 
 INSERT INTO _utilisateur (nom, prenom, date_naissance, civilite, pseudo, mot_de_passe, photo_profile, email, telephone, id_adresse) 
 VALUES 
-('Leclerc', 'Pierre', '1983-12-10', 'Mr', 'PierreLeclerc', '$2y$12$9NL.1cLkgmMAkJWvk/0BbuBZTdhJznUoeusqnCnonVIwsDV.8aKfa', '/img/compte/pierre.jpg', 'pierre.leclerc@gmail.com', '0678901234', 5), -- Leclerc123
-('Durand', 'Marie', '1990-06-25', 'Mme', 'MarieD', '$2y$12$vY9Pt0yPekWPXIvYA/OIpuPKZJQ65R7ieu3an.A5AIT09rEjZkZwS', '/img/compte/marie.jpg', 'marie.durand@gmail.com', '0612345678', 6),
-('Girard', 'Paul', '1978-08-20', 'Mr', 'PaulG', '$2y$12$04UNuujBq.unTU3DX9hK1eQv/QNksrzKo92TIYEnCT8JXgYKT3Spm', '/img/compte/paul.jpg', 'paul.girard@gmail.com', '0678904567', 7),
-('Martin', 'Luc', '1972-03-28', 'Mme', 'LucM', '$2y$12$1OEJ1IX9VjoHg05Wby4nhOfSmSLkpVQA.QSYPMT3RwfF5P0zvRv5e', '/img/compte/luc.jpg', 'luc.martin@gmail.com', '0678901357', 8);
+('Leclerc', 'Pierre', '1983-12-10', 'Mr', 'PierreLeclerc', '$2y$12$mWBi5LnEajEatHcKqXHp9eAk4lqNXEmnn8lVcTjfFhRXXRTkHFOxy', '/img/compte/pierre.jpg', 'pierre.leclerc@gmail.com', '0678901234', 5),
+('Durand', 'Marie', '1990-06-25', 'Mme', 'MarieD', '$2y$12$XTeyD.U5pwOEvpKREoDdjuRezdcddiYedsjgCdlsm6KhOHoeBEwzW', '/img/compte/marie.jpg', 'marie.durand@gmail.com', '0612345678', 6),
+('Girard', 'Paul', '1978-08-20', 'Mr', 'PaulG', '$2y$12$H2Vag2nlVMOyzfd0D3xRluNdkM0IigMBsdkJmR.eDzGXHawhefhdO', '/img/compte/paul.jpg', 'paul.girard@gmail.com', '0678904567', 7),
+('Martin', 'Luc', '1972-03-28', 'Mme', 'LucM', '$2y$12$0/fP5Kw4u/za805iegm0.uF6flHQTwr1FRdjt2Lm9ZcNyyiHQaExS', '/img/compte/luc.jpg', 'luc.martin@gmail.com', '0678901357', 8);
 
 INSERT INTO _compte_client (id) VALUES (1), (2), (3);
 

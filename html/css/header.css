@@ -1,4 +1,24 @@
 @import url("setup.css");
+.buisness.header {
+  background-color: #5669FF;
+}
+.buisness .header__name {
+  color: #FFFFFF;
+}
+.buisness .header__form i {
+  color: #FFFFFF;
+}
+.buisness .header__form #header__info {
+  background-color: #FFFFFF;
+  color: #222222;
+  border: none;
+}
+.buisness .header__form #header__info:hover {
+  background-color: #FFFFFF;
+  border: none;
+  color: #5669FF;
+}
+
 .header__container {
   padding-top: 1rem;
   display: flex;
@@ -58,11 +78,18 @@
   text-decoration: underline;
 }
 
+#CmdMenuClose, #CmdMenu, #fermerMenu {
+  cursor: pointer;
+}
+
 .header__form {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1.25rem;
+}
+.header__form i {
+  color: #222222;
 }
 
 .header__connexion {
@@ -71,6 +98,10 @@
   border-radius: 0.625rem;
   border: 1px solid #222;
   font-weight: 400;
+}
+
+.header__connexion, #header__info {
+  cursor: pointer;
 }
 
 .header__connexion:hover, #header__info:hover {
@@ -99,7 +130,7 @@
     font-size: 0.75rem;
   }
   .header__connexion, #header__info {
-    padding: 5px 10px !important;
+    padding: 3px 10px !important;
   }
   .user__photo {
     display: none;
@@ -186,6 +217,7 @@
   height: 1.875rem;
   border-radius: 50%;
   margin-right: 0.5rem;
+  object-fit: cover;
 }
 
 .user__down {

@@ -32,18 +32,20 @@ $lineHeight: 1.5;
 
 .connect-container {
     display: flex;
+    justify-content: space-around;
 }
 .connect__photo{
-    width: 670px;
-    flex-shrink: 0;
+    width: 40%;
+    object-fit: contain;
 }
 .connect__from {
-    padding: 6rem;
+    width: 50%;
+    padding: 0rem 4rem 0rem 4rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: 30px;
+    gap: 15px;
 }
 .connect__from h1{
     font-style: $semiboldWeight;
@@ -56,6 +58,16 @@ $lineHeight: 1.5;
     line-height: 160%; 
     letter-spacing: 0.0125rem;
 }
+
+.connect__from form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+}
+
 .connect__input{
     width: 100%;
     display: flex;
@@ -111,6 +123,11 @@ $lineHeight: 1.5;
 .p_ligne::after {
     right: 0;
 }
+.connect__from .login_invalid {
+    color: $boutonRouge;
+    align-self: flex-start;
+    font-size: $h55Size;
+}
 .connect__google {
 }
 .connect__face {
@@ -126,5 +143,23 @@ $lineHeight: 1.5;
 }
 .connect__face img, .connect__google img{
     width: 1.75rem;
+    
+}
+.connect__from h1 img{
+    width: 40px;
+}
+@media (max-width: 800px){
+    .connect__photo{
+        display: none;
+    }
+    .connect__from{
+        width: 80%;
+        padding: 3rem 0rem;
+        gap: 10px;
+    }
+    .connect__from h1{
+        font-size: $h4Size;        
+    }
+
     
 }
