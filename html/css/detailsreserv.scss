@@ -1,0 +1,325 @@
+@import url("setup.css");
+
+// Variables
+$myFont: 'Plus Jakarta San', sans-serif;
+$mainViolet: #5669FF;
+$mainJaune: #FFD33C;
+$mainNoir: #222222;
+$mainGris: #878787;
+$mainBlanc: #FFFFFF;
+
+$hoverViolet: #9AA5FF;
+$selectedViolet: #273EFC;
+$selectedBlanc: #E1EBF4;
+
+$boutonPink: #DD69FA;
+$boutonGreen: #79DA7D;
+$boutonRouge: #FF6258;
+
+$h1Size: 4rem;
+$h2Size: 2.25rem;
+$h3Size: 2rem;
+$h4Size: 1.5rem;
+$h5Size: 1.25rem;
+$h55Size: 1rem;
+$h6Size: 0.75rem;
+
+$sizeIcone : 2.5em;
+$sizeLogement  : 21em;
+
+$lightWeight: 300;
+$normalWeight: 400;
+$semiboldWeight: 600;
+$boldWeight: 700;
+$lineHeight: 1.5;
+
+/**Detail Reservation */
+
+/** Style entête de la page détail des réservation */
+
+.detail-reservation__conteneur{
+    display: flex; 
+    flex-direction: column;
+    gap: 3.125em;   
+    font-family: $myFont;
+    
+    
+}
+.detail-reservation__entete {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    
+        
+    .entete__titre{
+        font-size: $h2Size;
+        font-weight: $semiboldWeight;
+    }
+    & > div:first-child {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      
+
+      > img{
+        max-width: $sizeIcone;
+      }
+
+    }
+    & > div:last-child{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap:10px;
+
+        & > div.entete__textinfo1{
+            display: flex;
+            gap:20px  ;
+            
+        }
+
+        &> div.entete__textinfo2{
+            display: flex;
+            justify-content: space-between;
+            
+        }
+
+       
+   
+        
+    }
+    
+    
+}
+
+.couleur{
+    color:$mainViolet;
+}
+.gras{
+    font-weight: $semiboldWeight        ;
+}
+
+.texteGras{
+    font-size: $h5Size;
+    font-weight: $semiboldWeight;
+}
+
+.entete__titre{
+    font-size: $h2Size;
+    letter-spacing: 0.36px;
+}
+
+
+
+
+
+/**Contenu principal d"tail d'une réservation */
+
+.separation{
+    height: 1px;
+    border-top: 1px solid #909090;
+}
+.separation2{
+    width: 1px;
+    height: 60px;
+    background: #909090;
+}
+
+.fa-size{
+    font-size: 0.75em!important;
+}
+
+.detail-reservation__contenu{
+    display: flex;
+    border-radius: 0.75em;
+    flex-direction: column;
+    gap:1.875em;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 1.875em;
+
+    > div.detail-reservation__section1{
+        display: flex;  
+        gap:1.875em;
+        align-self: stretch;
+        align-items: center ;
+        >div.section1__article{ 
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1.875em;
+            >p{
+                font-size: $h55Size;
+            }
+            >div.article__title{
+                display: flex;
+                flex-direction: row;
+                gap : 1.875em;
+                >p{
+                    font-size: $h3Size;
+                }
+            }
+
+        }
+        >img{
+            max-width: $sizeLogement;
+            max-height: auto;
+        }   
+    }
+    >div.detail-reservation__section2{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        >div.section2__article1{
+            display: flex;
+            padding:20px;
+            align-items: center;
+            border-radius: 12px;
+            border: 1px solid #cccccc;
+            box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+            gap:1.25em;
+            >img{
+                max-width: 8.75em;
+                height: 8.75em;
+                border-radius: 6.25em;
+               
+            }
+            >div.article_textcontent{
+                display: flex;
+              
+                flex-direction: column;
+
+                >div.textcontent__1{
+                    display: flex;
+                    flex-direction: row;
+                    gap:10px;
+                    >p{
+                        font-size:  1.5em;
+                    }
+                    >div.note{
+                        display: flex;
+                        gap: 5px;
+                        align-items: center;
+                        >div.star{
+                            display: flex;
+                            
+                           
+                        }
+                        >div.star:last-child{
+                            color: initial!important;
+                        }
+                    }
+                }
+                >div.textcontent__2{
+                    display: flex;
+                    gap: 10px;
+                    >p{
+                        font-size: 16px!important;
+                    }
+                }
+            }
+        }
+        >div.section2__article2{
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+            &>p:first-child{
+                font-size: 1.375em;
+            }
+        }
+    }
+    >div.detail-reservation__section3{
+        
+        >h3.section3__titre{
+            font-size: $h3Size;
+            margin-bottom: 2em;
+        }
+        >div.section3__informationoccupation{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap:1.25em;
+            >div.informationoccupation__detail{
+                display: flex;
+                padding:2.5em;
+                justify-content: center;
+                align-items: center;
+                gap:2.25em;
+                border-radius: 12px;
+                border: 1px solid #cccccc;
+                box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+            }
+            >div.informationoccupation__prix{
+                font-size: 3em;
+            }
+            
+        }
+    }
+    >div.detail-reservation__section4{
+        display: flex;
+        flex-direction: column;
+        gap: 1.875em;
+        >h3{
+            font-size: 2em;
+        }
+        >div.partiemontant{
+            display: flex;
+            flex-direction: column;
+            gap: 1.875em;
+            >div.partiemontant__sanssoustitre{
+                justify-content: space-between;
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                &>p:first-child{
+                    font-size: $h5Size;
+                }
+            }
+            >div.partiemontant__soustitre{
+                >div{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                    &>p:first-child{
+                        font-size: $h5Size;
+                    }
+
+                }
+                >p{
+                    font-size: 1em;
+                    color: $mainViolet;
+                }
+            }
+            >div.montantFinal{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                >p{
+                    font-size: $h3Size;
+                }
+            }
+
+        }
+    }
+    >div.detail-reservation__section5{
+        >h3{
+            margin-bottom: 1em;
+        }
+        >p{
+            font-size: $h55Size;
+        }
+    }
+
+}
+
+i.jaune{
+    color:$mainJaune;
+}
+
+
+
+
+
+

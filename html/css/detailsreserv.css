@@ -1,0 +1,246 @@
+@charset "UTF-8";
+@import url("setup.css");
+/**Detail Reservation */
+/** Style entête de la page détail des réservation */
+.detail-reservation__conteneur {
+  display: flex;
+  flex-direction: column;
+  gap: 3.125em;
+  font-family: "Plus Jakarta San", sans-serif;
+}
+
+.detail-reservation__entete {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.detail-reservation__entete .entete__titre {
+  font-size: 2.25rem;
+  font-weight: 600;
+}
+.detail-reservation__entete > div:first-child {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.detail-reservation__entete > div:first-child > img {
+  max-width: 2.5em;
+}
+.detail-reservation__entete > div:last-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+.detail-reservation__entete > div:last-child > div.entete__textinfo1 {
+  display: flex;
+  gap: 20px;
+}
+.detail-reservation__entete > div:last-child > div.entete__textinfo2 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.couleur {
+  color: #5669FF;
+}
+
+.gras {
+  font-weight: 600;
+}
+
+.texteGras {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.entete__titre {
+  font-size: 2.25rem;
+  letter-spacing: 0.36px;
+}
+
+/**Contenu principal d"tail d'une réservation */
+.separation {
+  height: 1px;
+  border-top: 1px solid #909090;
+}
+
+.separation2 {
+  width: 1px;
+  height: 60px;
+  background: #909090;
+}
+
+.fa-size {
+  font-size: 0.75em !important;
+}
+
+.detail-reservation__contenu {
+  display: flex;
+  border-radius: 0.75em;
+  flex-direction: column;
+  gap: 1.875em;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 1.875em;
+}
+.detail-reservation__contenu > div.detail-reservation__section1 {
+  display: flex;
+  gap: 1.875em;
+  align-self: stretch;
+  align-items: center;
+}
+.detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1.875em;
+}
+.detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article > p {
+  font-size: 1rem;
+}
+.detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article > div.article__title {
+  display: flex;
+  flex-direction: row;
+  gap: 1.875em;
+}
+.detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article > div.article__title > p {
+  font-size: 2rem;
+}
+.detail-reservation__contenu > div.detail-reservation__section1 > img {
+  max-width: 21em;
+  max-height: auto;
+}
+.detail-reservation__contenu > div.detail-reservation__section2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid #cccccc;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  gap: 1.25em;
+}
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > img {
+  max-width: 8.75em;
+  height: 8.75em;
+  border-radius: 6.25em;
+}
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent {
+  display: flex;
+  flex-direction: column;
+}
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 > p {
+  font-size: 1.5em;
+}
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 > div.note {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 > div.note > div.star {
+  display: flex;
+}
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 > div.note > div.star:last-child {
+  color: initial !important;
+}
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__2 {
+  display: flex;
+  gap: 10px;
+}
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__2 > p {
+  font-size: 16px !important;
+}
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article2 {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article2 > p:first-child {
+  font-size: 1.375em;
+}
+.detail-reservation__contenu > div.detail-reservation__section3 > h3.section3__titre {
+  font-size: 2rem;
+  margin-bottom: 2em;
+}
+.detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.25em;
+}
+.detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation > div.informationoccupation__detail {
+  display: flex;
+  padding: 2.5em;
+  justify-content: center;
+  align-items: center;
+  gap: 2.25em;
+  border-radius: 12px;
+  border: 1px solid #cccccc;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+}
+.detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation > div.informationoccupation__prix {
+  font-size: 3em;
+}
+.detail-reservation__contenu > div.detail-reservation__section4 {
+  display: flex;
+  flex-direction: column;
+  gap: 1.875em;
+}
+.detail-reservation__contenu > div.detail-reservation__section4 > h3 {
+  font-size: 2em;
+}
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant {
+  display: flex;
+  flex-direction: column;
+  gap: 1.875em;
+}
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__sanssoustitre {
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__sanssoustitre > p:first-child {
+  font-size: 1.25rem;
+}
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__soustitre > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__soustitre > div > p:first-child {
+  font-size: 1.25rem;
+}
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__soustitre > p {
+  font-size: 1em;
+  color: #5669FF;
+}
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.montantFinal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.montantFinal > p {
+  font-size: 2rem;
+}
+.detail-reservation__contenu > div.detail-reservation__section5 > h3 {
+  margin-bottom: 1em;
+}
+.detail-reservation__contenu > div.detail-reservation__section5 > p {
+  font-size: 1rem;
+}
+
+i.jaune {
+  color: #FFD33C;
+}/*# sourceMappingURL=detailsreserv.css.map */
