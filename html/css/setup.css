@@ -18,11 +18,6 @@ a {
   cursor: pointer;
 }
 
-.wrapper {
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
 
 header {
   position: relative;
