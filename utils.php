@@ -29,7 +29,7 @@ try {
 
 function client_connected(){
   if (isset($_SESSION) && isset($_SESSION["client_id"])){
-    return $_SESSION["client_id"];
+    return $_SESSION["client_id"]; unset($_SESSION["client_id"])
   } else {
     false;
   }
