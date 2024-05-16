@@ -34,6 +34,11 @@
 
 .connect__from form {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
 }
 
 .connect__input {
@@ -107,8 +112,9 @@
 }
 
 .connect__from .login_invalid {
-  font-size: 1.15em;
   color: #FF6258;
+  align-self: flex-start;
+  font-size: 1rem;
 }
 
 .connect__face, .connect__google {

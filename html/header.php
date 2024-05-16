@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="../css/header.css">
 
 <?php
-    session_start();
+    if (session_status() === PHP_SESSION_NONE){session_start();}
     if (!isset($_SESSION["client_id"])){
 ?>
     <header class="header">
@@ -75,7 +75,7 @@
                     <a href="" class="menu__link">Mes notifications</a>
                 </li>
                 <li class="menu__item hide">
-                    <a href="" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
+                    <a href="buisness/index.php" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
                 </li>
                 <li class="menu__item hide">
                     <a href="" class="menu__link" style="color: #FF5656;">Se déconnecter</a>
@@ -103,7 +103,7 @@
             <a href="" class="menu__link">Mes notifications</a>
         </li>
         <li class="menu__item ">
-            <a href="" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
+            <a href="buisness/index.php" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
         </li>
         <li class="menu__item ">
             <a href="" class="menu__link" style="color: #FF5656;">Se déconnecter</a>

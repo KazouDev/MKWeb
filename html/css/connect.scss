@@ -61,6 +61,11 @@ $lineHeight: 1.5;
 
 .connect__from form {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
 }
 
 .connect__input{
@@ -119,8 +124,9 @@ $lineHeight: 1.5;
     right: 0;
 }
 .connect__from .login_invalid {
-    font-size: 1.15em;
     color: $boutonRouge;
+    align-self: flex-start;
+    font-size: $h55Size;
 }
 .connect__google {
 }

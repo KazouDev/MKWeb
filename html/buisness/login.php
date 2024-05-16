@@ -1,22 +1,21 @@
 <?php 
-    require_once "../utils.php";
+    require_once "../../utils.php";
     session_start();
 
     $status = false;
 
     // Si déjà connecté on renvoie sur l'acceuil.
-    if (isset($_SESSION["client_id"])){
+    if (isset($_SESSION["buisness_id"])){
         header('Location: index.php');
         exit;
     }   
 
     // Si le formulaie à était envoyé 
-
     if (isset($_POST["email"]) && isset($_POST["password"])){
         $email = strtolower($_POST["email"]);
 
-        $query = "SELECT sae._utilisateur.id, mot_de_passe FROM sae._compte_client 
-        INNER JOIN sae._utilisateur ON sae._compte_client.id = sae._utilisateur.id 
+        $query = "SELECT sae._utilisateur.id, mot_de_passe FROM sae._compte_proprietaire 
+        INNER JOIN sae._utilisateur ON sae._compte_proprietaire.id = sae._utilisateur.id 
         WHERE email = '$email'";
                 
         $result = request($query, true);
@@ -26,7 +25,8 @@
         } else {
             // On vérifie les mot de passe.
             if (password_verify($_POST["password"], $result["mot_de_passe"])){
-                $_SESSION["client_id"] = $result["id"];
+                $_SESSION["buisness_id"] = $result["id"];
+                unset($_SESSION["client_id"]);
                 header('Location: index.php');
                 exit; 
             } else {
@@ -49,13 +49,13 @@
 </head>
 <body class="page">
     <div class="wrapper">
-        <?php require_once "header.php" ?>
+        <?php require_once "./header.php" ?>
         <main class="main">
             <div class="main__container">
                 <div class="connect-container">
                     <div class="connect__from">
-                        <h1>Bienvenue <img src="img/hello.webp" alt="Hello"></h1>
-                        <p>Plongez dans l'authenticité bretonne en choisissant parmi une gamme de logements uniques.</p>
+                        <h1>Inscrivez votre logement sur Alheiz Breizh</h1>
+                        <p>Vous avez un trésor caché en Bretagne? Partagez-le avec le monde en le proposant sur ALHaiZ Breizh et laissez-nous vous aider à transformer votre logement en une destination incontournable pour les voyageurs en quête d'aventure et d'authenticité !</p>
                         <form method="POST" action="">
                             <div class="connect__input">
                                 <label for="connect__email">Adresse e-mail</label>

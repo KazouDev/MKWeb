@@ -1,5 +1,6 @@
 <?php
-    $env = parse_ini_file('../.env');
+    $project_root = dirname(__DIR__);
+    $env = parse_ini_file("$project_root/.env");
     $server = $env["DB_SERVER"];
     $driver = $env["DB_DRIVER"];
     $dbname = $env["DB_NAME"];

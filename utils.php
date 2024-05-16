@@ -31,13 +31,30 @@ function client_connected(){
   if (isset($_SESSION) && isset($_SESSION["client_id"])){
     return $_SESSION["client_id"];
   } else {
-    false;
+    return false;
   }
 }
 
-function connected_or_redirect(){
+function client_connected_or_redirect(){
   if (isset($_SESSION) && isset($_SESSION["client_id"])){
     return $_SESSION["client_id"];
+  } else {
+    header("Location: login.php");
+    exit();
+  }
+}
+
+function buisness_connected(){
+  if (isset($_SESSION) && isset($_SESSION["buisness_id"])){
+    return $_SESSION["buisness_id"];
+  } else {
+    return false;
+  }
+}
+
+function buisness_connected_or_redirect(){
+  if (isset($_SESSION) && isset($_SESSION["buisness_id"])){
+    return $_SESSION["buisness_id"];
   } else {
     header("Location: login.php");
     exit();

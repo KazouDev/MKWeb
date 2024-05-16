@@ -21,7 +21,7 @@
                 </li>
                 <li class="footer__menu__item footer__menu__item-point">·</li>
                 <li class="footer__menu__item">
-                    <a href="buisness/index.php" class="footer__menu__link">Ajouter mon établissement</a>
+                    <a href="../index.php" class="footer__menu__link">Réserver un établissement</a>
                 </li>
             </ul>
         </nav>

@@ -28,6 +28,34 @@ $semiboldWeight: 600;
 $boldWeight: 700;
 $lineHeight: 1.5;
 // Header
+
+.buisness {
+    &.header {
+        background-color: $mainViolet;
+    }
+
+    .header__name {
+        color:$mainBlanc;
+    }
+
+    .header__form {
+        i {
+            color: $mainBlanc;
+        }
+        #header__info {
+            background-color: $mainBlanc;
+            color: $mainNoir;
+            border: none;
+    
+            &:hover {
+                background-color: $mainBlanc;
+                border: none;
+                color: $mainViolet;
+            }
+        }
+    }
+
+}
 .header__container {
     padding-top: 1rem;
     display: flex;
@@ -91,6 +119,10 @@ $lineHeight: 1.5;
     align-items: center;
     justify-content: center;
     gap: 1.25rem;
+    
+    i {
+        color: #222222;
+    }
 }
 
 .header__connexion {
@@ -231,6 +263,7 @@ $lineHeight: 1.5;
     height: 1.875rem;
     border-radius: 50%; 
     margin-right: 0.5rem;
+    object-fit: cover;
   }
 
   .user__down{
