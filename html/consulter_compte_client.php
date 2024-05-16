@@ -24,6 +24,22 @@
     }
     $src_photo = $rep_utilisateur['photo_profile'];
 
-    
+
 
 ?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/logement.css">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+</body>
+</html>
