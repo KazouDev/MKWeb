@@ -194,6 +194,8 @@
   height: 1.875rem;
   border-radius: 50%;
   margin-right: 0.5rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .user__down {

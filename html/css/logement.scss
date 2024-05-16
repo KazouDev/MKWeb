@@ -99,14 +99,12 @@ $lineHeight: 1.5;
 .logement__adr a:hover{
     background-color: $hoverViolet;
 }
-.logement__photos {
-    display: flex;
-    justify-content: space-between;
-}
+
 .photo__grille {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
+    align-items: stretch;
 }
 .photo__grille img{
     width: 100%; 
@@ -115,13 +113,7 @@ $lineHeight: 1.5;
     max-height: 15.625rem; 
     object-fit: cover;
 }
-#main__photo{
-    width: 40%;
-    height: auto; 
-    max-width: 36.75rem; 
-    max-height: 33.4375rem; 
-    object-fit: cover;
-}
+
 @media (max-width: 1200px){
 
     .photo__grille img{
@@ -415,7 +407,7 @@ $lineHeight: 1.5;
         gap: 0.3rem;
         h2, p{
             font-weight: $semiboldWeight;
-            font-size: $h4Size;
+            font-size: $h5Size;
         }
     }
     .details__features{

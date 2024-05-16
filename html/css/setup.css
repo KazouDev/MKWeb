@@ -1,11 +1,18 @@
 @import url("reset.css");
 .wrapper {
-  position: relative;
-  min-height: 100vh;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-footer {
-  margin-top: 50px;
+main {
+  flex: 1;
+  padding-bottom: 3rem;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
 }
 
 body {
@@ -18,14 +25,9 @@ a {
   cursor: pointer;
 }
 
-.wrapper {
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
 header {
   position: relative;
+  margin-bottom: 2rem;
 }
 
 [class*=__container] {
@@ -47,5 +49,8 @@ header {
   [class*=__container] {
     max-width: none;
     padding: 0px 0.75rem;
+  }
+  header {
+    margin-bottom: 1rem;
   }
 }/*# sourceMappingURL=setup.css.map */

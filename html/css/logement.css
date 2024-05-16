@@ -81,15 +81,11 @@
   background-color: #9AA5FF;
 }
 
-.logement__photos {
-  display: flex;
-  justify-content: space-between;
-}
-
 .photo__grille {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
+  align-items: stretch;
 }
 
 .photo__grille img {
@@ -97,15 +93,6 @@
   height: auto;
   max-width: 21.875rem;
   max-height: 15.625rem;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
-#main__photo {
-  width: 40%;
-  height: auto;
-  max-width: 36.75rem;
-  max-height: 33.4375rem;
   -o-object-fit: cover;
      object-fit: cover;
 }
@@ -401,7 +388,7 @@
 }
 .details__top .details__nom h2, .details__top .details__nom p {
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 .details__top .details__features {
   display: flex;
