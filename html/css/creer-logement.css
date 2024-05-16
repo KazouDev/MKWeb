@@ -1,19 +1,28 @@
 @import url("setup.css");
 .main__container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   width: 100%;
 }
-.main__container .top {
+.main__container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+.main__container > .top {
   width: 100%;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
 }
-.main__container .top > div {
+.main__container > .top > div {
   display: flex;
   align-items: center;
   flex-direction: row;
 }
-.main__container .top > div img {
+.main__container > .top > div img {
   max-width: 2.5em;
   margin-left: 1.1em;
 }
@@ -29,15 +38,55 @@ section {
   box-shadow: 4px 4px 10px rgba(27, 27, 27, 0.319);
   padding: 1rem;
 }
-section form {
+section > .top p,
+section h2 {
+  margin-left: 0.5rem;
+  font-weight: 300;
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+section > .top {
+  flex-direction: column;
+}
+section > .top p {
+  font-size: 1rem;
+}
+section .field-container {
+  padding: 0.5rem;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  gap: 0.75rem;
 }
-section form .info_gen__input {
+section .field-container.check__list {
+  gap: 1.5rem;
+  justify-content: flex-start;
+}
+@media screen and (max-width: 600px) {
+  section .field-container {
+    justify-content: center;
+  }
+}
+section .field-container .input__checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+section .field-container .full-size {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+section .field-container .full-size .info_gen__input {
+  width: 48%;
+}
+section .field-container .info_gen__input {
   width: 30%;
   display: flex;
   flex-direction: column;
@@ -45,16 +94,98 @@ section form .info_gen__input {
   align-items: flex-start;
   gap: 0.5rem;
 }
-section form .info_gen__input .input__input {
+@media screen and (max-width: 600px) {
+  section .field-container .info_gen__input {
+    width: -moz-fit-content;
+    width: fit-content;
+    max-width: 100%;
+  }
+}
+section .field-container .info_gen__input.adresse {
+  width: 65%;
+}
+section .field-container .info_gen__input .input__input {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
-section form .info_gen__input .input__input input {
+section .field-container .info_gen__input .input__input input {
   width: 45%;
 }
-section form .info_gen__input input,
-section form .info_gen__input select,
-section form .info_gen__input option {
+section .field-container .amenagement__input {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+section .field-container .amenagement__input input {
+  width: 35%;
+}
+section .field-container .amenagement__input select {
+  width: 20%;
+}
+@media screen and (max-width: 600px) {
+  section .field-container .amenagement__input select {
+    width: 42%;
+  }
+}
+
+input:not([type=checkbox]),
+select,
+option,
+textarea {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #222;
+  background: #fff;
+}
+
+textarea {
+  padding: 0.55em;
+}
+
+textarea::-moz-placeholder, input:not([type=checkbox])::-moz-placeholder {
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 1rem;
+}
+
+textarea::placeholder,
+input:not([type=checkbox])::placeholder {
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 1rem;
+}
+
+select {
+  border-radius: 0.75rem;
+  border: 1px solid #222;
+  padding: 1rem;
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 1rem;
+  font-weight: 300;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-image: url("../img/down.webp");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem top 50%;
+  background-size: 0.8rem auto;
+}
+
+.ajouter {
+  cursor: pointer;
+  align-self: stretch;
+  border-radius: 0.5rem;
+  width: 10%;
+  background-color: #79da7d;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (max-width: 600px) {
+  .ajouter {
+    width: 18%;
+  }
 }/*# sourceMappingURL=creer-logement.css.map */
