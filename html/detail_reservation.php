@@ -8,7 +8,7 @@ require "../connect_db/connect_db.php"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/detailsreserv.css">
+    <link rel="stylesheet" href="css/detailsreserv.css">
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
     <title>Detail réservation</title>
 </head>
@@ -20,7 +20,7 @@ require "../connect_db/connect_db.php"
                 <div class="detail-reservation__entete">
                     <div>
                         <h1 class="entete__titre">Détail de la reservation</h1>
-                        <img src="../img/back.webp" alt="">
+                        <img src="img/back.webp" alt="">
                     </div>
                     <div>
                         <div class="entete__textinfo1">
@@ -36,7 +36,7 @@ require "../connect_db/connect_db.php"
                 <!-- Contenu principal des informations de la réservation -->
                 <div class="detail-reservation__contenu">
                     <div class="detail-reservation__section1">
-                        <img src="../img/log1.webp">
+                        <img src="img/log1.webp">
                         <div class="section1__article">
                             <div class="article__title">
                                 <p class="gras">Ô gîte de la plage</p>
@@ -54,7 +54,7 @@ require "../connect_db/connect_db.php"
                     </div>  
                     <div class="detail-reservation__section2">
                         <div class="section2__article1">
-                            <img src="../img/log1.webp">
+                            <img src="img/log1.webp">
                             <div class="article_textcontent">
                                 <div class="textcontent__1">
                                     <p class="gras">Hôte: Cyril</p>
