@@ -1,6 +1,3 @@
-<link rel="stylesheet" href="../css/header.css">
-<link rel="stylesheet" href="css/header.css">
-
 <?php
     if (session_status() === PHP_SESSION_NONE){session_start();}
     if (!isset($_SESSION["buisness_id"])){
