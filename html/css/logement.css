@@ -930,6 +930,7 @@
   cursor: pointer;
 }
 #container-calendar {
+  position: relative;
   display: inline-block;
   text-align: center;
   border: 1px solid #ccc;
@@ -946,6 +947,22 @@
 #container-calendar button {
   margin-bottom: 10px;
   width: 1em;
+}
+#container-calendar #error_periode {
+  position: absolute;
+  display: none;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f44336;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  z-index: 9999;
+  max-width: 200px;
+  text-align: center;
 }
 #container-calendar #calendar {
   border-collapse: collapse;

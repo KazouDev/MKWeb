@@ -6,5 +6,5 @@
     $dbname = $env["DB_NAME"];
     $user   = $env["DB_USER"];
     $pass	= $env["DB_PASS"];
-    $path_img = $env["PATH_IMG"];
+    //$path_img = $env["PATH_IMG"];
 ?>

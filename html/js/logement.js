@@ -10,7 +10,7 @@ var inputDateFin = document.getElementsByName('dateFin')[0];
 var inputValider = document.getElementsByName('valider_calendrier')[0];
 
 var inputNombrePersonne = document.getElementById('nb_personnesDevis');
-
+var displayError = document.getElementById('error_periode');
 var datesReservees = [];
 
 
@@ -31,7 +31,6 @@ const verifyValue = (event) => {
 
 
 const verifyAndFetch = () => {
-    console.log(inputDateDebut.value);
     if (
       '' != inputDateDebut.value.trim() &&
       '' != inputDateFin.value.trim() &&
@@ -42,7 +41,8 @@ const verifyAndFetch = () => {
       params.append('dateFin', inputDateFin.value);
       params.append('nombrePersonne', inputNombrePersonne.value);
   
-      xhr.open("GET", "../../ajax/afficher-prix.ajax.php?" + params, true);
+      //xhr.open("GET", "../../ajax/afficher-prix.ajax.php?" + params, true);
+      xhr.open("GET", "http://localhost/MKWEB/ajax/afficher-prix.ajax.php?" + params, true);
   
       xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
@@ -68,6 +68,7 @@ const verifyAndFetch = () => {
  
 
 const afficherCalendrier = (mois, annee) => {
+    
     
     var joursNoms = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
     var moisNoms = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
@@ -97,7 +98,6 @@ const afficherCalendrier = (mois, annee) => {
     for (var i = premierJourDuMois; i < 7; i++) {
         var cellule = ligne.insertCell();
         cellule.innerHTML = jourCourant++;
-
         var dateSelectionnee = new Date(annee, mois, jourCourant - 1);
         if (estReservee(dateSelectionnee)) {
             cellule.classList.add('reserved');
@@ -111,12 +111,26 @@ const afficherCalendrier = (mois, annee) => {
                     dateFin = null;
                     inputDateDebut.value = formatDate(dateDebut);
                     inputDateFin.value = '';
-                } else if (dateDebut.getTime() == dateSelectionnee.getTime()){
+                } else if ((dateDebut.getTime() == dateSelectionnee.getTime())){
                     dateDebut = null;
-                    inputDateFin.value = '';
+                    if(dateFin != null){
+                        dateDebut = dateFin
+                        dateFin = null;
+                        inputDateFin.value='';
+                        inputDateDebut.value = formatDate(dateDebut);
+                    }else{
+                        inputDateDebut.value = '';
+                        inputDateFin.value = '';
+
+                    }
+                    
                     updateCalendar();
                     
-                } else if (!dateFin || dateSelectionnee > dateDebut) {
+                } else if((dateFin != null && (dateFin.getTime() == dateSelectionnee.getTime()))){
+                    dateFin = null;
+                    inputDateFin.value = '';
+                
+                }else if (!dateFin || dateSelectionnee > dateDebut) {
                     dateFin = dateSelectionnee;
                     inputDateFin.value = formatDate(dateFin);
                     if (dateFin < dateDebut) {
@@ -127,6 +141,21 @@ const afficherCalendrier = (mois, annee) => {
                         inputDateFin.value = formatDate(dateFin);
                         updateCalendar();
                     }
+                     // Vérifier si la période est supérieur à 4 jours
+                     var diffDays = Math.round((dateFin - dateDebut) / (1000 * 60 * 60 * 24)) + 1;
+                     if (diffDays <= 4) {
+                        displayError.style.display='block';
+                        setTimeout(() =>{
+                            displayError.style.display='none';
+                        },1000);
+                        
+                         dateDebut = '';
+                         dateFin = '';
+                         inputDateFin.value = '';
+                         inputDateDebut.value = '';
+                         updateCalendar();
+
+                     }
 
                     // Vérifier si des dates réservées se situent entre dateDebut et dateFin
                     var datesEntreDebutFin = getDatesEntreDebutFin(dateDebut, dateFin);
@@ -134,6 +163,7 @@ const afficherCalendrier = (mois, annee) => {
                         dateFin = null;
                         dateDebut = null;
                         inputDateFin.value = '';
+                        inputDateDebut.value = '';
                         updateCalendar();
                         return;
                     }
@@ -165,12 +195,27 @@ const afficherCalendrier = (mois, annee) => {
                         dateFin = null;
                         inputDateDebut.value = formatDate(dateDebut);
                         inputDateFin.value = '';
-                    } else if (dateDebut.getTime() == dateSelectionnee.getTime()){
+                    } else if ((dateDebut.getTime() == dateSelectionnee.getTime())){
                         dateDebut = null;
-                        inputDateFin.value = '';
+                        if(dateFin != null){
+                            dateDebut = dateFin
+                            dateFin = null;
+                            inputDateFin.value='';
+                            inputDateDebut.value = formatDate(dateDebut);
+                        }else{
+                            inputDateDebut.value = '';
+                            inputDateFin.value = '';
+    
+                        }
+                        
                         updateCalendar();
                         
+                    } else if((dateFin != null && (dateFin.getTime() == dateSelectionnee.getTime()))){
+                        dateFin = null;
+                        inputDateFin.value = '';
+                    
                     } else if (!dateFin || dateSelectionnee > dateDebut) {
+                        
                         dateFin = dateSelectionnee;
                         inputDateFin.value = formatDate(dateFin);
                         if (dateFin < dateDebut) {
@@ -182,12 +227,27 @@ const afficherCalendrier = (mois, annee) => {
                             updateCalendar();
                         }
 
+                        // Vérifier si la période est supérieur à 4 jours
+                        var diffDays = Math.round((dateFin - dateDebut) / (1000 * 60 * 60 * 24)) + 1;
+                        if (diffDays <= 4) {
+                            displayError.style.display='block';
+                            setTimeout(() =>{
+                                displayError.style.display='none';
+                            },1000);
+                            dateDebut = '';
+                            dateFin = '';
+                            inputDateFin.value = '';
+                            inputDateDebut.value = '';
+                            updateCalendar();
+
+                        }
                         // Vérifier si des dates réservées se situent entre dateDebut et dateFin
                         var datesEntreDebutFin = getDatesEntreDebutFin(dateDebut, dateFin);
                         if (datesEntreDebutFin.some(date => estReservee(date))) {
                             dateFin = null;
                             dateDebut = null;
                             inputDateFin.value = '';
+                            inputDateDebut.value = '';
                             updateCalendar();
                             return;
                         }
@@ -206,6 +266,11 @@ const afficherCalendrier = (mois, annee) => {
     updateCalendar();
 }
 
+
+
+const printCalendar = ()=>{
+    
+}
 
 const getDatesEntreDebutFin = (dateDebut, dateFin) => {
     var dates = [];
@@ -288,9 +353,12 @@ const estReservee = (date) => {
 // Requête AJAX
 
 var xhr = new XMLHttpRequest();
-xhr.open("GET", "../../ajax/calendrier.ajax.php", true);
+//xhr.open("GET", "../../ajax/calendrier.ajax.php", true);
+xhr.open("GET", "http://localhost/MKWEB/ajax/calendrier.ajax.php", true);
+
 xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
+   
         var dateRanges = JSON.parse(xhr.responseText);
 
         datesReservees = dateRanges.map(function (dateRange) {

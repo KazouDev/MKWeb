@@ -322,10 +322,11 @@
                             <form action="" method="post">
                                 <div class="res__fromulaire">
                                   
-                                        <input type="text" name="dateDebut" hidden>
+                                        <input type="text" name="dateDebut" hidden >
                                         <input type="text" name="dateFin" hidden>
-                                      
+                                        
                                         <div id="container-calendar">
+                                        <div id="error_periode">Une réservation doit être supérieur à 4 jours</div>
                                             <h3>Arrivée - Départ</h3>
                                             <div class="calendar-nav">
                                                 <button type="button" class="calendar-btn" id="prev">&lt;</button>
