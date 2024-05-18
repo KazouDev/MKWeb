@@ -1,0 +1,171 @@
+@import url("setup.css");
+
+// Variables
+$myFont: 'Plus Jakarta San', sans-serif;
+$mainViolet: #5669FF;
+$mainJeune: #FFD33C;
+$mainNoir: #222222;
+$mainGris: #878787;
+$mainBlanc: #FFFFFF;
+
+$hoverViolet: #9AA5FF;
+$selectedViolet: #273EFC;
+$selectedBlanc: #E1EBF4;
+
+$boutonPink: #DD69FA;
+$boutonGreen: #79DA7D;
+$boutonRouge: #FF6258;
+
+$h1Size: 4rem;
+$h2Size: 2.25rem;
+$h3Size: 2rem;
+$h4Size: 1.5rem;
+$h5Size: 1.25rem;
+$h55Size: 1rem;
+$h6Size: 0.75rem;
+
+$lightWeight: 300;
+$normalWeight: 400;
+$semiboldWeight: 600;
+$boldWeight: 700;
+$lineHeight: 1.5;
+
+// Mixins
+@mixin flexCenter() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mes__reserv__exporter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+
+}
+
+.test__TEST{
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    align-items: center
+}
+
+// Styles
+.mes__reserv__titre {
+    @include flexCenter;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    align-items: center;
+    height: max-content;
+    h1 {
+        font-size: $h2Size;
+    }
+    img {
+        width: auto;
+        height: 3rem;
+        &:last-child {
+            height: 2.5rem;
+        }
+    }
+    i {
+        justify-content: flex-end;
+        font-size: $h2Size;
+        color: $mainViolet;
+    }
+}
+
+.card__reserv {
+    padding: 1rem;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    box-shadow: 4px 4px 16px rgba(18, 18, 18, 0.06);
+    border-radius: 0.75rem;
+    height: 200px;
+    margin-bottom: 2rem;
+    border: 1px solid #909090;
+
+    .mes__reserv__container_desc_prix {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+
+        .mes__reserv__description {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+            h4 {
+                font-size: $h5Size;
+                font-weight: $lightWeight;
+            }
+            > h4{
+                    font-size: $h4Size;
+                    font-weight: $normalWeight;
+            }
+            p {
+                color: $mainBlanc;
+                padding: 0.5rem 1.25rem;
+                font-size: $h55Size;
+                border-radius: 0.75rem;
+                width: fit-content;
+            }
+            .green {
+                background-color: $boutonGreen;
+            }
+            .red {
+                background-color: $boutonRouge;
+            }
+        }
+
+        .mes__reserv__prix {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            align-items: center;
+
+            :last-child {
+                font-size: $h3Size;
+                color: $mainViolet;
+            }
+
+            .mes__reserv__prix_color {
+                color: $mainNoir;
+            }
+        }
+    }
+
+    img {
+        object-fit: cover;
+        height: 100%;
+    }
+
+    .mes_reserv__numero,
+    .mes__reserv__date {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+}
+
+.mes__reserv__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    
+    h4 {
+        font-size: $h4Size;
+        font-weight: $normalWeight;
+        color: $mainGris;
+        text-align: center;
+    }
+}
+

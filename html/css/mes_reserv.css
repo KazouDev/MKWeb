@@ -1,0 +1,126 @@
+@import url("setup.css");
+.mes__reserv__exporter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.test__TEST {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.mes__reserv__titre {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  align-items: center;
+  height: -moz-max-content;
+  height: max-content;
+}
+.mes__reserv__titre h1 {
+  font-size: 2.25rem;
+}
+.mes__reserv__titre img {
+  width: auto;
+  height: 3rem;
+}
+.mes__reserv__titre img:last-child {
+  height: 2.5rem;
+}
+.mes__reserv__titre i {
+  justify-content: flex-end;
+  font-size: 2.25rem;
+  color: #5669FF;
+}
+
+.card__reserv {
+  padding: 1rem;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  box-shadow: 4px 4px 16px rgba(18, 18, 18, 0.06);
+  border-radius: 0.75rem;
+  height: 200px;
+  margin-bottom: 2rem;
+  border: 1px solid #909090;
+}
+.card__reserv .mes__reserv__container_desc_prix {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+.card__reserv .mes__reserv__container_desc_prix .mes__reserv__description {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+.card__reserv .mes__reserv__container_desc_prix .mes__reserv__description h4 {
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+.card__reserv .mes__reserv__container_desc_prix .mes__reserv__description > h4 {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.card__reserv .mes__reserv__container_desc_prix .mes__reserv__description p {
+  color: #FFFFFF;
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 0.75rem;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.card__reserv .mes__reserv__container_desc_prix .mes__reserv__description .green {
+  background-color: #79DA7D;
+}
+.card__reserv .mes__reserv__container_desc_prix .mes__reserv__description .red {
+  background-color: #FF6258;
+}
+.card__reserv .mes__reserv__container_desc_prix .mes__reserv__prix {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+}
+.card__reserv .mes__reserv__container_desc_prix .mes__reserv__prix :last-child {
+  font-size: 2rem;
+  color: #5669FF;
+}
+.card__reserv .mes__reserv__container_desc_prix .mes__reserv__prix .mes__reserv__prix_color {
+  color: #222222;
+}
+.card__reserv img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 100%;
+}
+.card__reserv .mes_reserv__numero,
+.card__reserv .mes__reserv__date {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.mes__reserv__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.mes__reserv__empty h4 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #878787;
+  text-align: center;
+}/*# sourceMappingURL=mes_reserv.css.map */
