@@ -45,20 +45,42 @@ function client_connected_or_redirect(){
 }
 
 function buisness_connected(){
-  if (isset($_SESSION) && isset($_SESSION["buisness_id"])){
-    return $_SESSION["buisness_id"];
+  if (isset($_SESSION) && isset($_SESSION["business_id"])){
+    return $_SESSION["business_id"];
   } else {
     false;
   }
 }
 
 function buisness_connected_or_redirect(){
-  if (isset($_SESSION) && isset($_SESSION["buisness_id"])){
-    return $_SESSION["buisness_id"];
+  if (isset($_SESSION) && isset($_SESSION["business_id"])){
+    return $_SESSION["business_id"];
   } else {
     header("Location: login.php");
     exit();
   }
+}
+
+function client_disconnect(){
+  if (session_status() == PHP_SESSION_NONE) {
+      session_start();
+  }
+  if (isset($_SESSION["client_id"])) {
+      unset($_SESSION["client_id"]);
+  }
+  session_unset();
+  session_destroy();
+}
+
+function business_disconnect(){
+  if (session_status() == PHP_SESSION_NONE) {
+      session_start();
+  }
+  if (isset($_SESSION["business_id"])) {
+      unset($_SESSION["business_id"]);
+  }
+  session_unset();
+  session_destroy();
 }
 
 ?>

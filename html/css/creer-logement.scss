@@ -73,6 +73,8 @@ $lineHeight: 1.5;
 }
 
 section {
+  display: flex;
+  flex-direction: column;
   border-radius: 0.75rem;
   border: $mainNoir 1px solid;
   box-shadow: 4px 4px 10px rgba(27, 27, 27, 0.319);
@@ -92,6 +94,35 @@ section {
 
   > .top p {
     font-size: $h55Size;
+  }
+
+  .container {
+    padding: 0.5rem;
+    width: 100%;
+
+    #image-preview {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1em;
+
+      img {
+        width: 10rem;
+      }
+
+      div {
+        position: relative;
+      }
+
+      div button {
+        position: absolute;
+        right: 10;
+        top: 10;
+        color: $boutonRouge;
+      }
+    }
   }
 
   .field-container {
@@ -177,6 +208,48 @@ section {
           width: 42%;
         }
       }
+    }
+
+    #list__amenagement {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 2rem;
+
+      div {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+
+        font-size: $h55Size;
+
+        .btn__remove {
+          color: $boutonRouge;
+        }
+
+        p {
+          font-weight: 400;
+          text-transform: capitalize;
+        }
+
+        span {
+          font-weight: 200;
+          text-transform: lowercase;
+        }
+      }
+    }
+  }
+
+  &#section__image {
+    input[type="button"] {
+      background-color: $boutonGreen;
+      color: $mainBlanc;
+      width: 50%;
+      border: none;
+      align-self: center;
     }
   }
 }

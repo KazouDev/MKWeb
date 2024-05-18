@@ -33,6 +33,8 @@
 }
 
 section {
+  display: flex;
+  flex-direction: column;
   border-radius: 0.75rem;
   border: #222222 1px solid;
   box-shadow: 4px 4px 10px rgba(27, 27, 27, 0.319);
@@ -50,6 +52,30 @@ section > .top {
 }
 section > .top p {
   font-size: 1rem;
+}
+section .container {
+  padding: 0.5rem;
+  width: 100%;
+}
+section .container #image-preview {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+section .container #image-preview img {
+  width: 10rem;
+}
+section .container #image-preview div {
+  position: relative;
+}
+section .container #image-preview div button {
+  position: absolute;
+  right: 10;
+  top: 10;
+  color: #ff6258;
 }
 section .field-container {
   padding: 0.5rem;
@@ -129,6 +155,39 @@ section .field-container .amenagement__input select {
   section .field-container .amenagement__input select {
     width: 42%;
   }
+}
+section .field-container #list__amenagement {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2rem;
+}
+section .field-container #list__amenagement div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+}
+section .field-container #list__amenagement div .btn__remove {
+  color: #ff6258;
+}
+section .field-container #list__amenagement div p {
+  font-weight: 400;
+  text-transform: capitalize;
+}
+section .field-container #list__amenagement div span {
+  font-weight: 200;
+  text-transform: lowercase;
+}
+section#section__image input[type=button] {
+  background-color: #79da7d;
+  color: #ffffff;
+  width: 50%;
+  border: none;
+  align-self: center;
 }
 
 input:not([type=checkbox]),

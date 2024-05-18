@@ -99,7 +99,7 @@
   max-width: 21.875rem;
   max-height: 15.625rem;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 
 #main__photo {
@@ -108,7 +108,7 @@
   max-width: 36.75rem;
   max-height: 33.4375rem;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 
 @media (max-width: 1200px) {
@@ -330,7 +330,7 @@
   padding: 0.4rem 0.7rem;
 }
 
-.logement__res input[type="submit"] {
+.logement__res input[type=submit] {
   cursor: pointer;
   align-self: stretch;
   border-radius: 0.5rem;
@@ -588,7 +588,7 @@
   }
   .logement__propose ul {
     -moz-column-gap: 4rem;
-    column-gap: 4rem;
+         column-gap: 4rem;
   }
   .logement__proposNote {
     padding-right: 0rem;
@@ -662,7 +662,7 @@
   height: 7rem;
   border-radius: 50%;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 .hote .hote__info .hote__main {
   display: flex;
@@ -713,7 +713,7 @@
 }
 
 .apropos button:hover,
-.logement__res input[type="submit"]:hover,
+.logement__res input[type=submit]:hover,
 #reset:hover {
   background-color: #9aa5ff;
 }
@@ -875,7 +875,7 @@
   height: 3rem;
   border-radius: 50%;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 .avis .lesavis .avis__element .avis__top .avis__user .user__nom {
   display: flex;
@@ -959,4 +959,4 @@
   .avis .lesavis .avis__element p {
     font-size: 0.75rem;
   }
-} /*# sourceMappingURL=logement.css.map */
+}/*# sourceMappingURL=logement.css.map */

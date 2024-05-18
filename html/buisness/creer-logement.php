@@ -3,10 +3,6 @@
     require "../../utils.php";
 
     buisness_connected_or_redirect();
-
-    if (isset($_POST)){
-        var_dump($_POST);
-    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -30,7 +26,7 @@
                 </div>
             </div>
             
-            <form action="" method="POST">
+            <form id="nv-logement" action="" method="POST" enctype="multipart/form-data">
                 <section>
                     <div class="top">
                         <h2>Informations générales</h2>
@@ -38,11 +34,11 @@
                     <div class="field-container">
                         <div class="info_gen__input">
                             <label for="titre">Titre</label>
-                            <input type="text" id="titre" name="titre" placeholder="ex: Villa pieds dans la mer">
+                            <input type="text" id="titre" name="titre" placeholder="ex: Villa pieds dans la mer" required>
                         </div>
                         <div class="info_gen__input">
                             <label for="categorie">Catégorie</label>
-                            <select name="categorie" id="categorie" placeholder="">
+                            <select name="categorie" id="categorie" placeholder="" required>
                                 <option value="" disabled selected>Catégorie Logement</option>
                                 <option value="0">Maison</option>
                                 <option value="1">Appartement</option>
@@ -52,7 +48,7 @@
                         </div>
                         <div class="info_gen__input">
                             <label for="titre">Type</label>
-                            <select name="type" id="titre">
+                            <select name="type" id="titre" required>
                                 <option value="" disabled selected>Type de Logement</option>
                                 <option value="0">T1</option>
                                 <option value="1">T2</option>
@@ -64,44 +60,44 @@
                         </div>
                         <div class="info_gen__input">
                             <label for="titre">Surface</label>
-                            <input type="number" id="surface" name="surface" placeholder="Surface en m²">
+                            <input type="number" id="surface" name="surface" placeholder="Surface en m²" required>
                         </div>
                         
                         <div class="info_gen__input">
                             <label for="chambre">Nombre de chambres</label>
-                            <input type="number" id="chambre" name="chambre" placeholder="Saisissez">
+                            <input type="number" id="chambre" name="chambre" placeholder="Saisissez" required>
                         </div>
 
                         <div class="info_gen__input">
                             <label for="simple">Nombre de lit</label>
                             <div class="input__input">
-                                <input type="number" id="simple" name="simple" placeholder="Saisissez" min="0" max="10">
-                                <input type="number" id="double" name="double" placeholder="Saisissez">
+                                <input type="number" id="simple" name="simple" placeholder="Simple" min="0" max="10" required>
+                                <input type="number" id="double" name="double" placeholder="Double" required>
                             </div>
                         </div>
 
                         <div class="info_gen__input adresse">
                             <label for="chambre">Adresse du logement</label>
-                            <input type="text" id="adresse" name="adresse" placeholder="Saisir adresse">
+                            <input type="text" id="adresse" name="adresse" placeholder="Saisir adresse" required>
                         </div>
 
                         <div class="info_gen__input">
                             <label for="latitude">Coordonnées GPS</label>
                             <div class="input__input">
-                                <input type="text" id="latitude" name="latitude" placeholder="Latitude">
-                                <input type="text" id="longitude" name="longitude" placeholder="Longitude">
+                                <input type="text" id="latitude" name="latitude" placeholder="Latitude" required>
+                                <input type="text" id="longitude" name="longitude" placeholder="Longitude" required>
                             </div>
                         </div>
 
                         <div class="full-size">
                             <div class="info_gen__input">
                                 <label for="accroche">Accroche</label>
-                                <textarea id="description" name="description" placeholder="Saisir descriptif"></textarea>
+                                <textarea id="description" name="description" placeholder="Saisir descriptif" required></textarea>
                             </div>
 
                             <div class="info_gen__input">
                                 <label for="description">Descriptif détaillé</label>
-                                <textarea id="description" name="description" placeholder="Saisir descriptif"></textarea>
+                                <textarea id="description" name="description" placeholder="Saisir descriptif" required></textarea>
                             </div>
                         </div>
                         
@@ -115,27 +111,27 @@
                     <div class="field-container">
                         <div class="info_gen__input">
                             <label for="nbpersonne">Nombre max de personne</label>
-                            <input type="text" id="titre" name="titre" placeholder="ex: Villa pieds dans la mer">
+                            <input type="text" id="titre" name="titre" placeholder="ex: Villa pieds dans la mer" required>
                         </div>
                         
                         <div class="info_gen__input">
                             <label for="chambre">Prix HT</label>
-                            <input type="number" id="prixht" name="prixht" placeholder="Saisissez">
+                            <input type="number" id="prixht" name="prixht" placeholder="Saisissez" required>
                         </div>
 
                         <div class="info_gen__input">
                                 <label for="dureeloc">Délai minimum de location</label>
-                                <input type="number" id="dureeloc" name="dureeloc" placeholder="Saisissez">
+                                <input type="number" id="dureeloc" name="dureeloc" placeholder="Saisissez" required>
                             </div>
 
                         <div class="info_gen__input">
                             <label for="delaires">Délai minimum réservation avant l'arrivée </label>
-                            <input type="number" id="delaires" name="delaires" placeholder="Saisissez">
+                            <input type="number" id="delaires" name="delaires" placeholder="Saisissez" required>
                         </div>
 
                         <div class="info_gen__input">
                             <label for="statut">Statut du logement</label>
-                            <select name="statut" id="statut" placeholder="">
+                            <select name="statut" id="statut" placeholder="" required>
                                 <option value="" disabled selected>Choisir</option>
                                 <option value="0">En ligne</option>
                                 <option value="1">Hors ligne</option>
@@ -187,13 +183,12 @@
                         <p>Ajoutez des activités disponibles à proximité de votre logement.</p>
                     </div>
                     <div class="field-container">
-                        <div class="amenagmenet__list">
-
+                        <div id="list__amenagement">
                         </div>
 
                         <div class="amenagement__input">
-                            <input type="text" id="amenagement__name">
-                            <select id="amenagement__distance">
+                            <input type="text" id="name__amenagement">
+                            <select id="distance__amenagement">
                                 <option value="0">Sur place</option>
                                 <option value="1">Moins de 5km</option>
                                 <option value="2">Moins de 10km</option>
@@ -203,13 +198,19 @@
                     </div>
                 </section>
 
-                <section>
+                <section id="section__image">
                     <div class="top">
                         <h2>Photos</h2>
                         <p>Ajoutez des photos à votre logement.</p>
                     </div>
-                    <div class="field-container">
+                    <div class="container">
+                        <p>Previsualiation des images</p>
+                        <div id="image-preview">
+                            <p>Aucune image chargé.</p>
+                        </div>
                     </div>
+                    <input type="file" id="image-input" accept=".jpg,.jpeg,.png,.webp" hidden multiple>
+                    <input type="button" value="Ajouter une image" onclick="document.getElementById('image-input').click();" />
                 </section>
 
                 <button>
@@ -219,4 +220,5 @@
         </main>
         <?php require_once "footer.php"; ?>
     </div>
+    <script src="../js/creer-logement.js"></script>
 </body>
