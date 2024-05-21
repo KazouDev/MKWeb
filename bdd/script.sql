@@ -43,6 +43,9 @@ CREATE TABLE _adresse (
   commune VARCHAR(255) NOT NULL,
   code_postal VARCHAR(255) NOT NULL,
   nom_voie VARCHAR(255) NOT NULL,
+  complement_1 VARCHAR(255),
+  complement_2 VARCHAR(255),
+  complement_3 VARCHAR(255),
   latitude FLOAT,
   longitude FLOAT
 );
