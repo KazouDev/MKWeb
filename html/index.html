@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="header__container">
+                <div class="header__nav">
+                    <div class="header__logo">
+                        <a href=""><img src="img/trisquel.webp" alt="Logo trisquel"></a>
+                        <a href="" class="header__name">ALHaiZ Breizh</a>
+                    </div>
+                    <nav class="header__menu" id="LeMenu">
+                        <ul class="menu__list" id="menu__list">
+                            <li class="menu__item">
+                                <a href="" class="menu__link">Logements</a>
+                            </li>
+                            <li class="menu__item">
+                                <a href="" class="menu__link">À propos</a>
+                            </li>
+                            <li class="menu__item">
+                                <a href="" class="menu__link">Contact</a>
+                            </li>
+                            <li class="menu__item hide">
+                                <a href="" class="menu__link" style="color: #5669FF;">Connexion</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="header__form">
+                    <a href=""><i class="fa-regular fa-eye-slash" style="color: #222222;"></i></a>
+                    <div class="header__connexion"><a href="">Connexion</a></div>                    
+                </div>
+                <img src="img/menu.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
+                <img src="img/fermer.webp" alt="Fermer le menu" id="CmdMenuClose">
+
+            </div>
+        </header>
+        <main class="main">
+                <div class="top">
+                    <div class="top__container top-cont">
+                        <h1 >Votre retraite bretonne vous attend</h1>
+                        <h2 class="top__nom">Trouvez votre hébergement idéal</h2>
+                        <div class="checkLogement">
+                            <h2>Vérifier la disponibilité</h2>
+                            <div class="checkLogement__tri">
+                                <div class="tri__element">
+                                    <label for="dest-select">Destination</label>
+                                    <div class="select-container">
+                                        <button class="dropbtn" id="dropdown-btn">Où?</button>
+                                    </div>
+                                </div>
+                                <div class="tri__element">
+                                    <label for="daterange">Arrivée - Départ</label>
+                                    <input type="text" id="daterange" name="daterange" value="01/01/2024 - 01/01/2036" />
+                                </div>
+                                <div class="tri__element">
+                                    <label for="nb_personnes">Nombre de voyageurs</label>
+                                    <input type="number" id="nb_personnes" placeholder="Qui ?" name="nombre_personnes" min="1" max="13">
+                                </div>
+                                <div class="tri__element">
+                                    <label for="tarif">Tarif/jour</label>
+                                    <div id="tarif_range">
+                                        <input type="number" placeholder="min" id="tarif_min" name="tarif_min" min="0" step="5">
+                                        <input type="number" placeholder="max" id="tarif_max" name="tarif_max" min="0" step="5">
+                                    </div>
+                                </div>
+                                <div class="tri__element">
+                                    <label for="propr-select">Propriétaires</label>
+                                        <select name="propr" id="propr-select">
+                                            <option value="">Le propriétaire</option>
+                                        </select>
+                                </div>
+                                <div class="tri__element">
+                                    <input id="executeRecherche" type="submit" value="Rechercher">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="drops">
+                            <div class="dropdown" id="departments-dropdown-container">
+                                <div class="dropdown-content"  id="departments-dropdown">
+                                  <input class="dropdown-element search" type="text" id="search-input-department"  placeholder="Département" >
+                                </div>
+                              </div>
+                              <div class="dropdown" id="communs-dropdown-container">
+                                <div class="dropdown-content" id="communes-dropdown">
+                                  <input class="dropdown-element search" type="text" id="search-input-commune" placeholder="Commune" >
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main__container main__logement">
+                    <div class="list__logements">
+                        <h3 class="list__titre" id="nos_logements">Nos logements <button id="tri_note"><img src="img/sort.webp" alt="Sort"></button></h3>
+                        <div class="les__logements" id="les__logements">
+                            <div id="les__logements__vide">
+                                <p>Aucun logement ne correspond à la recherche.</p>
+                            </div>
+                        </div>
+                        <button class="logement__plus" id="decouvrir_plus" >Découvrir plus</button>
+                        <button class="logement__plus" id="decouvrir_moins" style="display: none;">Voir moins</button>
+                    </div>
+                    <div class="coup_de_coeurs">
+                        <h3 class="list__titre" id="nos_coups_coeur">Nos coups de cœur</h3>
+                        <div class="les__coups" id="les__coups">
+                        </div>
+                        <button class="logement__plus" id="decouvrir_plus_coup_coeur" >Découvrir plus</button>
+                        <button class="logement__plus" id="decouvrir_plus_coup_coeur_moins" style="display: none;">Voir moins</button>
+                    </div>
+                </div>
+        </main>
+        <footer class="footer">
+            <div class="footer__container">
+                <nav class="footer__menu">
+                    <ul class="footer__menu__list">
+                        <li class="footer__menu__item">© 2024 ALHalZ Breizh</li>
+                        <li class="footer__menu__item footer__menu__item-point">·</li>
+                        <li class="footer__menu__item">
+                            <a href="" class="footer__menu__link">Confidentialité</a>
+                        </li>
+                        <li class="footer__menu__item footer__menu__item-point">·</li>
+                        <li class="footer__menu__item">
+                            <a href="" class="footer__menu__link">Conditions générales</a>
+                        </li>
+                        <li class="footer__menu__item footer__menu__item-point">·</li>
+                        <li class="footer__menu__item">
+                            <a href="" class="footer__menu__link">Mentions légales</a>
+                        </li>
+                        <li class="footer__menu__item footer__menu__item-point">·</li>
+                        <li class="footer__menu__item">
+                            <a href="" class="footer__menu__link">Accessibilité</a>
+                        </li>
+                        <li class="footer__menu__item footer__menu__item-point">·</li>
+                        <li class="footer__menu__item">
+                            <a href="" class="footer__menu__link">Ajouter mon établissement</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </footer>
+    </div>
+
+    <div id="tri-note-value" style="display: none;">t_init</div>
+
+    
+    <script src="js/verifier.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

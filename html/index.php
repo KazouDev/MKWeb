@@ -1,301 +1,138 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/index.css">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <title>Document</title>
-    <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    <?php 
-        $f_departement = ""; 
-        $f_commune = "";
-        $f_nb_personne = "";
-        $f_base_tarif_min = "";
-        $f_base_tarif_max = "";
+<?php
+
+require "../utils.php";
+
+function genererListeDepartement() {
+    $query = "SELECT DISTINCT sae._adresse.departement 
+        FROM sae._logement INNER JOIN sae._adresse ON sae._logement.id_adresse = sae._adresse.id;";
+    $reponse = request($query);
+    return $reponse;
+}
+
+function genererListeCommune($departement) {
+    $query = "SELECT DISTINCT sae._adresse.commune 
+        FROM sae._logement INNER JOIN sae._adresse ON sae._logement.id_adresse = sae._adresse.id
+        WHERE sae._adresse.departement = '".$departement."';";
+    $reponse = request($query);
+    return $reponse;
+}
+
+function genererSelectProprietaire() {
+    $query = "SELECT sae._utilisateur.id, sae._utilisateur.nom, sae._utilisateur.prenom 
+        FROM sae._utilisateur INNER JOIN sae._compte_proprietaire ON sae._utilisateur.id = sae._compte_proprietaire.id;";
+    $reponse = request($query);
+    return $reponse;
+}
+
+function genererListeLogement($f_departements, $f_communes, $f_nb_personnes, $f_tarif_min, $f_tarif_max, $f_proprietaire, $f_date_arrive, $f_date_depart) {
+    $where = "";
+    /*if ($f_departements != "") {
+        foreach ($f_departements as $departement) {
+            $where = $where . " AND sae._adresse.departement = " . $departement;
+        }
+    }
+    if ($f_communes!= "") {
+        foreach ($f_communes as $commune) {
+            $where = $where. " AND sae._adresse.commune = ". $commune;
+        }
+    }
+    $f_nb_personnes != "" ? $where = $where . " AND sae._logement.nb_max_personne = " . $f_nb_personnes : $where;
+    $f_tarif_min    != "" ? $where = $where . " AND sae._logement.base_tarif >= " . $f_tarif_min : $where;
+    $f_tarif_max    != "" ? $where = $where . " AND sae._logement.base_tarif <= " . $f_tarif_max : $where;
+    $f_proprietaire != "" ? $where = $where . " AND sae._logement.id_proprietaire = " . $f_proprietaire : $where;*/
+    
+    # Recuperation des donnees des logements
+    $query = "SELECT l.id AS id_logement, a.id AS id_adresse, l.titre, l.base_tarif as tarif, a.departement, a.commune,
+            (SELECT AVG(av.note)::numeric(10,2) 
+            FROM sae._avis av 
+            WHERE av.id_logement = l.id) AS note
+        FROM sae._logement l INNER JOIN sae._adresse a ON l.id_adresse = a.id
+        WHERE l.en_ligne = true".$where.";";
+    $reponse = request($query);
+    return $reponse;
+
+    # Recuperation des image de couverture d'un logement
+        /* $query_image = "SELECT * 
+            FROM sae._image 
+            WHERE sae._image.id_logement = " . $logement["id"] . " AND sae._image.principale = true";
+        $rep_image = request($query_image); */    
+    # Construction filtres dates
+        /*$where = "";
+        if ($f_date_arrive != "" && $f_date_arrive != "") {
+            $dateArrive = new DateTime($f_date_arrive);
+            $dateDepart = new DateTime($f_date_depart);
+            $dateDepart->modify('+1 day');
+
+            $interval = new DateInterval('P1D'); // Interval d'un jour
+            $dates = new DatePeriod($dateArrive, $interval, $dateDepart);
+
+            foreach ($dates as $d) {
+                if ($where == "") { $where = $where . " AND (sae._calendrier.date = '" . $d->format('Y-m-d') . "'"; } 
+                else { $where = $where. " OR sae._calendrier.date = '" . $d->format('Y-m-d') . "'"; }
+            }
+
+            if ($where != "") { $where = $where . ")"; }
+
+            # Recuperation des logements non disponible sur la periode
+            $query_calendrier = "SELECT * 
+                FROM sae._calendrier 
+                WHERE sae._calendrier.id_logement = " . $donnee["id_logement"] . $where;
+            $rep_calendier = request($query_calendrier);
+        }*/
+
+        # Filtre des logements en fonction de la periode
+        /*if (($f_date_arrive == "" || empty($rep_calendier))
+            && ($f_date_depart == "" || empty($rep_calendier))) {*/
+}
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $action = ""; 
+    if (isset($_POST['action'])) {
+        $action = $_POST['action'];
+    }
+
+    if ($action == "genererListeDepartement") {
+        $reponse = genererListeDepartement();
+        echo json_encode(['reponse' => $reponse]);
+    }
+
+    if ($action == "genererListeCommune") {
+        $departement = $_POST['departement'];
+
+        $reponse = genererListeCommune($departement);
+        echo json_encode(['reponse' => $reponse]);
+    }
+    
+    if ($action == "genererSelectProprietaire") {
+        $reponse = genererSelectProprietaire();
+        echo json_encode(['reponse' => $reponse]);
+    }
+
+    if ($action == "genererListeLogement") {
+        $f_departements = ""; 
+        $f_communes = "";
+        $f_nb_personnes = "";
+        $f_tarif_min = "";
+        $f_tarif_max = "";
         $f_proprietaire = "";
         $f_date_arrive = "";
         $f_date_depart = "";
 
-        require "./liste-logement.php";
-    ?>
-    <div class="wrapper">
-        <header class="header">
-            <div class="header__container">
-                <div class="header__nav">
-                    <div class="header__logo">
-                        <a href=""><img src="img/trisquel.webp" alt="Logo trisquel"></a>
-                        <a href="" class="header__name">ALHaiZ Breizh</a>
-                    </div>
-                    <nav class="header__menu" id="LeMenu">
-                        <ul class="menu__list" id="menu__list">
-                            <li class="menu__item">
-                                <a href="" class="menu__link">Logements</a>
-                            </li>
-                            <li class="menu__item">
-                                <a href="" class="menu__link">À propos</a>
-                            </li>
-                            <li class="menu__item">
-                                <a href="" class="menu__link">Contact</a>
-                            </li>
-                            <li class="menu__item hide">
-                                <a href="" class="menu__link" style="color: #5669FF;">Connexion</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="header__form">
-                    <a href=""><i class="fa-regular fa-eye-slash" style="color: #222222;"></i></a>
-                    <div class="header__connexion"><a href="">Connexion</a></div>                    
-                </div>
-                <img src="img/menu.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
-                <img src="img/fermer.webp" alt="Fermer le menu" id="CmdMenuClose">
+        if (isset($_POST['departements'])) { $f_departements = $_POST['departements']; }
+        if (isset($_POST['communes'])) { $f_communes = $_POST['communes']; }
+        if (isset($_POST['nb_personnes'])) { $f_nb_personnes = $_POST['nb_personnes']; }
+        if (isset($_POST['tarif_min'])) { $f_tarif_min = $_POST['tarif_min']; }
+        if (isset($_POST['tarif_max'])) { $f_tarif_max = $_POST['tarif_max']; }
+        if (isset($_POST['proprietaire'])) { $f_proprietaire = $_POST['proprietaire']; }
+        if (isset($_POST['date_arrive'])) { $f_date_arrive = $_POST['date_arrive']; }
+        if (isset($_POST['date_depart'])) { $f_date_depart = $_POST['date_depart']; }
+        
+        $reponse = genererListeLogement($f_departements, $f_communes, $f_nb_personnes, $f_tarif_min, $f_tarif_max, $f_proprietaire, $f_date_arrive, $f_date_depart);
+        echo json_encode(['reponse' => $reponse]);
+    }  
+}
 
-            </div>
-        </header>
-        <main class="main">
-                <div class="top">
-                    <div class="top__container top-cont">
-                        <h1 >Votre retraite bretonne vous attend</h1>
-                        <h2 class="top__nom">Trouvez votre hébergement idéal</h2>
-                        <div class="checkLogement">
-                            <h2>Vérifier la disponibilité</h2>
-                            <div class="checkLogement__tri">
-                                <div class="tri__element">
-                                    <label for="dest-select">Destination</label>
-                                    <div class="select-container">
-                                        <button class="dropbtn" id="dropdown-btn">Où?</button>
-                                    </div>
-                                </div>
-                                <div class="tri__element">
-                                    <label for="daterange">Arrivée - Départ</label>
-                                    <input type="text" id="daterange" name="daterange" value="01/01/2024 - 01/01/2036" />
-                                </div>
-                                <div class="tri__element">
-                                    <label for="nb_personnes">Nombre de voyageurs</label>
-                                    <input type="number" id="nb_personnes" placeholder="Qui?" name="nombre_personnes" min="1" max="13">
-                                </div>
-                                <div class="tri__element">
-                                    <label for="tarif">Tarif/jour</label>
-                                    <div id="tarif_range">
-                                        <input type="number" placeholder="min" id="tarif_min" name="tarif_min" min="0" step="5">
-                                        <input type="number" placeholder="max" id="tarif_max" name="tarif_max" min="0" step="5">
-                                    </div>
-                                </div>
-                                <div class="tri__element">
-                                    <label for="propr-select">Propriétaires</label>
-                                        <select name="propr" id="propr-select">
-                                            <option value="">Le propriétaire</option>
-                                            <option value="Varvara">Varvara Sradnichenko</option>
-                                            <option value="AgenceParis">Agence Paris</option>
-                                        </select>
-                                </div>
-                                <div class="tri__element">
-                                    <input type="submit" value="Rechercher">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="drops">
-                            <div class="dropdown" id="departments-dropdown-container">
-                                <div class="dropdown-content"  id="departments-dropdown">
-                                  <input class="dropdown-element search" type="text" id="search-input-department"  placeholder="Département" >
-                                  <label class="dropdown-element dep"><input type="checkbox" name="department" value="Ain" >Ain</label>
-                                  <label class="dropdown-element dep"><input type="checkbox" name="department" value="Aisne" >Aisne</label>
-                                </div>
-                              </div>
-                              <div class="dropdown" id="communs-dropdown-container">
-                                <div class="dropdown-content" id="communes-dropdown">
-                                  <input class="dropdown-element search" type="text" id="search-input-commune" placeholder="Commune" >
-                                  <label class="dropdown-element"><input type="checkbox" name="commune" value="Bourg-en-Bresse" >Bourg-en-Bresse</label>
-                                  <label class="dropdown-element"><input type="checkbox" name="commune" value="L'Abergement-Clémenciat" >L'Abergement-Clémenciat</label>
-                                </div>
-                              </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="main__container main__logement">
-                    <div class="list__logements">
-                        <h3 class="list__titre" id="nos_logements">Nos logements <button><img src="img/sort.webp" alt="Sort"></button></h3>
-                        <div class="les__logements">
+/*password_hash(PASSWORD_BCRYPT) {}*/
 
-                            <?php 
-                            
-                            for ($i = 0 ; $i < sizeof($list_logements) ; $i++) {
-                                $logement = $list_logements[$i]; 
-
-                                if ($i < 6) {
-                                    echo "<div class=\"card__container\">";
-                                } else {
-                                    echo "<div class=\"card__container card__container_cacher\">"; 
-                                }
-                                    echo "<img src=\"img/logement1.webp\" alt=\"Lodge Cosy photo\">";
-                                    echo "<div class=\"logement__wrapper_description\">";
-                                        echo "<div class=\"logement__titre\">";
-                                            echo "<h1 class=\"logement__nom\" id=\"logement__nom\">".$logement["titre"]."</h1>";
-                                            echo "<div class=\"logement__note\">";
-                                                echo "<i class=\"fas fa-star fa-sm\"></i>";
-                                                echo "<h1 class=\"logement__note\" >".$logement["note"]."<h1>";
-                                            echo "</div>";
-                                        echo "</div>";
-                                        echo "<h1 class=\"logement__localisation\" >".$logement["ville"].', '.$logement["departement"]."</h1>";
-                                        echo "<div class=\"logement__prix__alignement\">";
-                                            echo "<h1 class=\"logement__prix\" >".$logement["tarif"]."€</h1>";
-                                            echo "<h1 class=\"logement__localisation\">/jour</h1>";
-                                        echo "</div>";
-                                    echo "</div>";
-                                echo "</div>";
-                            }
-
-
-                            for ($i = 0 ; $i < 9 ; $i++) {
-                                if ($i < 3) {
-                                    echo "<div class=\"card__container\">";
-                                } else {
-                                    echo "<div class=\"card__container card__container_cacher\">"; 
-                                }
-                                    echo "<img src=\"img/logement1.webp\" alt=\"Lodge Cosy photo\">";
-                                    echo "<div class=\"logement__wrapper_description\">";
-                                        echo "<div class=\"logement__titre\">";
-                                            echo "<h1 class=\"logement__nom\" id=\"logement__nom\">Lodge Cosy - Sauna et jacuzzi</h1>";
-                                            echo "<div class=\"logement__note\">";
-                                                echo "<i class=\"fas fa-star fa-sm\"></i>";
-                                                echo "<h1 class=\"logement__note\" >4.0<h1>";
-                                            echo "</div>";
-                                        echo "</div>";
-                                        echo "<h1 class=\"logement__localisation\" >Saint-Coulitz, Finistère</h1>";
-                                        echo "<div class=\"logement__prix__alignement\">";
-                                            echo "<h1 class=\"logement__prix\" >230€</h1>";
-                                            echo "<h1 class=\"logement__localisation\">/jour</h1>";
-                                        echo "</div>";
-                                    echo "</div>";
-                                echo "</div>";
-                            }
-                            
-                            ?>
-                            
-                        </div>
-                        <button class="logement__plus" id="decouvrir_plus" >Découvrir plus</button>
-                        <button class="logement__plus" id="decouvrir_moins" style="display: none;">Voir moins</button>
-                    </div>
-                    <div class="coup_de_coeurs">
-                        <h3 class="list__titre" id="nos_coups_coeur">Nos coups de cœur</h3>
-                        <div class="les__coups">
-                            <?php 
-
-                            # Recuperation des logements coup de coeur
-                            $list_logements_coeur = []; 
-                            for ($i = 0; $i < sizeof($list_logements) ; $i++) {
-                                
-                                $logement = $list_logements[$i]; 
-
-                                $list_logements_coeur[] = $logement; 
-                            }
-
-                            for ($i = 0; $i < sizeof($list_logements_coeur) ; $i++) {
-                                if ($i < 4) {
-                                    echo "<div class=\"coups-coeur__container\">";
-                                } else {
-                                    echo "<div class=\"coups-coeur__container coups-coeur__container_cacher\">"; 
-                                }
-                                    echo "<img src=\"img/logement1.webp\" alt=\"Logement\">";
-                                    echo "<div>";
-                                        echo "<div class=\"coups-coeur__titre\">";
-                                            echo "<h1>Petite maison atypique</h1>";
-                                            echo "<h2><span>$230</span>jour</h2>";
-                                        echo "</div>";
-                                        echo "<h1>Plouguin, Finistère</h1>";
-                                        echo "<div class=\"coups-coeur__note\">";
-                                            echo "<div>";
-                                                echo "<i class=\"fas fa-star fa-sm\"></i>";
-                                                echo "<i class=\"fas fa-star fa-sm\"></i>";
-                                                echo "<i class=\"fas fa-star fa-sm\"></i>";
-                                                echo "<i class=\"fas fa-star fa-sm\"></i>";
-                                                echo "<i class=\"fas fa-star fa-sm\"></i>";
-                                                echo "<i class=\"fas fa-star fa-sm\"></i>";
-                                            echo "</div>";
-                                            echo "<h1>4</h1>";
-                                        echo "</div>";
-                                    echo "</div>";
-                                echo "</div>";
-                            }
-
-                            for ($i = 0 ; $i < 5 ; $i++) {
-                                if ($i < 1) {
-                                    echo "<div class=\"coups-coeur__container\">";
-                                } else {
-                                    echo "<div class=\"coups-coeur__container coups-coeur__container_cacher\">"; 
-                                }
-                                    echo "<img src=\"img/logement1.webp\" alt=\"Logement\">";
-                                    echo "<div>";
-                                        echo "<div class=\"coups-coeur__titre\">";
-                                            echo "<h1>Petite maison atypique</h1>";
-                                            echo "<h2><span>$230</span>jour</h2>";
-                                        echo "</div>";
-                                        echo "<h1>Plouguin, Finistère</h1>";
-                                        echo "<div class=\"coups-coeur__note\">";
-                                            echo "<div>";
-                                                echo "<i class=\"fas fa-star fa-sm\"></i>";
-                                                echo "<i class=\"fas fa-star fa-sm\"></i>";
-                                                echo "<i class=\"fas fa-star fa-sm\"></i>";
-                                                echo "<i class=\"fas fa-star fa-sm\"></i>";
-                                                echo "<i class=\"fas fa-star fa-sm\"></i>";
-                                                echo "<i class=\"fas fa-star fa-sm\"></i>";
-                                            echo "</div>";
-                                            echo "<h1>4</h1>";
-                                        echo "</div>";
-                                    echo "</div>";
-                                echo "</div>";
-                            }
-
-                            ?>
-
-                        </div>
-                        <button class="logement__plus" id="decouvrir_plus_coup_coeur" >Découvrir plus</button>
-                        <button class="logement__plus" id="decouvrir_plus_coup_coeur_moins" style="display: none;">Voir moins</button>
-                    </div>
-                </div>
-        </main>
-        <footer class="footer">
-            <div class="footer__container">
-                <nav class="footer__menu">
-                    <ul class="footer__menu__list">
-                        <li class="footer__menu__item">© 2024 ALHalZ Breizh</li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Confidentialité</a>
-                        </li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Conditions générales</a>
-                        </li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Mentions légales</a>
-                        </li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Accessibilité</a>
-                        </li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Ajouter mon établissement</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </footer>
-    </div>
-
-    <div id="btn-decouvrir" style="display: none;">false</div>
-
-    <script src="js/index.js"></script>
-    <script src="js/verifier.js"></script>
-</body>
-</html>
+?>
