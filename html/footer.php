@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="../css/footer.css">
+
 <footer class="footer">
     <div class="footer__container">
         <nav class="footer__menu">

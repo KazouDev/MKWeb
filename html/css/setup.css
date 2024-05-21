@@ -26,32 +26,37 @@ a {
   cursor: pointer;
 }
 
+.wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
 header {
   position: relative;
   margin-bottom: 2rem;
 }
 
-[class*=__container] {
+[class*="__container"] {
   max-width: 1280px;
   margin: 0 auto;
 }
 
 @media (max-width: 1199.98px) {
-  [class*=__container] {
+  [class*="__container"] {
     max-width: 970px;
   }
 }
 @media (max-width: 991.98px) {
-  [class*=__container] {
+  [class*="__container"] {
     max-width: 750px;
   }
 }
 @media (max-width: 767.98px) {
-  [class*=__container] {
+  [class*="__container"] {
     max-width: none;
     padding: 0px 0.75rem;
   }
   header {
     margin-bottom: 1rem;
   }
-}/*# sourceMappingURL=setup.css.map */
+} /*# sourceMappingURL=setup.css.map */
