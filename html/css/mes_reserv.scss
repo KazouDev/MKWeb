@@ -37,13 +37,81 @@ $lineHeight: 1.5;
     align-items: center;
 }
 
+.buisness_mes_reserv_line{
+    @include flexCenter;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+
+    .buisness_left_big_box{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
+
+        .buisness_left_box{
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+    
+            h4{
+                font-size: $h5Size;
+                font-weight: $normalWeight;
+            }
+            >h4{
+                font-size: $h4Size;
+                font-weight: $semiboldWeight;
+            }
+    
+            h5{
+                font-size: $h5Size;
+                font-weight: $lightWeight;
+            }
+    
+            .mes_reserv__numero{
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+
+
+    h4{
+        font-size: $h4Size;
+        font-weight: $normalWeight;
+    }
+
+    p {
+        color: $mainBlanc;
+        padding: 0.5rem 1.25rem;
+        font-size: $h55Size;
+        border-radius: 0.75rem;
+        width: fit-content;
+    }
+
+    .fa-eye, .fa-trash{
+        font-size: $h4Size;
+        color: $mainBlanc;
+        padding: 1rem 1rem;
+        border-radius: 0.75rem;
+        width: fit-content;
+        background-color: $boutonPink;
+    }
+
+    .green {
+        background-color: $boutonGreen;
+    }
+    .red {
+        background-color: $boutonRouge;
+    }
+
+}
+
 .mes__reserv__exporter{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
-
 }
 
 .test__TEST{

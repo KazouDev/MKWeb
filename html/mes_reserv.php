@@ -10,7 +10,6 @@
     WHERE id_client = $id";
     $results = request($query, false);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +32,7 @@
             <img src="img/filter-3.webp" alt="">
             <img src="img/arrows.webp" alt="">
         </div>
-        <a href="exporter_reservation.php?id=<?php echo $id ?>"><i class="fa-solid fa-download"></i></a>
+        <a href="#" id="export-reservation-btn"><i class="fa-solid fa-download"></i></a>
     </div>
     <?php if(empty($results)){?>
         <div class="mes__reserv__empty">
@@ -63,7 +62,7 @@
                             <?php } ?>
                         </div>
                         <div class="mes__reserv__prix">
-                            <h4 class="mes__reserv__prix_color"><?php echo $result["prix_ttc"] . "$"; ?></h4>
+                            <h4 class="mes__reserv__prix_color"><?php echo $result["prix_ttc"] . "€"; ?></h4>
                             <a href=""><i class="fa-solid fa-ellipsis-vertical"></i></a>
                         </div>
                     </div>
@@ -76,5 +75,34 @@
         <?php require_once 'footer.php';?>
     </div>
     <script src="js/script.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var exportButton = document.getElementById("export-reservation-btn");
+        exportButton.addEventListener("click", function(e) {
+            e.preventDefault();
+            
+            fetch("../exporter_reservation.php?id=<?php echo $id ?>&type=0")
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error("Une erreur s'est produite lors du téléchargement des réservations.");
+                }
+                return response.blob();
+            })
+            .then(function(blob) {
+                var url = window.URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'reservations.csv';
+                document.body.appendChild(a);
+                a.click();
+                
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(function(error) {
+                alert(error.message);
+            });
+        });
+    });
+</script>
 </body>
 </html>
