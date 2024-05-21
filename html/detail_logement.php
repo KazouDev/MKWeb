@@ -1,5 +1,4 @@
 <?php 
-    include "header.php";
     require_once "../utils.php";
 
     $id_logement = $_GET["id"];
@@ -119,6 +118,7 @@
 </head>
 <body>
     <div class="wrapper">
+        <?php     include "header.php";?>
         <main class="main">
             <div class="main__container logement">
                 <div class="logement__top">
