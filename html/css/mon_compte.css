@@ -1,8 +1,6 @@
 @import url("setup.css");
 .detail_mon_compte__conteneur {
   display: flex;
-  color: rgba(34, 34, 34, 0.5);
-  font-size: 1rem;
 }
 .detail_mon_compte__conteneur .info_perso_conteneur, .detail_mon_compte__conteneur .adresse_conteneur, .detail_mon_compte__conteneur .photo_conteneur, .detail_mon_compte__conteneur .mdp_conteneur {
   display: flex;
@@ -11,4 +9,100 @@
   gap: 1.875em;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   padding: 1.875em;
+  margin: 2rem;
+}
+.detail_mon_compte__conteneur .compte__form {
+  width: 50%;
+  padding: 0rem 4rem 0rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 15px;
+}
+.detail_mon_compte__conteneur .compte__form h1 {
+  font-style: 600;
+  font-size: 2.25rem;
+  letter-spacing: 0.0225rem;
+}
+.detail_mon_compte__conteneur .compte__form p {
+  font-size: 1.25rem;
+  line-height: 160%;
+  letter-spacing: 0.0125rem;
+}
+.detail_mon_compte__conteneur .compte__form form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+}
+.detail_mon_compte__conteneur .compte__input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+.detail_mon_compte__conteneur .compte__input label {
+  font-size: 1rem;
+}
+.detail_mon_compte__conteneur .compte__input input {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #222;
+  background: #FFF;
+}
+.detail_mon_compte__conteneur .compte__input input::-moz-placeholder {
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 1rem;
+}
+.detail_mon_compte__conteneur .compte__input input::placeholder {
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 1rem;
+}
+.detail_mon_compte__conteneur .compte__form .mdp_oublie {
+  align-self: flex-end;
+  color: #5669ff;
+}
+.detail_mon_compte__conteneur .compte__form input[type=submit] {
+  background-color: #5669ff;
+  border-radius: 0.75rem;
+  width: 100%;
+  padding: 1rem;
+  color: #ffffff;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+.detail_mon_compte__conteneur .compte__form select {
+  border-radius: 0.3125rem;
+  border: 1px solid #222;
+  padding: 0.5rem;
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 1rem;
+  font-weight: 300;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-image: url("../img/down.webp");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem top 50%;
+  background-size: 0.8rem auto;
+}
+.detail_mon_compte__conteneur .ligne {
+  display: flex;
+  flex-direction: row;
+}
+.detail_mon_compte__conteneur .photo_conteneur img {
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  align-self: center;
+}
+.detail_mon_compte__conteneur .bloc {
+  display: flex;
+  flex-direction: row;
 }/*# sourceMappingURL=mon_compte.css.map */

@@ -1,8 +1,9 @@
 <?php 
     include "header.php";
     require_once "../utils.php";
+   
 
-    $id_utilisateur = $_GET["id"];
+    $id_utilisateur =  client_connected_or_redirect();
 
     $query_utilisateur = "select nom, prenom, pseudo, ville, pays, region, departement,
     rue, civilite, photo_profile, email, telephone, date_naissance, mot_de_passe 
@@ -55,47 +56,128 @@
             <div class="detail_mon_compte__conteneur">
                 <h1>Mon Compte<h1>
                 <p>Identifiant client : <?= $id_utilisateur ?></p>
-                <div class= "info_perso_conteneur">
-                    <h3>Informations personnelles</h3>
-                    <p>Prénom</p>
-                    <p>Nom</p>
-                    <p><?= $prenom . " " . $nom ?></p>
-                    <p>Pseudo</p>
-                    <p><?= $pseudo ?></p>
-                    <p>Genre</p>
-                    <p><?= $genre ?></p>
-                    <p>Email</p>
-                    <p><?= $email ?></p>
-                    <p>Téléphone</p>
-                    <p><?= $telephone ?></p> 
-                    <form method="POST" action="">
-                        <div class="connect__input">
-                            <label for="connect__email">Adresse e-mail</label>
-                            <input type="email" name="email" id="connect__email" placeholder="Veuillez saisir votre adresse e-mail">
-                        </div>
-                        <div class="connect__input">    
-                            <label for="connect__pass">Mot de passe</label>
-                            <input type="password" name="password" id="connect__pass" placeholder="Saisissez un mot de passe">
-                        </div>
-                    </form>
+                
+                <div class="compte_form">
+                    <div class="info_perso_conteneur">
+                        <form method="POST" action="">
+                            <div class="ligne">
+                                <div class="compte__input">
+                                    <label for="compte__prenom">Prénom</label>
+                                    <input type="text" name="prenom" id="compte__prenom" value="<?= $prenom ?>" readonly>
+                                </div>
+                                <div class="compte__input">
+                                    <label for="compte__nom">Nom</label>
+                                    <input type="text" name="nom" id="compte__nom" value="<?= $nom ?>" placeholder="Votre nom" readonly>
+                                </div>
+                                <div class="compte__input">
+                                    <label for="compte__pseudo">Pseudo</label>
+                                    <input type="text" name="pseudo" id="compte__pseudo" value="<?= $pseudo ?>" placeholder="Votre pseudo" readonly>
+                                </div>
+                            </div>
+                            <div class="ligne">
+                                <div class="compte__input">
+                                    <label for="genre">Choisissez votre genre :</label>
+                                    <select id="genre" name="genre">
+                                        <option value="Homme" <?php if ($civilite == "Mr") echo 'selected'; ?>>Homme</option>
+                                        <option value="Femme" <?php if ($civilite == "Mme") echo 'selected'; ?>>Femme</option>
+                                        <option value="Autre" <?php if ($civilite == "Autre") echo 'selected'; ?>>Autre</option>
+                                    </select>
+                                </div>
+                                <div class="compte__input">
+                                    <label for="compte__date_naissance">Date de naissance</label>
+                                    <input type="date" name="date_naissance" id="compte__date_naissance" value ="<?=$date_naissance?>" readonly>
+                                </div>
+                                <div class="compte__input">
+                                    <label for="compte__telephone">Téléphone</label>
+                                    <input type="text" name="telephone" id="compte__telephone" value="<?= $telephone ?>" placeholder="Votre téléphone" readonly>
+                                </div>
+                            </div>
+                            <div class="ligne">
+                                <div class="compte__input">
+                                    <label for="compte__email">Adresse e-mail</label>
+                                    <input type="email" name="email" id="compte__email" value="<?= $email ?>" placeholder="Votre e-mail" readonly>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
 
-                </div>
-                <div class= "adresse_conteneur">
-                    <p>Ville</p>
-                    <p><?= $ville?> </p>
-                    <p>Pays</p>
-                    <p><?= $pays ?></p>   
-                </div>
-                <div class= "photo_conteneur">
-                    <img src="<?= $src_photo ?>" alt="photo de profil de l'utilisateur">
-                    <p>source : <?= $src_photo ?></p>
-                </div>
-                <div class= "mdp_conteneur">  
-                    <p>Mot de passe</p>  
+                
+                    <div class= "adresse_conteneur">
+                        <form method="POST" action="">
+                            <div class="ligne">
+                                <div class="compte__input">
+                                    <label for="compte__prenom">Pays</label>
+                                    <input type="text" name="pays" id="compte__pays" value="<?= $pays ?>" placeholder="Votre pays" readonly>
+                                </div>
+                                <div class="compte__input">
+                                    <label for="compte__region">Région</label>
+                                    <input type="text" name="region" id="compte__region" value="<?= $region ?>" placeholder="Votre région" readonly>
+                                </div>
+                            </div>
+                            <div class="ligne">
+                                <div class="compte__input">
+                                    <label for="compte__departement">Département</label>
+                                    <input type="text" name="departement" id="compte__departement" value="<?= $departement ?>" placeholder="Votre département" readonly>
+                                </div>
+                                <div class="compte__input">
+                                    <label for="compte__ville">Ville</label>
+                                    <input type="text" name="ville" id="compte__ville" value="<?= $ville ?>" placeholder="Votre ville" readonly>
+                                </div>
+                            </div>
+                            <div class="compte__input">
+                                <label for="compte__rue">Rue</label>
+                                <input type="text" name="rue" id="compte__rue" value="<?= $rue ?>" placeholder="Votre rue" readonly>
+                            </div>
+                            <div class="compte__input">
+                                <label for="compte__complement">Complément d'adresse</label>
+                                <input type="text" name="complement" id="compte__complement1"  placeholder="Complément" readonly>
+                            </div>
+                            <div class="compte__input">
+                                <label for="compte__complement">Complément d'adresse</label>
+                                <input type="text" name="complement" id="compte__complement2" placeholder="Complément" readonly>
+                            </div>
+                            <div class="compte__input">
+                                <label for="compte__complement">Complément d'adresse</label>
+                                <input type="text" name="complement" id="compte__complement3" placeholder="Complément" readonly>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="bloc">
+                        <div class= "photo_conteneur">
+                            <h3>Votre photo de profil</h3>
+                            <img src="<?= $src_photo ?>" alt="photo de profil de l'utilisateur">
+                            <p>source : <?= $src_photo ?></p>
+    <!--                         <label for="photo_profile">Votre photo de profil</label>
+                            <input type="file" id="photo_profile" name="photo_profile" accept="image/png, image/jpeg" /> -->
+                        </div>
+                        <div class= "mdp_conteneur">  
+                            <div class="compte__input">
+                                <label for="compte__mdp">Mot de passe :</label>
+                                <input type="password" id="compte__mdp" name="mdp" value="<?= $mdp ?>" placeholder="mdp" readonly>
+                                <label for="showPassword">
+                                    <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()"> Afficher le mot de passe
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </main>
         <?php include "footer.php"; ?>
     </div>
+    <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("compte__mdp");
+            var checkbox = document.getElementById("showPassword");
+
+            if (checkbox.checked) {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        }
+    </script>
 </body>
 </html>
