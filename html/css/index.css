@@ -198,3 +198,20 @@
   font-weight: 600;
   color: #5669FF;
 }/*# sourceMappingURL=index.css.map */
+
+/* Styles de base pour l'autocomplétion */
+.autocomplete-suggestions {
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: #fff;
+  position: absolute;
+  margin-top: 80px;
+}
+.autocomplete-suggestion {
+  padding: 10px;
+  cursor: pointer;
+}
+.autocomplete-suggestion:hover {
+  background-color: #e9e9e9;
+}

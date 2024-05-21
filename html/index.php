@@ -24,23 +24,7 @@ function genererSelectProprietaire() {
     return $reponse;
 }
 
-function genererListeLogement($f_departements, $f_communes, $f_nb_personnes, $f_tarif_min, $f_tarif_max, $f_proprietaire, $f_date_arrive, $f_date_depart) {
-    $where = "";
-    /*if ($f_departements != "") {
-        foreach ($f_departements as $departement) {
-            $where = $where . " AND sae._adresse.departement = " . $departement;
-        }
-    }
-    if ($f_communes!= "") {
-        foreach ($f_communes as $commune) {
-            $where = $where. " AND sae._adresse.commune = ". $commune;
-        }
-    }
-    $f_nb_personnes != "" ? $where = $where . " AND sae._logement.nb_max_personne = " . $f_nb_personnes : $where;
-    $f_tarif_min    != "" ? $where = $where . " AND sae._logement.base_tarif >= " . $f_tarif_min : $where;
-    $f_tarif_max    != "" ? $where = $where . " AND sae._logement.base_tarif <= " . $f_tarif_max : $where;
-    $f_proprietaire != "" ? $where = $where . " AND sae._logement.id_proprietaire = " . $f_proprietaire : $where;*/
-    
+function genererListeLogement($where) {
     # Recuperation des donnees des logements
     $query = "SELECT l.id AS id_logement, a.id AS id_adresse, l.titre, l.base_tarif as tarif, a.departement, a.commune,
             (SELECT AVG(av.note)::numeric(10,2) 
@@ -110,25 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if ($action == "genererListeLogement") {
-        $f_departements = ""; 
-        $f_communes = "";
-        $f_nb_personnes = "";
-        $f_tarif_min = "";
-        $f_tarif_max = "";
-        $f_proprietaire = "";
-        $f_date_arrive = "";
-        $f_date_depart = "";
-
-        if (isset($_POST['departements'])) { $f_departements = $_POST['departements']; }
-        if (isset($_POST['communes'])) { $f_communes = $_POST['communes']; }
-        if (isset($_POST['nb_personnes'])) { $f_nb_personnes = $_POST['nb_personnes']; }
-        if (isset($_POST['tarif_min'])) { $f_tarif_min = $_POST['tarif_min']; }
-        if (isset($_POST['tarif_max'])) { $f_tarif_max = $_POST['tarif_max']; }
-        if (isset($_POST['proprietaire'])) { $f_proprietaire = $_POST['proprietaire']; }
-        if (isset($_POST['date_arrive'])) { $f_date_arrive = $_POST['date_arrive']; }
-        if (isset($_POST['date_depart'])) { $f_date_depart = $_POST['date_depart']; }
+        $where = $_POST['where'];
         
-        $reponse = genererListeLogement($f_departements, $f_communes, $f_nb_personnes, $f_tarif_min, $f_tarif_max, $f_proprietaire, $f_date_arrive, $f_date_depart);
+        $reponse = genererListeLogement($where);
         echo json_encode(['reponse' => $reponse]);
     }  
 }
