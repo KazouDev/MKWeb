@@ -54,11 +54,14 @@
     <div class="wrapper">
         <main class="main__container">
             <div class="detail_mon_compte__conteneur">
-                <h1>Mon Compte<h1>
-                <p>Identifiant client : <?= $id_utilisateur ?></p>
-                
+                <div class="header_info_compte">
+                    <h2>Mon Compte</h2>
+                    <div class ="identifiant_client"><h3>Identifiant client : </h3><h3 id="blue"><?= " " . $id_utilisateur ?></h3></div>
+                </div>
+              
                 <div class="compte_form">
                     <div class="info_perso_conteneur">
+                        <h3>Informations personnelles</h3>
                         <form method="POST" action="">
                             <div class="ligne">
                                 <div class="compte__input">
@@ -104,6 +107,7 @@
 
                 
                     <div class= "adresse_conteneur">
+                        <h3>Adresse</h3>
                         <form method="POST" action="">
                             <div class="ligne">
                                 <div class="compte__input">
@@ -143,15 +147,14 @@
                             </div>
                         </form>
                     </div>
-                    <div class="bloc">
-                        <div class= "photo_conteneur">
-                            <h3>Votre photo de profil</h3>
-                            <img src="<?= $src_photo ?>" alt="photo de profil de l'utilisateur">
-                            <p>source : <?= $src_photo ?></p>
-    <!--                         <label for="photo_profile">Votre photo de profil</label>
-                            <input type="file" id="photo_profile" name="photo_profile" accept="image/png, image/jpeg" /> -->
-                        </div>
-                        <div class= "mdp_conteneur">  
+                    <div class= "photo_conteneur">
+                        <h3>Votre photo de profil</h3>
+                        <img src="<?= $src_photo ?>" alt="photo de profil de l'utilisateur">
+                        <p>source : <?= $src_photo ?></p>
+<!--                         <label for="photo_profile">Votre photo de profil</label>
+                        <input type="file" id="photo_profile" name="photo_profile" accept="image/png, image/jpeg" /> -->
+                    </div>
+                        <!-- <div class= "mdp_conteneur">  
                             <div class="compte__input">
                                 <label for="compte__mdp">Mot de passe :</label>
                                 <input type="password" id="compte__mdp" name="mdp" value="<?= $mdp ?>" placeholder="mdp" readonly>
@@ -159,8 +162,7 @@
                                     <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()"> Afficher le mot de passe
                                 </label>
                             </div>
-                        </div>
-                    </div>
+                        </div> -->
                     
                 </div>
             </div>

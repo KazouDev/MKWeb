@@ -31,6 +31,17 @@ $lineHeight: 1.5;
 
 .detail_mon_compte__conteneur{
     display: flex;
+    flex-direction: column;
+    h2{
+        font-size: $h2Size;
+        font-weight: $boldWeight;
+    }
+    h3{
+        font-size: $h3Size;
+    }
+    #blue{
+        color: $mainViolet;
+    }
     .info_perso_conteneur, .adresse_conteneur, .photo_conteneur, .mdp_conteneur{
         display: flex;
         border-radius: 0.75em;
@@ -51,7 +62,7 @@ $lineHeight: 1.5;
         gap: 15px;
     }
     .compte__form h1{
-        font-style: $semiboldWeight;
+        font-weight: $semiboldWeight;
         font-size: $h2Size;
         letter-spacing: 0.0225rem;
         
@@ -106,7 +117,7 @@ $lineHeight: 1.5;
         font-size: $h5Size;
         cursor: pointer;
     }
-    .compte__form select{
+    .compte__input select{
         border-radius: 0.3125rem;
         border: 1px solid #222;
         padding: 0.5rem;
@@ -126,14 +137,33 @@ $lineHeight: 1.5;
 
     .photo_conteneur img {
         border-radius: 50%;
-        width: 5rem;
-        height: 5rem;
+        width: 15rem;
+        height: 15rem;
         align-self: center ;
-    }
-    .bloc{
-        display: flex;
-        flex-direction: row;
     }
 }
 
+.wrapper {
+    width: 100%;
+    box-sizing: border-box; /* Assure que le padding et la bordure sont inclus dans la largeur */
+}
+
+.main__container {
+    width: 100%;
+}
+
+.detail_mon_compte__conteneur {
+    width: 100%;
+}
+
+.header_info_compte{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.identifiant_client{
+    display: flex;
+    flex-direction: row;
+}
 
