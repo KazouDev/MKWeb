@@ -423,24 +423,51 @@
                     
                     $base_tarif = $res['base_tarif'];
                    
-                    if (isset($_POST['submit_resa'])){
-
+                    if (isset($_POST['acceptButton'])){
+                        $dateDebut = $_POST['dateDebut'];
+                        $dateFin = $_POST['dateFin'];
+                        $prix_ht = $_POST['prix_ht'];
+                        $prix_ttc = $_POST['prix_ttc'];
+                        $nb_jours = $_POST['nb_jours'];
+                        $taxe = $_POST['taxe'];
+                        $frais = $_POST['frais'];
+                        
                         // CRÉATION RÉSERVATION
 
                     }
 
                     ?>
                 
-                        
+
+
                     <div class="logement__res" id="logement__reserver">
                         <div class="form__logement">
                             <h2><span  id="logement__prix"><?=$base_tarif?></span> € par  nuit</h2>
                             <h1>Indiquez les dates pour voir les tarifs</h1>
                             <form action="" method="post">
+                            <div id="myModal_cvg" class="modal_cvg">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <div class="accept_cvg">
+                                        <p>Je reconnais avoir pris connaissance et j'accepte <a href="#">les conditions générales de ventes</a></p>
+                                        <div class="button_cvg">
+                                            <input type="button" id="declineButton" value="Refuser">
+                                            <input type="submit" id="acceptButton" value="Accepter">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="res__fromulaire">
                                 
-                                    <input type="text" name="dateDebut" hidden >
+                                    <input type="text" name="dateDebut"  hidden>
                                     <input type="text" name="dateFin" hidden>
+
+                                    <input type="text" name="prix_ht"  hidden>
+                                    <input type="text" name="prix_ttc" hidden>
+                                    <input type="text" name="nb_jours" hidden>
+                                    <input type="text" name="taxe" hidden>
+                                    <input type="text" name="frais" hidden>
                                     
                                     <div id="container-calendar">
                                     <div id="error_periode">Une réservation doit être supérieur à 4 jours</div>
@@ -495,7 +522,7 @@
                                     <p><span id="tot-ttc"></span>€</p>
                                 </div>
                                 <!--<input type="submit" id="reset" value="Annuler"> -->
-                                <input type="submit" name="submit_resa" value="Réserver">
+                                <input type="button" name="submit_resa" id="submit_resa" value="Réserver">
                                 
                             </div>
                         </form>
