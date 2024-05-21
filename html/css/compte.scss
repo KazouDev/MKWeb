@@ -1,0 +1,55 @@
+@import url("setup.css");
+
+// Variables
+$myFont: 'Plus Jakarta San', sans-serif;
+$mainViolet: #5669FF;
+$mainJeune: #FFD33C;
+$mainNoir: #222222;
+$mainGris: #878787;
+$mainBlanc: #FFFFFF;
+
+$hoverViolet: #9AA5FF;
+$selectedViolet: #273EFC;
+$selectedBlanc: #E1EBF4;
+
+$boutonPink: #DD69FA;
+$boutonGreen: #79DA7D;
+$boutonRouge: #FF6258;
+
+$h1Size: 4rem;
+$h2Size: 2.25rem;
+$h3Size: 2rem;
+$h4Size: 1.5rem;
+$h5Size: 1.25rem;
+$h55Size: 1rem;
+$h6Size: 0.75rem;
+
+$lightWeight: 300;
+$normalWeight: 400;
+$semiboldWeight: 600;
+$boldWeight: 700;
+$lineHeight: 1.5;
+
+.detail_compte__conteneur{
+    display: flex;
+    padding: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.625rem;
+    border-radius: 0.75rem;
+    border: 1px solid #909090;
+    box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.12);
+
+    h3 {
+        font-weight: $semiboldWeight;
+        font-size: $h3Size;
+        align-self: center;
+    }
+    img {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 50%;
+        object-fit: cover;
+        align-self: center;
+    }
+}
