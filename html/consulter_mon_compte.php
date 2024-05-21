@@ -5,7 +5,7 @@
 
     $id_utilisateur =  client_connected_or_redirect();
 
-    $query_utilisateur = "select nom, prenom, pseudo, ville, pays, region, departement,
+    $query_utilisateur = "select nom, prenom, pseudo, commune, pays, region, departement,
     rue, civilite, photo_profile, email, telephone, date_naissance, mot_de_passe 
     from sae._utilisateur
     inner join sae._adresse on sae._adresse.id = sae._utilisateur.id_adresse
@@ -15,7 +15,7 @@
     //$id = $rep_utilisateur['id'];
     $prenom = $rep_utilisateur['prenom'];
     $nom = $rep_utilisateur['nom'];
-    $ville = $rep_utilisateur['ville'];
+    $ville = $rep_utilisateur['commune'];
     $region = $rep_utilisateur['region'];
     $departement = $rep_utilisateur['departement'];
     $rue = $rep_utilisateur['rue'];
