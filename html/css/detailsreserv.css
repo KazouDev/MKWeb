@@ -90,34 +90,22 @@
   align-self: stretch;
   align-items: center;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section1
-  > div.section1__article {
+.detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article {
   display: flex;
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
   gap: 1.875em;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section1
-  > div.section1__article
-  > p {
+.detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article > p {
   font-size: 1rem;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section1
-  > div.section1__article
-  > div.article__title {
+.detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article > div.article__title {
   display: flex;
   flex-direction: row;
   gap: 1.875em;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section1
-  > div.section1__article
-  > div.article__title
-  > p {
+.detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article > div.article__title > p {
   font-size: 2rem;
 }
 .detail-reservation__contenu > div.detail-reservation__section1 > img {
@@ -129,9 +117,7 @@
   justify-content: space-between;
   align-items: center;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section2
-  > div.section2__article1 {
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 {
   display: flex;
   padding: 20px;
   align-items: center;
@@ -140,113 +126,60 @@
   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
   gap: 1.25em;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section2
-  > div.section2__article1
-  > img {
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > img {
   max-width: 8.75em;
   height: 8.75em;
   border-radius: 6.25em;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section2
-  > div.section2__article1
-  > div.article_textcontent {
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent {
   display: flex;
   flex-direction: column;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section2
-  > div.section2__article1
-  > div.article_textcontent
-  > div.textcontent__1 {
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section2
-  > div.section2__article1
-  > div.article_textcontent
-  > div.textcontent__1
-  > p {
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 > p {
   font-size: 1.5em;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section2
-  > div.section2__article1
-  > div.article_textcontent
-  > div.textcontent__1
-  > div.note {
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 > div.note {
   display: flex;
   gap: 5px;
   align-items: center;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section2
-  > div.section2__article1
-  > div.article_textcontent
-  > div.textcontent__1
-  > div.note
-  > div.star {
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 > div.note > div.star {
   display: flex;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section2
-  > div.section2__article1
-  > div.article_textcontent
-  > div.textcontent__1
-  > div.note
-  > div.star:last-child {
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 > div.note > div.star:last-child {
   color: initial !important;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section2
-  > div.section2__article1
-  > div.article_textcontent
-  > div.textcontent__2 {
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__2 {
   display: flex;
   gap: 10px;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section2
-  > div.section2__article1
-  > div.article_textcontent
-  > div.textcontent__2
-  > p {
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__2 > p {
   font-size: 16px !important;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section2
-  > div.section2__article2 {
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article2 {
   display: flex;
   flex-direction: column;
   gap: 26px;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section2
-  > div.section2__article2
-  > p:first-child {
+.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article2 > p:first-child {
   font-size: 1.375em;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section3
-  > h3.section3__titre {
+.detail-reservation__contenu > div.detail-reservation__section3 > h3.section3__titre {
   font-size: 2rem;
   margin-bottom: 1em;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section3
-  > div.section3__informationoccupation {
+.detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1.25em;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section3
-  > div.section3__informationoccupation
-  > div.informationoccupation__detail {
+.detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation > div.informationoccupation__detail {
   display: flex;
   padding: 2.5em;
   justify-content: center;
@@ -256,10 +189,7 @@
   border: 1px solid #cccccc;
   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section3
-  > div.section3__informationoccupation
-  > div.informationoccupation__prix {
+.detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation > div.informationoccupation__prix {
   font-size: 3em;
 }
 .detail-reservation__contenu > div.detail-reservation__section4 {
@@ -270,68 +200,39 @@
 .detail-reservation__contenu > div.detail-reservation__section4 > h3 {
   font-size: 2em;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section4
-  > div.partiemontant {
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant {
   display: flex;
   flex-direction: column;
   gap: 1.875em;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section4
-  > div.partiemontant
-  > div.partiemontant__sanssoustitre {
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__sanssoustitre {
   justify-content: space-between;
   display: flex;
   align-items: center;
   flex-direction: row;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section4
-  > div.partiemontant
-  > div.partiemontant__sanssoustitre
-  > p:first-child {
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__sanssoustitre > p:first-child {
   font-size: 1.25rem;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section4
-  > div.partiemontant
-  > div.partiemontant__soustitre
-  > div {
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__soustitre > div {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section4
-  > div.partiemontant
-  > div.partiemontant__soustitre
-  > div
-  > p:first-child {
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__soustitre > div > p:first-child {
   font-size: 1.25rem;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section4
-  > div.partiemontant
-  > div.partiemontant__soustitre
-  > p {
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__soustitre > p {
   font-size: 1em;
   color: #5669ff;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section4
-  > div.partiemontant
-  > div.montantFinal {
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.montantFinal {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.detail-reservation__contenu
-  > div.detail-reservation__section4
-  > div.partiemontant
-  > div.montantFinal
-  > p {
+.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.montantFinal > p {
   font-size: 2rem;
 }
 .detail-reservation__contenu > div.detail-reservation__section5 > h3 {
@@ -364,7 +265,7 @@ i.jaune {
   height: 7rem;
   border-radius: 50%;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 .hote .hote__info .hote__main {
   display: flex;
@@ -419,7 +320,7 @@ i.jaune {
 }
 
 .apropos button:hover,
-.logement__res input[type="submit"]:hover,
+.logement__res input[type=submit]:hover,
 #reset:hover {
   background-color: #9aa5ff;
 }
@@ -451,11 +352,10 @@ i.jaune {
     align-items: flex-start;
     justify-content: flex-start;
   }
+  .hote .hote__info {
+    width: 70%;
+  }
 }
-.hote .hote__info {
-  width: 70%;
-}
-
 @media (max-width: 800px) {
   .hote {
     gap: 2rem;
@@ -510,15 +410,8 @@ i.jaune {
 }
 
 @media (max-width: 1000px) {
-  .detail-reservation__contenu
-    > div.detail-reservation__section1
-    > div.section1__article
-    > div.article__title
-    > p,
-  .detail-reservation__contenu
-    > div.detail-reservation__section3
-    > div.section3__informationoccupation
-    > div.informationoccupation__prix {
+  .detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article > div.article__title > p,
+  .detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation > div.informationoccupation__prix {
     font-size: 1.5rem;
   }
   .detail-reservation__entete .entete__titre {
@@ -540,31 +433,20 @@ i.jaune {
   .detail-reservation__conteneur {
     gap: 2em;
   }
-  .detail-reservation__contenu
-    > div.detail-reservation__section3
-    > h3.section3__titre {
+  .detail-reservation__contenu > div.detail-reservation__section3 > h3.section3__titre {
     font-size: 1.5rem;
     margin-bottom: 1rem;
   }
   .detail-reservation__contenu > div.detail-reservation__section4 > h3,
-  .detail-reservation__contenu
-    > div.detail-reservation__section4
-    > div.partiemontant
-    > div.montantFinal
-    > p {
+  .detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.montantFinal > p {
     font-size: 1.5rem;
   }
-  .detail-reservation__contenu
-    > div.detail-reservation__section3
-    > div.section3__informationoccupation
-    > div.informationoccupation__detail {
+  .detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation > div.informationoccupation__detail {
     padding: 1.5em;
     gap: 1em;
     align-items: flex-start;
   }
-  .detail-reservation__contenu
-    > div.detail-reservation__section4
-    > div.partiemontant {
+  .detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant {
     gap: 1rem;
   }
   .detail-reservation__section5,
@@ -583,20 +465,11 @@ i.jaune {
   .detail-reservation__entete .entete__titre {
     font-size: 1.5rem;
   }
-  .detail-reservation__contenu
-    > div.detail-reservation__section1
-    > div.section1__article
-    > div.article__title
-    > p,
-  .detail-reservation__contenu
-    > div.detail-reservation__section3
-    > div.section3__informationoccupation
-    > div.informationoccupation__prix {
+  .detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article > div.article__title > p,
+  .detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation > div.informationoccupation__prix {
     font-size: 1.25rem;
   }
-  .detail-reservation__contenu
-    > div.detail-reservation__section1
-    > div.section1__article {
+  .detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article {
     gap: 1rem;
   }
   .hote .hote__info {
@@ -618,17 +491,10 @@ i.jaune {
     gap: 1em;
   }
   .detail-reservation__contenu > div.detail-reservation__section4 > h3,
-  .detail-reservation__contenu
-    > div.detail-reservation__section4
-    > div.partiemontant
-    > div.montantFinal
-    > p {
+  .detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.montantFinal > p {
     font-size: 1.25rem;
   }
-  .detail-reservation__contenu
-    > div.detail-reservation__section3
-    > div.section3__informationoccupation
-    > div.informationoccupation__detail {
+  .detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation > div.informationoccupation__detail {
     padding: 1em;
   }
 }
@@ -657,7 +523,7 @@ i.jaune {
   .detail-reservation__contenu > div.detail-reservation__section1 > img {
     width: 100%;
     -o-object-fit: cover;
-    object-fit: cover;
+       object-fit: cover;
     max-height: 15rem;
     max-width: none;
   }
@@ -673,9 +539,7 @@ i.jaune {
   .detail-reservation__entete > div:first-child {
     gap: 1rem;
   }
-  .detail-reservation__contenu
-    > div.detail-reservation__section3
-    > div.section3__informationoccupation {
+  .detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation {
     align-items: flex-start;
     flex-direction: column;
   }
@@ -693,4 +557,4 @@ i.jaune {
   .asavoir {
     order: inherit;
   }
-} /*# sourceMappingURL=detailsreserv.css.map */
+}/*# sourceMappingURL=detailsreserv.css.map */
