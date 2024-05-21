@@ -73,8 +73,8 @@ section .container #image-preview div {
 }
 section .container #image-preview div button {
   position: absolute;
-  right: 10;
-  top: 10;
+  right: 10px;
+  top: 10px;
   color: #ff6258;
 }
 section .field-container {
@@ -137,6 +137,16 @@ section .field-container .info_gen__input .input__input {
 }
 section .field-container .info_gen__input .input__input input {
   width: 45%;
+}
+section .field-container .info_gen__input .input__input div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+section .field-container .info_gen__input .input__input div input {
+  width: 95%;
 }
 section .field-container .amenagement__input {
   width: 100%;
@@ -232,7 +242,8 @@ select {
   background-size: 0.8rem auto;
 }
 
-.ajouter {
+.ajouter,
+.envoyer {
   cursor: pointer;
   align-self: stretch;
   border-radius: 0.5rem;
@@ -244,7 +255,15 @@ select {
   justify-content: center;
 }
 @media screen and (max-width: 600px) {
-  .ajouter {
+  .ajouter,
+  .envoyer {
     width: 18%;
   }
+}
+
+.envoyer {
+  width: 25%;
+  height: 40px;
+  background-color: #5669ff;
+  margin: auto;
 }/*# sourceMappingURL=creer-logement.css.map */

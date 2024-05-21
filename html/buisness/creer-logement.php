@@ -3,6 +3,10 @@
     require "../../utils.php";
 
     buisness_connected_or_redirect();
+
+    if (isset($_POST)){
+        
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -76,19 +80,6 @@
                             </div>
                         </div>
 
-                        <div class="info_gen__input adresse">
-                            <label for="chambre">Adresse du logement</label>
-                            <input type="text" id="adresse" name="adresse" placeholder="Saisir adresse" required>
-                        </div>
-
-                        <div class="info_gen__input">
-                            <label for="latitude">Coordonnées GPS</label>
-                            <div class="input__input">
-                                <input type="text" id="latitude" name="latitude" placeholder="Latitude" required>
-                                <input type="text" id="longitude" name="longitude" placeholder="Longitude" required>
-                            </div>
-                        </div>
-
                         <div class="full-size">
                             <div class="info_gen__input">
                                 <label for="accroche">Accroche</label>
@@ -101,6 +92,79 @@
                             </div>
                         </div>
                         
+                    </div>
+                </section>
+
+                <section>
+                    <div class="top">
+                        <h2>Adresse</h2>
+                    </div>
+                    <div class="field-container">
+                        <div class="info_gen__input">
+                            <label for="nbpersonne">Pays</label>
+                            <input type="text" id="pays" name="pays" value="France" disabled required>
+                        </div>
+                        
+                        <div class="info_gen__input">
+                            <label for="nbpersonne">Région</label>
+                            <input type="text" id="region" name="region" value="Bretagne" disabled required>
+                        </div>
+
+                        <div class="info_gen__input">
+                            <label for="departement">Département</label>
+                            <select name="departement" id="departement" required>
+                                <option value="" disabled selected>Selectionner</option>
+                                <option value="Finistère">Finistère</option>
+                                <option value="Morbihan">Morbihan</option>
+                                <option value="Ille-et-Vilaine">Ille-et-Vilaine</option>
+                                <option value="Côtes-d'Armor">Côtes-d'Armor</option>
+                            </select>
+                        </div>
+
+                        <div class="info_gen__input">
+                            <label for="commune">Commune</label>
+                            <input type="text" id="commune" name="commune" placeholder="Saisissez" required>
+                        </div>
+
+                        <div class="info_gen__input">
+                            <label for="">Code Postal</label>
+                            <input type="number" id="cp" name="cp" placeholder="29400" required>
+                        </div>
+
+                        <div class="info_gen__input">
+                            <label for="latitude">Coordonnées GPS</label>
+                            <div class="input__input">
+                                <input type="text" id="latitude" name="latitude" placeholder="Latitude" required>
+                                <input type="text" id="longitude" name="longitude" placeholder="Longitude" required>
+                            </div>
+                        </div>
+
+                        <div class="info_gen__input adresse">
+                            <label for="voie">Voie</label>
+                            <input type="text" id="voie" name="voie" placeholder="Nom de voie" required>
+                        </div>
+
+                        <div class="info_gen__input">
+                            <label for="num_voie">Numéro Voie</label>
+                            <div class="input__input">
+                                <input type="number" id="num_voie" name="num_voie" placeholder="12" required>
+                            </div>
+                        </div>
+
+                        <div class="info_gen__input adresse">
+                            <label for="comp1">Complément 1</label>
+                            <input type="text" id="comp1" name="comp1" placeholder="Saisir complément">
+                        </div>
+
+                        <div class="info_gen__input adresse">
+                            <label for="comp2">Complément 2</label>
+                            <input type="text" id="comp2" name="comp2" placeholder="Saisir complément">
+                        </div>
+
+                        <div class="info_gen__input adresse">
+                            <label for="comp2">Complément 3</label>
+                            <input type="text" id="comp2" name="comp2" placeholder="Saisir complément">
+                        </div>
                     </div>
                 </section>
 
@@ -213,10 +277,10 @@
                     <input type="button" value="Ajouter une image" onclick="document.getElementById('image-input').click();" />
                 </section>
 
-                <button>
-                    SUBMIT
-                </button>
-            </form>
+                    <button class="envoyer">
+                        Enregistrer
+                    </button>
+                </form>
         </main>
         <?php require_once "footer.php"; ?>
     </div>
