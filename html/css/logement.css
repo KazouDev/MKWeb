@@ -239,10 +239,6 @@
   position: relative;
 }
 
-#logement__reserver {
-  display: none;
-}
-
 #logement__verifier,
 #logement__reserver {
   position: sticky;
@@ -946,4 +942,133 @@
   .avis .lesavis .avis__element p {
     font-size: 0.75rem;
   }
+}
+#container-calendar .calendar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+#container-calendar .calendar-nav .calendar-btn {
+  background-color: #878787;
+  color: #fff;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#container-calendar .calendar-nav .calendar-btn#prev {
+  margin-right: 0.25rem;
+}
+#container-calendar .calendar-nav .calendar-btn#next {
+  margin-left: 0.25rem;
+}
+#container-calendar .calendar-nav .calendar-month {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+}
+#container-calendar table {
+  border-collapse: collapse;
+  width: 200px;
+}
+#container-calendar th,
+#container-calendar td {
+  border: 1px solid black;
+  padding: 4px;
+  text-align: center;
+}
+#container-calendar th {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+#container-calendar {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1em;
+}
+#container-calendar h3 {
+  margin-top: 0;
+  font-size: calc(1vw + 0.4em);
+}
+#container-calendar button {
+  margin-bottom: 10px;
+  width: 1em;
+}
+#container-calendar #error_periode {
+  position: absolute;
+  display: none;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f44336;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  z-index: 9999;
+  max-width: 200px;
+  text-align: center;
+}
+#container-calendar #calendar {
+  border-collapse: collapse;
+  width: 100%;
+}
+#container-calendar #calendar th,
+#container-calendar #calendar td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+#container-calendar #calendar th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.selected-start,
+.selected-end {
+  background-color: #5669ff;
+  color: white;
+}
+
+.selected {
+  background-color: #9aa5ff;
+}
+
+.reserved {
+  background-color: #ffc0cb;
+  cursor: not-allowed;
+}
+
+.style_calendar {
+  font-weight: bold;
+}
+
+#prev,
+#next {
+  cursor: pointer;
+  background-color: #f2f2f2;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#month {
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+#nb_personnesDevis {
+  color: black;
 } /*# sourceMappingURL=logement.css.map */
