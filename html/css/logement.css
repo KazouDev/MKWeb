@@ -95,7 +95,7 @@
   max-width: 21.875rem;
   max-height: 15.625rem;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 
 @media (max-width: 1200px) {
@@ -238,6 +238,11 @@
   flex-direction: column;
   position: relative;
 }
+
+#logement__reserver {
+  display: none;
+}
+
 #logement__verifier,
 #logement__reserver {
   position: sticky;
@@ -312,7 +317,7 @@
   padding: 0.4rem 0.7rem;
 }
 
-.logement__res input[type="submit"] {
+.logement__res input[type=submit] {
   cursor: pointer;
   align-self: stretch;
   border-radius: 0.5rem;
@@ -570,7 +575,7 @@
   }
   .logement__propose ul {
     -moz-column-gap: 4rem;
-    column-gap: 4rem;
+         column-gap: 4rem;
   }
   .logement__proposNote {
     padding-right: 0rem;
@@ -644,7 +649,7 @@
   height: 7rem;
   border-radius: 50%;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 .hote .hote__info .hote__main {
   display: flex;
@@ -695,7 +700,7 @@
 }
 
 .apropos button:hover,
-.logement__res input[type="submit"]:hover,
+.logement__res input[type=submit]:hover,
 #reset:hover {
   background-color: #9aa5ff;
 }
@@ -780,7 +785,7 @@
   align-items: flex-start;
   gap: 2rem;
 }
-.environs .environs__map iframe {
+.environs #environs__map {
   width: 25rem;
   height: 20rem;
 }
@@ -857,7 +862,7 @@
   height: 3rem;
   border-radius: 50%;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 .avis .lesavis .avis__element .avis__top .avis__user .user__nom {
   display: flex;
@@ -924,7 +929,7 @@
   .avis .lesavis .avis__element p {
     max-width: none;
   }
-  .environs .environs__map iframe {
+  .environs #environs__map {
     width: 20rem;
     height: 20rem;
   }
@@ -1070,4 +1075,4 @@
 
 #nb_personnesDevis {
   color: black;
-} /*# sourceMappingURL=logement.css.map */
+}/*# sourceMappingURL=logement.css.map */
