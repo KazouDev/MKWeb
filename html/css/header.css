@@ -234,6 +234,7 @@
 }
 
 #menu-user {
+  z-index: 100;
   display: none;
   position: absolute;
   top: 70px;
