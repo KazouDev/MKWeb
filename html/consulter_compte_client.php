@@ -40,6 +40,15 @@
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    
+    <div class="wrapper">
+        <main class="main__container">
+            <div class="detail_compte__conteneur">
+                <img src="$src_photo" alt="photo de profil de l'utilisateur">
+                <h1><?= $premon . " " . $nom ?></h1>
+                <p><?= $ville . ", " . $pays ?></p>
+                <p><?= $genre ?></p>
+            </div>
+        </main>
+    </div>
 </body>
 </html>
