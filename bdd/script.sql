@@ -42,7 +42,9 @@ CREATE TABLE _adresse (
   departement VARCHAR(255) NOT NULL,
   commune VARCHAR(255) NOT NULL,
   code_postal VARCHAR(255) NOT NULL,
-  nom_voie VARCHAR(255) NOT NULL,
+  numero VARCHAR(255), 
+  rep VARCHAR(255), 
+  nom_voie VARCHAR(255),
   latitude FLOAT,
   longitude FLOAT
 );
@@ -395,7 +397,7 @@ INSERT INTO _adresse (pays, region, departement, commune, code_postal, numero, r
 ('France', 'Bretagne', 'Morbihan', 'Vannes', '56000', '4', '', 'Allée du Noroît', '-2.771338', '47.639905'),
 ('France', 'Bretagne', 'Morbihan', 'Vannes', '56000', '9', 'bis', 'Rue Louis Pasteur', '-2.763011', '47.655071');
 
-INSERT INTO users (last_name, first_name, birth_date, gender, username, password, profile_image, email, phone, id) VALUES
+INSERT INTO _utilisateur (nom, prenom, date_naissance, civilite, pseudo, mot_de_passe, photo_profile, email, telephone, id_adresse) VALUES
 ('Dupont', 'Jean', '1944-03-15', 'Mr', 'JeanD', '$2y$10$BDX6AiuIWhjCXxTO3rXhMObumJjQsn6waQVEJPGcX3hZXolu4J9M.', './img/compte/profile_jeand.jpg', 'jean.dupont@gmail.com', '06 12 34 56 78', 1),
 ('Martin', 'Marie', '1947-05-23', 'Mme', 'MarieM', '$2y$10$lVCsVLWcTTKb4qHytuN6C.iHPHcLwjuxWBmDJ99GP.z3EYWYY80SG', './img/compte/profile_mariem.jpg', 'marie.martin@yahoo.com', '06 23 45 67 89', 2),
 ('Lefevre', 'Pierre', '1950-08-19', 'Mr', 'PierreL', '$2y$10$tACfPV0DiKt1PQJDGaiUUOUdlbK7vUjfs/3fpQF4zfY5NCWe6/hWG', './img/compte/profile_pierrel.jpg', 'pierre.lefevre@icloud.com', '06 34 56 78 90', 3),
