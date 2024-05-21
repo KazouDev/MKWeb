@@ -238,7 +238,6 @@
   flex-direction: column;
   position: relative;
 }
-
 #logement__verifier,
 #logement__reserver {
   position: sticky;
