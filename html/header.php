@@ -78,7 +78,7 @@
                     <a href="buisness/index.php" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
                 </li>
                 <li class="menu__item hide">
-                    <a href="" class="menu__link" style="color: #FF5656;">Se déconnecter</a>
+                    <a href="logout.php" class="menu__link" style="color: #FF5656;">Se déconnecter</a>
                 </li>
             </ul>
         </nav>
@@ -106,7 +106,7 @@
             <a href="buisness/index.php" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
         </li>
         <li class="menu__item ">
-            <a href="" class="menu__link" style="color: #FF5656;">Se déconnecter</a>
+            <a href="logout.php" class="menu__link" style="color: #FF5656;">Se déconnecter</a>
         </li>
     </ul> 
     <img src="../img/menu.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
