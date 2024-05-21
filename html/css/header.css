@@ -112,6 +112,7 @@
 
 .header__form i {
   font-size: 1.5rem !important;
+  color: #222222;
 }
 
 @media (max-width: 767.98px) {
@@ -278,4 +279,11 @@
     height: 15px;
     top: 15px;
   }
+}
+header.buisness .header__connexion {
+  border: 1px solid #FFFFFF;
+  color: #FFFFFF;
+}
+header.buisness .header__form a i {
+  color: #FFFFFF;
 }/*# sourceMappingURL=header.css.map */

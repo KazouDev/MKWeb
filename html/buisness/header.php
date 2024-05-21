@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="header__form">
-                <a href=""><i class="fa-regular fa-eye-slash" style="color: #222222;"></i></a>
+                <a href=""><i class="fa-regular fa-eye-slash"></i></a>
                 <div class="header__connexion"><a href="login.php">Connexion</a></div>                    
             </div>
             <img src="../img/menu.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
