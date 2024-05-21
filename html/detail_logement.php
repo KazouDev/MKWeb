@@ -9,6 +9,13 @@
     INNER JOIN sae._type_logement ON sae._logement.id_type = sae._type_logement.id 
     INNER JOIN sae._categorie_logement ON sae._logement.id_categorie = sae._categorie_logement.id
     WHERE sae._logement.id ='$id_logement';"; 
+
+    $rep_logement = request($query, true);
+    if (!$rep_logement || !isset($rep_logement)){
+        header('Location: index.php');
+        die;
+    }
+
     $query_note = "SELECT avg(note), count(*) from sae._avis where id_logement = $id_logement;";
     $query_amenagement = "SELECT amenagement FROM sae._amenagement_logement INNER JOIN sae._amenagement ON sae._amenagement_logement.id_amenagement = sae._amenagement.id  WHERE sae._amenagement_logement.id_logement = $id_logement;";
     $query_hote = "select prenom, nom from sae._utilisateur inner join sae._logement on sae._utilisateur.id = sae._logement.id_proprietaire where sae._logement.id = $id_logement;";
@@ -33,7 +40,6 @@
         FROM sae._logement 
         WHERE sae._logement.id = $id_logement
     );";
-    $rep_logement = request($query)[0];
     $rep_note = request($query_note)[0];
     $rep_amenagement = request($query_amenagement);
     $rep_hote = request($query_hote)[0];
@@ -96,62 +102,6 @@
         }
         $liste_avis = $liste_avis . $avis['prenom'] . ", " . $avis['ville'] .', ' . $avis['pays'] .', ' .$avis['note'] .', ' . $avis['commentaire'];
     }
-
-    /* echo "ID: " . $id_logement . "<br>";
-    echo "Nom du logement : " . $titre_logement . "<br>";
-    if (empty($moyenne_note)) {
-        echo 'Aucune note n\'a été donnée pour ce logement.' . "<br>";
-    } else {
-        echo "Note : " . $moyenne_note . "<br>";
-    }
-    echo "Localisation : " . $ville . "<br>";
-    echo "Département : " . $departement . "<br>";
-    echo "Accroche : " . $accroche . "<br>";
-    echo "Type : " . $type . "<br>";
-    echo "Surface : " . $surface . "<br>";
-    echo "Nombre de voyageur : " . $nb_personne . "<br>";
-    echo "Chambres : " . $nb_chambre . "<br>";
-    if (empty($nb_lit_simple)) {
-        echo 'Il n\'y a pas  de lit simple.'. "<br>";
-    } else {
-        echo "Lits simples : " . $nb_lit_simple . "<br>";
-    } 
-    if (empty($nb_lit_double)) {
-        echo 'Il n\'y a pas  de lit double.'. "<br>";
-    } else {
-        echo "Lits doubles : " . $nb_lit_double . "<br>";
-    }
-    echo "Aménagements : " . "<br>";
-    if (empty($liste_amenagement)) {
-        echo 'Il n\'y a aucun aménagement pour ce logement.'. "<br>";
-    } else {
-        var_dump($liste_amenagement) . "<br>";
-    }
-    if (empty($moyenne_note)) {
-        echo 'Aucune note n\'a été donnée pour ce logement.' . "<br>";
-    } else {
-        echo "Note : " . $moyenne_note . "<br>";
-    }
-    echo "Nombre de commentaire : " . $nb_commentaire . "<br>";
-    echo "Description : " . $description . "<br>";
-    echo "Nom de l'hôte : " . $nom_hote . "<br>";
-    echo "Prénom de l'hôte : " . $prenom_hote . "<br>";
-    echo "Langues : ";
-    //echo $liste_langue . "<br>";
-    echo "Moyens de paiement acceptés : Carte bancaire et Paypal" . "<br>" ;
-    echo "Activités à proximité : " . "<br>" ;
-    if (empty($liste_activite)) {
-        echo 'Il n\'y a pas d\'activité à proximité.'. "<br>";
-    } else {
-        echo $liste_activite . "<br>";
-    }
-    echo "Avis client : " . "<br>";
-    if (empty($liste_avis)) {
-        echo 'Aucun avis disponible.'. "<br>";
-    } else {
-        echo $liste_avis . "<br>";
-    } */
-
 ?>
 
 <!DOCTYPE html>
@@ -460,123 +410,102 @@
                         </div>
 
                     </div>
-                    <div class="logement__reserver">
-                        <div class="logement__res" id="logement__verifier">
-                            <h2>Indiquez les dates pour voir les tarifs</h2>
-                            <form action="">
-                                <div class="res__fromulaire">
-                                    <div class="res__dates">
-                                        <div class="res__arrive">
-                                            <label for="reservArr">Arrivée</label>
-                                            <input type="date" name="reservArr" id="reservArr" value="2024-05-30" min="2024-05-30" required>
-                                        </div>
-                                        <div class="res__dep">
-                                            <label for="reservDep">Départ</label>
-                                            <input type="date" name="reservDep" id="reservDep" value="2024-05-30" min="2024-05-30" required>
-                                        </div>
-                                    </div>
-                                    <div class="res__voy">
-                                        <label for="nb_personnes">Voyageurs</label>
-                                        <input type="number" id="nb_personnes" placeholder="1 voyageur" name="nombre_personnes" min="1" max="13" required>
-                                    </div>
-                                </div>
-                                <input type="submit" value="Vérifier la disponibilité">
+                    <!--  Partie résa-->
+                    
+                    <?php
 
-                            </form>
-                        </div>
-                        <div class="logement__res" id="logement__reserver">
-                            <h2><span id="logement__prix">286</span> € par  nuit</h2>
-                            <form action="">
-                                <div class="res__fromulaire">
-                                    <div class="res__dates">
-                                        <div class="res__arrive">
-                                            <label for="reservArrDevis">Arrivée</label>
-                                            <input type="date" name="reservArrDevis" id="reservArrDevis" value="2024-05-30" min="2024-05-30" required>
+                    require_once '../utils.php';
+                    $id = 1;
+                    $sql = 'SELECT base_tarif FROM sae._logement';
+                    $sql .= ' WHERE id = ' . $id;
+                    $res = request($sql,1);
+                    
+                    $base_tarif = $res['base_tarif'];
+                   
+                    if (isset($_POST['submit_resa'])){
+
+                        // CRÉATION RÉSERVATION
+
+                    }
+
+                    ?>
+                
+                        
+                    <div class="logement__res" id="logement__reserver">
+                        <h2><span  id="logement__prix"><?=$base_tarif?></span> € par  nuit</h2>
+                        <form action="" method="post">
+                            <div class="res__fromulaire">
+                                
+                                    <input type="text" name="dateDebut" hidden >
+                                    <input type="text" name="dateFin" hidden>
+                                    
+                                    <div id="container-calendar">
+                                    <div id="error_periode">Une réservation doit être supérieur à 4 jours</div>
+                                        <h3>Arrivée - Départ</h3>
+                                        <div class="calendar-nav">
+                                            <button type="button" class="calendar-btn" id="prev">&lt;</button>
+                                            <span class="calendar-month" id="month"></span>
+                                            <button type="button" class="calendar-btn" id="next">&gt;</button>
                                         </div>
-                                        <div class="res__dep">
-                                            <label for="reservDepDevis">Départ</label>
-                                            <input type="date" name="reservDepDevis" id="reservDepDevis" value="2024-05-30" min="2024-05-30" required>
-                                        </div>
+                                        <table id="calendar"></table>
                                     </div>
-                                    <div class="res__voy">
-                                        <label for="nb_personnesDevis">Voyageurs</label>
-                                        <input type="number" id="nb_personnesDevis" placeholder="1 voyageur" name="nombre_personnesDevis" min="1" max="13" required>
-                                    </div>
+                                
+                                <div class="res__voy">
+                                    <label for="nb_personnesDevis">Voyageurs</label>
+                                    <input type="number" id="nb_personnesDevis" placeholder="1 voyageur" name="nombre_personnesDevis" min="1" max="13" required>
                                 </div>
-                                <div class="logement__calcules">
+                                
+
+                            </div>
+
+                            <div id="appear_calcul" style="display:none">
+                                <div class="logement__calcules" >
                                     <div class="calcules__ligne">
                                         <div class="ttc__jours">
-                                            <p id="prix__TTC" class="calcules__under">286</p>
+                                            <p id="prix__TTC" class="calcules__under"></p>
                                             <p class="calcules__under">€  x</p>
-                                            <p id="nb_jours" class="calcules__under">5</p>
+                                            <p id="nb_jours" class="calcules__under"></p>
                                             <p class="calcules__under">jours</p>
                                         </div>
                                         <div class="ttc_prix">
-                                            <p id="prix__total">1430</p>
-                                            <p>€  TTC</p>
+                                            <p id="prix__total"></p>
+                                            <p>€  HT</p>
                                         </div>
                                     </div>
                                     <div class="calcules__ligne">
                                         <p class="calcules__under">Frais</p>
                                         <div class="frais">
-                                            <p id="frais__total">14,3 </p>
+                                            <p id="frais__total"> </p>
                                             <p>€</p>
                                         </div>
                                     </div>
                                     <div class="calcules__ligne">
                                         <p class="calcules__under">Taxes</p>
                                         <div class="frais">
-                                            <p id="taxes__total">14,4 </p>
+                                            <p id="taxes__total"></p>
                                             <p>€</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="logement__total-ttc">
                                     <p>Total TTC</p>
-                                    <p><span id="tot-ttc">1 458,7 </span>€</p>
+                                    <p><span id="tot-ttc"></span>€</p>
                                 </div>
-                                <input type="submit" value="Réserver">
-                                <input type="submit" id="reset" value="Annuler">
-
-                            </form>
-                        </div>
+                                <!--<input type="submit" id="reset" value="Annuler"> -->
+                                <input type="submit" name="submit_resa" value="Réserver">
+                                
+                            </div>
+                        </form>
                     </div>
-                </div>
+            </div>
             </div>
         </main>
-        <footer class="footer">
-            <div class="footer__container">
-                <nav class="footer__menu">
-                    <ul class="footer__menu__list">
-                        <li class="footer__menu__item">© 2024 ALHalZ Breizh</li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Confidentialité</a>
-                        </li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Conditions générales</a>
-                        </li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Mentions légales</a>
-                        </li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Accessibilité</a>
-                        </li>
-                        <li class="footer__menu__item footer__menu__item-point">·</li>
-                        <li class="footer__menu__item">
-                            <a href="" class="footer__menu__link">Ajouter mon établissement</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </footer>
+        <?php include_once 'footer.php'; ?>
     </div>
     
     
     <script src="js/header_user.js"></script>
+    <script src="js/logement.js"></script>
 </body>
 </html>
 
