@@ -18,6 +18,11 @@ a {
   cursor: pointer;
 }
 
+.wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
 header {
   position: relative;
 }

@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   gap: 3.125em;
+  margin-top: 2em;
   font-family: "Plus Jakarta San", sans-serif;
 }
 
@@ -22,6 +23,7 @@
   display: flex;
   align-items: center;
   flex-direction: row;
+  gap: 1.875em;
 }
 .detail-reservation__entete > div:first-child > img {
   max-width: 2.5em;
@@ -189,7 +191,8 @@
   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
 }
 .detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation > div.informationoccupation__prix {
-  font-size: 3em;
+  font-size: 2rem;
+  font-weight: 600;
 }
 .detail-reservation__contenu > div.detail-reservation__section4 {
   display: flex;
@@ -243,4 +246,9 @@
 
 i.jaune {
   color: #FFD33C;
+}
+
+.info_fin_page {
+  display: flex;
+  gap: 1.875em;
 }/*# sourceMappingURL=detailsreserv.css.map */
