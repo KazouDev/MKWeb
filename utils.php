@@ -27,6 +27,43 @@ try {
 }
 }
 
+function insert($table, $name, $value, $get_id = true){
+  require "connect_db/connect_param.php";
+  
+  try {
+    $connexion = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    $name = implode(", ", $name);
+
+    $values = implode(", ", array_map(function ($v){
+      if (strtolower($v) != "null"){
+        return "'$v'";
+      } else {
+        return $v;
+      }
+    }, $value));
+
+    $sql = "INSERT INTO $table($name) VALUES ($values)";
+
+    $requete = $connexion->prepare($sql);
+  
+    $requete->execute();
+    $id;
+    if ($get_id){
+      $id = $connexion->lastInsertId();
+    } else {
+      $id = true;
+    }
+    $connexion = null;
+    return $id;
+  } catch(PDOException $e) {
+    $connexion = null;
+    echo "Error : ".$e;
+    return false;
+  }
+  }
+
 function client_connected(){
   if (isset($_SESSION) && isset($_SESSION["client_id"])){
     return $_SESSION["client_id"];
@@ -39,6 +76,7 @@ function client_connected_or_redirect(){
   if (isset($_SESSION) && isset($_SESSION["client_id"])){
     return $_SESSION["client_id"];
   } else {
+    $_SESSION["last_page"] = $_SERVER["REQUEST_URI"];
     header("Location: login.php");
     exit();
   }
@@ -56,6 +94,7 @@ function buisness_connected_or_redirect(){
   if (isset($_SESSION) && isset($_SESSION["business_id"])){
     return $_SESSION["business_id"];
   } else {
+    $_SESSION["last_page"] = $_SERVER["REQUEST_URI"];
     header("Location: login.php");
     exit();
   }
@@ -81,6 +120,15 @@ function business_disconnect(){
   }
   session_unset();
   session_destroy();
+}
+
+function redirect(){
+  if (isset($_SESSION["last_page"])){
+    header('Location: '.$_SESSION["last_page"]);
+  } else {
+    header('Location: index.php');
+  }
+  exit();
 }
 
 ?>

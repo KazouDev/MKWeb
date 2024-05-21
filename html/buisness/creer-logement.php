@@ -4,8 +4,86 @@
 
     buisness_connected_or_redirect();
 
-    if (isset($_POST)){
-        
+    if (isset($_POST["titre"])){
+        echo "<pre>";
+        print_r($_POST);
+        echo "</pre>";
+
+        /*
+          id SERIAL PRIMARY KEY,
+  id_proprietaire INT NOT NULL,
+  id_adresse INT NOT NULL,
+  titre VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
+  accroche VARCHAR(255) NOT NULL,
+  base_tarif FLOAT NOT NULL,
+  surface INT NOT NULL,
+  nb_max_personne INT NOT NULL,
+  nb_chambre INT NOT NULL,
+  nb_lit_simple INT NOT NULL,
+  nb_lit_double INT NOT NULL,
+  periode_preavis INT NOT NULL,
+  en_ligne BOOLEAN NOT NULL,
+  id_categorie INT NOT NULL,
+  id_type INT NOT NULL*/
+          $adresse = [
+            "pays" => $_POST["pays"],
+            "region" => $_POST["region"],
+            "departement" => $_POST["departement"],
+            "ville" => $_POST["commune"],
+            "rue" => $_POST["num_voie"] . " " .$_POST["voie"],
+            "complement_1" => empty($_POST["comp1"]) ? "NULL" : $_POST["comp1"],
+            "complement_2" => empty($_POST["comp2"]) ? "NULL" : $_POST["comp2"],
+            "complement_3" => empty($_POST["comp3"]) ? "NULL" : $_POST["comp3"],
+            "latitude" => $_POST["latitude"],
+            "longitude" => $_POST["longitude"]
+        ];
+
+        $logement = [
+            "titre" => $_POST["titre"],
+            "id_proprietaire" => buisness_connected_or_redirect(),
+            "id_adresse" => insert("sae._adresse", array_keys($adresse), array_values($adresse)),
+            "id_categorie" => $_POST["categorie"],
+            "id_type" => $_POST["type"],
+            "surface" => $_POST["surface"],
+            "nb_chambre" => $_POST["chambre"],
+            "nb_lit_simple" => $_POST["simple"],
+            "nb_lit_double" => $_POST["double"],
+            "accroche" => $_POST["accroche"],
+            "description" => $_POST["description"],
+            "nb_max_personne" => $_POST["nbpersonne"],
+            "base_tarif" => $_POST["prixht"],
+            "periode_preavis" => $_POST["delaires"],
+            "en_ligne" => $_POST["statut"]
+        ];
+
+        $id_logement = insert("sae._logement", array_keys($logement), array_values($logement));
+
+        foreach($_POST["amenagements"] as $amenagement){
+            insert("sae._amenagement_logement", ["id_logement", "id_amenagement"], [$id_logement, $amenagement], false);
+        }
+
+        /*Activite*/
+        foreach($_POST["amenagement"] as $activite){
+            $activite = explode(";;" ,$activite);
+            insert("sae._activite_logement", ["id_logement", "activite", "id_distance"], [$id_logement, $activite[0], $activite[1]], false);
+        }
+
+        $uploads_dir = "../../images/logement/$id_logement";
+        if (!is_dir($uploads_dir)){
+            mkdir($uploads_dir, 0777, true);
+        }
+
+        if (isset($_FILES["images"])){
+            foreach ($_FILES["images"]["error"] as $key => $error) {
+                if ($error == UPLOAD_ERR_OK) {
+                    $tmp_name = $_FILES["images"]["tmp_name"][$key];
+                    $name = basename($_FILES["images"]["name"][$key]);
+                    move_uploaded_file($tmp_name, "$uploads_dir/$name");
+                }
+            }
+        }
+
     }
 ?>
 <!DOCTYPE html>
@@ -44,26 +122,22 @@
                             <label for="categorie">Catégorie</label>
                             <select name="categorie" id="categorie" placeholder="" required>
                                 <option value="" disabled selected>Catégorie Logement</option>
-                                <option value="0">Maison</option>
-                                <option value="1">Appartement</option>
-                                <option value="2">Villa</option>
-                                <option value="3">Exotique</option>
+                                <?php foreach(request("SELECT * FROM sae._categorie_logement") as $cat){ ?>
+                                    <option value=<?= $cat["id"]?>><?=$cat["categorie"]?></option>
+                                <?php } ?>
                             </select>
                         </div>
                         <div class="info_gen__input">
                             <label for="titre">Type</label>
-                            <select name="type" id="titre" required>
+                            <select name="type" id="type" required>
                                 <option value="" disabled selected>Type de Logement</option>
-                                <option value="0">T1</option>
-                                <option value="1">T2</option>
-                                <option value="2">T3</option>
-                                <option value="3">F1</option>
-                                <option value="4">F2</option>
-                                <option value="5">F3</option>
+                                <?php foreach(request("SELECT * FROM sae._type_logement") as $cat){ ?>
+                                    <option value=<?= $cat["id"]?>><?=$cat["type"]?></option>
+                                <?php } ?>
                             </select>
                         </div>
                         <div class="info_gen__input">
-                            <label for="titre">Surface</label>
+                            <label for="surface">Surface</label>
                             <input type="number" id="surface" name="surface" placeholder="Surface en m²" required>
                         </div>
                         
@@ -83,7 +157,7 @@
                         <div class="full-size">
                             <div class="info_gen__input">
                                 <label for="accroche">Accroche</label>
-                                <textarea id="description" name="description" placeholder="Saisir descriptif" required></textarea>
+                                <textarea id="accroche" name="accroche" placeholder="Saisir descriptif" required></textarea>
                             </div>
 
                             <div class="info_gen__input">
@@ -101,12 +175,12 @@
                     </div>
                     <div class="field-container">
                         <div class="info_gen__input">
-                            <label for="nbpersonne">Pays</label>
+                            <label for="pays">Pays</label>
                             <input type="text" id="pays" name="pays" value="France" disabled required>
                         </div>
                         
                         <div class="info_gen__input">
-                            <label for="nbpersonne">Région</label>
+                            <label for="region">Région</label>
                             <input type="text" id="region" name="region" value="Bretagne" disabled required>
                         </div>
 
@@ -131,13 +205,8 @@
                             <input type="number" id="cp" name="cp" placeholder="29400" required>
                         </div>
 
-                        <div class="info_gen__input">
-                            <label for="latitude">Coordonnées GPS</label>
-                            <div class="input__input">
-                                <input type="text" id="latitude" name="latitude" placeholder="Latitude" required>
-                                <input type="text" id="longitude" name="longitude" placeholder="Longitude" required>
-                            </div>
-                        </div>
+                        <input type="hidden" id="latitude" name="latitude" placeholder="Latitude" required>
+                        <input type="hidden" id="longitude" name="longitude" placeholder="Longitude" required>
 
                         <div class="info_gen__input adresse">
                             <label for="voie">Voie</label>
@@ -162,8 +231,8 @@
                         </div>
 
                         <div class="info_gen__input adresse">
-                            <label for="comp2">Complément 3</label>
-                            <input type="text" id="comp2" name="comp2" placeholder="Saisir complément">
+                            <label for="comp3">Complément 3</label>
+                            <input type="text" id="comp3" name="comp3" placeholder="Saisir complément">
                         </div>
                     </div>
                 </section>
@@ -175,12 +244,12 @@
                     <div class="field-container">
                         <div class="info_gen__input">
                             <label for="nbpersonne">Nombre max de personne</label>
-                            <input type="text" id="titre" name="titre" placeholder="ex: Villa pieds dans la mer" required>
+                            <input type="number" id="nbpersonne" name="nbpersonne" placeholder="6" required>
                         </div>
                         
                         <div class="info_gen__input">
-                            <label for="chambre">Prix HT</label>
-                            <input type="number" id="prixht" name="prixht" placeholder="Saisissez" required>
+                            <label for="prixht">Prix HT</label>
+                            <input type="number" id="prixht" name="prixht" placeholder="123.5" required>
                         </div>
 
                         <div class="info_gen__input">
@@ -210,34 +279,13 @@
                         <p>Ajoutez des aménagement présent dans votre logements.</p>
                     </div>
                     <div class="field-container check__list">
-                        <div class="input__checkbox">
-                            <input type="checkbox" name="amenagements[]" value="0">
-                            <label>Four</label>
+                        
+                        <?php foreach(request("SELECT * FROM sae._amenagement") as $ame){ ?>
+                            <div class="input__checkbox">
+                            <input type="checkbox" name="amenagements[]" value=<?=$ame["id"]?>>
+                            <label><?=$ame["amenagement"]?></label>
                         </div>
-                        <div class="input__checkbox">
-                            <input type="checkbox" name="amenagements[]" value="1">
-                            <label>Climatisation</label>
-                        </div>
-                        <div class="input__checkbox">
-                            <input type="checkbox" name="amenagements[]" value="2">
-                            <label>Piscine</label>
-                        </div>
-                        <div class="input__checkbox">
-                            <input type="checkbox" name="amenagements[]" value="3">
-                            <label>Beer-Pong</label>
-                        </div>
-                        <div class="input__checkbox">
-                            <input type="checkbox" name="amenagements[]" value="3">
-                            <label>Parking gratuit sur place</label>
-                        </div>
-                        <div class="input__checkbox">
-                            <input type="checkbox" name="amenagements[]" value="3">
-                            <label>Vue sur la mer</label>
-                        </div>
-                        <div class="input__checkbox">
-                            <input type="checkbox" name="amenagements[]" value="3">
-                            <label>Sèche-linge</label>
-                        </div>
+                        <?php } ?>
                     </div>
                 </section>
 
@@ -253,9 +301,9 @@
                         <div class="amenagement__input">
                             <input type="text" id="name__amenagement">
                             <select id="distance__amenagement">
-                                <option value="0">Sur place</option>
-                                <option value="1">Moins de 5km</option>
-                                <option value="2">Moins de 10km</option>
+                            <?php foreach(request("SELECT * FROM sae._distance") as $distance){ ?>
+                                <option value=<?= $distance["id"]?>><?=ucfirst($distance["perimetre"])?></option>
+                            <?php } ?>
                             </select>
                             <button type="button" class="ajouter" id="ajouter__amenagement">Ajouter</button>
                         </div>
@@ -277,7 +325,7 @@
                     <input type="button" value="Ajouter une image" onclick="document.getElementById('image-input').click();" />
                 </section>
 
-                    <button class="envoyer">
+                    <button id="form__submit" class="envoyer">
                         Enregistrer
                     </button>
                 </form>

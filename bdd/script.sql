@@ -45,7 +45,7 @@ CREATE TABLE _adresse (
   complement_1 VARCHAR(255),
   complement_2 VARCHAR(255),
   complement_3 VARCHAR(255),
-  lattitude FLOAT,
+  latitude FLOAT,
   longitude FLOAT
 );
 

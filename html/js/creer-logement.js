@@ -98,7 +98,20 @@ imageInput.addEventListener("change", (e) => {
   e.target.value = "";
 });
 
-logementForm.addEventListener("submit", (e) => {
+const latitudeInput = document.getElementById("latitude");
+const longitudeInput = document.getElementById("longitude");
+
+const villeInput = document.getElementById("commune");
+const regionInput = document.getElementById("region");
+const departementInput = document.getElementById("departement");
+const paysInput = document.getElementById("pays");
+const voieInput = document.getElementById("voie");
+const numVoieInput = document.getElementById("num_voie");
+
+document.getElementById("form__submit").addEventListener("click", async (e) => {
+  console.log("click form submit");
+  e.preventDefault();
+  if (!logementForm.reportValidity()) return;
   if (imageList.length > 0) {
     const data = new DataTransfer();
 
@@ -109,7 +122,41 @@ logementForm.addEventListener("submit", (e) => {
     imageInput.files = data.files;
 
     imageInput.name = "images[]";
-
-    console.log(data);
   }
+
+  let adresse =
+    numVoieInput.value +
+    " " +
+    voieInput.value +
+    " " +
+    villeInput.value +
+    " " +
+    departementInput.value +
+    " " +
+    regionInput.value +
+    " " +
+    paysInput.value;
+
+  const url =
+    "https://api.opencagedata.com/geocode/v1/json?q=" +
+    encodeURIComponent(adresse) +
+    "&key=90a3f846aa9e490d927a787facf78c7e";
+
+  const response = await fetch(url);
+  const data = await response.json();
+
+  if (data.results.length > 0) {
+    latitudeInput.value = data.results[0].geometry.lat;
+    longitudeInput.value = data.results[0].geometry.lng;
+    console.log(data);
+  } else {
+    console.error("Adresse invalide.");
+    document.getElementById("voie").focus();
+    return;
+  }
+
+  paysInput.disabled = false;
+  regionInput.disabled = false;
+
+  logementForm.submit();
 });

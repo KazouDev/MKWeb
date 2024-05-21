@@ -6,7 +6,7 @@
 
     // Si déjà connecté on renvoie sur l'acceuil.
     if (isset($_SESSION["client_id"])){
-        header('Location: index.php');
+        redirect();
         exit;
     }   
 
@@ -27,7 +27,7 @@
             // On vérifie les mot de passe.
             if (password_verify($_POST["password"], $result["mot_de_passe"])){
                 $_SESSION["client_id"] = $result["id"];
-                header('Location: index.php');
+                redirect();
                 exit; 
             } else {
                 $status = true;
