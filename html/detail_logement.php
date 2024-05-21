@@ -1,5 +1,6 @@
 <?php 
     require_once "../utils.php";
+    session_start();
 
     $id_logement = $_GET["id"];
 
