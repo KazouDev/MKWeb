@@ -23,7 +23,8 @@
   align-items: center;
   flex-direction: row;
 }
-.detail-reservation__entete > div:first-child > img {
+.detail-reservation__entete > div:first-child > a img {
+  margin-left: 1rem;
   max-width: 2.5em;
 }
 .detail-reservation__entete > div:last-child {
@@ -42,7 +43,7 @@
 }
 
 .couleur {
-  color: #5669FF;
+  color: #5669ff;
 }
 
 .gras {
@@ -89,22 +90,34 @@
   align-self: stretch;
   align-items: center;
 }
-.detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article {
+.detail-reservation__contenu
+  > div.detail-reservation__section1
+  > div.section1__article {
   display: flex;
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
   gap: 1.875em;
 }
-.detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article > p {
+.detail-reservation__contenu
+  > div.detail-reservation__section1
+  > div.section1__article
+  > p {
   font-size: 1rem;
 }
-.detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article > div.article__title {
+.detail-reservation__contenu
+  > div.detail-reservation__section1
+  > div.section1__article
+  > div.article__title {
   display: flex;
   flex-direction: row;
   gap: 1.875em;
 }
-.detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article > div.article__title > p {
+.detail-reservation__contenu
+  > div.detail-reservation__section1
+  > div.section1__article
+  > div.article__title
+  > p {
   font-size: 2rem;
 }
 .detail-reservation__contenu > div.detail-reservation__section1 > img {
@@ -116,7 +129,9 @@
   justify-content: space-between;
   align-items: center;
 }
-.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 {
+.detail-reservation__contenu
+  > div.detail-reservation__section2
+  > div.section2__article1 {
   display: flex;
   padding: 20px;
   align-items: center;
@@ -125,60 +140,113 @@
   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
   gap: 1.25em;
 }
-.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > img {
+.detail-reservation__contenu
+  > div.detail-reservation__section2
+  > div.section2__article1
+  > img {
   max-width: 8.75em;
   height: 8.75em;
   border-radius: 6.25em;
 }
-.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent {
+.detail-reservation__contenu
+  > div.detail-reservation__section2
+  > div.section2__article1
+  > div.article_textcontent {
   display: flex;
   flex-direction: column;
 }
-.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 {
+.detail-reservation__contenu
+  > div.detail-reservation__section2
+  > div.section2__article1
+  > div.article_textcontent
+  > div.textcontent__1 {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
-.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 > p {
+.detail-reservation__contenu
+  > div.detail-reservation__section2
+  > div.section2__article1
+  > div.article_textcontent
+  > div.textcontent__1
+  > p {
   font-size: 1.5em;
 }
-.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 > div.note {
+.detail-reservation__contenu
+  > div.detail-reservation__section2
+  > div.section2__article1
+  > div.article_textcontent
+  > div.textcontent__1
+  > div.note {
   display: flex;
   gap: 5px;
   align-items: center;
 }
-.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 > div.note > div.star {
+.detail-reservation__contenu
+  > div.detail-reservation__section2
+  > div.section2__article1
+  > div.article_textcontent
+  > div.textcontent__1
+  > div.note
+  > div.star {
   display: flex;
 }
-.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__1 > div.note > div.star:last-child {
+.detail-reservation__contenu
+  > div.detail-reservation__section2
+  > div.section2__article1
+  > div.article_textcontent
+  > div.textcontent__1
+  > div.note
+  > div.star:last-child {
   color: initial !important;
 }
-.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__2 {
+.detail-reservation__contenu
+  > div.detail-reservation__section2
+  > div.section2__article1
+  > div.article_textcontent
+  > div.textcontent__2 {
   display: flex;
   gap: 10px;
 }
-.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > div.article_textcontent > div.textcontent__2 > p {
+.detail-reservation__contenu
+  > div.detail-reservation__section2
+  > div.section2__article1
+  > div.article_textcontent
+  > div.textcontent__2
+  > p {
   font-size: 16px !important;
 }
-.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article2 {
+.detail-reservation__contenu
+  > div.detail-reservation__section2
+  > div.section2__article2 {
   display: flex;
   flex-direction: column;
   gap: 26px;
 }
-.detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article2 > p:first-child {
+.detail-reservation__contenu
+  > div.detail-reservation__section2
+  > div.section2__article2
+  > p:first-child {
   font-size: 1.375em;
 }
-.detail-reservation__contenu > div.detail-reservation__section3 > h3.section3__titre {
+.detail-reservation__contenu
+  > div.detail-reservation__section3
+  > h3.section3__titre {
   font-size: 2rem;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
-.detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation {
+.detail-reservation__contenu
+  > div.detail-reservation__section3
+  > div.section3__informationoccupation {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1.25em;
 }
-.detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation > div.informationoccupation__detail {
+.detail-reservation__contenu
+  > div.detail-reservation__section3
+  > div.section3__informationoccupation
+  > div.informationoccupation__detail {
   display: flex;
   padding: 2.5em;
   justify-content: center;
@@ -188,7 +256,10 @@
   border: 1px solid #cccccc;
   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
 }
-.detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation > div.informationoccupation__prix {
+.detail-reservation__contenu
+  > div.detail-reservation__section3
+  > div.section3__informationoccupation
+  > div.informationoccupation__prix {
   font-size: 3em;
 }
 .detail-reservation__contenu > div.detail-reservation__section4 {
@@ -199,39 +270,68 @@
 .detail-reservation__contenu > div.detail-reservation__section4 > h3 {
   font-size: 2em;
 }
-.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant {
+.detail-reservation__contenu
+  > div.detail-reservation__section4
+  > div.partiemontant {
   display: flex;
   flex-direction: column;
   gap: 1.875em;
 }
-.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__sanssoustitre {
+.detail-reservation__contenu
+  > div.detail-reservation__section4
+  > div.partiemontant
+  > div.partiemontant__sanssoustitre {
   justify-content: space-between;
   display: flex;
   align-items: center;
   flex-direction: row;
 }
-.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__sanssoustitre > p:first-child {
+.detail-reservation__contenu
+  > div.detail-reservation__section4
+  > div.partiemontant
+  > div.partiemontant__sanssoustitre
+  > p:first-child {
   font-size: 1.25rem;
 }
-.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__soustitre > div {
+.detail-reservation__contenu
+  > div.detail-reservation__section4
+  > div.partiemontant
+  > div.partiemontant__soustitre
+  > div {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
-.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__soustitre > div > p:first-child {
+.detail-reservation__contenu
+  > div.detail-reservation__section4
+  > div.partiemontant
+  > div.partiemontant__soustitre
+  > div
+  > p:first-child {
   font-size: 1.25rem;
 }
-.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.partiemontant__soustitre > p {
+.detail-reservation__contenu
+  > div.detail-reservation__section4
+  > div.partiemontant
+  > div.partiemontant__soustitre
+  > p {
   font-size: 1em;
-  color: #5669FF;
+  color: #5669ff;
 }
-.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.montantFinal {
+.detail-reservation__contenu
+  > div.detail-reservation__section4
+  > div.partiemontant
+  > div.montantFinal {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.detail-reservation__contenu > div.detail-reservation__section4 > div.partiemontant > div.montantFinal > p {
+.detail-reservation__contenu
+  > div.detail-reservation__section4
+  > div.partiemontant
+  > div.montantFinal
+  > p {
   font-size: 2rem;
 }
 .detail-reservation__contenu > div.detail-reservation__section5 > h3 {
@@ -242,5 +342,355 @@
 }
 
 i.jaune {
-  color: #FFD33C;
-}/*# sourceMappingURL=detailsreserv.css.map */
+  color: #ffd33c;
+}
+
+.hote {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.hote .hote__info {
+  border-radius: 0.75rem;
+  border: 1px solid #909090;
+  box-shadow: 0px 6px 16px 0px #000;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+.hote .hote__info img {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+.hote .hote__info .hote__main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+.hote .hote__info .hote__main .hote__nom {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 20rem;
+  justify-content: space-center;
+  gap: 0.8rem;
+}
+.hote .hote__info .hote__main .hote__nom h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  max-width: 15rem;
+}
+.hote .hote__info .hote__main .hote__nom .hote_rate i {
+  font-weight: 20px;
+  color: #ffd33c;
+}
+.hote .hote__info .hote__main .hote__nom #hote__5star {
+  color: #878787;
+}
+.hote .hote__info .hote__main .hote__nom h6 {
+  font-size: 1rem;
+}
+.hote .hote__info .hote__langues {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.hote .hote__info .hote__langues ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  max-width: 15rem;
+}
+.hote .hote__info .hote__langues ul li {
+  font-size: 1rem;
+  font-weight: 300;
+}
+.hote .hote__info .hote__langues i {
+  font-size: 20px;
+}
+.hote .section2__article3 iframe {
+  width: 20rem;
+  height: 15rem;
+}
+
+.apropos button:hover,
+.logement__res input[type="submit"]:hover,
+#reset:hover {
+  background-color: #9aa5ff;
+}
+
+.asavoir {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.asavoir h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.asavoir a {
+  color: #5669ff;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.asavoir h3 {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+@media (max-width: 1200px) {
+  .hote {
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+}
+.hote .hote__info {
+  width: 70%;
+}
+
+@media (max-width: 800px) {
+  .hote {
+    gap: 2rem;
+    align-items: flex-start;
+  }
+  .hote .hote__info {
+    padding: 0.8rem;
+    width: 100%;
+  }
+  .hote .hote__info img {
+    width: 4rem;
+    height: 4rem;
+  }
+  .asavoir {
+    gap: 0.5rem;
+  }
+  .apropos button {
+    align-self: stretch;
+    padding: 0.9rem;
+  }
+}
+@media (max-width: 400px) {
+  .hote .hote__info .hote__main .hote__nom h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    max-width: 15rem;
+  }
+  .hote .hote__info .hote__main .hote__nom {
+    display: block;
+  }
+  #hote__valuernote {
+    display: none;
+  }
+  .hote .hote__info .hote__langues ul li {
+    font-size: 0.75rem;
+  }
+}
+@media (max-width: 350px) {
+  .hote .hote__info .hote__langues i {
+    display: none;
+  }
+}
+.telecharger {
+  display: flex;
+  padding: 2rem 0rem;
+  justify-content: space-between;
+  align-items: center;
+}
+.telecharger a img {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+@media (max-width: 1000px) {
+  .detail-reservation__contenu
+    > div.detail-reservation__section1
+    > div.section1__article
+    > div.article__title
+    > p,
+  .detail-reservation__contenu
+    > div.detail-reservation__section3
+    > div.section3__informationoccupation
+    > div.informationoccupation__prix {
+    font-size: 1.5rem;
+  }
+  .detail-reservation__entete .entete__titre {
+    font-size: 2rem;
+  }
+  .detail-reservation__contenu > div.detail-reservation__section1 > img {
+    max-width: 15em;
+  }
+  .asavoir {
+    order: 3;
+    align-self: flex-start;
+  }
+  .hote .hote__info {
+    padding: 0.5rem;
+  }
+  .detail-reservation__contenu {
+    padding: 1rem;
+  }
+  .detail-reservation__conteneur {
+    gap: 2em;
+  }
+  .detail-reservation__contenu
+    > div.detail-reservation__section3
+    > h3.section3__titre {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .detail-reservation__contenu > div.detail-reservation__section4 > h3,
+  .detail-reservation__contenu
+    > div.detail-reservation__section4
+    > div.partiemontant
+    > div.montantFinal
+    > p {
+    font-size: 1.5rem;
+  }
+  .detail-reservation__contenu
+    > div.detail-reservation__section3
+    > div.section3__informationoccupation
+    > div.informationoccupation__detail {
+    padding: 1.5em;
+    gap: 1em;
+    align-items: flex-start;
+  }
+  .detail-reservation__contenu
+    > div.detail-reservation__section4
+    > div.partiemontant {
+    gap: 1rem;
+  }
+  .detail-reservation__section5,
+  .telecharger {
+    line-height: 1.2;
+  }
+  .telecharger a img {
+    width: 2rem;
+    height: 2rem;
+  }
+  .telecharger {
+    gap: 1rem;
+  }
+}
+@media (max-width: 700px) {
+  .detail-reservation__entete .entete__titre {
+    font-size: 1.5rem;
+  }
+  .detail-reservation__contenu
+    > div.detail-reservation__section1
+    > div.section1__article
+    > div.article__title
+    > p,
+  .detail-reservation__contenu
+    > div.detail-reservation__section3
+    > div.section3__informationoccupation
+    > div.informationoccupation__prix {
+    font-size: 1.25rem;
+  }
+  .detail-reservation__contenu
+    > div.detail-reservation__section1
+    > div.section1__article {
+    gap: 1rem;
+  }
+  .hote .hote__info {
+    padding: 1rem;
+    width: 100%;
+  }
+  .hote .section2__article3 iframe {
+    width: 15rem;
+    height: 10rem;
+  }
+  .detail-reservation__contenu > div.detail-reservation__section5 > p,
+  .telecharger p {
+    font-size: 0.75rem;
+  }
+  .telecharger a img {
+    display: none;
+  }
+  .detail-reservation__contenu > div.detail-reservation__section4 {
+    gap: 1em;
+  }
+  .detail-reservation__contenu > div.detail-reservation__section4 > h3,
+  .detail-reservation__contenu
+    > div.detail-reservation__section4
+    > div.partiemontant
+    > div.montantFinal
+    > p {
+    font-size: 1.25rem;
+  }
+  .detail-reservation__contenu
+    > div.detail-reservation__section3
+    > div.section3__informationoccupation
+    > div.informationoccupation__detail {
+    padding: 1em;
+  }
+}
+@media (max-width: 500px) {
+  .detail-reservation__entete > div:last-child {
+    gap: 0px;
+  }
+  .detail-reservation__entete > div:first-child > a img {
+    margin-left: 0rem;
+    max-width: 2rem;
+  }
+  .detail-reservation__entete {
+    flex-direction: column;
+  }
+  .detail-reservation__entete > div:last-child > div.entete__textinfo2 {
+    justify-content: flex-start;
+  }
+  .detail-reservation__entete > div:last-child > div.entete__textinfo1,
+  .detail-reservation__entete > div:last-child > div.entete__textinfo2 {
+    gap: 1rem;
+  }
+  .detail-reservation__contenu > div.detail-reservation__section1 {
+    flex-direction: column;
+    align-items: self-start;
+  }
+  .detail-reservation__contenu > div.detail-reservation__section1 > img {
+    width: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    max-height: 15rem;
+    max-width: none;
+  }
+  .detail-reservation__entete {
+    gap: 1rem;
+  }
+  .hote .section2__article3 iframe {
+    width: 32rem;
+  }
+  .hote .hote__info {
+    width: 80%;
+  }
+  .detail-reservation__entete > div:first-child {
+    gap: 1rem;
+  }
+  .detail-reservation__contenu
+    > div.detail-reservation__section3
+    > div.section3__informationoccupation {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+@media (max-width: 350px) {
+  .hote .section2__article3 iframe {
+    width: initial;
+  }
+  .hote .hote__info {
+    width: 100%;
+  }
+  .hote {
+    gap: 1rem;
+  }
+  .asavoir {
+    order: inherit;
+  }
+} /*# sourceMappingURL=detailsreserv.css.map */
