@@ -1,0 +1,14 @@
+@import url("setup.css");
+.detail_mon_compte__conteneur {
+  display: flex;
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 1rem;
+}
+.detail_mon_compte__conteneur .info_perso_conteneur, .detail_mon_compte__conteneur .adresse_conteneur, .detail_mon_compte__conteneur .photo_conteneur, .detail_mon_compte__conteneur .mdp_conteneur {
+  display: flex;
+  border-radius: 0.75em;
+  flex-direction: column;
+  gap: 1.875em;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 1.875em;
+}/*# sourceMappingURL=mon_compte.css.map */
