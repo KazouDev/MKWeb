@@ -224,6 +224,7 @@
 .user__down {
   width: 10px !important;
   height: 10px !important;
+  margin-left: 5px;
 }
 
 .header__connexion img {
