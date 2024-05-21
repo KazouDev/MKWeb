@@ -1,6 +1,6 @@
 <?php 
-    include "header.php";
     require_once "../utils.php";
+    session_start();
 
     $id_logement = $_GET["id"];
 
@@ -28,7 +28,7 @@
     inner join sae._logement on sae._activite_logement.id_logement = sae._logement.id  
     inner join sae._distance on sae._activite_logement.id_distance = sae._distance.id
     where sae._logement.id = $id_logement;";
-    $query_avis = "select commentaire, note, prenom, ville, pays from sae._avis 
+    $query_avis = "select commentaire, note, prenom, commune, pays from sae._avis 
     inner join sae._utilisateur on sae._avis.id_client = sae._utilisateur.id 
     inner join sae._adresse on sae._adresse.id = sae._utilisateur.id_adresse
     where sae._avis.id_logement =$id_logement;";
@@ -55,7 +55,7 @@
     }
     
 
-    $ville = $rep_logement['ville'];
+    $ville = $rep_logement['commune'];
     $departement = $rep_logement['departement'];
     $accroche = $rep_logement['accroche'];
     $categorie = $rep_logement['categorie'];
@@ -100,7 +100,7 @@
         if ($cle > 0) {
             $liste_avis = $liste_avis  . "<br>";
         }
-        $liste_avis = $liste_avis . $avis['prenom'] . ", " . $avis['ville'] .', ' . $avis['pays'] .', ' .$avis['note'] .', ' . $avis['commentaire'];
+        $liste_avis = $liste_avis . $avis['prenom'] . ", " . $avis['commune'] .', ' . $avis['pays'] .', ' .$avis['note'] .', ' . $avis['commentaire'];
     }
 ?>
 
@@ -119,6 +119,7 @@
 </head>
 <body>
     <div class="wrapper">
+        <?php     include "header.php";?>
         <main class="main">
             <div class="main__container logement">
                 <div class="logement__top">
@@ -127,10 +128,10 @@
                             <h1 id="logement__nom"><?php echo  $titre_logement?></h1>
                             <div class="stars" id="logement__rate">
                                 <i class="fas fa-star fa-lg" id="1star"></i>
-                                <i class="fas fa-star fa-lg" id="2star"></i>
+                                <!-- <i class="fas fa-star fa-lg" id="2star"></i>
                                 <i class="fas fa-star fa-lg" id="3star"></i>
                                 <i class="fas fa-star fa-lg" id="4star"></i>
-                                <i class="fas fa-star fa-lg" id="5star"></i>
+                                <i class="fas fa-star fa-lg" id="5star"></i> -->
                             </div>
                             <h6 id="logement__rate__valuernote"><?php echo  $moyenne_note?></h6>
                             <a class="retour" href="" id="logement__retour"><img src="img/back.webp" alt="Retour"></a>
@@ -201,13 +202,13 @@
                                     </div>
                                 <?php }?>  
                                 <div class="logement__note">
-                                    <h2 id="note"><?php echo  $moyenne_note?></h2>
+                                    <h2 id="note"><?php echo  $moyenne_note?> / 5</h2>
                                     <div class="details__stars" id="logement__rate__details">
                                         <i class="fas fa-star fa-lg" id="1star_details"></i>
-                                        <i class="fas fa-star fa-lg" id="2star_details"></i>
+                                        <!-- <i class="fas fa-star fa-lg" id="2star_details"></i>
                                         <i class="fas fa-star fa-lg" id="3star_details"></i>
                                         <i class="fas fa-star fa-lg" id="4star_details"></i>
-                                        <i class="fas fa-star fa-lg" id="5star_details"></i>
+                                        <i class="fas fa-star fa-lg" id="5star_details"></i> -->
                                     </div>
                                     <?php 
                                         if($nb_commentaire == 1){?>
@@ -239,10 +240,10 @@
                                         <h3>Hôte: <span id="hote__nm"><?php echo  $prenom_hote?></span></h3>
                                         <div class="hote_rate" id="hote__rate">
                                             <i class="fas fa-star fa-xs" ></i>
+                                            <!-- <i class="fas fa-star fa-xs" ></i>
                                             <i class="fas fa-star fa-xs" ></i>
                                             <i class="fas fa-star fa-xs" ></i>
-                                            <i class="fas fa-star fa-xs" ></i>
-                                            <i class="fas fa-star fa-xs" ></i>
+                                            <i class="fas fa-star fa-xs" ></i> -->
                                         </div>
                                         <h6 id="hote__valuernote"><?= $note_hote?></h6>
                                     </div>
@@ -309,7 +310,7 @@
                                 
                             </div>
                         </div>
-                        <div class="avis">
+                        <!-- <div class="avis">
                             <h3>Les avis des clients</h3>
                             <div class="lesavis">
                                 <div class="avis__element">
@@ -407,7 +408,7 @@
                                 </div>
                             </div>
                             <button id="decouvrir__avis">Découvrir plus</button>
-                        </div>
+                        </div> -->
 
                     </div>
                     <!--  Partie résa-->
@@ -432,8 +433,10 @@
                 
                         
                     <div class="logement__res" id="logement__reserver">
-                        <h2><span  id="logement__prix"><?=$base_tarif?></span> € par  nuit</h2>
-                        <form action="" method="post">
+                        <div class="form__logement">
+                            <h2><span  id="logement__prix"><?=$base_tarif?></span> € par  nuit</h2>
+                            <h1>Indiquez les dates pour voir les tarifs</h1>
+                            <form action="" method="post">
                             <div class="res__fromulaire">
                                 
                                     <input type="text" name="dateDebut" hidden >
@@ -496,6 +499,7 @@
                                 
                             </div>
                         </form>
+                        </div>
                     </div>
             </div>
             </div>

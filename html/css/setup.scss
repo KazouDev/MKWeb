@@ -85,3 +85,6 @@ header {
     margin-bottom: 1rem;
   }
 }
+input:focus{
+  outline: 1px solid $mainViolet;
+}

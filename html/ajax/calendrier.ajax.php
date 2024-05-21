@@ -10,7 +10,7 @@ $sql = 'SELECT r.date_debut, r.date_fin FROM sae._reservation r';
 $sql .= ' WHERE r.id_logement = ' . $id . ' AND r.annulation = false';
 $ret = request($sql);
 
-if(!$ret){
+if($ret === false){
     print 'Erreur requête';
 }else{
 

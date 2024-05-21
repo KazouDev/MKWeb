@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="header__form">
-                <a href=""><i class="fa-regular fa-eye-slash" style="color: #222222;"></i></a>
+                <a href=""><i class="fa-regular fa-eye-slash"></i></a>
                 <div class="header__connexion"><a href="login.php">Connexion</a></div>                    
             </div>
             <img src="../img/menu.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
@@ -63,7 +63,7 @@
             <a href="" class="menu__link" style="color: #5669FF;">Ajouter un logement</a>
         </li>
         <li class="menu__item ">
-            <a href="" class="menu__link" style="color: #FF5656;">Se déconnecter</a>
+            <a href="logout.php" class="menu__link" style="color: #FF5656;">Se déconnecter</a>
         </li>
     </ul> 
     <img src="../img/menu.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">

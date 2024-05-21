@@ -142,6 +142,7 @@ $lineHeight: 1.5;
 }
 .header__form  i {
     font-size: 1.5rem !important;
+    color: $mainNoir;
 }
 @media (max-width: 767.98px) {
     .menu__item .menu__link,
@@ -269,6 +270,7 @@ $lineHeight: 1.5;
   .user__down{
     width: 10px !important ; 
     height: 10px !important;
+    margin-left: 5px;
   }
 
 .header__connexion img{
@@ -281,6 +283,7 @@ $lineHeight: 1.5;
 
 // menu utilisateur 
 #menu-user{
+    z-index: 100;
     display: none;
     position: absolute;
     top: 70px;
@@ -319,5 +322,14 @@ $lineHeight: 1.5;
     #fermerMenu{
         height: 15px;
         top: 15px;
+    }
+}
+header.buisness{
+    .header__connexion{
+        border: 1px solid $mainBlanc;
+        color: $mainBlanc;
+    }
+    .header__form a i{
+        color:$mainBlanc;
     }
 }
