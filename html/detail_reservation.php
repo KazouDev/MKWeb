@@ -1,15 +1,19 @@
 <?php
     require "../utils.php";
-    //$idreservation = $_GET["id"]
-    //id du client = client_connected()
-    $idclient  = 1;
-    $idreservation = 1;
+    session_start();
+    //$id_client = client_connected_or_redirect();
+    $id_client= client_connected_or_redirect();
+    $idreservation = $_GET["id"];
+    $sql = "SELECT id_client FROM sae._reservation WHERE id=$idreservation";
+    $client = request($sql,true);
     // On vérifie que la réservation est bien associée au bon utilisateur
-    $sql = "SELECT * from sae._reservation where id_client=$idclient and id=$idreservation";
-    $verifAssociation = request($sql,true);
+    $sql = "SELECT * from sae._reservation where id_client=$id_client and id=$idreservation";
+    $reservation = request($sql,true);
     // Vérification que la reservation existe puis qu'elle est bien associé au client connecté
-    if($verifAssociation==null){
+    if($reservation==null){
         // Redirection vers la page des réservations
+        header('Location: mes_reserv.php');
+        die();
     }
     // On recupère les données à afficher
     else{
@@ -21,81 +25,62 @@
           */
          function mois($date = null) {
 	        
-	        switch ($date) {
-	            case 1:
-		            $mois = "jan";
-		            break;
-	            case 2:
-		            $mois = "fév";
-		            break;
-	            case 3:
-		            $mois = "mar";
-		            break;
-	            case 4:
-		            $mois = "Avr";
-		            break;
-	            case 5:
-		            $mois = "mai";
-		            break;
-	            case 6:
-		            $mois = "Jun";
-		            break;
-	            case 7:
-		            $mois = "jul";
-		            break;
-	            case 8:
-		            $mois = "aou";
-		            break;
-	            case 9:
-		            $mois = "sep";
-		            break;
-	            case 10:
-		            $mois = "oct";
-		            break;
-	            case 11:
-		            $mois = "nov";
-		            break;
-	            case 12:
-		            $mois = "déc";
-		            break;
-	            default:
-		            return false;
-	        }
+	        // Définir le tableau associatif des mois
+            $arrayMonth = [
+                1 => "jan",2 => "fév",3 => "mar",
+                4 => "avr",5 => "mai",6 => "jun",
+                7 => "jul",8 => "aou",9 => "sep",
+                10 => "oct",11 => "nov",12 => "déc"
+            ];
+
+            
+            if (array_key_exists($date, $arrayMonth)) {
+                $mois = $arrayMonth[$date];
+            } else {
+                return false; 
+            }
 	        return $mois;
  
         }
         
-        $date1 = date_parse($verifAssociation["date_debut"]);
-        $date2 = date_parse($verifAssociation["date_fin"]);
+        $date1 = date_parse($reservation["date_debut"]);
+        $date2 = date_parse($reservation["date_fin"]);
         $moisEnLettreDebut = mois($date1['month']);
         $moisEnLettreFin = mois($date2['month']);
+        // Formation de la chaine du titre de la réservation 
         if($moisEnLettreDebut!=false && $moisEnLettreFin!=false){
             
             $dateReservation = $date1['day']." ".$moisEnLettreDebut.". ".$date1['year']." - ".$date2['day']." ".$moisEnLettreFin.". ".$date2['year'];
         
         }
     
-        $idLogement = $verifAssociation["id_logement"];
+        $idLogement = $reservation["id_logement"];
         $sql = "SELECT * from sae._logement where id=$idLogement";
         $logement = request($sql,true);
         $sql = "SELECT * from sae._utilisateur where id=$logement[id_proprietaire]";
         $proprio  = request($sql,true);
         $sql = "SELECT * from sae._adresse where id=$logement[id_adresse]";
         $adresse = request($sql,true);
-
-        $sql = "SELECT * from sae._reservation_prix_par_nuit WHERE id_reservation=$verifAssociation[id]";
+        
+        $sql = "SELECT * from sae._reservation_prix_par_nuit WHERE id_reservation=$reservation[id]";
 
         $prixParNuit = request($sql,true);
 
-        $prixHTTNuit = round($verifAssociation["prix_ht"]/$prixParNuit["nb_nuit"],2);
+        $prixHTTNuit = round($reservation["prix_ht"]/$prixParNuit["nb_nuit"],2);
 
         
-        $prixTTCnuit =round( $verifAssociation["prix_ttc"]/$prixParNuit["nb_nuit"],2);
+        $prixTTCnuit =round( $reservation["prix_ttc"]/$prixParNuit["nb_nuit"],2);
 
-        $taxeSejour = $prixParNuit["nb_nuit"] * 2.88;
+        $taxeSejour = $reservation["taxe_sejour"];
         
         $locationTTC = $prixParNuit["nb_nuit"] * $prixTTCnuit;
 
+        $latitude = $adresse["latitude"];
+        $longitude = $adresse["longitude"];
+        
+        $bis = $adresse["rep"] ?? "";
+        $adresseRue = $adresse["numero"]." ".$bis." ".$adresse["nom_voie"].", ".$adresse["code_postal"].", ".$adresse["commune"];
+        
         $sql = "SELECT *
         FROM sae._langue_proprietaire
         INNER JOIN sae._langue ON sae._langue_proprietaire.id_langue = sae._langue.id
@@ -115,6 +100,8 @@
     <link rel="stylesheet" href="css/detailsreserv.css">
 
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <title>Detail réservation</title>
 </head>
 <body>
@@ -131,11 +118,11 @@
                     <div>
                         <div class="entete__textinfo1">
                             <p>Numéro de confirmation : </p>
-                            <span class="couleur"><!-- <?=$test1?>--> 1 </span> 
+                            <span class="couleur">1</span> 
                         </div>
                         <div class="entete__textinfo2">
                             <p>Numéro de réservation :</p>
-                            <span class="couleur"><?=$verifAssociation["id"]?></span>
+                            <span class="couleur"><?=$reservation["id"]?></span>
                         </div>
                     </div>
                 </div>
@@ -148,7 +135,7 @@
                                 <p class="gras"><?=$logement["titre"]?></p>
                                 <p class="gras"><?=$dateReservation?></p>
                             </div>
-                            <p><span class="gras">Adresse: </span><?=$adresse['rue'].", ".$adresse['ville']?></p>
+                            <p><span class="gras">Adresse: </span><?=$adresseRue?></p>
                             <p><span class="gras">Coordonnées GPS: </span> N 048° 55.849, E 02° 16.963</p>
                             <p><span class="gras">Hôte: </span><?=$proprio['prenom']?></p>
                             <p><span class="gras">Téléphone: </span><?=$proprio['telephone']?></p>
@@ -172,6 +159,7 @@
                                     <div class="hote__langues">
                                         <i class="fa-solid fa-earth-americas" style="color: #222222;"></i>
                                         <ul>
+                                            <!-- On parcourt les différentes langues du propriétaire -->
                                         <?php
                                         foreach($languesProprio as $langue){
                                             ?>
@@ -188,9 +176,25 @@
                                 <a href="">Conditions de séjour dans сe logement</a>
                                 <h3>Moyens de paiement acceptés : PayPal, carte bancaire</h3>
                             </div>
-                            <div class="section2__article3">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8544.925581204967!2d-2.5527066852125144!3d48.586915081517375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480e0e90a5504f43%3A0x40ca5cd36e62fc0!2s22370%20Pl%C3%A9neuf-Val-Andr%C3%A9!5e0!3m2!1sfr!2sfr!4v1715792791097!5m2!1sfr!2sfr" width="250" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <div class="section2__article3" id="localisation">
+                                <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
                             </div>
+                            <script>
+                                var lat = "<?php echo $latitude; ?>";
+                                var lng = "<?php echo $longitude; ?>";
+                                console.log(lat,lng)
+                                afficherCommuneSurMap(lat, lng);
+
+                                function afficherCommuneSurMap(lat, lng) {
+                                    console.log("coucou")
+                                    var map = L.map('localisation').setView([lat, lng], 9); 
+                                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                        attribution: '© OpenStreetMap contributors'
+                                    }).addTo(map);
+
+                                    L.marker([lat, lng]).addTo(map).bindPopup('Le logement est ici !');
+                                }
+                            </script>
                         </div>  
                     <div class="separation">
                     </div>
@@ -200,12 +204,12 @@
                             <div class="informationoccupation__detail">
                                 <div>
                                     <p class="gras">Arrivée</p>
-                                    <p><?=(new DateTime($verifAssociation["date_debut"]))->format('d/m/Y')?><p>
+                                    <p><?=(new DateTime($reservation["date_debut"]))->format('d/m/Y')?><p>
                                 </div>
                                 <div class="separation2"></div>
                                 <div>
                                     <p class="gras">Départ</p>
-                                    <p><?=(new DateTime($verifAssociation["date_fin"]))->format('d/m/Y')?></p>
+                                    <p><?=(new DateTime($reservation["date_fin"]))->format('d/m/Y')?></p>
                                 </div>
                                 <div class="separation2"></div>
                                 <div>
@@ -215,7 +219,7 @@
                                 <div class="separation2"></div>
                                 <div>
                                     <p class="gras">Occupant</p>
-                                    <p><?=$verifAssociation["nb_occupant"]?></p>
+                                    <p><?=$reservation["nb_occupant"]?></p>
                                 </div>
                             </div>
                             <div class="informationoccupation__prix">
@@ -242,28 +246,28 @@
                             <div class="partiemontant__soustitre">
                                <div>
                                     <p>Location TTC</p>
-                                    <p class="texteGras"><?=$verifAssociation["prix_ttc"]?> €</p>
+                                    <p class="texteGras"><?=$reservation["prix_ttc"]?> €</p>
                                </div>
                                <p>Prix par nuit TTC × nombre de nuits</p>
                             </div>
                             <div class="partiemontant__soustitre">
                                <div>
                                     <p>Frais supplémentaires</p>
-                                    
+
                                </div>
                                <p>Services supplémentaires d'hébergement</p>
                             </div>
                             <div class="partiemontant__sanssoustitre">
-                                <p>Taxe de séjour  (€ 2,88 ×  nuits)</p>
+                                <p>Taxe de séjour  (2,88 € ×  nuits)</p>
                                 <p class="texteGras"><?=$taxeSejour?> €</p>
                             </div>
                             <div class="partiemontant__sanssoustitre">
                                 <p>1% de la commission de la plateforme</p>
-                                <p class="texteGras"><?=$verifAssociation["taxe_commission"]?> €</p>
+                                <p class="texteGras"><?=$reservation["taxe_commission"]?> €</p>
                             </div>
                             <div class="montantFinal">
                                 <p>Montant Final TTC</p>
-                                <p class="texteGras"><?=$verifAssociation["prix_ttc"]+$verifAssociation["taxe_commission"]+$taxeSejour?> €</p>
+                                <p class="texteGras"><?=$reservation["prix_ttc"]+$reservation["taxe_commission"]+$taxeSejour?> €</p>
                             </div>
                             
                         </div>
