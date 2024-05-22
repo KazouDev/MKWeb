@@ -581,7 +581,7 @@ INSERT INTO _logement(titre, description, accroche, base_tarif, surface, nb_max_
 
 INSERT INTO _image (src, principale, alt, id_logement)
 SELECT 
-    CONCAT('/logement/', l.id, '_', n.num, '.jpg') AS src,
+    CONCAT('/logement/', l.id, '/', n.num, '.jpg') AS src,
     CASE WHEN n.num = 1 THEN true ELSE false END AS principale,
     l.titre AS alt,
     l.id AS id_logement
