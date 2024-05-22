@@ -63,6 +63,10 @@
     INNER JOIN sae._categorie_logement ON sae._logement.id_categorie = sae._categorie_logement.id
     WHERE sae._logement.id ='$id_logement';"; 
 
+    $query_photo = "SELECT src, principale, alt FROM sae._image
+    INNER JOIN sae._logement ON sae._image.id_logement = sae._logement.id
+    WHERE sae._logement.id = $id_logement;";
+
     $rep_logement = request($query, true);
     if (!$rep_logement || !isset($rep_logement)){
         header('Location: index.php');
@@ -100,6 +104,7 @@
     $rep_activite = request($query_activite);
     $rep_avis = request($query_avis);
     $rep_note_hote = request($query_note_hote)[0];
+    $rep_photo = request($query_photo);
 
     $titre_logement =  $rep_logement['titre'] ;
     $moyenne_note = $rep_note['avg'];
@@ -157,6 +162,7 @@
         $liste_avis = $liste_avis . $avis['prenom'] . ", " . $avis['commune'] .', ' . $avis['pays'] .', ' .$avis['note'] .', ' . $avis['commentaire'];
     }
 
+
     print <<<EOT
     <script>
         const JOUR_MIN = {$min_jour};
@@ -210,11 +216,10 @@
                 </div>
                 <div class="logement__photos">
                     <div class="photo__grille" id="logement__photo__grille">
-                        <img src="img/log1.webp" alt="Logement">
-                        <img src="img/log6.webp" alt="Logement">
-                        <img src="img/log3.webp" alt="Logement">
-                        <img src="img/log4.webp" alt="Logement">
-                        <img src="img/log5.webp" alt="Logement">
+                        <?php foreach($rep_photo as $photo) {?>
+                            
+                            <img src="img/<?=$photo['src']?>" alt="<?=$photo['alt']?>">
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="logement-container">
