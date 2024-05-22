@@ -4,10 +4,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
   const headerUser = document.getElementById("header__info");
   const menu = document.getElementById("menu-user");
   var fermerMenu = document.getElementById("fermerMenu");
-  //menu utilisateur
-  const headerUser = document.getElementById("header__info");
-  const menu = document.getElementById("menu-user");
-  var fermerMenu = document.getElementById("fermerMenu");
 
   //menu utilisateur
   if (headerUser) {
