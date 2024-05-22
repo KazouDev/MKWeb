@@ -39,27 +39,28 @@
   font-weight: 400;
 }
 .buisness_mes_reserv_line p {
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 0.5rem 1.25rem;
   font-size: 1rem;
   border-radius: 0.75rem;
   width: -moz-fit-content;
   width: fit-content;
 }
-.buisness_mes_reserv_line .fa-eye, .buisness_mes_reserv_line .fa-trash {
+.buisness_mes_reserv_line .fa-eye,
+.buisness_mes_reserv_line .fa-trash {
   font-size: 1.5rem;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 1rem 1rem;
   border-radius: 0.75rem;
   width: -moz-fit-content;
   width: fit-content;
-  background-color: #DD69FA;
+  background-color: #dd69fa;
 }
 .buisness_mes_reserv_line .green {
-  background-color: #79DA7D;
+  background-color: #79da7d;
 }
 .buisness_mes_reserv_line .red {
-  background-color: #FF6258;
+  background-color: #ff6258;
 }
 
 .mes__reserv__exporter {
@@ -91,16 +92,8 @@
   font-size: 2.25rem;
 }
 .mes__reserv__titre img {
-  width: auto;
-  height: 3rem;
-}
-.mes__reserv__titre img:last-child {
-  height: 2.5rem;
-}
-.mes__reserv__titre i {
-  justify-content: flex-end;
-  font-size: 2.25rem;
-  color: #5669FF;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .card__reserv {
@@ -111,62 +104,67 @@
   gap: 2rem;
   box-shadow: 4px 4px 16px rgba(18, 18, 18, 0.06);
   border-radius: 0.75rem;
-  height: 200px;
   margin-bottom: 2rem;
   border: 1px solid #909090;
 }
-.card__reserv .mes__reserv__container_desc_prix {
+.card__reserv .mes__reserv__cont_desc_prix {
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 100%;
   justify-content: space-between;
 }
-.card__reserv .mes__reserv__container_desc_prix .mes__reserv__description {
+.card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description {
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: space-between;
 }
-.card__reserv .mes__reserv__container_desc_prix .mes__reserv__description h4 {
+.card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
   font-size: 1.25rem;
   font-weight: 300;
 }
-.card__reserv .mes__reserv__container_desc_prix .mes__reserv__description > h4 {
+.card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description > h4 {
   font-size: 1.5rem;
   font-weight: 400;
 }
-.card__reserv .mes__reserv__container_desc_prix .mes__reserv__description p {
-  color: #FFFFFF;
+.card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description p {
+  color: #ffffff;
   padding: 0.5rem 1.25rem;
   font-size: 1rem;
   border-radius: 0.75rem;
   width: -moz-fit-content;
   width: fit-content;
 }
-.card__reserv .mes__reserv__container_desc_prix .mes__reserv__description .green {
-  background-color: #79DA7D;
+.card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description .green {
+  background-color: #79da7d;
 }
-.card__reserv .mes__reserv__container_desc_prix .mes__reserv__description .red {
-  background-color: #FF6258;
+.card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description .red {
+  background-color: #ff6258;
 }
-.card__reserv .mes__reserv__container_desc_prix .mes__reserv__prix {
+.card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix {
   display: flex;
   flex-direction: row;
   gap: 1rem;
   align-items: center;
 }
-.card__reserv .mes__reserv__container_desc_prix .mes__reserv__prix :last-child {
+.card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix :last-child {
   font-size: 2rem;
-  color: #5669FF;
+  color: #5669ff;
 }
-.card__reserv .mes__reserv__container_desc_prix .mes__reserv__prix .mes__reserv__prix_color {
+.card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix .mes__reserv__prix_color {
   color: #222222;
 }
 .card__reserv img {
   -o-object-fit: cover;
      object-fit: cover;
-  height: 100%;
+  height: 150px;
+}
+.card__reserv .mes__reserv__date i {
+  font-size: 0.4rem;
+}
+.card__reserv .mes__reserv__date {
+  align-items: center;
 }
 .card__reserv .mes_reserv__numero,
 .card__reserv .mes__reserv__date {
@@ -186,4 +184,81 @@
   font-weight: 400;
   color: #878787;
   text-align: center;
+}
+
+@media (max-width: 750px) {
+  .mes__reserv__titre h1 {
+    font-size: 2rem;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix h4 {
+    font-size: 1.25rem !important;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix :last-child {
+    font-size: 1.5rem;
+  }
+  .card__reserv {
+    gap: 1rem;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
+    font-size: 1rem;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description {
+    height: initial;
+    gap: 1rem;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description p {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 600px) {
+  .card__reserv img {
+    height: 100px;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description {
+    gap: 0.5rem;
+  }
+  .card__reserv {
+    align-items: center;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 500px) {
+  .card__reserv img {
+    display: none;
+  }
+  .mes__reserv__titre h1 {
+    font-size: 1.5rem;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description p {
+    padding: 0.3rem 0.5rem;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 400px) {
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix {
+    flex-direction: column;
+  }
+  .card__reserv .mes__reserv__date {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .card__reserv .mes__reserv__date i {
+    display: none;
+  }
+  .card__reserv {
+    gap: 0rem;
+    padding: 0.5rem;
+  }
+  .mes__reserv__titre h1 {
+    font-size: 1.25rem;
+  }
+  .mes__reserv__titre img {
+    width: 1rem;
+    height: 1rem;
+  }
 }/*# sourceMappingURL=mes_reserv.css.map */

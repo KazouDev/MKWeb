@@ -114,6 +114,7 @@
 </div>
 </header>
 <script src="../js/header_user.js"></script>
+<script src="../js/header.js"></script>
 <?php 
     }
 ?>
