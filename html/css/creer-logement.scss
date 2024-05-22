@@ -256,12 +256,12 @@ section {
   }
 
   &#section__image {
+    gap: 1rem;
     input[type="button"] {
       background-color: $boutonGreen;
       color: $mainBlanc;
-      width: 50%;
+      width: 30%;
       border: none;
-      align-self: center;
     }
   }
 }
@@ -321,7 +321,6 @@ select {
   width: 25%;
   height: 40px;
   background-color: $mainViolet;
-  margin: auto;
 }
 
 .loader {

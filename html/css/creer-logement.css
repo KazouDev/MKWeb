@@ -192,12 +192,14 @@ section .field-container #list__amenagement div span {
   font-weight: 200;
   text-transform: lowercase;
 }
+section#section__image {
+  gap: 1rem;
+}
 section#section__image input[type=button] {
   background-color: #79da7d;
   color: #ffffff;
-  width: 50%;
+  width: 30%;
   border: none;
-  align-self: center;
 }
 
 input:not([type=checkbox]),
@@ -265,7 +267,6 @@ select {
   width: 25%;
   height: 40px;
   background-color: #5669ff;
-  margin: auto;
 }
 
 .loader {

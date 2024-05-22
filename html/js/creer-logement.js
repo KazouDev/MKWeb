@@ -123,9 +123,9 @@ document.addEventListener("click", () => {
 
 submitButton.addEventListener("click", async (e) => {
   e.preventDefault();
-  if (!logementForm.reportValidity() || isSubmiting) return;
+  //if (!logementForm.reportValidity() || isSubmiting) return;
 
-  if (imageList.length > 0) {
+  /*if (imageList.length > 0) {
     const data = new DataTransfer();
 
     imageList.forEach((img) => {
@@ -166,10 +166,21 @@ submitButton.addEventListener("click", async (e) => {
     console.error("Adresse invalide.");
     document.getElementById("voie").focus();
     return;
-  }
+  }*/
 
   paysInput.disabled = false;
   regionInput.disabled = false;
 
-  logementForm.submit();
+  const formData = new FormData(logementForm);
+  fetch("../ajax/creer-logement.ajax.php", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.err == false) {
+        window.location.href = "index.php?id=" + data.id;
+      }
+    });
 });

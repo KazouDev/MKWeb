@@ -3,92 +3,6 @@
     require "../../utils.php";
 
     buisness_connected_or_redirect();
-
-    if (isset($_POST["titre"])){
-        echo "<pre>";
-        print_r($_POST);
-        echo "</pre>";
-
-        /*
-          id SERIAL PRIMARY KEY,
-  id_proprietaire INT NOT NULL,
-  id_adresse INT NOT NULL,
-  titre VARCHAR(255) NOT NULL,
-  description TEXT NOT NULL,
-  accroche VARCHAR(255) NOT NULL,
-  base_tarif FLOAT NOT NULL,
-  surface INT NOT NULL,
-  nb_max_personne INT NOT NULL,
-  nb_chambre INT NOT NULL,
-  nb_lit_simple INT NOT NULL,
-  nb_lit_double INT NOT NULL,
-  periode_preavis INT NOT NULL,
-  en_ligne BOOLEAN NOT NULL,
-  id_categorie INT NOT NULL,
-  id_type INT NOT NULL*/
-          $adresse = [
-            "pays" => $_POST["pays"],
-            "region" => $_POST["region"],
-            "departement" => $_POST["departement"],
-            "ville" => $_POST["commune"],
-            "rue" => $_POST["num_voie"] . " " .$_POST["voie"],
-            "complement_1" => empty($_POST["comp1"]) ? "NULL" : $_POST["comp1"],
-            "complement_2" => empty($_POST["comp2"]) ? "NULL" : $_POST["comp2"],
-            "complement_3" => empty($_POST["comp3"]) ? "NULL" : $_POST["comp3"],
-            "latitude" => $_POST["latitude"],
-            "longitude" => $_POST["longitude"]
-        ];
-
-        $logement = [
-            "titre" => $_POST["titre"],
-            "id_proprietaire" => buisness_connected_or_redirect(),
-            "id_adresse" => insert("sae._adresse", array_keys($adresse), array_values($adresse)),
-            "id_categorie" => $_POST["categorie"],
-            "id_type" => $_POST["type"],
-            "surface" => $_POST["surface"],
-            "nb_chambre" => $_POST["chambre"],
-            "nb_lit_simple" => $_POST["simple"],
-            "nb_lit_double" => $_POST["double"],
-            "accroche" => $_POST["accroche"],
-            "description" => $_POST["description"],
-            "nb_max_personne" => $_POST["nbpersonne"],
-            "base_tarif" => $_POST["prixht"],
-            "periode_preavis" => $_POST["delaires"],
-            "en_ligne" => $_POST["statut"]
-        ];
-
-        $id_logement = insert("sae._logement", array_keys($logement), array_values($logement));
-
-        if (isset($_POST["amenagements"])){
-            foreach($_POST["amenagements"] as $amenagement){
-                insert("sae._amenagement_logement", ["id_logement", "id_amenagement"], [$id_logement, $amenagement], false);
-            }
-        }
-
-        /*Activite*/
-        if (isset($_POST["activite"])){
-            foreach($_POST["activite"] as $activite){
-                $activite = explode(";;" ,$activite);
-                insert("sae._activite_logement", ["id_logement", "activite", "id_distance"], [$id_logement, $activite[0], $activite[1]], false);
-            }
-        }
-
-        $uploads_dir = "../../images/logement/$id_logement";
-        if (!is_dir($uploads_dir)){
-            mkdir($uploads_dir, 0777, true);
-        }
-
-        if (isset($_FILES["images"])){
-            foreach ($_FILES["images"]["error"] as $key => $error) {
-                if ($error == UPLOAD_ERR_OK) {
-                    $tmp_name = $_FILES["images"]["tmp_name"][$key];
-                    $name = basename($_FILES["images"]["name"][$key]);
-                    move_uploaded_file($tmp_name, "$uploads_dir/$name");
-                }
-            }
-        }
-
-    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -120,11 +34,11 @@
                     <div class="field-container">
                         <div class="info_gen__input">
                             <label for="titre">Titre</label>
-                            <input type="text" id="titre" name="titre" placeholder="ex: Villa pieds dans la mer" required>
+                            <input type="text" id="titre" name="titre" placeholder="ex: Villa pieds dans la mer" requirednon>
                         </div>
                         <div class="info_gen__input">
                             <label for="categorie">Catégorie</label>
-                            <select name="categorie" id="categorie" placeholder="" required>
+                            <select name="categorie" id="categorie" placeholder="" requirednon>
                                 <option value="" disabled selected>Catégorie Logement</option>
                                 <?php foreach(request("SELECT * FROM sae._categorie_logement") as $cat){ ?>
                                     <option value=<?= $cat["id"]?>><?=$cat["categorie"]?></option>
@@ -133,7 +47,7 @@
                         </div>
                         <div class="info_gen__input">
                             <label for="titre">Type</label>
-                            <select name="type" id="type" required>
+                            <select name="type" id="type" requirednon>
                                 <option value="" disabled selected>Type de Logement</option>
                                 <?php foreach(request("SELECT * FROM sae._type_logement") as $cat){ ?>
                                     <option value=<?= $cat["id"]?>><?=$cat["type"]?></option>
@@ -142,31 +56,31 @@
                         </div>
                         <div class="info_gen__input">
                             <label for="surface">Surface</label>
-                            <input type="number" id="surface" name="surface" placeholder="Surface en m²" required>
+                            <input type="number" id="surface" name="surface" placeholder="Surface en m²" requirednon>
                         </div>
                         
                         <div class="info_gen__input">
                             <label for="chambre">Nombre de chambres</label>
-                            <input type="number" id="chambre" name="chambre" placeholder="Saisissez" required>
+                            <input type="number" id="chambre" name="chambre" placeholder="Saisissez" requirednon>
                         </div>
 
                         <div class="info_gen__input">
                             <label for="simple">Nombre de lit</label>
                             <div class="input__input">
-                                <input type="number" id="simple" name="simple" placeholder="Simple" min="0" max="10" required>
-                                <input type="number" id="double" name="double" placeholder="Double" required>
+                                <input type="number" id="simple" name="simple" placeholder="Simple" requirednon>
+                                <input type="number" id="double" name="double" placeholder="Double" requirednon>
                             </div>
                         </div>
 
                         <div class="full-size">
                             <div class="info_gen__input">
                                 <label for="accroche">Accroche</label>
-                                <textarea id="accroche" name="accroche" placeholder="Saisir descriptif" required></textarea>
+                                <textarea id="accroche" name="accroche" placeholder="Saisir descriptif" requirednon></textarea>
                             </div>
 
                             <div class="info_gen__input">
                                 <label for="description">Descriptif détaillé</label>
-                                <textarea id="description" name="description" placeholder="Saisir descriptif" required></textarea>
+                                <textarea id="description" name="description" placeholder="Saisir descriptif" requirednon></textarea>
                             </div>
                         </div>
                         
@@ -180,17 +94,17 @@
                     <div class="field-container">
                         <div class="info_gen__input">
                             <label for="pays">Pays</label>
-                            <input type="text" id="pays" name="pays" value="France" disabled required>
+                            <input type="text" id="pays" name="pays" value="France" disabled requirednon>
                         </div>
                         
                         <div class="info_gen__input">
                             <label for="region">Région</label>
-                            <input type="text" id="region" name="region" value="Bretagne" disabled required>
+                            <input type="text" id="region" name="region" value="Bretagne" disabled requirednon>
                         </div>
 
                         <div class="info_gen__input">
                             <label for="departement">Département</label>
-                            <select name="departement" id="departement" required>
+                            <select name="departement" id="departement" requirednon>
                                 <option value="" disabled selected>Selectionner</option>
                                 <option value="Finistère">Finistère</option>
                                 <option value="Morbihan">Morbihan</option>
@@ -201,26 +115,26 @@
 
                         <div class="info_gen__input">
                             <label for="commune">Commune</label>
-                            <input type="text" id="commune" name="commune" placeholder="Saisissez" required>
+                            <input type="text" id="commune" name="commune" placeholder="Saisissez" requirednon>
                         </div>
 
                         <div class="info_gen__input">
                             <label for="">Code Postal</label>
-                            <input type="number" id="cp" name="cp" placeholder="29400" required>
+                            <input type="number" id="cp" name="cp" placeholder="29400" requirednon>
                         </div>
 
-                        <input type="hidden" id="latitude" name="latitude" placeholder="Latitude" required>
-                        <input type="hidden" id="longitude" name="longitude" placeholder="Longitude" required>
+                        <input type="hidden" id="latitude" name="latitude" placeholder="Latitude" requirednon>
+                        <input type="hidden" id="longitude" name="longitude" placeholder="Longitude" requirednon>
 
                         <div class="info_gen__input adresse">
                             <label for="voie">Voie</label>
-                            <input type="text" id="voie" name="voie" placeholder="Nom de voie" required>
+                            <input type="text" id="voie" name="voie" placeholder="Nom de voie" requirednon>
                         </div>
 
                         <div class="info_gen__input">
                             <label for="num_voie">Numéro Voie</label>
                             <div class="input__input">
-                                <input type="number" id="num_voie" name="num_voie" placeholder="12" required>
+                                <input type="number" id="num_voie" name="num_voie" placeholder="12" requirednon>
                             </div>
                         </div>
 
@@ -248,33 +162,33 @@
                     <div class="field-container">
                         <div class="info_gen__input">
                             <label for="nbpersonne">Nombre max de personne</label>
-                            <input type="number" id="nbpersonne" name="nbpersonne" placeholder="6" required>
+                            <input type="number" id="nbpersonne" name="nbpersonne" placeholder="6" requirednon>
                         </div>
                         
                         <div class="info_gen__input">
                             <label for="prixht">Prix HT</label>
-                            <input type="number" id="prixht" name="prixht" placeholder="123.5" required>
+                            <input type="number" id="prixht" name="prixht" placeholder="123.5" requirednon>
                         </div>
 
                         <div class="info_gen__input">
                                 <label for="dureeloc">Durée minimum de location</label>
-                                <input type="number" id="dureeloc" name="dureeloc" placeholder="Saisissez" required>
+                                <input type="number" id="dureeloc" name="dureeloc" placeholder="Saisissez" requirednon>
                             </div>
 
                         <div class="info_gen__input">
                             <label for="delaires">Délai minimum réservation avant l'arrivée </label>
-                            <input type="number" id="delaires" name="delaires" placeholder="Saisissez" required>
+                            <input type="number" id="delaires" name="delaires" placeholder="Saisissez" requirednon>
                         </div>
 
                         <div class="info_gen__input">
                             <label for="delaires">Délai d'annulation </label>
-                            <input type="number" id="preavis" name="preavis" placeholder="Saisissez" required>
+                            <input type="number" id="preavis" name="preavis" placeholder="Saisissez" requirednon>
                         </div>
 
 
                         <div class="info_gen__input">
                             <label for="statut">Statut du logement</label>
-                            <select name="statut" id="statut" placeholder="" required>
+                            <select name="statut" id="statut" placeholder="" requirednon>
                                 <option value="" disabled selected>Choisir</option>
                                 <option value="0">En ligne</option>
                                 <option value="1">Hors ligne</option>
