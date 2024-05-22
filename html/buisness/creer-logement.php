@@ -59,14 +59,18 @@
 
         $id_logement = insert("sae._logement", array_keys($logement), array_values($logement));
 
-        foreach($_POST["amenagements"] as $amenagement){
-            insert("sae._amenagement_logement", ["id_logement", "id_amenagement"], [$id_logement, $amenagement], false);
+        if (isset($_POST["amenagements"])){
+            foreach($_POST["amenagements"] as $amenagement){
+                insert("sae._amenagement_logement", ["id_logement", "id_amenagement"], [$id_logement, $amenagement], false);
+            }
         }
 
         /*Activite*/
-        foreach($_POST["amenagement"] as $activite){
-            $activite = explode(";;" ,$activite);
-            insert("sae._activite_logement", ["id_logement", "activite", "id_distance"], [$id_logement, $activite[0], $activite[1]], false);
+        if (isset($_POST["activite"])){
+            foreach($_POST["activite"] as $activite){
+                $activite = explode(";;" ,$activite);
+                insert("sae._activite_logement", ["id_logement", "activite", "id_distance"], [$id_logement, $activite[0], $activite[1]], false);
+            }
         }
 
         $uploads_dir = "../../images/logement/$id_logement";
@@ -330,6 +334,9 @@
                     </button>
                 </form>
         </main>
+        <div class="loading__modal">
+            <span class="loader"></span>
+        </div>
         <?php require_once "footer.php"; ?>
     </div>
     <script src="../js/creer-logement.js"></script>

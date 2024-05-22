@@ -47,7 +47,7 @@ btnAddAmenagement.addEventListener("click", () => {
   });
 
   input.type = "hidden";
-  input.name = "amenagement[]";
+  input.name = "activite[]";
   input.value = amenagement.name + ";;" + amenagement.distanceID;
 
   p.textContent = amenagement.name;
@@ -108,10 +108,23 @@ const paysInput = document.getElementById("pays");
 const voieInput = document.getElementById("voie");
 const numVoieInput = document.getElementById("num_voie");
 
-document.getElementById("form__submit").addEventListener("click", async (e) => {
-  console.log("click form submit");
+var isSubmiting = false;
+const submitButton = document.getElementById("form__submit");
+const loadingModal = document.querySelector(".loading__modal");
+
+const updateSubmitingButton = () => {
+  loadingModal.style.display = isSubmiting ? "flex" : "none";
+};
+
+document.addEventListener("click", () => {
+  updateSubmitingButton();
+  isSubmiting = !isSubmiting;
+});
+
+submitButton.addEventListener("click", async (e) => {
   e.preventDefault();
-  if (!logementForm.reportValidity()) return;
+  if (!logementForm.reportValidity() || isSubmiting) return;
+
   if (imageList.length > 0) {
     const data = new DataTransfer();
 
