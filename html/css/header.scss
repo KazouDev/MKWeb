@@ -338,3 +338,10 @@ header.buisness{
         color:$mainBlanc;
     }
 }
+header.buisness{
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    #CmdMenu{
+        display: none;
+    }
+}

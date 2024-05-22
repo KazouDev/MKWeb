@@ -56,7 +56,7 @@ foreach ($results as $result) {
                         <img src="../img/filter-3.webp" alt="">
                         <img src="../img/arrows.webp" alt="">
                     </div>
-                    <a href="#" id="export-reservation-btn"><i class="fa-solid fa-download"></i></a>
+                    <a href="#" id="export-reservation-btn"><img src="../img/downloads.webp" alt="Download"></a>
                 </div>
                 <?php if (empty($results)) { ?>
                     <div class="mes__reserv__empty">
@@ -83,13 +83,15 @@ foreach ($results as $result) {
                                         </div>
                                     </div>
                                     <h4><?php echo $result["date_debut"] ?> – <?php echo $result["date_fin"] ?></h4>
-                                    <p class="<?php echo $status_class ?>"><?php echo $status ?></p>
                                 </div>
-                                <div>
-                                    <i class="fa-regular fa-eye"></i>
-                                    <?php if ($status === "À venir") { ?>
-                                        <i class="fa-solid fa-trash red"></i>
-                                    <?php } ?>
+                                <div class="petit_bouttons_main">
+                                    <p class="<?php echo $status_class ?>"><?php echo $status ?></p>
+                                    <div class="petit_bouttons">
+                                        <i class="fa-regular fa-eye"></i>
+                                        <?php if ($status === "À venir") { ?>
+                                            <i class="fa-solid fa-trash red"></i>
+                                        <?php } ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>

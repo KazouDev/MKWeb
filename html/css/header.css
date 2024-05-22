@@ -291,4 +291,12 @@ header.buisness .header__connexion {
 }
 header.buisness .header__form a i {
   color: #FFFFFF;
+}
+
+header.buisness {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+header.buisness #CmdMenu {
+  display: none;
 }/*# sourceMappingURL=header.css.map */
