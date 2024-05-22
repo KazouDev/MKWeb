@@ -360,6 +360,7 @@ INSERT INTO _utilisateur (nom, prenom, date_naissance, civilite, pseudo, mot_de_
 ('Moreau', 'Camille', '1959-04-17', 'Mme', 'CamilleM', '$2y$10$ZoN3zC0CCtjt6F.7e6xTiOdyzL24G.tGDKqyqf8tB2wjZGNv.0e7G', './img/compte/profile_camillem.jpg', 'camille.moreau@gmail.com', '06 67 89 01 23', 14),
 
 ('Petit', 'Louis', '1962-07-08', 'Mr', 'LouisP', '$2y$10$h8Z1E0u8pz8fmluTIMmVCeCatHuYZDDrBG72PtoCYq3pIoeVhju.y', './img/compte/profile_louisp.jpg', 'louis.petit@yahoo.com', '06 78 90 12 34', 15);
+
 INSERT INTO _compte_client (id) VALUES 
 (1), (2), (3);
 
