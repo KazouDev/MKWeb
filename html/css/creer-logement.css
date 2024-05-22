@@ -192,7 +192,7 @@ section .field-container #list__amenagement div span {
   font-weight: 200;
   text-transform: lowercase;
 }
-section#section__image input[type="button"] {
+section#section__image input[type=button] {
   background-color: #79da7d;
   color: #ffffff;
   width: 50%;
@@ -200,7 +200,7 @@ section#section__image input[type="button"] {
   align-self: center;
 }
 
-input:not([type="checkbox"]),
+input:not([type=checkbox]),
 select,
 option,
 textarea {
@@ -215,14 +215,13 @@ textarea {
   padding: 0.55em;
 }
 
-textarea::-moz-placeholder,
-input:not([type="checkbox"])::-moz-placeholder {
+textarea::-moz-placeholder, input:not([type=checkbox])::-moz-placeholder {
   color: rgba(34, 34, 34, 0.5);
   font-size: 1rem;
 }
 
 textarea::placeholder,
-input:not([type="checkbox"])::placeholder {
+input:not([type=checkbox])::placeholder {
   color: rgba(34, 34, 34, 0.5);
   font-size: 1rem;
 }
@@ -235,8 +234,8 @@ select {
   font-size: 1rem;
   font-weight: 300;
   -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   background-image: url("../img/down.webp");
   background-repeat: no-repeat;
   background-position: right 0.7rem top 50%;
@@ -267,4 +266,4 @@ select {
   height: 40px;
   background-color: #5669ff;
   margin: auto;
-} /*# sourceMappingURL=creer-logement.css.map */
+}/*# sourceMappingURL=creer-logement.css.map */

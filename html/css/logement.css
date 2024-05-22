@@ -29,7 +29,6 @@
 }
 .stars i {
   color: #ffd33c;
-  color: #ffd33c;
 }
 
 #logement__rate__valuernote {
@@ -38,8 +37,6 @@
   font-weight: 600;
 }
 
-.retour img,
-.partager img {
 .retour img,
 .partager img {
   width: 2.5rem;
@@ -60,7 +57,6 @@
 
 .partager a:hover {
   color: #5669ff;
-  color: #5669ff;
 }
 
 .logement__adr {
@@ -76,11 +72,9 @@
 
 .logement__adr a {
   color: #ffffff;
-  color: #ffffff;
   padding: 0.5rem 2rem;
   font-size: 1.25rem;
   border-radius: 0.75rem;
-  background: #5669ff;
   background: #5669ff;
 }
 
@@ -101,7 +95,7 @@
   max-width: 21.875rem;
   max-height: 15.625rem;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 
 @media (max-width: 1200px) {
@@ -121,8 +115,6 @@
   .logement__adr h2 {
     font-size: 1.25rem;
   }
-  .retour img,
-  .partager img {
   .retour img,
   .partager img {
     width: 1.5rem;
@@ -259,8 +251,6 @@
 
 .logement__res form,
 .res__fromulaire {
-.logement__res form,
-.res__fromulaire {
   display: flex;
   flex-direction: column;
 }
@@ -278,9 +268,6 @@
 .res__arrive,
 .res__dep,
 .res__voy {
-.res__arrive,
-.res__dep,
-.res__voy {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -290,16 +277,10 @@
 .res__arrive label,
 .res__dep label,
 .res__voy label {
-.res__arrive label,
-.res__dep label,
-.res__voy label {
   font-weight: 600;
   font-size: 0.5rem;
   text-transform: uppercase;
 }
-.res__arrive input,
-.res__dep input,
-.res__voy input {
 .res__arrive input,
 .res__dep input,
 .res__voy input {
@@ -320,12 +301,10 @@
   padding: 0.4rem 0.7rem;
 }
 
-.logement__res .form__logement input[type="submit"] {
+.logement__res .form__logement input[type=submit] {
   cursor: pointer;
   align-self: stretch;
   border-radius: 0.5rem;
-  background-color: #5669ff;
-  color: #ffffff;
   background-color: #5669ff;
   color: #ffffff;
   padding: 0.8rem 4rem;
@@ -336,7 +315,6 @@
   cursor: pointer;
   align-self: stretch;
   border-radius: 0.5rem;
-  background-color: #e1ebf4;
   background-color: #e1ebf4;
   color: #222222;
   padding: 0.8rem 4rem;
@@ -357,8 +335,6 @@
   border-bottom: 1px solid #878787;
 }
 
-.calcules__ligne,
-.logement__total-ttc {
 .calcules__ligne,
 .logement__total-ttc {
   width: 100%;
@@ -409,8 +385,6 @@
 }
 .details__top .details__nom h2,
 .details__top .details__nom p {
-.details__top .details__nom h2,
-.details__top .details__nom p {
   font-weight: 600;
   font-size: 1.25rem;
 }
@@ -445,7 +419,6 @@
 }
 .logement__propose a {
   color: #5669ff;
-  color: #5669ff;
 }
 .logement__propose li {
   line-height: 2;
@@ -470,7 +443,6 @@
 }
 .logement__note i {
   color: #ffd33c;
-  color: #ffd33c;
 }
 .logement__note a {
   font-weight: 400;
@@ -480,7 +452,6 @@
 }
 .logement__note a:hover {
   color: #5669ff;
-  color: #5669ff;
 }
 
 @media (max-width: 1200px) {
@@ -489,8 +460,6 @@
   }
 }
 @media (max-width: 1000px) {
-  .details__top .details__nom h2,
-  .details__top .details__nom p {
   .details__top .details__nom h2,
   .details__top .details__nom p {
     font-weight: 600;
@@ -520,8 +489,6 @@
 @media (max-width: 750px) {
   .details__top .details__nom h2,
   .details__top .details__nom p {
-  .details__top .details__nom h2,
-  .details__top .details__nom p {
     font-size: 0.75rem;
   }
   .details__top .details__features {
@@ -544,12 +511,8 @@
   }
   .details__top .details__nom h2,
   .details__top .details__nom p {
-  .details__top .details__nom h2,
-  .details__top .details__nom p {
     font-size: 1.25rem;
   }
-  #logement__reserver,
-  #logement__verifier {
   #logement__reserver,
   #logement__verifier {
     position: static;
@@ -557,9 +520,6 @@
   .logement__res {
     align-items: normal;
   }
-  .res__arrive,
-  .res__dep,
-  .res__voy {
   .res__arrive,
   .res__dep,
   .res__voy {
@@ -580,8 +540,6 @@
   }
   .details__top .details__nom h2,
   .details__top .details__nom p {
-  .details__top .details__nom h2,
-  .details__top .details__nom p {
     font-size: 1rem;
   }
   .logement__proposNote {
@@ -597,16 +555,13 @@
   .res__arrive,
   .res__dep,
   .res__voy {
-  .res__arrive,
-  .res__dep,
-  .res__voy {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.2rem;
   }
   .logement__propose ul {
     -moz-column-gap: 4rem;
-    column-gap: 4rem;
+         column-gap: 4rem;
   }
   .logement__proposNote {
     padding-right: 0rem;
@@ -631,9 +586,6 @@
   .res__arrive,
   .res__dep,
   .res__voy {
-  .res__arrive,
-  .res__dep,
-  .res__voy {
     padding: 0.2rem;
   }
 }
@@ -655,8 +607,6 @@
   line-height: 2;
 }
 .apropos button {
-  background-color: #5669ff;
-  color: #ffffff;
   background-color: #5669ff;
   color: #ffffff;
   font-size: 1rem;
@@ -685,7 +635,7 @@
   height: 7rem;
   border-radius: 50%;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 .hote .hote__info .hote__main {
   display: flex;
@@ -708,7 +658,6 @@
 }
 .hote .hote__info .hote__main .hote__nom .hote_rate i {
   font-weight: 20px;
-  color: #ffd33c;
   color: #ffd33c;
 }
 .hote .hote__info .hote__main .hote__nom #hote__5star {
@@ -737,7 +686,7 @@
 }
 
 .apropos button:hover,
-.logement__res input[type="submit"]:hover,
+.logement__res input[type=submit]:hover,
 #reset:hover {
   background-color: #9aa5ff;
 }
@@ -753,7 +702,6 @@
   font-weight: 600;
 }
 .asavoir a {
-  color: #5669ff;
   color: #5669ff;
   cursor: pointer;
   font-size: 1rem;
@@ -900,7 +848,7 @@
   height: 3rem;
   border-radius: 50%;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 .avis .lesavis .avis__element .avis__top .avis__user .user__nom {
   display: flex;
@@ -924,7 +872,6 @@
 }
 .avis .lesavis .avis__element .avis__top .avis__note .avis_rate i {
   color: #ffd33c;
-  color: #ffd33c;
 }
 .avis .lesavis .avis__element .avis__top .avis__note h6 {
   font-size: 0.75rem;
@@ -938,8 +885,6 @@
   border-radius: 0.75rem;
   background: #5669ff;
   color: #ffffff;
-  background: #5669ff;
-  color: #ffffff;
   font-size: 1rem;
   padding: 0.9rem 4rem;
   border-radius: 0.75rem;
@@ -947,7 +892,6 @@
   cursor: pointer;
 }
 .avis button:hover {
-  background-color: #9aa5ff;
   background-color: #9aa5ff;
 }
 
@@ -1129,4 +1073,4 @@
 
 input:focus {
   outline: 1px solid #5669ff;
-} /*# sourceMappingURL=logement.css.map */
+}/*# sourceMappingURL=logement.css.map */
