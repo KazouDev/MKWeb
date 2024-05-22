@@ -1,5 +1,5 @@
 <?php 
-    include "./header.php";
+    session_start();
     require_once "../../utils.php";
    
     
@@ -64,6 +64,7 @@
 </head>
 <body>
     <div class="wrapper">
+        <?php     include "./header.php"; ?>
         <main class="main__container">
             <div class="detail_mon_compte__conteneur">
                 <div class="header_info_compte">
