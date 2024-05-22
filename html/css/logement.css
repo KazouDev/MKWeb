@@ -779,6 +779,7 @@
 .environs #environs__map {
   width: 25rem;
   height: 20rem;
+  z-index: 0;
 }
 .environs .environs__details {
   display: flex;
