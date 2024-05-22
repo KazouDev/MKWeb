@@ -1,8 +1,8 @@
 <?php
-require_once './header.php';
 require_once "../../utils.php";
-//session_destroy();
+
 $id = buisness_connected_or_redirect();
+
 $query = "SELECT 
 sae._utilisateur.nom , sae._utilisateur.prenom , sae._utilisateur.telephone, sae._logement.titre, sae._reservation.id as numero_de_reservation, sae._reservation.date_debut AS Date_Debut, sae._reservation.date_fin AS Date_Fin, sae._reservation.date_annulation
 FROM sae._reservation
@@ -30,6 +30,7 @@ $current_date = date("Y-m-d"); // Obtient la date actuelle au format Y-m-d
 
 <body class="page">
     <div class="wrapper">
+        <?php require_once './header.php'; ?>
         <main class="main">
             <div class="main__container reserv">
                 <div class="mes__reserv__titre">
