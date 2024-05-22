@@ -217,8 +217,7 @@
                 <div class="logement__photos">
                     <div class="photo__grille" id="logement__photo__grille">
                         <?php foreach($rep_photo as $photo) {?>
-                            
-                            <img src="img/<?=$photo['src']?>" alt="<?=$photo['alt']?>">
+                            <img src="./img<?=$photo['src']?>" alt="<?=$photo['alt']?>">
                         <?php } ?>
                     </div>
                 </div>
