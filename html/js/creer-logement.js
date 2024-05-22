@@ -178,11 +178,15 @@ submitButton.addEventListener("click", async (e) => {
 
   const formData = new FormData(logementForm);
 
+  console.log(formData);
   fetch("../ajax/creer-logement.ajax.php", {
     method: "POST",
     body: formData,
   })
-    .then((response) => response.text())
+    .then((response) => {
+      console.log(response);
+      response.text();
+    })
     .then((data) => {
       console.log(data);
       /*if (data.err == false) {
