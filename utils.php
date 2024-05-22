@@ -131,4 +131,13 @@ function redirect(){
   exit();
 }
 
+function redirect_business(){
+  if (isset($_SESSION["last_page"])){
+    header('Location: '.$_SESSION["last_page"]);
+  } else {
+    header('Location: buisness/index.php');
+  }
+  exit();
+}
+
 ?>

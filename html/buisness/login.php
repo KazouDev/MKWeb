@@ -6,7 +6,7 @@
 
     // Si déjà connecté on renvoie sur l'acceuil.
     if (buisness_connected()){
-        redirect();
+        redirect_business();
         exit;
     }   
 
@@ -27,7 +27,7 @@
             if (password_verify($_POST["password"], $result["mot_de_passe"])){
                 $_SESSION["business_id"] = $result["id"];
                 unset($_SESSION["client_id"]);
-                redirect();
+                redirect_business();
             } else {
                 $status = true;
             }
