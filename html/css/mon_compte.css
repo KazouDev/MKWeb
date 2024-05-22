@@ -10,15 +10,16 @@
 }
 .detail_mon_compte__conteneur h3 {
   font-size: 2rem;
-}
-.detail_mon_compte__conteneur #blue {
   color: #5669ff;
 }
-.detail_mon_compte__conteneur .info_perso_conteneur, .detail_mon_compte__conteneur .adresse_conteneur, .detail_mon_compte__conteneur .photo_conteneur, .detail_mon_compte__conteneur .mdp_conteneur {
+.detail_mon_compte__conteneur #identifiant_client {
+  color: #222222;
+}
+.detail_mon_compte__conteneur .info_perso_conteneur, .detail_mon_compte__conteneur .adresse_conteneur, .detail_mon_compte__conteneur .photo_conteneur, .detail_mon_compte__conteneur .mdp_conteneur, .detail_mon_compte__conteneur .coord_bancaire_conteneur {
   display: flex;
   border-radius: 0.75em;
   flex-direction: column;
-  gap: 1.875em;
+  gap: 1rem;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   padding: 1.875em;
   margin-bottom: 2rem;
@@ -102,6 +103,7 @@
   width: 15rem;
   height: 15rem;
   align-self: center;
+  margin: 1rem;
 }
 
 .wrapper {
@@ -123,4 +125,49 @@
 .identifiant_client {
   display: flex;
   flex-direction: row;
+}
+
+.ensemble_flex {
+  display: flex;
+  flex-direction: row;
+  gap: 5rem;
+}
+
+.sous_ensemble_flex {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.photo_conteneur img {
+  display: inline;
+  align-items: center;
+}
+
+.mdp_conteneur label[for=showPassword] {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+#showPassword {
+  width: 1rem;
+}
+
+.detail_mon_compte__conteneur .photo_conteneur {
+  width: 60%;
+  gap: 7rem;
+}
+
+#photo_client {
+  width: 40%;
+  gap: 2rem;
+}
+
+#mdp_client {
+  width: 60%;
+  height: -moz-max-content;
+  height: max-content;
 }/*# sourceMappingURL=mon_compte.css.map */

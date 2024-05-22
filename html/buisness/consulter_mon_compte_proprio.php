@@ -1,14 +1,16 @@
 <?php 
-    include "header.php";
-    require_once "../utils.php";
+    include "./header.php";
+    require_once "../../utils.php";
    
+    
 
-    $id_utilisateur =  client_connected_or_redirect();
+    $id_utilisateur =  buisness_connected_or_redirect();
 
     $query_utilisateur = "select nom, prenom, pseudo, commune, pays, region, departement,
-    numero, nom_voie, civilite, photo_profile, email, telephone, date_naissance, mot_de_passe, complement_1, complement_2, complement_3
+    numero, nom_voie, civilite, photo_profile, email, telephone, date_naissance, mot_de_passe, iban, bic, complement_1, complement_2, complement_3
     from sae._utilisateur
     inner join sae._adresse on sae._adresse.id = sae._utilisateur.id_adresse
+    inner join sae._compte_proprietaire on sae._compte_proprietaire.id = sae._utilisateur.id
     where sae._utilisateur.id = $id_utilisateur;";
     $rep_utilisateur = request($query_utilisateur, true);
     
@@ -27,10 +29,16 @@
     $civilite = $rep_utilisateur['civilite'];
     $date_naissance = $rep_utilisateur['date_naissance'];
     $pseudo = $rep_utilisateur['pseudo'];
-
+    $iban = $rep_utilisateur['iban'];
+    $bic = $rep_utilisateur['bic'];
+    $photo = $rep_utilisateur['photo_profile'];
     $complement1 = $rep_utilisateur['complement_1'];
     $complement2 = $rep_utilisateur['complement_2'];
     $complement3 = $rep_utilisateur['complement_3'];
+
+
+
+
 
     if ($rep_utilisateur['civilite'] == "Mr"){
         $genre = "Homme";
@@ -48,9 +56,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/mon_compte.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/mon_compte.css">
     <title>Document</title>
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
 </head>
@@ -60,7 +68,7 @@
             <div class="detail_mon_compte__conteneur">
                 <div class="header_info_compte">
                     <h2>Mon Compte</h2>
-                    <div class ="identifiant_client"><h3 id="identifiant_client">Identifiant client : </h3><h3><?= " " . $id_utilisateur ?></h3></div>
+                    <div class ="identifiant_client" ><h3 id="identifiant_client">Identifiant client : </h3><h3><?= " " . $id_utilisateur ?></h3></div>
                 </div>
               
                 <div class="compte_form">
@@ -96,7 +104,7 @@
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__telephone">Téléphone</label>
-                                    <input type="text" name="telephone" id="compte__telephone" value="<?= $telephone ?>" placeholder="Votre téléphone" readonly>
+                                    <input type="tel" name="telephone" id="compte__telephone" value="<?= $telephone ?>" placeholder="Votre téléphone" readonly>
                                 </div>
                             </div>
                             <div class="ligne">
@@ -147,33 +155,46 @@
                             </div>
                             <div class="compte__input">
                                 <label for="compte__complement">Complément d'adresse</label>
-                                <input type="tel" name="complement" id="compte__complement3" value= "<?= $complement3?>" placeholder="Complément" readonly>
+                                <input type="text" name="complement" id="compte__complement3" value= "<?= $complement3?>" placeholder="Complément" readonly>
                             </div>
                         </form>
                     </div>
-                    <div class="ensemble_flex">
-                        <div class= "photo_conteneur" id="photo_client">
+                    <div class = "ensemble_flex">
+                        <div class= "photo_conteneur">
                             <h3>Votre photo de profil</h3>
-                            <img src="<?= $src_photo ?>" alt="photo de profil de l'utilisateur">
-    <!--                         <p>source : <?= $src_photo ?></p>
-    --><!--                         <label for="photo_profile">Votre photo de profil</label>
+                            <img src="<?= "../".$photo ?>" alt="photo de profil de l'utilisateur">
+                            <!-- <p>source : <?= $src_photo ?></p> -->
+    <!--                         <label for="photo_profile">Votre photo de profil</label>
                             <input type="file" id="photo_profile" name="photo_profile" accept="image/png, image/jpeg" /> -->
                         </div>
-                        <div class= "mdp_conteneur" id="mdp_client">  
-                            <h3>Mot de passe</h3>
-                            <div class="compte__input">
-                                <label for="compte__mdp">Mot de passe :</label>
-                                <input type="password" id="compte__mdp" name="mdp" value="<?= $mdp ?>" placeholder="mdp" readonly>
-                                <label for="showPassword">
-                                    <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()"> Afficher le mot de passe
-                                </label>
+                        <div class="sous_ensemble_flex">
+                            <div class= "mdp_conteneur">  
+                                <h3>Mot de passe</h3>
+                                <div class="compte__input">
+                                    <label for="compte__mdp">Mot de passe :</label>
+                                    <input type="password" id="compte__mdp" name="mdp" value="<?= $mdp ?>" placeholder="mdp" readonly>
+                                    <label for="showPassword">
+                                        <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()"> Afficher le mot de passe
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-                    </div>  
+                            <div class="coord_bancaire_conteneur">
+                                <h3>Coordonnées bancaires</h3>
+                                <form method="POST" action="">
+                                    <div class="compte__input">
+                                        <label for="compte__iban">IBAN :</label>
+                                        <input type="text" id="compte__iban" name="iban" value="<?= $iban ?>" placeholder="IBAN" readonly>
+                                        <label for="compte__bic">BIC :</label>
+                                        <input type="text" id="compte__bic" name="bic" value="<?= $bic ?>" placeholder="BIC" readonly>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>                        
+                    </div>                    
                 </div>
             </div>
         </main>
-        <?php include "footer.php"; ?>
+        <?php include "./footer.php"; ?>
     </div>
     <script>
         function togglePasswordVisibility() {
