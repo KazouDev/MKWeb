@@ -74,6 +74,8 @@ const verifyAndFetch = () => {
         document.getElementById("nb_jours").innerHTML = responseData.nombre_jour;
         document.getElementsByName("nb_jours")[0].value = responseData.nombre_jour;
 
+        document.getElementsByName("nb_nuit")[0].value = responseData.nombre_nuit;
+
         document.getElementById("frais__total").innerHTML = responseData.frais;
         document.getElementsByName("frais")[0].value = responseData.frais;
 
@@ -179,7 +181,7 @@ const afficherCalendrier = (mois, annee) => {
           // Vérifier si la période est supérieur à 4 jours
           var diffDays =
             Math.round((dateFin - dateDebut) / (1000 * 60 * 60 * 24)) + 1;
-          if (diffDays <= 4) {
+          if (diffDays <= JOUR_MIN) {
             displayError.style.display = "block";
             setTimeout(() => {
               displayError.style.display = "none";
@@ -267,7 +269,7 @@ const afficherCalendrier = (mois, annee) => {
             // Vérifier si la période est supérieur à 4 jours
             var diffDays =
               Math.round((dateFin - dateDebut) / (1000 * 60 * 60 * 24)) + 1;
-            if (diffDays <= 4) {
+            if (diffDays <= JOUR_MIN) {
               displayError.style.display = "block";
               setTimeout(() => {
                 displayError.style.display = "none";
@@ -322,12 +324,24 @@ const formatDate = (date) => {
 };
 
 const updateCalendar = () => {
-  var cells = document.querySelectorAll("#calendar td");
+  let today = new Date();
+  today.setHours(0, 0, 0, 0); 
+
+  let delaiDate = new Date(today);
+  delaiDate.setDate(today.getDate() + DELAI_RES);
+
+  let cells = document.querySelectorAll("#calendar td");
   cells.forEach(function (cell) {
     var day = parseInt(cell.innerHTML);
     var cellDate = new Date(annee, mois, day);
+    cellDate.setHours(0, 0, 0, 0); 
 
-    cell.classList.remove("selected", "selected-start", "selected-end");
+    cell.classList.remove("selected", "selected-start", "selected-end", "passed");
+   
+    if (cellDate < delaiDate) {
+      cell.classList.add("passed");
+      return; 
+    }
     if (dateDebut && cellDate.toDateString() === dateDebut.toDateString()) {
       cell.classList.add("selected-start");
     }
@@ -346,7 +360,6 @@ const moisPrecedent = () => {
 
   // Ne pas pouvoir aller dans une date déjà passé
   if (mois == current_month) return;
-
   mois--;
   if (mois < 0) {
     mois = 11;
@@ -400,8 +413,6 @@ xhr.onreadystatechange = function () {
   }
 };
 xhr.send();
-
-console.log("ajax");
 
 inputNombrePersonne.addEventListener("input", verifyAndFetch);
 
