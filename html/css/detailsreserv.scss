@@ -140,7 +140,7 @@ $lineHeight: 1.5;
         flex-direction: row;
         gap: 1.875em;
         > p {
-          font-size: $h3Size;
+          font-size: 1.8rem;
         }
       }
     }
@@ -359,9 +359,9 @@ i.jaune {
       }
     }
   }
-  .section2__article3 iframe {
-    width: 20rem;
-    height: 15rem;
+  .section2__article3#localisation {
+    width: 25rem;
+    height: 20rem;
   }
 }
 
@@ -373,6 +373,7 @@ i.jaune {
 .asavoir {
   display: flex;
   flex-direction: column;
+  align-self: center;
   align-items: flex-start;
   gap: 1rem;
   h2 {
@@ -395,10 +396,15 @@ i.jaune {
     gap: 2rem;
     align-items: flex-start;
     justify-content: flex-start;
+    justify-content: center;
   }
 
   .hote .hote__info {
     width: 70%;
+  }
+  .article__title{
+    flex-direction: column!important;
+    gap:1rem!important;
   }
 }
 
@@ -407,13 +413,20 @@ i.jaune {
     gap: 2rem;
     align-items: flex-start;
   }
+  .detail-reservation__contenu > div.detail-reservation__section1{
+    flex-direction: column;
+  }
+  .article__title{
+    flex-direction: row;
+  }
+ 
   .hote .hote__info {
     padding: 0.8rem;
     width: 100%;
     img {
       width: 4rem;
       height: 4rem;
-    }
+    } 
   }
 
   .asavoir {
@@ -469,8 +482,9 @@ i.jaune {
   .detail-reservation__entete .entete__titre {
     font-size: $h3Size;
   }
+  
   .detail-reservation__contenu > div.detail-reservation__section1 > img {
-    max-width: 15em;
+    max-width: 20rem;
   }
 
   .asavoir {
@@ -552,7 +566,7 @@ i.jaune {
     padding: 1rem;
     width: 100%;
   }
-  .hote .section2__article3 iframe {
+  .hote .section2__article3#localisation {
     width: 15rem;
     height: 10rem;
   }
@@ -580,6 +594,7 @@ i.jaune {
     > div.informationoccupation__detail {
     padding: 1em;
   }
+  
 }
 @media (max-width: 500px) {
   .detail-reservation__entete > div:last-child {
@@ -612,7 +627,7 @@ i.jaune {
   .detail-reservation__entete {
     gap: 1rem;
   }
-  .hote .section2__article3 iframe {
+  .hote .section2__article3#localisation {
     width: 32rem;
   }
   .hote .hote__info {
@@ -629,7 +644,7 @@ i.jaune {
   }
 }
 @media (max-width: 350px) {
-  .hote .section2__article3 iframe {
+  .hote .section2__article3 #localisation {
     width: initial;
   }
   .hote .hote__info {

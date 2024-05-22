@@ -106,7 +106,7 @@
   gap: 1.875em;
 }
 .detail-reservation__contenu > div.detail-reservation__section1 > div.section1__article > div.article__title > p {
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 .detail-reservation__contenu > div.detail-reservation__section1 > img {
   max-width: 21em;
@@ -314,9 +314,9 @@ i.jaune {
 .hote .hote__info .hote__langues i {
   font-size: 20px;
 }
-.hote .section2__article3 iframe {
-  width: 20rem;
-  height: 15rem;
+.hote .section2__article3#localisation {
+  width: 25rem;
+  height: 20rem;
 }
 
 .apropos button:hover,
@@ -328,6 +328,7 @@ i.jaune {
 .asavoir {
   display: flex;
   flex-direction: column;
+  align-self: center;
   align-items: flex-start;
   gap: 1rem;
 }
@@ -351,15 +352,26 @@ i.jaune {
     gap: 2rem;
     align-items: flex-start;
     justify-content: flex-start;
+    justify-content: center;
   }
   .hote .hote__info {
     width: 70%;
+  }
+  .article__title {
+    flex-direction: column !important;
+    gap: 1rem !important;
   }
 }
 @media (max-width: 800px) {
   .hote {
     gap: 2rem;
     align-items: flex-start;
+  }
+  .detail-reservation__contenu > div.detail-reservation__section1 {
+    flex-direction: column;
+  }
+  .article__title {
+    flex-direction: row;
   }
   .hote .hote__info {
     padding: 0.8rem;
@@ -417,7 +429,7 @@ i.jaune {
     font-size: 2rem;
   }
   .detail-reservation__contenu > div.detail-reservation__section1 > img {
-    max-width: 15em;
+    max-width: 20rem;
   }
   .asavoir {
     order: 3;
@@ -475,7 +487,7 @@ i.jaune {
     padding: 1rem;
     width: 100%;
   }
-  .hote .section2__article3 iframe {
+  .hote .section2__article3#localisation {
     width: 15rem;
     height: 10rem;
   }
@@ -529,7 +541,7 @@ i.jaune {
   .detail-reservation__entete {
     gap: 1rem;
   }
-  .hote .section2__article3 iframe {
+  .hote .section2__article3#localisation {
     width: 32rem;
   }
   .hote .hote__info {
@@ -544,7 +556,7 @@ i.jaune {
   }
 }
 @media (max-width: 350px) {
-  .hote .section2__article3 iframe {
+  .hote .section2__article3 #localisation {
     width: initial;
   }
   .hote .hote__info {
