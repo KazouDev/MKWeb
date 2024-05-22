@@ -257,7 +257,7 @@
                         </div>
 
                         <div class="info_gen__input">
-                                <label for="dureeloc">Délai minimum de location</label>
+                                <label for="dureeloc">Durée minimum de location</label>
                                 <input type="number" id="dureeloc" name="dureeloc" placeholder="Saisissez" required>
                             </div>
 
@@ -265,6 +265,12 @@
                             <label for="delaires">Délai minimum réservation avant l'arrivée </label>
                             <input type="number" id="delaires" name="delaires" placeholder="Saisissez" required>
                         </div>
+
+                        <div class="info_gen__input">
+                            <label for="delaires">Délai d'annulation </label>
+                            <input type="number" id="preavis" name="preavis" placeholder="Saisissez" required>
+                        </div>
+
 
                         <div class="info_gen__input">
                             <label for="statut">Statut du logement</label>
