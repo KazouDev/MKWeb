@@ -71,7 +71,7 @@
 
     $query_note = "SELECT avg(note), count(*) from sae._avis where id_logement = $id_logement;";
     $query_amenagement = "SELECT amenagement FROM sae._amenagement_logement INNER JOIN sae._amenagement ON sae._amenagement_logement.id_amenagement = sae._amenagement.id  WHERE sae._amenagement_logement.id_logement = $id_logement;";
-    $query_hote = "select prenom, nom from sae._utilisateur inner join sae._logement on sae._utilisateur.id = sae._logement.id_proprietaire where sae._logement.id = $id_logement;";
+    $query_hote = "select prenom, nom, photo_profile from sae._utilisateur inner join sae._logement on sae._utilisateur.id = sae._logement.id_proprietaire where sae._logement.id = $id_logement;";
     $query_langue = "select langue from sae._utilisateur 
     inner join sae._langue_proprietaire on sae._utilisateur.id = sae._langue_proprietaire.id_proprietaire 
     inner join sae._langue on sae._langue_proprietaire.id_langue = sae._langue.id
@@ -126,6 +126,7 @@
     if (isset($note_hote)) {
         $note_hote = round($note_hote, 1);
     }
+    $source = $rep_hote['photo_profile'];
 
     $liste_amenagement = [];
     foreach($rep_amenagement as $cle => $amenagements){
@@ -173,7 +174,7 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/logement.css">
-    <title>Document</title>
+    <title><?= $titre_logement?></title>
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -195,16 +196,16 @@
                                 <i class="fas fa-star fa-lg" id="5star"></i> -->
                             </div>
                             <h6 id="logement__rate__valuernote"><?php echo  $moyenne_note?></h6>
-                            <a class="retour" href="" id="logement__retour"><img src="img/back.webp" alt="Retour"></a>
+                            <a class="retour" href="index.php" id="logement__retour"><img src="img/back.webp" alt="Retour"></a>
                         </div>
                         <div class="partager">
                             <img src="img/share.webp" alt="Partager">
-                            <a href="">Partager</a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://mkweb.ventsdouest.dev/detail_logement.php?id=<?= $id_logement?>" target="_blank">Partager</a>
                         </div>
                     </div>
                     <div class="logement__adr">
                         <h2 id="logement__adresse"><?php echo  $ville . ", " . $departement?></h2>
-                        <a href="#logement__verifier">Réserver</a>
+                        <a href="#logement__reserver">Réserver</a>
                     </div>
                 </div>
                 <div class="logement__photos">
@@ -295,7 +296,7 @@
                         </div>
                         <div class="hote">
                             <div class="hote__info">
-                                <img src="img/compte/<?php echo $source?>" alt="Hôte" id="hote__photo">
+                                <img src="img/<?php echo $source?>" alt="Hôte" id="hote__photo">
                                 <div class="hote__main">
                                     <div class="hote__nom">
                                         <h3>Hôte: <span id="hote__nm"><?php echo  $prenom_hote?></span></h3>
@@ -385,7 +386,7 @@
                                 <div class="modal-content">
                                     <span class="close">&times;</span>
                                     <div class="accept_cvg">
-                                    <p>Je reconnais avoir pris connaissance et j'accepte <a href="img/cvg/CVG.pdf" target="_blank">les conditions générales de ventes</a></p>
+                                    <p>Je reconnais avoir pris connaissance et j'accepte <a href="/documents_pdf/CGV_CGU.pdf" target="_blank">les conditions générales de ventes</a></p>
                                         <div class="button_cvg">
                                             <input type="button" id="declineButton" value="Refuser">
                                             <input type="submit" name="acceptButton" id="acceptButton" value="Accepter">

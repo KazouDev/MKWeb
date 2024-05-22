@@ -27,7 +27,7 @@ session_start();
       type="text/css"
       href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
     />
-    <title>Document</title>
+    <title>ALHaiZ Breizh</title>
     <script
       src="https://kit.fontawesome.com/7f17ac2dfc.js"
       crossorigin="anonymous"

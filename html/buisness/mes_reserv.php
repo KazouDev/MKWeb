@@ -24,7 +24,7 @@ $current_date = date("Y-m-d"); // Obtient la date actuelle au format Y-m-d
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/logement.css">
     <link rel="stylesheet" href="../css/mes_reserv.css">
-    <title>Document</title>
+    <title>Mes réservations</title>
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
 </head>
 

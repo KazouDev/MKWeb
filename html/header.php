@@ -8,19 +8,19 @@
         <div class="header__container">
             <div class="header__nav">
                 <div class="header__logo">
-                    <a href=""><img src="../img/trisquel.webp" alt="Logo trisquel"></a>
-                    <a href="" class="header__name">ALHaiZ Breizh</a>
+                    <a href="./index.php"><img src="../img/trisquel.webp" alt="Logo trisquel"></a>
+                    <a href="./index.php" class="header__name">ALHaiZ Breizh</a>
                 </div>
                 <nav class="header__menu" id="LeMenu">
                     <ul class="menu__list" id="menu__list">
                         <li class="menu__item">
-                            <a href="" class="menu__link">Logements</a>
+                            <a href="index.php" class="menu__link">Logements</a>
                         </li>
                         <li class="menu__item">
-                            <a href="" class="menu__link">À propos</a>
+                            <a href="index.php" class="menu__link">À propos</a>
                         </li>
                         <li class="menu__item">
-                            <a href="" class="menu__link">Contact</a>
+                            <a href="index.php" class="menu__link">Contact</a>
                         </li>
                         <li class="menu__item hide">
                             <a href="" class="menu__link" style="color: #5669FF;">Connexion</a>
@@ -42,7 +42,8 @@
     } else {
         require_once '../utils.php';
         $id = $_SESSION["client_id"];
-        $user_info = request("SELECT pseudo, photo_profile FROM sae._compte_client
+        $photo_user = $_SESSION["photo_user"];
+        $user_info = request("SELECT pseudo FROM sae._compte_client
         NATURAL JOIN sae._utilisateur
         WHERE id = '$id'", true);
 ?>
@@ -51,19 +52,19 @@
 <div class="header__container">
     <div class="header__nav">
         <div class="header__logo">
-            <a href=""><img src="../img/trisquel.webp" alt="Logo trisquel"></a>
-            <a href="" class="header__name">ALHaiZ Breizh</a>
+            <a href="index.php"><img src="../img/trisquel.webp" alt="Logo trisquel"></a>
+            <a href="index.php" class="header__name">ALHaiZ Breizh</a>
         </div>
         <nav class="header__menu menu" id="LeMenu">
             <ul class="menu__list" id="menu__list">
                 <li class="menu__item">
-                    <a href="" class="menu__link">Logements</a>
+                    <a href="index.php" class="menu__link">Logements</a>
                 </li>
                 <li class="menu__item">
-                    <a href="" class="menu__link">À propos</a>
+                    <a href="index.php" class="menu__link">À propos</a>
                 </li>
                 <li class="menu__item">
-                    <a href="" class="menu__link">Contact</a>
+                    <a href="index.php" class="menu__link">Contact</a>
                 </li>
                 <li class="menu__item hide">
                     <a href="" class="menu__link">Mon compte</a>
@@ -86,7 +87,7 @@
     <div class="header__form">
         <a href=""><i class="fa-regular fa-eye-slash" style="color: #222222;"></i></a>
             <div class="user__info" id="header__info">
-                <img src="../img/user.webp" alt="Photo User" class="user__photo">
+                <img src="../img/<?=$photo_user?>" alt="Photo User" class="user__photo">
                 <p><?= $user_info["pseudo"] ?></p>
                 <img src="../img/fleche.webp" alt="Ouvrir le menu" class="user__down">
             </div>                   
@@ -94,10 +95,10 @@
     <ul class="header__menu-user" id="menu-user">
         <img src="../img/fermer.webp" alt="Fermer le menu" id="fermerMenu">
         <li class="menu__item ">
-            <a href="" class="menu__link">Mon compte</a>
+            <a href="consulter_mon_compte.php" class="menu__link">Mon compte</a>
         </li>
         <li class="menu__item ">
-            <a href="" class="menu__link">Mes réservations</a>
+            <a href="mes_reserv.php" class="menu__link">Mes réservations</a>
         </li>
         <li class="menu__item ">
             <a href="" class="menu__link">Mes notifications</a>

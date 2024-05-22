@@ -59,7 +59,7 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/mon_compte.css">
-    <title>Document</title>
+    <title>Mon Compte</title>
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -162,13 +162,13 @@
                     <div class = "ensemble_flex">
                         <div class= "photo_conteneur">
                             <h3>Votre photo de profil</h3>
-                            <img src="<?= "../".$photo ?>" alt="photo de profil de l'utilisateur">
+                            <img src="<?= "../img/".$photo ?>" alt="photo de profil de l'utilisateur">
                             <!-- <p>source : <?= $src_photo ?></p> -->
     <!--                         <label for="photo_profile">Votre photo de profil</label>
                             <input type="file" id="photo_profile" name="photo_profile" accept="image/png, image/jpeg" /> -->
                         </div>
                         <div class="sous_ensemble_flex">
-                            <div class= "mdp_conteneur">  
+                            <div class= "mdp_conteneur" style="display: none;">  
                                 <h3>Mot de passe</h3>
                                 <div class="compte__input">
                                     <label for="compte__mdp">Mot de passe :</label>

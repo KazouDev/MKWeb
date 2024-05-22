@@ -14,7 +14,7 @@
     if (isset($_POST["email"]) && isset($_POST["password"])){
         $email = strtolower($_POST["email"]);
 
-        $query = "SELECT sae._utilisateur.id, mot_de_passe FROM sae._compte_proprietaire 
+        $query = "SELECT sae._utilisateur.id, mot_de_passe, photo_profile FROM sae._compte_proprietaire 
         INNER JOIN sae._utilisateur ON sae._compte_proprietaire.id = sae._utilisateur.id 
         WHERE email = '$email'";
                 
@@ -26,6 +26,7 @@
             // On vérifie les mot de passe.
             if (password_verify($_POST["password"], $result["mot_de_passe"])){
                 $_SESSION["business_id"] = $result["id"];
+                $_SESSION["business_photo"] = $result["photo_profile"];
                 unset($_SESSION["client_id"]);
                 redirect_business();
             } else {
@@ -53,7 +54,7 @@
             <div class="main__container">
                 <div class="connect-container">
                     <div class="connect__from">
-                        <h1>Inscrivez votre logement sur Alheiz Breizh</h1>
+                        <h1>Inscrivez votre logement sur ALHaiZ Breizh</h1>
                         <p>Vous avez un trésor caché en Bretagne? Partagez-le avec le monde en le proposant sur ALHaiZ Breizh et laissez-nous vous aider à transformer votre logement en une destination incontournable pour les voyageurs en quête d'aventure et d'authenticité !</p>
                         <form method="POST" action="">
                             <div class="connect__input">
