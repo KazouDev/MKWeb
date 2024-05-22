@@ -87,7 +87,9 @@ let genererCard = {
     let divPrix;
     let prix;
     let prixpar;
-
+    let aLien;
+    aLien=document.createElement("a");
+    aLien.href="detail_reservation.php?id="+logement.id_logement;
     divCard = document.createElement("div");
 
     if (i < 6) {
@@ -154,8 +156,9 @@ let genererCard = {
 
     divCard.appendChild(imgCouverture);
     divCard.appendChild(divDescription);
+    aLien.appendChild(divCard);
 
-    return divCard;
+    return aLien;
   },
 
   card_coups: function (i, logement) {
