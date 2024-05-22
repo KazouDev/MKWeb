@@ -184,7 +184,7 @@ submitButton.addEventListener("click", async (e) => {
     body: formData,
   })
     .then((response) => {
-      response.text();
+      return response.text();
     })
     .then((data) => {
       console.log(data);
