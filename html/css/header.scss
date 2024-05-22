@@ -205,6 +205,10 @@ $lineHeight: 1.5;
 #CmdMenuClose{
     display: none;
 }
+#CmdMenu, #CmdMenuClose {
+    height: 20px;
+    z-index: 100;
+}
 @media (max-width: 530px) {
     #LeMenu {
     padding: 1rem 1.5rem 1rem 1rem;
@@ -241,10 +245,8 @@ $lineHeight: 1.5;
 }
 
 
-#CmdMenu {
-    display: none;
-}
-@media (min-width: 769px) {
+
+@media (min-width: 530px) {
     #CmdMenu {
         display: none;
     }

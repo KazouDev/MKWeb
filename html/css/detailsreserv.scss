@@ -1,37 +1,5 @@
 @import url("setup.css");
 
-// Variables
-$myFont: "Plus Jakarta San", sans-serif;
-$mainViolet: #5669ff;
-$mainJaune: #ffd33c;
-$mainNoir: #222222;
-$mainGris: #878787;
-$mainBlanc: #ffffff;
-
-$hoverViolet: #9aa5ff;
-$selectedViolet: #273efc;
-$selectedBlanc: #e1ebf4;
-
-$boutonPink: #dd69fa;
-$boutonGreen: #79da7d;
-$boutonRouge: #ff6258;
-
-$h1Size: 4rem;
-$h2Size: 2.25rem;
-$h3Size: 2rem;
-$h4Size: 1.5rem;
-$h5Size: 1.25rem;
-$h55Size: 1rem;
-$h6Size: 0.75rem;
-
-$sizeIcone: 2.5em;
-$sizeLogement: 21em;
-
-$lightWeight: 300;
-$normalWeight: 400;
-$semiboldWeight: 600;
-$boldWeight: 700;
-$lineHeight: 1.5;
 
 /**Detail Reservation */
 
@@ -43,6 +11,7 @@ $lineHeight: 1.5;
   gap: 3.125em;
   font-family: $myFont;
 }
+
 .detail-reservation__entete {
   display: flex;
   justify-content: space-between;
@@ -52,28 +21,30 @@ $lineHeight: 1.5;
     font-size: $h2Size;
     font-weight: $semiboldWeight;
   }
-  & > div:first-child {
+
+  &>div:first-child {
     display: flex;
     align-items: center;
     flex-direction: row;
 
-    > a img {
+    >a img {
       margin-left: 1rem;
       max-width: $sizeIcone;
     }
   }
-  & > div:last-child {
+
+  &>div:last-child {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 10px;
 
-    & > div.entete__textinfo1 {
+    &>div.entete__textinfo1 {
       display: flex;
       gap: 20px;
     }
 
-    & > div.entete__textinfo2 {
+    &>div.entete__textinfo2 {
       display: flex;
       justify-content: space-between;
     }
@@ -83,6 +54,7 @@ $lineHeight: 1.5;
 .couleur {
   color: $mainViolet;
 }
+
 .gras {
   font-weight: $semiboldWeight;
 }
@@ -103,6 +75,7 @@ $lineHeight: 1.5;
   height: 1px;
   border-top: 1px solid #909090;
 }
+
 .separation2 {
   width: 1px;
   height: 60px;
@@ -121,40 +94,46 @@ $lineHeight: 1.5;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   padding: 1.875em;
 
-  > div.detail-reservation__section1 {
+  >div.detail-reservation__section1 {
     display: flex;
     gap: 1.875em;
     align-self: stretch;
     align-items: center;
-    > div.section1__article {
+
+    >div.section1__article {
       display: flex;
       align-items: flex-start;
       justify-content: center;
       flex-direction: column;
       gap: 1.875em;
-      > p {
+
+      >p {
         font-size: $h55Size;
       }
-      > div.article__title {
+
+      >div.article__title {
         display: flex;
         flex-direction: row;
         gap: 1.875em;
-        > p {
+
+        >p {
           font-size: $h3Size;
         }
       }
     }
-    > img {
+
+    >img {
       max-width: $sizeLogement;
       max-height: auto;
     }
   }
-  > div.detail-reservation__section2 {
+
+  >div.detail-reservation__section2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    > div.section2__article1 {
+    >div.section2__article1 {
       display: flex;
       padding: 20px;
       align-items: center;
@@ -162,64 +141,77 @@ $lineHeight: 1.5;
       border: 1px solid #cccccc;
       box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
       gap: 1.25em;
-      > img {
+
+      >img {
         max-width: 8.75em;
         height: 8.75em;
         border-radius: 6.25em;
       }
-      > div.article_textcontent {
+
+      >div.article_textcontent {
         display: flex;
 
         flex-direction: column;
 
-        > div.textcontent__1 {
+        >div.textcontent__1 {
           display: flex;
           flex-direction: row;
           gap: 10px;
-          > p {
+
+          >p {
             font-size: 1.5em;
           }
-          > div.note {
+
+          >div.note {
             display: flex;
             gap: 5px;
             align-items: center;
-            > div.star {
+
+            >div.star {
               display: flex;
             }
-            > div.star:last-child {
+
+            >div.star:last-child {
               color: initial !important;
             }
           }
         }
-        > div.textcontent__2 {
+
+        >div.textcontent__2 {
           display: flex;
           gap: 10px;
-          > p {
+
+          >p {
             font-size: 16px !important;
           }
         }
       }
     }
-    > div.section2__article2 {
+
+    >div.section2__article2 {
       display: flex;
       flex-direction: column;
       gap: 26px;
-      & > p:first-child {
+
+      &>p:first-child {
         font-size: 1.375em;
       }
     }
   }
-  > div.detail-reservation__section3 {
-    > h3.section3__titre {
+
+  >div.detail-reservation__section3 {
+    >h3.section3__titre {
       font-size: $h3Size;
       margin-bottom: 1em;
     }
-    > div.section3__informationoccupation {
+
+    >div.section3__informationoccupation {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 1.25em;
-      > div.informationoccupation__detail {
+
+      >div.informationoccupation__detail {
         display: flex;
         padding: 2.5em;
         justify-content: center;
@@ -229,61 +221,74 @@ $lineHeight: 1.5;
         border: 1px solid #cccccc;
         box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
       }
-      > div.informationoccupation__prix {
+
+      >div.informationoccupation__prix {
         font-size: 3em;
       }
     }
   }
-  > div.detail-reservation__section4 {
+
+  >div.detail-reservation__section4 {
     display: flex;
     flex-direction: column;
     gap: 1.875em;
-    > h3 {
+
+    >h3 {
       font-size: 2em;
     }
-    > div.partiemontant {
+
+    >div.partiemontant {
       display: flex;
       flex-direction: column;
       gap: 1.875em;
-      > div.partiemontant__sanssoustitre {
+
+      >div.partiemontant__sanssoustitre {
         justify-content: space-between;
         display: flex;
         align-items: center;
         flex-direction: row;
-        & > p:first-child {
+
+        &>p:first-child {
           font-size: $h5Size;
         }
       }
-      > div.partiemontant__soustitre {
-        > div {
+
+      >div.partiemontant__soustitre {
+        >div {
           display: flex;
           flex-direction: row;
           align-items: center;
           justify-content: space-between;
-          & > p:first-child {
+
+          &>p:first-child {
             font-size: $h5Size;
           }
         }
-        > p {
+
+        >p {
           font-size: 1em;
           color: $mainViolet;
         }
       }
-      > div.montantFinal {
+
+      >div.montantFinal {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        > p {
+
+        >p {
           font-size: $h3Size;
         }
       }
     }
   }
-  > div.detail-reservation__section5 {
-    > h3 {
+
+  >div.detail-reservation__section5 {
+    >h3 {
       margin-bottom: 1em;
     }
-    > p {
+
+    >p {
       font-size: $h55Size;
     }
   }
@@ -297,6 +302,7 @@ i.jaune {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   .hote__info {
     border-radius: 0.75rem;
     border: 1px solid #909090;
@@ -305,17 +311,20 @@ i.jaune {
     display: flex;
     align-items: center;
     gap: 1.25rem;
+
     img {
       width: 7rem;
       height: 7rem;
       border-radius: 50%;
       object-fit: cover;
     }
+
     .hote__main {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 0.7rem;
+
       .hote__nom {
         display: flex;
         align-items: center;
@@ -323,42 +332,51 @@ i.jaune {
         max-width: 20rem;
         justify-content: space-center;
         gap: 0.8rem;
+
         h3 {
           font-size: $h4Size;
           font-weight: $semiboldWeight;
           max-width: 15rem;
         }
+
         .hote_rate i {
           font-weight: 20px;
           color: $mainJaune;
         }
+
         #hote__5star {
           color: $mainGris;
         }
+
         h6 {
           font-size: $h55Size;
         }
       }
     }
+
     .hote__langues {
       display: flex;
       align-items: center;
       gap: 0.8rem;
+
       ul {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
         max-width: 15rem;
+
         li {
           font-size: $h55Size;
           font-weight: $lightWeight;
         }
       }
+
       i {
         font-size: 20px;
       }
     }
   }
+
   .section2__article3 iframe {
     width: 20rem;
     height: 15rem;
@@ -370,25 +388,30 @@ i.jaune {
 #reset:hover {
   background-color: $hoverViolet;
 }
+
 .asavoir {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
+
   h2 {
     font-size: $h5Size;
     font-weight: $semiboldWeight;
   }
+
   a {
     color: $mainViolet;
     cursor: pointer;
     font-size: $h55Size;
   }
+
   h3 {
     font-size: $h6Size;
     font-weight: $semiboldWeight;
   }
 }
+
 @media (max-width: 1200px) {
   .hote {
     flex-wrap: wrap;
@@ -407,9 +430,11 @@ i.jaune {
     gap: 2rem;
     align-items: flex-start;
   }
+
   .hote .hote__info {
     padding: 0.8rem;
     width: 100%;
+
     img {
       width: 4rem;
       height: 4rem;
@@ -419,57 +444,62 @@ i.jaune {
   .asavoir {
     gap: 0.5rem;
   }
+
   .apropos button {
     align-self: stretch;
     padding: 0.9rem;
   }
 }
+
 @media (max-width: 400px) {
   .hote .hote__info .hote__main .hote__nom h3 {
     font-size: $h5Size;
     font-weight: 600;
     max-width: 15rem;
   }
+
   .hote .hote__info .hote__main .hote__nom {
     display: block;
   }
+
   #hote__valuernote {
     display: none;
   }
+
   .hote .hote__info .hote__langues ul li {
     font-size: $h6Size;
   }
 }
+
 @media (max-width: 350px) {
   .hote .hote__info .hote__langues i {
     display: none;
   }
 }
+
 .telecharger {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   a img {
     width: 2.5rem;
     height: 2.5rem;
   }
 }
+
 @media (max-width: 1000px) {
-  .detail-reservation__contenu
-    > div.detail-reservation__section1
-    > div.section1__article
-    > div.article__title
-    > p,
-  .detail-reservation__contenu
-    > div.detail-reservation__section3
-    > div.section3__informationoccupation
-    > div.informationoccupation__prix {
+
+  .detail-reservation__contenu>div.detail-reservation__section1>div.section1__article>div.article__title>p,
+  .detail-reservation__contenu>div.detail-reservation__section3>div.section3__informationoccupation>div.informationoccupation__prix {
     font-size: $h4Size;
   }
+
   .detail-reservation__entete .entete__titre {
     font-size: $h3Size;
   }
-  .detail-reservation__contenu > div.detail-reservation__section1 > img {
+
+  .detail-reservation__contenu>div.detail-reservation__section1>img {
     max-width: 15em;
   }
 
@@ -485,161 +515,164 @@ i.jaune {
   .detail-reservation__contenu {
     padding: 1rem;
   }
+
   .detail-reservation__conteneur {
     gap: 2em;
   }
-  .detail-reservation__contenu
-    > div.detail-reservation__section3
-    > h3.section3__titre {
+
+  .detail-reservation__contenu>div.detail-reservation__section3>h3.section3__titre {
     font-size: $h4Size;
     margin-bottom: 1rem;
   }
 
-  .detail-reservation__contenu > div.detail-reservation__section4 > h3,
-  .detail-reservation__contenu
-    > div.detail-reservation__section4
-    > div.partiemontant
-    > div.montantFinal
-    > p {
+  .detail-reservation__contenu>div.detail-reservation__section4>h3,
+  .detail-reservation__contenu>div.detail-reservation__section4>div.partiemontant>div.montantFinal>p {
     font-size: $h4Size;
   }
-  .detail-reservation__contenu
-    > div.detail-reservation__section3
-    > div.section3__informationoccupation
-    > div.informationoccupation__detail {
+
+  .detail-reservation__contenu>div.detail-reservation__section3>div.section3__informationoccupation>div.informationoccupation__detail {
     padding: 1.5em;
     gap: 1em;
     align-items: flex-start;
   }
-  .detail-reservation__contenu
-    > div.detail-reservation__section4
-    > div.partiemontant {
+
+  .detail-reservation__contenu>div.detail-reservation__section4>div.partiemontant {
     gap: 1rem;
   }
+
   .detail-reservation__section5,
   .telecharger {
     line-height: 1.2;
   }
+
   .telecharger a img {
     width: 2rem;
     height: 2rem;
   }
+
   .telecharger {
     gap: 1rem;
   }
 }
+
 @media (max-width: 700px) {
   .detail-reservation__entete .entete__titre {
     font-size: $h4Size;
   }
-  .detail-reservation__contenu
-    > div.detail-reservation__section1
-    > div.section1__article
-    > div.article__title
-    > p,
-  .detail-reservation__contenu
-    > div.detail-reservation__section3
-    > div.section3__informationoccupation
-    > div.informationoccupation__prix {
+
+  .detail-reservation__contenu>div.detail-reservation__section1>div.section1__article>div.article__title>p,
+  .detail-reservation__contenu>div.detail-reservation__section3>div.section3__informationoccupation>div.informationoccupation__prix {
     font-size: $h5Size;
   }
-  .detail-reservation__contenu
-    > div.detail-reservation__section1
-    > div.section1__article {
+
+  .detail-reservation__contenu>div.detail-reservation__section1>div.section1__article {
     gap: 1rem;
   }
+
   .hote .hote__info {
     padding: 1rem;
     width: 100%;
   }
+
   .hote .section2__article3 iframe {
     width: 15rem;
     height: 10rem;
   }
-  .detail-reservation__contenu > div.detail-reservation__section5 > p,
+
+  .detail-reservation__contenu>div.detail-reservation__section5>p,
   .telecharger p {
     font-size: $h6Size;
   }
+
   .telecharger a img {
     display: none;
   }
-  .detail-reservation__contenu > div.detail-reservation__section4 {
+
+  .detail-reservation__contenu>div.detail-reservation__section4 {
     gap: 1em;
   }
-  .detail-reservation__contenu > div.detail-reservation__section4 > h3,
-  .detail-reservation__contenu
-    > div.detail-reservation__section4
-    > div.partiemontant
-    > div.montantFinal
-    > p {
+
+  .detail-reservation__contenu>div.detail-reservation__section4>h3,
+  .detail-reservation__contenu>div.detail-reservation__section4>div.partiemontant>div.montantFinal>p {
     font-size: $h5Size;
   }
-  .detail-reservation__contenu
-    > div.detail-reservation__section3
-    > div.section3__informationoccupation
-    > div.informationoccupation__detail {
+
+  .detail-reservation__contenu>div.detail-reservation__section3>div.section3__informationoccupation>div.informationoccupation__detail {
     padding: 1em;
   }
 }
+
 @media (max-width: 500px) {
-  .detail-reservation__entete > div:last-child {
+  .detail-reservation__entete>div:last-child {
     gap: 0px;
   }
-  .detail-reservation__entete > div:first-child > a img {
+
+  .detail-reservation__entete>div:first-child>a img {
     margin-left: 0rem;
     max-width: 2rem;
   }
+
   .detail-reservation__entete {
     flex-direction: column;
   }
-  .detail-reservation__entete > div:last-child > div.entete__textinfo2 {
+
+  .detail-reservation__entete>div:last-child>div.entete__textinfo2 {
     justify-content: flex-start;
   }
-  .detail-reservation__entete > div:last-child > div.entete__textinfo1,
-  .detail-reservation__entete > div:last-child > div.entete__textinfo2 {
+
+  .detail-reservation__entete>div:last-child>div.entete__textinfo1,
+  .detail-reservation__entete>div:last-child>div.entete__textinfo2 {
     gap: 1rem;
   }
-  .detail-reservation__contenu > div.detail-reservation__section1 {
+
+  .detail-reservation__contenu>div.detail-reservation__section1 {
     flex-direction: column;
     align-items: self-start;
   }
-  .detail-reservation__contenu > div.detail-reservation__section1 > img {
+
+  .detail-reservation__contenu>div.detail-reservation__section1>img {
     width: 100%;
     object-fit: cover;
     max-height: 15rem;
     max-width: none;
   }
+
   .detail-reservation__entete {
     gap: 1rem;
   }
+
   .hote .section2__article3 iframe {
     width: 32rem;
   }
+
   .hote .hote__info {
     width: 80%;
   }
-  .detail-reservation__entete > div:first-child {
+
+  .detail-reservation__entete>div:first-child {
     gap: 1rem;
   }
-  .detail-reservation__contenu
-    > div.detail-reservation__section3
-    > div.section3__informationoccupation {
+
+  .detail-reservation__contenu>div.detail-reservation__section3>div.section3__informationoccupation {
     align-items: flex-start;
     flex-direction: column;
   }
 }
+
 @media (max-width: 350px) {
   .hote .section2__article3 iframe {
     width: initial;
   }
+
   .hote .hote__info {
     width: 100%;
   }
+
   .hote {
     gap: 1rem;
   }
+
   .asavoir {
     order: inherit;
   }
 }
-

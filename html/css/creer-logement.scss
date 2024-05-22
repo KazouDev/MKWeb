@@ -1,36 +1,4 @@
 @import url("setup.css");
-// Variables
-$myFont: "Plus Jakarta San", sans-serif;
-$mainViolet: #5669ff;
-$mainJeune: #ffd33c;
-$mainNoir: #222222;
-$mainGris: #878787;
-$mainBlanc: #ffffff;
-
-$hoverViolet: #9aa5ff;
-$selectedViolet: #273efc;
-$selectedBlanc: #e1ebf4;
-
-$boutonPink: #dd69fa;
-$boutonGreen: #79da7d;
-$boutonRouge: #ff6258;
-
-$h1Size: 4rem;
-$h2Size: 2.25rem;
-$h3Size: 2rem;
-$h4Size: 1.5rem;
-$h5Size: 1.25rem;
-$h55Size: 1rem;
-$h6Size: 0.75rem;
-
-$sizeIcone: 2.5em;
-$sizeLogement: 21em;
-
-$lightWeight: 300;
-$normalWeight: 400;
-$semiboldWeight: 600;
-$boldWeight: 700;
-$lineHeight: 1.5;
 
 .main__container {
   width: 100%;
@@ -41,7 +9,7 @@ $lineHeight: 1.5;
     justify-content: space-between;
     flex-direction: row;
 
-    > div {
+    >div {
       display: flex;
       align-items: center;
       flex-direction: row;
@@ -86,6 +54,7 @@ section {
         width: 100%;
         display: flex;
         justify-content: space-between;
+
         input {
           width: 45%;
         }

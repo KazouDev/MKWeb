@@ -4,7 +4,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
     const LeMenu = document.getElementById("LeMenu");
     const CmdMenu = document.getElementById("CmdMenu");
     const CmdMenuClose = document.getElementById("CmdMenuClose");
-    
+
     // menu general
 
     CmdMenu.addEventListener('click', function () {
@@ -15,7 +15,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
             LeMenu.style.display = 'none';
             CmdMenu.src = "../img/menu.webp"; // Change l'icône en icône de menu
         }
-        
+
     });
     window.onload = function () {
         var ww = window.innerWidth;

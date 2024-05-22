@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="../css/header.css">
-<link rel="stylesheet" href="css/header.css">
 
 <?php
     if (session_status() === PHP_SESSION_NONE){session_start();}
@@ -70,6 +69,7 @@
     <img src="../img/fermer.webp" alt="Fermer le menu" id="CmdMenuClose">
 </div>
 </header>
+<script src="../js/header.js"></script>
 <script src="../js/header_user.js"></script>
 <?php 
     }

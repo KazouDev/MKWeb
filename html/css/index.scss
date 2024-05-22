@@ -1,34 +1,6 @@
 @import url("setup.css");
 @import url("verifier.css");
-// Variables
-$myFont: 'Plus Jakarta San', sans-serif;
-$mainViolet: #5669FF;
-$mainJeune: #FFD33C;
-$mainNoir: #222222;
-$mainGris: #878787;
-$mainBlanc: #FFFFFF;
 
-$hoverViolet: #9AA5FF;
-$selectedViolet: #273EFC;
-$selectedBlanc: #E1EBF4;
-
-$boutonPink: #DD69FA;
-$boutonGreen: #79DA7D;
-$boutonRouge: #FF6258;
-
-$h1Size: 4rem;
-$h2Size: 2.25rem;
-$h3Size: 2rem;
-$h4Size: 1.5rem;
-$h5Size: 1.25rem;
-$h55Size: 1rem;
-$h6Size: 0.75rem;
-
-$lightWeight: 300;
-$normalWeight: 400;
-$semiboldWeight: 600;
-$boldWeight: 700;
-$lineHeight: 1.5;
 
 .top {
     position: relative;
@@ -90,12 +62,14 @@ $lineHeight: 1.5;
         .list__titre {
             font-size: $h5Size;
             font-weight: $semiboldWeight;
-            button img{
+
+            button img {
                 width: 1.875rem;
                 height: 1.875rem;
                 cursor: pointer;
             }
-            button{
+
+            button {
                 cursor: pointer;
             }
         }
