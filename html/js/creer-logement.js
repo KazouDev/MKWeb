@@ -182,13 +182,14 @@ submitButton.addEventListener("click", async (e) => {
     method: "POST",
     body: formData,
   })
-    .then((response) => response.json())
+    .then((response) => response.text())
     .then((data) => {
-      if (data.err == false) {
+      console.log(data);
+      /*if (data.err == false) {
         window.location.href = "index.php?id=" + data.id;
       } else {
         isSubmiting = false;
         updateSubmitingButton();
-      }
+      }*/
     });
 });
