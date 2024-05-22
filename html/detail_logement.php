@@ -474,7 +474,6 @@
     </div>
     
     
-    <script src="js/header_user.js"></script>
     <script src="js/logement.js"></script>
 </body>
 </html>

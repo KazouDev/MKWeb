@@ -17,7 +17,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
   }
 
   window.addEventListener("click", function (e) {
-    if (e.target === headerUser || headerUser.contains(e.target)) return;
+    if (
+      headerUser &&
+      (e.target === headerUser || headerUser.contains(e.target))
+    )
+      return;
     if (e.target === fermerMenu || !menu.contains(e.target)) {
       console.log("click");
       menu.style.display = "none";
