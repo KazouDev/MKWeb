@@ -1,22 +1,22 @@
 @import url("setup.css");
 .buisness.header {
-  background-color: #5669ff;
+  background-color: #5669FF;
 }
 .buisness .header__name {
-  color: #ffffff;
+  color: #FFFFFF;
 }
 .buisness .header__form i {
-  color: #ffffff;
+  color: #FFFFFF;
 }
 .buisness .header__form #header__info {
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   color: #222222;
   border: none;
 }
 .buisness .header__form #header__info:hover {
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   border: none;
-  color: #5669ff;
+  color: #5669FF;
 }
 
 .header__container {
@@ -31,7 +31,7 @@
 .header__nav {
   display: flex;
   -moz-column-gap: 1rem;
-  column-gap: 1rem;
+       column-gap: 1rem;
   row-gap: 0.5rem;
   align-items: center;
   justify-content: center;
@@ -43,7 +43,7 @@
   justify-content: center;
   align-items: center;
   -moz-column-gap: 5px;
-  column-gap: 5px;
+       column-gap: 5px;
 }
 
 .header__logo img {
@@ -52,7 +52,7 @@
 }
 
 .header__name {
-  color: #5669ff;
+  color: #5669FF;
   text-transform: lowercase;
   font-size: 1.25rem;
   letter-spacing: 3px;
@@ -63,7 +63,7 @@
   display: flex;
   flex-wrap: wrap;
   -moz-column-gap: 35px;
-  column-gap: 35px;
+       column-gap: 35px;
   justify-content: space-between;
   align-items: center;
 }
@@ -74,13 +74,11 @@
 }
 
 .menu__link:hover {
-  color: #5669ff;
+  color: #5669FF;
   text-decoration: underline;
 }
 
-#CmdMenuClose,
-#CmdMenu,
-#fermerMenu {
+#CmdMenuClose, #CmdMenu, #fermerMenu {
   cursor: pointer;
 }
 
@@ -102,16 +100,14 @@
   font-weight: 400;
 }
 
-.header__connexion,
-#header__info {
+.header__connexion, #header__info {
   cursor: pointer;
 }
 
-.header__connexion:hover,
-#header__info:hover {
-  border: 1px solid #5669ff;
-  background-color: #5669ff;
-  color: #ffffff;
+.header__connexion:hover, #header__info:hover {
+  border: 1px solid #5669FF;
+  background-color: #5669FF;
+  color: #FFFFFF;
 }
 
 .header__form i {
@@ -121,13 +117,12 @@
 
 @media (max-width: 767.98px) {
   .menu__item .menu__link,
-  .header__connexion a,
-  .user__info p {
+  .header__connexion a, .user__info p {
     font-size: 0.75rem;
   }
   .menu__list {
     -moz-column-gap: 20px;
-    column-gap: 20px;
+         column-gap: 20px;
   }
   .header__logo img {
     height: 40px;
@@ -135,8 +130,7 @@
   .header__name {
     font-size: 0.75rem;
   }
-  .header__connexion,
-  #header__info {
+  .header__connexion, #header__info {
     padding: 3px 10px !important;
   }
   .user__photo {
@@ -178,7 +172,7 @@
     padding: 1rem 1.5rem 1rem 1rem;
     border-radius: 0.75rem;
     border: 1px solid #878787;
-    background: #fff;
+    background: #FFF;
     position: fixed;
     top: 10px;
     right: 5px;
@@ -194,8 +188,7 @@
   .menu__list {
     flex-direction: column;
   }
-  #CmdMenu,
-  #CmdMenuClose {
+  #CmdMenu, #CmdMenuClose {
     height: 20px;
     z-index: 100;
   }
@@ -203,6 +196,10 @@
     width: 100%;
   }
 }
+#CmdMenu {
+  display: none;
+}
+
 @media (min-width: 769px) {
   #CmdMenu {
     display: none;
@@ -226,9 +223,7 @@
   border-radius: 50%;
   margin-right: 0.5rem;
   -o-object-fit: cover;
-  object-fit: cover;
-  -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 
 .user__down {
@@ -253,7 +248,7 @@
   flex-direction: column;
   align-items: start;
   gap: 5px;
-  background: #fff;
+  background: #FFF;
   padding: 1rem;
   border-radius: 0.75rem;
   border: 1px solid #878787;
@@ -290,9 +285,9 @@
   }
 }
 header.buisness .header__connexion {
-  border: 1px solid #ffffff;
-  color: #ffffff;
+  border: 1px solid #FFFFFF;
+  color: #FFFFFF;
 }
 header.buisness .header__form a i {
-  color: #ffffff;
-} /*# sourceMappingURL=header.css.map */
+  color: #FFFFFF;
+}/*# sourceMappingURL=header.css.map */

@@ -133,11 +133,8 @@ $lineHeight: 1.5;
         font-size: $h2Size;
     }
     img {
-        width: auto;
-        height: 3rem;
-        &:last-child {
-            height: 2.5rem;
-        }
+        width: 1.5rem;
+        height: 1.5rem;
     }
     i {
         justify-content: flex-end;
@@ -213,6 +210,12 @@ $lineHeight: 1.5;
     img {
         object-fit: cover;
         height: 100%;
+    }
+    .mes__reserv__date i{
+        font-size: 0.4rem;
+    }
+    .mes__reserv__date{
+        align-items: center;
     }
 
     .mes_reserv__numero,

@@ -241,7 +241,9 @@ $lineHeight: 1.5;
 }
 
 
-
+#CmdMenu {
+    display: none;
+}
 @media (min-width: 769px) {
     #CmdMenu {
         display: none;

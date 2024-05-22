@@ -32,7 +32,7 @@
             <img src="img/filter-3.webp" alt="">
             <img src="img/arrows.webp" alt="">
         </div>
-        <a href="#" id="export-reservation-btn"><i class="fa-solid fa-download"></i></a>
+        <a href="#" id="export-reservation-btn"><img src="img/downloads.webp" alt="Download"></a>
     </div>
     <?php if(empty($results)){?>
         <div class="mes__reserv__empty">
@@ -52,7 +52,7 @@
                             </div>
                             <div class="mes__reserv__date">
                                 <h4><?php echo $result["date_debut"] ?> – <?php echo $result["date_fin"] ?></h4>
-                                <h4>.</h4>
+                                <i class="fa-solid fa-circle" style="color: #222222;"></i>
                                 <h4><?php echo $result["ville"] ?></h4>
                             </div>
                             <?php if($result["date_annulation"]==null) {?>
