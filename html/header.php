@@ -70,7 +70,7 @@
                     <a href="consulter_mon_compte.php" class="menu__link">Mon compte</a>
                 </li>
                 <li class="menu__item hide">
-                    <a href="" class="menu__link">Mes réservations</a>
+                    <a href="mes_reserv.php" class="menu__link">Mes réservations</a>
                 </li>
                 <li class="menu__item hide">
                     <a href="" class="menu__link">Mes notifications</a>
