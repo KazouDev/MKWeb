@@ -579,6 +579,16 @@ INSERT INTO _logement(titre, description, accroche, base_tarif, surface, nb_max_
 ('Villa de luxe avec plage privée', 'Une villa d''exception avec plage privée, pour des vacances de rêve dans les Caraïbes. Nichée au cœur d''un jardin tropical luxuriant, cette villa spectaculaire offre des espaces de vie élégants, une piscine à débordement et un accès direct à une plage de sable blanc. Profitez du soleil, de la mer turquoise et des couchers de soleil romantiques, pour des vacances inoubliables en famille ou entre amis.', 'Luxe et farniente sous les tropiques.', 3000, 700, 18, 9, 8, 14, 1, 1, 12, true, 4, 5, 2, 9), 
 ('Chalet de montagne de luxe avec spa', 'Un chalet de montagne d''exception avec spa privé, pour des vacances inoubliables dans les Alpes suisses. Ce chalet luxueux allie charme alpin traditionnel et confort moderne, avec des matériaux nobles, un mobilier haut de gamme et des équipements dernier cri. Profitez du spa avec sauna, hammam et jacuzzi, détendez-vous près de la cheminée ou admirez la vue panoramique sur les sommets enneigés depuis la terrasse en savourant un verre de vin chaud.', 'Confort et bien-être au cœur des Alpes.', 2200, 450, 12, 6, 6, 10, 1, 1, 8, false, 5, 6, 4, 5);
 
+INSERT INTO _image (src, principale, alt, id_logement)
+SELECT 
+    CONCAT('/logement/', l.id, '_', n.num, '.jpg') AS src,
+    CASE WHEN n.num = 1 THEN true ELSE false END AS principale,
+    l.titre AS alt,
+    l.id AS id_logement
+FROM _logement l
+CROSS JOIN (SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5) n
+WHERE l.id BETWEEN 1 AND 42;
+
 INSERT INTO _avis(commentaire, note, id_logement, id_client) VALUES
 ('Très bel appartement avec vue sur la ville. Nous avons passé un excellent séjour !', 4.5, 1, 23),
 ('Le logement était sale à notre arrivée, ce qui a été décevant.', 2, 1, 24),
