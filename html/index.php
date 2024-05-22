@@ -118,38 +118,19 @@ session_start();
                 </div>
               </div>
             </div>
-            <div class="drops">
-              <div class="dropdown" id="departments-dropdown-container">
-                <div class="dropdown-content" id="departments-dropdown">
-                  <input
-                    class="dropdown-element search"
-                    type="text"
-                    id="search-input-department"
-                    placeholder="Département"
-                  />
-                </div>
-              </div>
-              <div class="dropdown" id="communs-dropdown-container">
-                <div class="dropdown-content" id="communes-dropdown">
-                  <input
-                    class="dropdown-element search"
-                    type="text"
-                    id="search-input-commune"
-                    placeholder="Commune"
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <div class="main__container main__logement">
           <div class="list__logements">
-            <h3 class="list__titre" id="nos_logements">
-              Nos logements
+            <div class="titre_nos_log">
+              <h3 class="list__titre" id="nos_logements">
+                Nos logements
+              </h3>
+              
               <button id="tri_note">
-                <img src="img/sort.webp" alt="Sort" />
-              </button>
-            </h3>
+                  <img src="img/sort.webp" alt="Sort" />
+            </button>
+            </div>
             <div class="les__logements" id="les__logements"></div>
             <button class="logement__plus" id="decouvrir_plus">
               Découvrir plus
