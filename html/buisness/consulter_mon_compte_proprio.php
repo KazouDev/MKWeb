@@ -7,7 +7,7 @@
     $id_utilisateur =  buisness_connected_or_redirect();
 
     $query_utilisateur = "select nom, prenom, pseudo, commune, pays, region, departement,
-    numero, nom_voie, civilite, photo_profile, email, telephone, date_naissance, mot_de_passe, iban, bic
+    numero, nom_voie, civilite, photo_profile, email, telephone, date_naissance, mot_de_passe, iban, bic, complement_1, complement_2, complement_3
     from sae._utilisateur
     inner join sae._adresse on sae._adresse.id = sae._utilisateur.id_adresse
     inner join sae._compte_proprietaire on sae._compte_proprietaire.id = sae._utilisateur.id
@@ -32,6 +32,10 @@
     $iban = $rep_utilisateur['iban'];
     $bic = $rep_utilisateur['bic'];
     $photo = $rep_utilisateur['photo_profile'];
+    $complement1 = $rep_utilisateur['complement_1'];
+    $complement2 = $rep_utilisateur['complement_2'];
+    $complement3 = $rep_utilisateur['complement_3'];
+
 
 
 
@@ -143,15 +147,15 @@
                             </div>
                             <div class="compte__input">
                                 <label for="compte__complement">Complément d'adresse</label>
-                                <input type="text" name="complement" id="compte__complement1"  placeholder="Complément" readonly>
+                                <input type="text" name="complement" id="compte__complement1"  value= "<?= $complement1?>" placeholder="Complément" readonly>
                             </div>
                             <div class="compte__input">
                                 <label for="compte__complement">Complément d'adresse</label>
-                                <input type="text" name="complement" id="compte__complement2" placeholder="Complément" readonly>
+                                <input type="text" name="complement" id="compte__complement2" value= "<?= $complement2?>" placeholder="Complément" readonly>
                             </div>
                             <div class="compte__input">
                                 <label for="compte__complement">Complément d'adresse</label>
-                                <input type="text" name="complement" id="compte__complement3" placeholder="Complément" readonly>
+                                <input type="text" name="complement" id="compte__complement3" value= "<?= $complement3?>" placeholder="Complément" readonly>
                             </div>
                         </form>
                     </div>
