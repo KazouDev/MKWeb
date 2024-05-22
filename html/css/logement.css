@@ -238,21 +238,10 @@
   flex-direction: column;
   position: relative;
 }
-#logement__verifier,
-#logement__reserver {
-  position: sticky;
-  top: 30px;
-}
 
-.logement__res {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-  border: 1px solid #878787;
-  box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.12);
-  gap: 1.5rem;
+.form__logement {
+  position: sticky;
+  top: 10px;
 }
 
 .res__fromulaire {
@@ -312,13 +301,14 @@
   padding: 0.4rem 0.7rem;
 }
 
-.logement__res input[type="submit"] {
+.logement__res .form__logement input[type="submit"] {
   cursor: pointer;
   align-self: stretch;
   border-radius: 0.5rem;
   background-color: #5669ff;
   color: #ffffff;
   padding: 0.8rem 4rem;
+  width: 100%;
 }
 
 #reset {
@@ -371,6 +361,7 @@
 .logement__total-ttc {
   display: flex;
   font-weight: 600;
+  padding: 1.5rem 0rem;
 }
 
 #logement__reserver h2 {
@@ -780,7 +771,7 @@
   align-items: flex-start;
   gap: 2rem;
 }
-.environs .environs__map iframe {
+.environs #environs__map {
   width: 25rem;
   height: 20rem;
 }
@@ -823,7 +814,6 @@
 }
 .avis .lesavis {
   display: flex;
-  max-width: 57.75rem;
   justify-content: space-between;
   align-items: flex-start;
   align-content: space-between;
@@ -831,6 +821,7 @@
   row-gap: 2rem;
 }
 .avis .lesavis .avis__element {
+  max-width: 25rem;
   display: flex;
   padding: 1rem;
   flex-direction: column;
@@ -924,7 +915,7 @@
   .avis .lesavis .avis__element p {
     max-width: none;
   }
-  .environs .environs__map iframe {
+  .environs #environs__map {
     width: 20rem;
     height: 20rem;
   }
@@ -946,10 +937,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 #container-calendar .calendar-nav .calendar-btn {
-  background-color: #878787;
+  background-color: #5669ff;
   color: #fff;
   border: none;
   padding: 0.25rem 0.5rem;
@@ -961,16 +952,10 @@
   align-items: center;
   justify-content: center;
 }
-#container-calendar .calendar-nav .calendar-btn#prev {
-  margin-right: 0.25rem;
-}
-#container-calendar .calendar-nav .calendar-btn#next {
-  margin-left: 0.25rem;
-}
 #container-calendar .calendar-nav .calendar-month {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1rem;
   text-align: center;
+  text-transform: lowercase;
 }
 #container-calendar table {
   border-collapse: collapse;
@@ -991,18 +976,19 @@
   display: inline-block;
   text-align: center;
   border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 1rem;
+  border-radius: 10px 10px 0px 0px;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 1em;
 }
 #container-calendar h3 {
+  text-transform: uppercase;
   margin-top: 0;
-  font-size: calc(1vw + 0.4em);
+  font-size: 1rem;
+  font-weight: 800;
 }
 #container-calendar button {
-  margin-bottom: 10px;
   width: 1em;
 }
 #container-calendar #error_periode {
@@ -1064,10 +1050,27 @@
 }
 
 #month {
-  font-weight: bold;
   margin: 0 10px;
 }
 
 #nb_personnesDevis {
   color: black;
+}
+
+.form__logement {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid #878787;
+  box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.12);
+  gap: 1rem;
+}
+.form__logement h1 {
+  font-size: 1.25rem;
+}
+
+input:focus {
+  outline: 1px solid #5669ff;
 } /*# sourceMappingURL=logement.css.map */

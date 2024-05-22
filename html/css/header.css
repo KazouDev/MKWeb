@@ -116,6 +116,7 @@
 
 .header__form i {
   font-size: 1.5rem !important;
+  color: #222222;
 }
 
 @media (max-width: 767.98px) {
@@ -226,11 +227,14 @@
   margin-right: 0.5rem;
   -o-object-fit: cover;
   object-fit: cover;
+  -o-object-fit: cover;
+  object-fit: cover;
 }
 
 .user__down {
   width: 10px !important;
   height: 10px !important;
+  margin-left: 5px;
 }
 
 .header__connexion img {
@@ -241,6 +245,7 @@
 }
 
 #menu-user {
+  z-index: 100;
   display: none;
   position: absolute;
   top: 70px;
@@ -283,4 +288,11 @@
     height: 15px;
     top: 15px;
   }
+}
+header.buisness .header__connexion {
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+header.buisness .header__form a i {
+  color: #ffffff;
 } /*# sourceMappingURL=header.css.map */

@@ -8,6 +8,4 @@
         print "Erreur ! " . $e->getMessage() . "<br/>";
         die();
     }
-
-    print_r($db);
 ?>

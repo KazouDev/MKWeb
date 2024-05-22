@@ -42,9 +42,15 @@ CREATE TABLE _adresse (
   departement VARCHAR(255) NOT NULL,
   commune VARCHAR(255) NOT NULL,
   code_postal VARCHAR(255) NOT NULL,
+<<<<<<< HEAD
   numero VARCHAR(255), 
   rep VARCHAR(255), 
   nom_voie VARCHAR(255),
+=======
+  complement_1 VARCHAR(255),
+  complement_2 VARCHAR(255),
+  complement_3 VARCHAR(255),
+>>>>>>> d77006b0fe5288e509dc00ecc81a47630b607dac
   latitude FLOAT,
   longitude FLOAT
 );

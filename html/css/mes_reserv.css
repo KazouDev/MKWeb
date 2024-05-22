@@ -1,4 +1,67 @@
 @import url("setup.css");
+.buisness_mes_reserv_line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.buisness_mes_reserv_line .buisness_left_big_box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+}
+.buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h4 {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+.buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box > h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h5 {
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+.buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box .mes_reserv__numero {
+  display: flex;
+  align-items: center;
+}
+.buisness_mes_reserv_line h4 {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.buisness_mes_reserv_line p {
+  color: #FFFFFF;
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 0.75rem;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.buisness_mes_reserv_line .fa-eye, .buisness_mes_reserv_line .fa-trash {
+  font-size: 1.5rem;
+  color: #FFFFFF;
+  padding: 1rem 1rem;
+  border-radius: 0.75rem;
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: #DD69FA;
+}
+.buisness_mes_reserv_line .green {
+  background-color: #79DA7D;
+}
+.buisness_mes_reserv_line .red {
+  background-color: #FF6258;
+}
+
 .mes__reserv__exporter {
   display: flex;
   flex-direction: row;

@@ -1,6 +1,6 @@
 <?php 
-    include "header.php";
     require_once "../utils.php";
+    session_start();
 
     $id_logement = $_GET["id"];
 
@@ -119,6 +119,7 @@
 </head>
 <body>
     <div class="wrapper">
+        <?php     include "header.php";?>
         <main class="main">
             <div class="main__container logement">
                 <div class="logement__top">
@@ -432,8 +433,10 @@
                 
                         
                     <div class="logement__res" id="logement__reserver">
-                        <h2><span  id="logement__prix"><?=$base_tarif?></span> € par  nuit</h2>
-                        <form action="" method="post">
+                        <div class="form__logement">
+                            <h2><span  id="logement__prix"><?=$base_tarif?></span> € par  nuit</h2>
+                            <h1>Indiquez les dates pour voir les tarifs</h1>
+                            <form action="" method="post">
                             <div class="res__fromulaire">
                                 
                                     <input type="text" name="dateDebut" hidden >
@@ -496,6 +499,7 @@
                                 
                             </div>
                         </form>
+                        </div>
                     </div>
             </div>
             </div>
