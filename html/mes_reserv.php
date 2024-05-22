@@ -1,5 +1,5 @@
 <?php
-require_once 'header.php';
+session_start();
 require_once "../utils.php";
 $id = client_connected_or_redirect();
 $query = "SELECT sae._reservation.id_logement, sae._reservation.date_annulation ,sae._reservation.prix_ttc ,sae._logement.titre, sae._reservation.date_debut, sae._reservation.date_fin, sae._adresse.commune 
@@ -25,6 +25,7 @@ $results = request($query, false);
 
 <body class="page">
     <div class="wrapper">
+        <?php require_once 'header.php'; ?>
         <main class="main">
             <div class="main__container reserv">
                 <div class="mes__reserv__titre">
