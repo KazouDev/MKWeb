@@ -5,8 +5,8 @@
     $status = false;
 
     // Si déjà connecté on renvoie sur l'acceuil.
-    if (isset($_SESSION["buisness_id"])){
-        header('Location: index.php');
+    if (buisness_connected()){
+        redirect();
         exit;
     }   
 
@@ -25,10 +25,9 @@
         } else {
             // On vérifie les mot de passe.
             if (password_verify($_POST["password"], $result["mot_de_passe"])){
-                $_SESSION["buisness_id"] = $result["id"];
+                $_SESSION["business_id"] = $result["id"];
                 unset($_SESSION["client_id"]);
-                header('Location: index.php');
-                exit; 
+                redirect();
             } else {
                 $status = true;
             }
@@ -84,6 +83,5 @@
         </main>
         <?php require_once "footer.php" ?>
     </div>
-    <script src="../js/script.js"></script>
 </body>
 </html>
