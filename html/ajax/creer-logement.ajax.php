@@ -3,6 +3,9 @@ require_once '../../utils.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+echo "CONNECT OKKK";
+exit;
   if (isset($_POST)){
 
       $adresse = [
