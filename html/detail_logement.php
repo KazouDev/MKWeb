@@ -1,4 +1,5 @@
 <?php 
+
     require_once "../utils.php";
     session_start();
 
@@ -420,10 +421,11 @@
                     $sql = 'SELECT base_tarif FROM sae._logement';
                     $sql .= ' WHERE id = ' . $id;
                     $res = request($sql,1);
-                    
+                  
                     $base_tarif = $res['base_tarif'];
                    
                     if (isset($_POST['acceptButton'])){
+                       
                         $dateDebut = $_POST['dateDebut'];
                         $dateFin = $_POST['dateFin'];
                         $prix_ht = $_POST['prix_ht'];
@@ -431,15 +433,23 @@
                         $nb_jours = $_POST['nb_jours'];
                         $taxe = $_POST['taxe'];
                         $frais = $_POST['frais'];
+
+                        $a = array(
+                            'date_debut'=>$dateDebut,
+                            'date_fin'=>$dateFin,
+                            'prix_ht'=>$prix_ht,
+                            'prix_ttc'=>$prix_ttc,
+                            'nb_jours'=>$nb_jours,
+                            'taxe'=>$taxe,
+                            'frais'=>$frais,
+                        );
+                      
                         
                         // CRÉATION RÉSERVATION
 
                     }
 
                     ?>
-                
-
-
                     <div class="logement__res" id="logement__reserver">
                         <div class="form__logement">
                             <h2><span  id="logement__prix"><?=$base_tarif?></span> € par  nuit</h2>
@@ -452,7 +462,7 @@
                                         <p>Je reconnais avoir pris connaissance et j'accepte <a href="#">les conditions générales de ventes</a></p>
                                         <div class="button_cvg">
                                             <input type="button" id="declineButton" value="Refuser">
-                                            <input type="submit" id="acceptButton" value="Accepter">
+                                            <input type="submit" name="acceptButton" id="acceptButton" value="Accepter">
                                         </div>
                                     </div>
                                 </div>

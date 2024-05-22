@@ -19,7 +19,7 @@ $interval = $reservArrDate->diff($reservDepDate);
 $base_tarif = $res['base_tarif'];
 $jour = $interval->days;
                                     
-$prix_ht = $base_tarif * (empty($jour) ? 1 : $jour);
+$prix_ht = $base_tarif * (empty($jour) ? 1 : $jour) * $nombre_personne;
 $nuit = empty($jour) ? 0 : $jour - 1;
 $frais = ($prix_ht * FRAIS) - $prix_ht;
 $taxe = $nuit * TAUX * $nombre_personne;
