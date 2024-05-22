@@ -159,7 +159,7 @@
     --><!--                         <label for="photo_profile">Votre photo de profil</label>
                             <input type="file" id="photo_profile" name="photo_profile" accept="image/png, image/jpeg" /> -->
                         </div>
-                        <div class= "mdp_conteneur" id="mdp_client">  
+                        <div class= "mdp_conteneur" id="mdp_client" style="display: none;">  
                             <h3>Mot de passe</h3>
                             <div class="compte__input">
                                 <label for="compte__mdp">Mot de passe :</label>
