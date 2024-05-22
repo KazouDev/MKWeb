@@ -50,15 +50,6 @@
   align-items: center;
   gap: 0.8rem;
 }
-.detail_mon_compte__conteneur .compte__form input[type=submit] {
-  background-color: #5669ff;
-  border-radius: 0.75rem;
-  width: 100%;
-  padding: 1rem;
-  color: #ffffff;
-  font-size: 1.25rem;
-  cursor: pointer;
-}
 .detail_mon_compte__conteneur .compte__input {
   width: 100%;
   display: flex;

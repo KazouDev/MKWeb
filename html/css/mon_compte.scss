@@ -88,16 +88,6 @@ $lineHeight: 1.5;
             align-items: center;
             gap: 0.8rem;
         }
-
-        input[type="submit"] {
-            background-color: $mainViolet;
-            border-radius: 0.75rem;
-            width: 100%;
-            padding: 1rem;
-            color: $mainBlanc;
-            font-size: $h5Size;
-            cursor: pointer;
-        }
     }
 
     .compte__input {
