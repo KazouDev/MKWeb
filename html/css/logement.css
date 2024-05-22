@@ -301,7 +301,8 @@
   padding: 0.4rem 0.7rem;
 }
 
-.logement__res .form__logement input[type="submit"] {
+.logement__res .form__logement input[type="submit"],
+.logement__res .form__logement input[type="button"] {
   cursor: pointer;
   align-self: stretch;
   border-radius: 0.5rem;
@@ -687,6 +688,7 @@
 
 .apropos button:hover,
 .logement__res input[type="submit"]:hover,
+.logement__res input[type="button"]:hover,
 #reset:hover {
   background-color: #9aa5ff;
 }
@@ -1073,4 +1075,117 @@
 
 input:focus {
   outline: 1px solid #5669ff;
+}
+
+.modal_cvg {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+.modal_cvg .modal-content {
+  background-color: #ffffff;
+  margin: 10% auto;
+  padding: 30px;
+  border: none;
+  width: 80%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  text-align: center;
+  animation: fadeIn 0.5s;
+}
+.modal_cvg .modal-content .close {
+  color: #bbb;
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.modal_cvg .modal-content .close:hover,
+.modal_cvg .modal-content .close:focus {
+  color: #000;
+  text-decoration: none;
+}
+.modal_cvg .modal-content .accept_cvg p {
+  margin-bottom: 20px;
+  line-height: 1.6;
+  font-size: 16px;
+  color: #333;
+}
+.modal_cvg .modal-content .accept_cvg a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.modal_cvg .modal-content .accept_cvg a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+.modal_cvg .modal-content .accept_cvg .button_cvg {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+.modal_cvg .modal-content .accept_cvg .button_cvg input[type="button"],
+.modal_cvg .modal-content .accept_cvg .button_cvg input[type="submit"] {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+.modal_cvg .modal-content .accept_cvg .button_cvg input[type="button"]:hover,
+.modal_cvg .modal-content .accept_cvg .button_cvg input[type="submit"]:hover {
+  transform: scale(1.05);
+}
+.modal_cvg
+  .modal-content
+  .accept_cvg
+  .button_cvg
+  input[type="button"]#declineButton {
+  background-color: #f44336;
+  color: white;
+}
+.modal_cvg
+  .modal-content
+  .accept_cvg
+  .button_cvg
+  input[type="button"]#declineButton:hover {
+  background-color: #e53935;
+}
+.modal_cvg
+  .modal-content
+  .accept_cvg
+  .button_cvg
+  input[type="submit"]#acceptButton {
+  background-color: #4caf50;
+  color: white;
+}
+.modal_cvg
+  .modal-content
+  .accept_cvg
+  .button_cvg
+  input[type="submit"]#acceptButton:hover {
+  background-color: #43a047;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 } /*# sourceMappingURL=logement.css.map */

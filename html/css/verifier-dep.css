@@ -35,7 +35,7 @@
 .dropdown-content {
   border-radius: 0.75rem;
   border: 1px solid #909090;
-  background: #FFF;
+  background: #fff;
   padding: 1rem;
   flex-direction: column;
   align-items: flex-start;
@@ -66,5 +66,5 @@ input.dropdown-element.search {
 }
 
 label.dropdown-element:hover {
-  background-color: #E1EBF4;
+  background-color: #e1ebf4;
 }/*# sourceMappingURL=verifier-dep.css.map */

@@ -1,4 +1,5 @@
 <?php 
+
     require_once "../utils.php";
     session_start();
 
@@ -28,7 +29,7 @@
     inner join sae._logement on sae._activite_logement.id_logement = sae._logement.id  
     inner join sae._distance on sae._activite_logement.id_distance = sae._distance.id
     where sae._logement.id = $id_logement;";
-    $query_avis = "select commentaire, note, prenom, ville, pays from sae._avis 
+    $query_avis = "select commentaire, note, prenom, commune, pays from sae._avis 
     inner join sae._utilisateur on sae._avis.id_client = sae._utilisateur.id 
     inner join sae._adresse on sae._adresse.id = sae._utilisateur.id_adresse
     where sae._avis.id_logement =$id_logement;";
@@ -55,7 +56,7 @@
     }
     
 
-    $ville = $rep_logement['ville'];
+    $ville = $rep_logement['commune'];
     $departement = $rep_logement['departement'];
     $accroche = $rep_logement['accroche'];
     $categorie = $rep_logement['categorie'];
@@ -100,7 +101,7 @@
         if ($cle > 0) {
             $liste_avis = $liste_avis  . "<br>";
         }
-        $liste_avis = $liste_avis . $avis['prenom'] . ", " . $avis['ville'] .', ' . $avis['pays'] .', ' .$avis['note'] .', ' . $avis['commentaire'];
+        $liste_avis = $liste_avis . $avis['prenom'] . ", " . $avis['commune'] .', ' . $avis['pays'] .', ' .$avis['note'] .', ' . $avis['commentaire'];
     }
 ?>
 
@@ -128,10 +129,10 @@
                             <h1 id="logement__nom"><?php echo  $titre_logement?></h1>
                             <div class="stars" id="logement__rate">
                                 <i class="fas fa-star fa-lg" id="1star"></i>
-                                <i class="fas fa-star fa-lg" id="2star"></i>
+                                <!-- <i class="fas fa-star fa-lg" id="2star"></i>
                                 <i class="fas fa-star fa-lg" id="3star"></i>
                                 <i class="fas fa-star fa-lg" id="4star"></i>
-                                <i class="fas fa-star fa-lg" id="5star"></i>
+                                <i class="fas fa-star fa-lg" id="5star"></i> -->
                             </div>
                             <h6 id="logement__rate__valuernote"><?php echo  $moyenne_note?></h6>
                             <a class="retour" href="" id="logement__retour"><img src="img/back.webp" alt="Retour"></a>
@@ -202,13 +203,13 @@
                                     </div>
                                 <?php }?>  
                                 <div class="logement__note">
-                                    <h2 id="note"><?php echo  $moyenne_note?></h2>
+                                    <h2 id="note"><?php echo  $moyenne_note?> / 5</h2>
                                     <div class="details__stars" id="logement__rate__details">
                                         <i class="fas fa-star fa-lg" id="1star_details"></i>
-                                        <i class="fas fa-star fa-lg" id="2star_details"></i>
+                                        <!-- <i class="fas fa-star fa-lg" id="2star_details"></i>
                                         <i class="fas fa-star fa-lg" id="3star_details"></i>
                                         <i class="fas fa-star fa-lg" id="4star_details"></i>
-                                        <i class="fas fa-star fa-lg" id="5star_details"></i>
+                                        <i class="fas fa-star fa-lg" id="5star_details"></i> -->
                                     </div>
                                     <?php 
                                         if($nb_commentaire == 1){?>
@@ -240,10 +241,10 @@
                                         <h3>Hôte: <span id="hote__nm"><?php echo  $prenom_hote?></span></h3>
                                         <div class="hote_rate" id="hote__rate">
                                             <i class="fas fa-star fa-xs" ></i>
+                                            <!-- <i class="fas fa-star fa-xs" ></i>
                                             <i class="fas fa-star fa-xs" ></i>
                                             <i class="fas fa-star fa-xs" ></i>
-                                            <i class="fas fa-star fa-xs" ></i>
-                                            <i class="fas fa-star fa-xs" ></i>
+                                            <i class="fas fa-star fa-xs" ></i> -->
                                         </div>
                                         <h6 id="hote__valuernote"><?= $note_hote?></h6>
                                     </div>
@@ -310,106 +311,6 @@
                                 
                             </div>
                         </div>
-                        <div class="avis">
-                            <h3>Les avis des clients</h3>
-                            <div class="lesavis">
-                                <div class="avis__element">
-                                    <div class="avis__top">
-                                        <div class="avis__user">
-                                            <img src="img/user.webp" alt="User">
-                                            <div class="user__nom">
-                                                <h5>Pierre</h5>
-                                                <h6>Paris, France</h6>
-                                            </div>
-                                        </div>
-                                        <div class="avis__note">
-                                            <div class="avis_rate">
-                                                <i class="fas fa-star fa-xs" id="avis__1star"></i>
-                                                <i class="fas fa-star fa-xs" id="avis__2star"></i>
-                                                <i class="fas fa-star fa-xs" id="avis__3star"></i>
-                                                <i class="fas fa-star fa-xs" id="avis__4star"></i>
-                                                <i class="fas fa-star fa-xs" id="avis__5star"></i>
-                                            </div>
-                                            <h6 >juin 2023</h6>
-                                        </div>
-                                    </div>
-                                    <p>Nous avons passé un excellent séjour dans ce superbe appartement avec une vue magnifique, à quelques minutes de la plage et de superbes promenades côtières. Le restaurant d'à côté vaut également le détour. </p>
-
-                                </div>
-                                <div class="avis__element">
-                                    <div class="avis__top">
-                                        <div class="avis__user">
-                                            <img src="img/user.webp" alt="User">
-                                            <div class="user__nom">
-                                                <h5>Mohamed</h5>
-                                                <h6>Dakar, Sénégal</h6>
-                                            </div>
-                                        </div>
-                                        <div class="avis__note">
-                                            <div class="avis_rate">
-                                                <i class="fas fa-star fa-xs" ></i>
-                                                <i class="fas fa-star fa-xs" ></i>
-                                                <i class="fas fa-star fa-xs" ></i>
-                                                <i class="fas fa-star fa-xs" ></i>
-                                                <i class="fas fa-star fa-xs" ></i>
-                                            </div>
-                                            <h6 >juin 2023</h6>
-                                        </div>
-                                    </div>
-                                    <p>Deuxième séjour dans ce petit nid et toujours aussi ravi.Ne dit on pas jamais deux sans trois....</p>
-
-                                </div>
-                                <div class="avis__element">
-                                    <div class="avis__top">
-                                        <div class="avis__user">
-                                            <img src="img/user.webp" alt="User">
-                                            <div class="user__nom">
-                                                <h5>Greta</h5>
-                                                <h6>Berlin, Allemagne</h6>
-                                            </div>
-                                        </div>
-                                        <div class="avis__note">
-                                            <div class="avis_rate">
-                                                <i class="fas fa-star fa-xs" ></i>
-                                                <i class="fas fa-star fa-xs" ></i>
-                                                <i class="fas fa-star fa-xs" ></i>
-                                                <i class="fas fa-star fa-xs" ></i>
-                                                <i class="fas fa-star fa-xs" ></i>
-                                            </div>
-                                            <h6 >juin 2023</h6>
-                                        </div>
-                                    </div>
-                                    <p>Magnifique gîte proche de la mer et d’une propreté irréprochable!!! Cyril est un hôte très sympathique et réactif aux demandes!! À conseiller sans modération!</p>
-
-                                </div>
-                                <div class="avis__element">
-                                    <div class="avis__top">
-                                        <div class="avis__user">
-                                            <img src="img/user.webp" alt="User">
-                                            <div class="user__nom">
-                                                <h5>James</h5>
-                                                <h6>Angleterre, Royaume-Uni</h6>
-                                            </div>
-                                        </div>
-                                        <div class="avis__note">
-                                            <div class="avis_rate">
-                                                <i class="fas fa-star fa-xs" ></i>
-                                                <i class="fas fa-star fa-xs" ></i>
-                                                <i class="fas fa-star fa-xs" ></i>
-                                                <i class="fas fa-star fa-xs" ></i>
-                                                <i class="fas fa-star fa-xs" ></i>
-                                            </div>
-                                            <h6 >juin 2023</h6>
-                                        </div>
-                                    </div>
-                                    <p>Endroit magnifique avec un hôte parfait... le logement est un véritable havre de paix et les alentours sont exceptionnels, même à pieds..
-                                        Deuxième séjour dans ce petit nid et toujours aussi ravi.Ne dit on pas jamais deux sans trois....</p>
-
-                                </div>
-                            </div>
-                            <button id="decouvrir__avis">Découvrir plus</button>
-                        </div>
-
                     </div>
                     <!--  Partie résa-->
                     
@@ -420,27 +321,63 @@
                     $sql = 'SELECT base_tarif FROM sae._logement';
                     $sql .= ' WHERE id = ' . $id;
                     $res = request($sql,1);
-                    
+                  
                     $base_tarif = $res['base_tarif'];
                    
-                    if (isset($_POST['submit_resa'])){
+                    if (isset($_POST['acceptButton'])){
+                       
+                        $dateDebut = $_POST['dateDebut'];
+                        $dateFin = $_POST['dateFin'];
+                        $prix_ht = $_POST['prix_ht'];
+                        $prix_ttc = $_POST['prix_ttc'];
+                        $nb_jours = $_POST['nb_jours'];
+                        $taxe = $_POST['taxe'];
+                        $frais = $_POST['frais'];
 
+                        $a = array(
+                            'date_debut'=>$dateDebut,
+                            'date_fin'=>$dateFin,
+                            'prix_ht'=>$prix_ht,
+                            'prix_ttc'=>$prix_ttc,
+                            'nb_jours'=>$nb_jours,
+                            'taxe'=>$taxe,
+                            'frais'=>$frais,
+                        );
+                      
+                        
                         // CRÉATION RÉSERVATION
 
                     }
 
                     ?>
-                
-                        
                     <div class="logement__res" id="logement__reserver">
                         <div class="form__logement">
                             <h2><span  id="logement__prix"><?=$base_tarif?></span> € par  nuit</h2>
                             <h1>Indiquez les dates pour voir les tarifs</h1>
                             <form action="" method="post">
+                            <div id="myModal_cvg" class="modal_cvg">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <div class="accept_cvg">
+                                        <p>Je reconnais avoir pris connaissance et j'accepte <a href="#">les conditions générales de ventes</a></p>
+                                        <div class="button_cvg">
+                                            <input type="button" id="declineButton" value="Refuser">
+                                            <input type="submit" name="acceptButton" id="acceptButton" value="Accepter">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="res__fromulaire">
                                 
-                                    <input type="text" name="dateDebut" hidden >
+                                    <input type="text" name="dateDebut"  hidden>
                                     <input type="text" name="dateFin" hidden>
+
+                                    <input type="text" name="prix_ht"  hidden>
+                                    <input type="text" name="prix_ttc" hidden>
+                                    <input type="text" name="nb_jours" hidden>
+                                    <input type="text" name="taxe" hidden>
+                                    <input type="text" name="frais" hidden>
                                     
                                     <div id="container-calendar">
                                     <div id="error_periode">Une réservation doit être supérieur à 4 jours</div>
@@ -495,7 +432,7 @@
                                     <p><span id="tot-ttc"></span>€</p>
                                 </div>
                                 <!--<input type="submit" id="reset" value="Annuler"> -->
-                                <input type="submit" name="submit_resa" value="Réserver">
+                                <input type="button" name="submit_resa" id="submit_resa" value="Réserver">
                                 
                             </div>
                         </form>
@@ -512,4 +449,3 @@
     <script src="js/logement.js"></script>
 </body>
 </html>
-
