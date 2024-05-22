@@ -95,8 +95,7 @@
   max-width: 21.875rem;
   max-height: 15.625rem;
   -o-object-fit: cover;
-  object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 
 @media (max-width: 1200px) {
@@ -302,8 +301,8 @@
   padding: 0.4rem 0.7rem;
 }
 
-.logement__res .form__logement input[type="submit"],
-.logement__res .form__logement input[type="button"] {
+.logement__res .form__logement input[type=submit],
+.logement__res .form__logement input[type=button] {
   cursor: pointer;
   align-self: stretch;
   border-radius: 0.5rem;
@@ -563,8 +562,7 @@
   }
   .logement__propose ul {
     -moz-column-gap: 4rem;
-    column-gap: 4rem;
-    column-gap: 4rem;
+         column-gap: 4rem;
   }
   .logement__proposNote {
     padding-right: 0rem;
@@ -638,8 +636,7 @@
   height: 7rem;
   border-radius: 50%;
   -o-object-fit: cover;
-  object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 .hote .hote__info .hote__main {
   display: flex;
@@ -690,8 +687,8 @@
 }
 
 .apropos button:hover,
-.logement__res input[type="submit"]:hover,
-.logement__res input[type="button"]:hover,
+.logement__res input[type=submit]:hover,
+.logement__res input[type=button]:hover,
 #reset:hover {
   background-color: #9aa5ff;
 }
@@ -854,8 +851,7 @@
   height: 3rem;
   border-radius: 50%;
   -o-object-fit: cover;
-  object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 .avis .lesavis .avis__element .avis__top .avis__user .user__nom {
   display: flex;
@@ -1099,7 +1095,7 @@ input:focus {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.6);
   -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
 }
 .modal_cvg .modal-content {
   background-color: #ffffff;
@@ -1121,8 +1117,7 @@ input:focus {
   cursor: pointer;
   transition: color 0.3s;
 }
-.modal_cvg .modal-content .close:hover,
-.modal_cvg .modal-content .close:focus {
+.modal_cvg .modal-content .close:hover, .modal_cvg .modal-content .close:focus {
   color: #000;
   text-decoration: none;
 }
@@ -1147,8 +1142,8 @@ input:focus {
   margin-top: 20px;
   gap: 2rem;
 }
-.modal_cvg .modal-content .accept_cvg .button_cvg input[type="button"],
-.modal_cvg .modal-content .accept_cvg .button_cvg input[type="submit"] {
+.modal_cvg .modal-content .accept_cvg .button_cvg input[type=button],
+.modal_cvg .modal-content .accept_cvg .button_cvg input[type=submit] {
   padding: 12px 25px;
   border: none;
   border-radius: 5px;
@@ -1156,38 +1151,22 @@ input:focus {
   font-size: 16px;
   transition: background-color 0.3s, transform 0.2s;
 }
-.modal_cvg .modal-content .accept_cvg .button_cvg input[type="button"]:hover,
-.modal_cvg .modal-content .accept_cvg .button_cvg input[type="submit"]:hover {
+.modal_cvg .modal-content .accept_cvg .button_cvg input[type=button]:hover,
+.modal_cvg .modal-content .accept_cvg .button_cvg input[type=submit]:hover {
   transform: scale(1.05);
 }
-.modal_cvg
-  .modal-content
-  .accept_cvg
-  .button_cvg
-  input[type="button"]#declineButton {
+.modal_cvg .modal-content .accept_cvg .button_cvg input[type=button]#declineButton {
   background-color: #f44336;
   color: white;
 }
-.modal_cvg
-  .modal-content
-  .accept_cvg
-  .button_cvg
-  input[type="button"]#declineButton:hover {
+.modal_cvg .modal-content .accept_cvg .button_cvg input[type=button]#declineButton:hover {
   background-color: #e53935;
 }
-.modal_cvg
-  .modal-content
-  .accept_cvg
-  .button_cvg
-  input[type="submit"]#acceptButton {
+.modal_cvg .modal-content .accept_cvg .button_cvg input[type=submit]#acceptButton {
   background-color: #4caf50;
   color: white;
 }
-.modal_cvg
-  .modal-content
-  .accept_cvg
-  .button_cvg
-  input[type="submit"]#acceptButton:hover {
+.modal_cvg .modal-content .accept_cvg .button_cvg input[type=submit]#acceptButton:hover {
   background-color: #43a047;
 }
 
@@ -1198,4 +1177,4 @@ input:focus {
   to {
     opacity: 1;
   }
-} /*# sourceMappingURL=logement.css.map */
+}/*# sourceMappingURL=logement.css.map */
