@@ -6,7 +6,7 @@
     $id_utilisateur =  client_connected_or_redirect();
 
     $query_utilisateur = "select nom, prenom, pseudo, commune, pays, region, departement,
-    numero, rep, nom_voie, civilite, photo_profile, email, telephone, date_naissance, mot_de_passe 
+    numero, nom_voie, civilite, photo_profile, email, telephone, date_naissance, mot_de_passe 
     from sae._utilisateur
     inner join sae._adresse on sae._adresse.id = sae._utilisateur.id_adresse
     where sae._utilisateur.id = $id_utilisateur;";
@@ -19,7 +19,6 @@
     $region = $rep_utilisateur['region'];
     $departement = $rep_utilisateur['departement'];
     $numero = $rep_utilisateur['numero'];
-    $rep = $rep_utilisateur['rep'];
     $voie = $rep_utilisateur['nom_voie'];
     $pays = $rep_utilisateur['pays'];
     $email = $rep_utilisateur['email'];
@@ -133,7 +132,7 @@
                             </div>
                             <div class="compte__input">
                                 <label for="compte__rue">Rue</label>
-                                <input type="text" name="rue" id="compte__rue" value="<?= $numero . " " . $rep . " " . $voie ?>" placeholder="Votre rue" readonly>
+                                <input type="text" name="rue" id="compte__rue" value="<?= $numero . " " . $voie ?>" placeholder="Votre rue" readonly>
                             </div>
                             <div class="compte__input">
                                 <label for="compte__complement">Complément d'adresse</label>
