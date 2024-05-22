@@ -766,6 +766,8 @@ $lineHeight: 1.5;
   }
 }
 .environs {
+ 
+  
   border-bottom: 1px solid #909090;
   padding: 2rem 0px;
   display: flex;
@@ -774,6 +776,7 @@ $lineHeight: 1.5;
   #environs__map {
     width: 25rem;
     height: 20rem;
+    z-index:0;
   }
   .environs__details {
     display: flex;
