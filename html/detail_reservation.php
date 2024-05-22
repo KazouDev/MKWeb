@@ -113,7 +113,7 @@
                 <div class="detail-reservation__entete">
                     <div>
                         <h1 class="entete__titre">Détails de la réservation</h1>
-                        <a href=""><img src="img/back.webp" alt="Back"></a>
+                        <a href="/detail_logement.php?id=<?= $idLogement?>"><img src="img/back.webp" alt="Back"></a>
                     </div>
                     <div>
                         <div class="entete__textinfo1">
