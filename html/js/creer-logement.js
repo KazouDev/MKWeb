@@ -183,9 +183,7 @@ submitButton.addEventListener("click", async (e) => {
     method: "POST",
     body: formData,
   })
-    .then((response) => {
-      return response.text();
-    })
+    .then((response) => response.json())
     .then((data) => {
       console.log(data);
       /*if (data.err == false) {
