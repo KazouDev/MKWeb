@@ -1,6 +1,10 @@
 <?php
+require_once '../../utils.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-if (isset($_POST)){
+  if (isset($_POST)){
 
       $adresse = [
         "pays" => $_POST["pays"],
