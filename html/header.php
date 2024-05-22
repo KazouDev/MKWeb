@@ -51,8 +51,8 @@
 <div class="header__container">
     <div class="header__nav">
         <div class="header__logo">
-            <a href=""><img src="../img/trisquel.webp" alt="Logo trisquel"></a>
-            <a href="" class="header__name">ALHaiZ Breizh</a>
+            <a href="index.php"><img src="../img/trisquel.webp" alt="Logo trisquel"></a>
+            <a href="index.php" class="header__name">ALHaiZ Breizh</a>
         </div>
         <nav class="header__menu menu" id="LeMenu">
             <ul class="menu__list" id="menu__list">
