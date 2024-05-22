@@ -33,8 +33,8 @@
 <div class="header__container">
     <div class="header__nav">
         <div class="header__logo">
-            <a href=""><img src="../img/trisquel.webp" alt="Logo trisquel"></a>
-            <a href="" class="header__name">ALHaiZ Breizh<span style="color:#FFD33C; text-transform: capitalize;">Pro</span></a>
+            <a href="index.php"><img src="../img/trisquel.webp" alt="Logo trisquel"></a>
+            <a href="index.php" class="header__name">ALHaiZ Breizh<span style="color:#FFD33C; text-transform: capitalize;">Pro</span></a>
         </div>
     </div>
     <div class="header__form">
@@ -48,16 +48,16 @@
     <ul class="header__menu-user" id="menu-user">
         <img src="../img/fermer.webp" alt="Fermer le menu" id="fermerMenu">
         <li class="menu__item ">
-            <a href="" class="menu__link">Mon compte</a>
+            <a href="consulter_mon_compte_proprio.php" class="menu__link">Mon compte</a>
         </li>
         <li class="menu__item ">
-            <a href="" class="menu__link">Mes Logements</a>
+            <a href="index.php" class="menu__link">Mes Logements</a>
         </li>
         <li class="menu__item ">
-            <a href="" class="menu__link">Les Réservations</a>
+            <a href="mes_reserv.php" class="menu__link">Les Réservations</a>
         </li>
         <li class="menu__item ">
-            <a href="" class="menu__link" style="color: #5669FF;">Ajouter un logement</a>
+            <a href="creer-logement.php" class="menu__link" style="color: #5669FF;">Ajouter un logement</a>
         </li>
         <li class="menu__item ">
             <a href="logout.php" class="menu__link" style="color: #FF5656;">Se déconnecter</a>
