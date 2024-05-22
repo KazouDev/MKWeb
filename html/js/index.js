@@ -87,7 +87,11 @@ let genererCard = {
     let divPrix;
     let prix;
     let prixpar;
-
+    let aLien;
+    
+    aLien=document.createElement("a");
+    aLien.href="./detail_logement.php?id="+logement.id_logement;
+    
     divCard = document.createElement("div");
 
     if (i < 6) {
@@ -155,7 +159,9 @@ let genererCard = {
     divCard.appendChild(imgCouverture);
     divCard.appendChild(divDescription);
 
-    return divCard;
+    aLien.appendChild(divCard);
+
+    return aLien;
   },
 
   card_coups: function (i, logement) {
@@ -171,6 +177,10 @@ let genererCard = {
     let iNote;
     let note;
     let localisation;
+    let aLien;
+    
+    aLien=document.createElement("a");
+    aLien.href="./detail_logement.php?id="+logement.id_logement;
 
     divCard = document.createElement("div");
 
@@ -231,7 +241,9 @@ let genererCard = {
     divCard.appendChild(imgCouverture);
     divCard.appendChild(divDescription);
 
-    return divCard;
+    aLien.appendChild(divCard);
+
+    return aLien;
   },
 };
 

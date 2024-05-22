@@ -13,24 +13,6 @@ WHERE sae._logement.id_proprietaire = $id";
 
 $results = request($query, false);
 $current_date = date("Y-m-d"); // Obtient la date actuelle au format Y-m-d
-
-foreach ($results as $result) {
-    $date_debut = $result["date_debut"];
-    $date_fin = $result["date_fin"];
-    $date_annulation = $result["date_annulation"];
-
-    // Vérifie si la réservation est confirmée (date de début dans le futur)
-    if ($date_annulation === null && $current_date <= $date_debut) {
-        $status = "À venir";
-        $status_class = "green";
-    } elseif ($date_annulation !== null || $current_date > $date_debut) {
-        $status = "Annulée";
-        $status_class = "red";
-    } else {
-        $status = "En cours";
-        $status_class = "green";
-    }
-};
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,14 +38,46 @@ foreach ($results as $result) {
                         <img src="../img/filter-3.webp" alt="">
                         <img src="../img/arrows.webp" alt="">
                     </div>
-                    <a href="#" id="export-reservation-btn"><i class="fa-solid fa-download"></i></a>
+                    <!--<a href="#" id="export-reservation-btn"><i class="fa-solid fa-download"></i></a> -->
                 </div>
                 <?php if (empty($results)) { ?>
                     <div class="mes__reserv__empty">
                         <h4>Vous n'avez pas encore de réservations</h4>
                     </div>
                     <?php } else {
-                    foreach ($results as $result) { ?>
+                    foreach ($results as $result) { 
+                        $date_debut = $result["date_debut"];
+    $date_fin = $result["date_fin"];
+    $date_annulation = $result["date_annulation"];
+
+    // Vérifie si la réservation est confirmée (date de début dans le futur)
+    if (empty($date_annulation) && ($current_date <= $date_debut)) {
+        $status = "À venir";
+        $status_class = "green";
+    } elseif (!empty($date_annulation)) {
+        if ($current_date > $date_debut){
+            if ($current_date <= $date_fin){
+                $status = "En cours";
+                $status_class = "green";
+            } else {
+                $status = "Passée";
+                $status_class = "green"; 
+            }
+            
+        }
+    } else {
+        if ($current_date > $date_debut){
+            if ($current_date <= $date_fin){
+                $status = "En cours";
+                $status_class = "green";
+            } else {
+                $status = "Passée";
+                $status_class = "green"; 
+            }
+            
+        }
+    }
+    ?>
                         <div class="card__reserv">
                             <div class="buisness_mes_reserv_line">
                                 <div class="buisness_left_big_box">
