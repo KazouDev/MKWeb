@@ -15,6 +15,22 @@ var datesReservees = [];
 const paramsGlobalURL = new URLSearchParams(document.location.search);
 const id = paramsGlobalURL.get("id");
 
+const toggleModal = (modalId, displayStyle) => {
+  document.getElementById(modalId).style.display = displayStyle;
+}
+
+document.getElementById('submit_resa').addEventListener('click', () => {
+  toggleModal('myModal_cvg', 'flex');
+});
+
+document.querySelector('.close').addEventListener('click', () => {
+  toggleModal('myModal_cvg', 'none');
+});
+
+document.getElementById('declineButton').addEventListener('click', () => {
+  toggleModal('myModal_cvg', 'none');
+});
+
 const verifyValue = (event) => {
   const key = event.key || event.target.value;
 
@@ -48,26 +64,24 @@ const verifyAndFetch = () => {
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
         document.getElementById("appear_calcul").style.display = "block";
+        var responseData = JSON.parse(xhr.responseText);
 
-        document.getElementById("prix__total").innerHTML = JSON.parse(
-          xhr.responseText
-        ).prix_ht;
-        document.getElementById("prix__TTC").innerHTML = JSON.parse(
-          xhr.responseText
-        ).base_tarif;
+        document.getElementById("prix__total").innerHTML = responseData.prix_ht;
+        document.getElementsByName("prix_ht")[0].value = responseData.prix_ht;
 
-        document.getElementById("nb_jours").innerHTML = JSON.parse(
-          xhr.responseText
-        ).nombre_jour;
-        document.getElementById("frais__total").innerHTML = JSON.parse(
-          xhr.responseText
-        ).frais;
-        document.getElementById("taxes__total").innerHTML = JSON.parse(
-          xhr.responseText
-        ).taxe;
-        document.getElementById("tot-ttc").innerHTML = JSON.parse(
-          xhr.responseText
-        ).prix_ttc;
+        document.getElementById("prix__TTC").innerHTML = responseData.base_tarif;
+
+        document.getElementById("nb_jours").innerHTML = responseData.nombre_jour;
+        document.getElementsByName("nb_jours")[0].value = responseData.nombre_jour;
+
+        document.getElementById("frais__total").innerHTML = responseData.frais;
+        document.getElementsByName("frais")[0].value = responseData.frais;
+
+        document.getElementById("taxes__total").innerHTML = responseData.taxe;
+        document.getElementsByName("taxe")[0].value = responseData.taxe;
+
+        document.getElementById("tot-ttc").innerHTML = responseData.prix_ttc;
+        document.getElementsByName("prix_ttc")[0].value = responseData.prix_ttc;
       }
     };
 
