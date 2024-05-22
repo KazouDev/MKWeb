@@ -62,7 +62,7 @@ error_reporting(E_ALL ^ E_DEPRECATED);
         }
     }
 
-    $uploads_dir = "../../images/logement/$id_logement";
+    $uploads_dir = "../img/logement/$id_logement";
     if (!is_dir($uploads_dir)){
         mkdir($uploads_dir, 0777, true);
     }
