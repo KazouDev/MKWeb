@@ -17,7 +17,7 @@ $reservDepDate = new DateTime($_GET['dateFin']);
     
 $interval = $reservArrDate->diff($reservDepDate);   
 $base_tarif = $res['base_tarif'];
-$jour = $interval->days;
+$jour = $interval->days + 1;
                                     
 $prix_ht = $base_tarif * (empty($jour) ? 1 : $jour) * $nombre_personne;
 $nuit = empty($jour) ? 0 : $jour - 1;
@@ -33,6 +33,7 @@ $response = array(
     'frais' =>$frais,
     'taxe'=>$taxe,
     'nombre_jour' => $jour,
+    'nombre_nuit'=>$nuit,
 );
 
 print json_encode($response);

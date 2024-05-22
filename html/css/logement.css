@@ -1033,6 +1033,10 @@
   background-color: #9aa5ff;
 }
 
+.passed {
+  background-color: #e1ebf4;
+}
+
 .reserved {
   background-color: #ffc0cb;
   cursor: not-allowed;

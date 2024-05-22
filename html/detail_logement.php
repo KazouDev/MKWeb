@@ -1,10 +1,62 @@
 <?php 
 
+    
     require_once "../utils.php";
     session_start();
+   
+    $id_logement = $_GET['id'];       
+    $sql = 'SELECT base_tarif, duree_min_res, delai_avant_res FROM sae._logement';
+    $sql .= ' WHERE id = ' . $id_logement;
+    $res = request($sql,1);           
+    $base_tarif = $res['base_tarif'];
+    $base_tarif = $res['base_tarif'];
+    $min_jour = $res['duree_min_res'];
+    $delai_res = $res['delai_avant_res'];;
 
-    $id_logement = $_GET["id"];
+    if (isset($_POST['acceptButton'])){
+        client_connected_or_redirect();
+        $dateDebut = $_POST['dateDebut'];
+        $dateFin = $_POST['dateFin'];
+        $prix_ht = $_POST['prix_ht'];
+        $prix_ttc = $_POST['prix_ttc'];
+        $nb_jours = $_POST['nb_jours'];
+        $nb_nuit = $_POST['nb_nuit'];
+        $taxe = $_POST['taxe'];
+        $frais = $_POST['frais'];
+        $nb_personne = $_POST['nombre_personnesDevis'];
+        print date('Y-m-d') . '<br>';
+        $reservation = array(
+            'id_logement' => $id_logement,
+            'id_client'=> client_connected(),
+            'date_reservation'=> date('Y-m-d'),
+            'date_debut'=>$dateDebut,
+            'date_fin'=>$dateFin,
+            'nb_occupant'=>$nb_personne,
+            'taxe_sejour'=>$taxe,
+            'taxe_commission'=>$frais,
+            'prix_ht'=>$prix_ht,
+            'prix_ttc'=>$prix_ttc,
+            'date_annulation'=> 'NULL',
+            'annulation'=>'false'
+        
+        );
 
+        $id_resa = insert('sae._reservation', array_keys($reservation), array_values($reservation), 1);
+        
+        $resa_prix_par_nuit = array(
+            'id_reservation'=>$id_resa,
+            'prix'=> $base_tarif,
+            'nb_nuit'=> $nb_nuit
+        );
+
+        insert('sae._reservation_prix_par_nuit', array_keys($resa_prix_par_nuit), array_values($resa_prix_par_nuit),0);
+        
+        header('Location: detail_reservation.php?id=' . $id_resa);
+        die;
+
+    }
+    //error_reporting(E_ERROR); ini_set("display_errors", 1);
+    
     $query = "SELECT sae._logement.id AS log_id, * FROM sae._logement 
     INNER JOIN sae._adresse ON sae._logement.id_adresse = sae._adresse.id 
     INNER JOIN sae._type_logement ON sae._logement.id_type = sae._type_logement.id 
@@ -103,6 +155,14 @@
         }
         $liste_avis = $liste_avis . $avis['prenom'] . ", " . $avis['commune'] .', ' . $avis['pays'] .', ' .$avis['note'] .', ' . $avis['commentaire'];
     }
+
+    print <<<EOT
+    <script>
+        const JOUR_MIN = {$min_jour};
+        const DELAI_RES = {$delai_res};
+    </script>
+
+    EOT;
 ?>
 
 <!DOCTYPE html>
@@ -312,44 +372,10 @@
                             </div>
                         </div>
                     </div>
-                    <!--  Partie résa-->
-                    
-                    <?php
-
-                    require_once '../utils.php';
-                    $id = 1;
-                    $sql = 'SELECT base_tarif FROM sae._logement';
-                    $sql .= ' WHERE id = ' . $id;
-                    $res = request($sql,1);
                   
-                    $base_tarif = $res['base_tarif'];
-                   
-                    if (isset($_POST['acceptButton'])){
-                       
-                        $dateDebut = $_POST['dateDebut'];
-                        $dateFin = $_POST['dateFin'];
-                        $prix_ht = $_POST['prix_ht'];
-                        $prix_ttc = $_POST['prix_ttc'];
-                        $nb_jours = $_POST['nb_jours'];
-                        $taxe = $_POST['taxe'];
-                        $frais = $_POST['frais'];
-
-                        $a = array(
-                            'date_debut'=>$dateDebut,
-                            'date_fin'=>$dateFin,
-                            'prix_ht'=>$prix_ht,
-                            'prix_ttc'=>$prix_ttc,
-                            'nb_jours'=>$nb_jours,
-                            'taxe'=>$taxe,
-                            'frais'=>$frais,
-                        );
-                      
-                        
-                        // CRÉATION RÉSERVATION
-
-                    }
-
-                    ?>
+                    
+            
+                    
                     <div class="logement__res" id="logement__reserver">
                         <div class="form__logement">
                             <h2><span  id="logement__prix"><?=$base_tarif?></span> € par  nuit</h2>
@@ -359,7 +385,7 @@
                                 <div class="modal-content">
                                     <span class="close">&times;</span>
                                     <div class="accept_cvg">
-                                        <p>Je reconnais avoir pris connaissance et j'accepte <a href="#">les conditions générales de ventes</a></p>
+                                    <p>Je reconnais avoir pris connaissance et j'accepte <a href="img/cvg/CVG.pdf" target="_blank">les conditions générales de ventes</a></p>
                                         <div class="button_cvg">
                                             <input type="button" id="declineButton" value="Refuser">
                                             <input type="submit" name="acceptButton" id="acceptButton" value="Accepter">
@@ -376,11 +402,12 @@
                                     <input type="text" name="prix_ht"  hidden>
                                     <input type="text" name="prix_ttc" hidden>
                                     <input type="text" name="nb_jours" hidden>
+                                    <input type="text" name="nb_nuit" hidden>
                                     <input type="text" name="taxe" hidden>
                                     <input type="text" name="frais" hidden>
                                     
                                     <div id="container-calendar">
-                                    <div id="error_periode">Une réservation doit être supérieur à 4 jours</div>
+                                    <div id="error_periode">Une réservation doit être supérieur à <?=$min_jour?> jours</div>
                                         <h3>Arrivée - Départ</h3>
                                         <div class="calendar-nav">
                                             <button type="button" class="calendar-btn" id="prev">&lt;</button>
