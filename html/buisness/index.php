@@ -2,7 +2,7 @@
     session_start();
     require "../../utils.php";
 
-    buisness_connected_or_redirect();
+    header('Location: mes_reserv.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
