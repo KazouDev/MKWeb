@@ -2,6 +2,7 @@
 .detail_mon_compte__conteneur {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
 }
 .detail_mon_compte__conteneur h2 {
   font-size: 2.25rem;
@@ -20,11 +21,11 @@
   gap: 1.875em;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   padding: 1.875em;
-  margin: 2rem;
+  margin-bottom: 2rem;
 }
 .detail_mon_compte__conteneur .compte__form {
   width: 50%;
-  padding: 0rem 4rem 0rem 4rem;
+  padding: 0rem 4rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -49,6 +50,15 @@
   align-items: center;
   gap: 0.8rem;
 }
+.detail_mon_compte__conteneur .compte__form input[type=submit] {
+  background-color: #5669ff;
+  border-radius: 0.75rem;
+  width: 100%;
+  padding: 1rem;
+  color: #ffffff;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
 .detail_mon_compte__conteneur .compte__input {
   width: 100%;
   display: flex;
@@ -64,8 +74,8 @@
   width: 100%;
   padding: 1rem;
   border-radius: 0.75rem;
-  border: 1px solid #222;
-  background: #FFF;
+  border: 1px solid #222222;
+  background: #ffffff;
 }
 .detail_mon_compte__conteneur .compte__input input::-moz-placeholder {
   color: rgba(34, 34, 34, 0.5);
@@ -75,24 +85,8 @@
   color: rgba(34, 34, 34, 0.5);
   font-size: 1rem;
 }
-.detail_mon_compte__conteneur .compte__form .mdp_oublie {
-  align-self: flex-end;
-  color: #5669ff;
-}
-.detail_mon_compte__conteneur .compte__form input[type=submit] {
-  background-color: #5669ff;
-  border-radius: 0.75rem;
-  width: 100%;
-  padding: 1rem;
-  color: #ffffff;
-  font-size: 1.25rem;
-  cursor: pointer;
-}
 .detail_mon_compte__conteneur .compte__input select {
-  border-radius: 0.3125rem;
-  border: 1px solid #222;
-  padding: 0.5rem;
-  color: rgba(34, 34, 34, 0.5);
+  border: 1px solid #222222;
   font-size: 1rem;
   font-weight: 300;
   -webkit-appearance: none;
@@ -102,6 +96,11 @@
   background-repeat: no-repeat;
   background-position: right 0.7rem top 50%;
   background-size: 0.8rem auto;
+  width: 100%;
+  height: auto;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  color: #222222;
 }
 .detail_mon_compte__conteneur .ligne {
   display: flex;
@@ -116,14 +115,10 @@
 
 .wrapper {
   width: 100%;
-  box-sizing: border-box; /* Assure que le padding et la bordure sont inclus dans la largeur */
+  box-sizing: border-box;
 }
 
 .main__container {
-  width: 100%;
-}
-
-.detail_mon_compte__conteneur {
   width: 100%;
 }
 

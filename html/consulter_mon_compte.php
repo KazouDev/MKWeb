@@ -82,7 +82,7 @@
                             <div class="ligne">
                                 <div class="compte__input">
                                     <label for="genre">Choisissez votre genre :</label>
-                                    <select id="genre" name="genre">
+                                    <select id="genre" name="genre" disabled>
                                         <option value="Homme" <?php if ($civilite == "Mr") echo 'selected'; ?>>Homme</option>
                                         <option value="Femme" <?php if ($civilite == "Mme") echo 'selected'; ?>>Femme</option>
                                         <option value="Autre" <?php if ($civilite == "Autre") echo 'selected'; ?>>Autre</option>

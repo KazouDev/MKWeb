@@ -1,4 +1,5 @@
 @import url("setup.css");
+
 // Variables
 $myFont: "Plus Jakarta San", sans-serif;
 $mainViolet: #5669ff;
@@ -29,141 +30,148 @@ $semiboldWeight: 600;
 $boldWeight: 700;
 $lineHeight: 1.5;
 
-.detail_mon_compte__conteneur{
+// Styles
+.detail_mon_compte__conteneur {
     display: flex;
     flex-direction: column;
-    h2{
+    gap: 2rem;
+    
+    h2 {
         font-size: $h2Size;
         font-weight: $boldWeight;
     }
-    h3{
+    
+    h3 {
         font-size: $h3Size;
     }
-    #blue{
+    
+    #blue {
         color: $mainViolet;
     }
-    .info_perso_conteneur, .adresse_conteneur, .photo_conteneur, .mdp_conteneur{
+    
+    .info_perso_conteneur, .adresse_conteneur, .photo_conteneur, .mdp_conteneur {
         display: flex;
         border-radius: 0.75em;
         flex-direction: column;
         gap: 1.875em;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         padding: 1.875em;
-        margin: 2rem;
+        margin-bottom: 2rem;
     }
 
     .compte__form {
         width: 50%;
-        padding: 0rem 4rem 0rem 4rem;
+        padding: 0rem 4rem;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
         gap: 15px;
+
+        h1 {
+            font-weight: $semiboldWeight;
+            font-size: $h2Size;
+            letter-spacing: 0.0225rem;
+        }
+
+        p {
+            font-size: $h5Size;
+            line-height: 160%; 
+            letter-spacing: 0.0125rem;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        input[type="submit"] {
+            background-color: $mainViolet;
+            border-radius: 0.75rem;
+            width: 100%;
+            padding: 1rem;
+            color: $mainBlanc;
+            font-size: $h5Size;
+            cursor: pointer;
+        }
     }
-    .compte__form h1{
-        font-weight: $semiboldWeight;
-        font-size: $h2Size;
-        letter-spacing: 0.0225rem;
-        
-    }
-    .compte__form  p{
-        font-size: $h5Size;
-        line-height: 160%; 
-        letter-spacing: 0.0125rem;
-    }
-    
-    .compte__form form {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 0.8rem;
-    }
-    
-    .compte__input{
+
+    .compte__input {
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
         padding: 1rem;
+
+        label {
+            font-size: $h55Size;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid $mainNoir;
+            background: $mainBlanc;
+
+            &::placeholder {
+                color: rgba($mainNoir, 0.50);
+                font-size: $h55Size;
+            }
+        }
+
+        select {
+            border: 1px solid $mainNoir;
+            font-size: $h55Size;
+            font-weight: $lightWeight;
+            appearance: none;
+            background-image: url("../img/down.webp");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem top 50%;
+            background-size: 0.8rem auto;
+            width: 100%;
+            height: auto;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            color: $mainNoir;
+        }
     }
-    .compte__input label{
-        font-size: $h55Size;
-    }
-    .compte__input input{
-        width: 100%;
-        padding: 1rem;
-        border-radius: 0.75rem;
-        border: 1px solid #222;
-        background: #FFF;
-    }
-    .compte__input input::placeholder{
-        color: rgba(34, 34, 34, 0.50);
-        font-size: $h55Size;
-    }
-    .compte__form  .mdp_oublie{
-        align-self: flex-end;
-        color: $mainViolet;
-    }
-    .compte__form input[type="submit"]{
-        background-color: $mainViolet;
-        border-radius: 0.75rem;
-        width: 100%;
-        padding: 1rem;
-        color: $mainBlanc;
-        font-size: $h5Size;
-        cursor: pointer;
-    }
-    .compte__input select{
-        border-radius: 0.3125rem;
-        border: 1px solid #222;
-        padding: 0.5rem;
-        color: rgba(34, 34, 34, 0.50);
-        font-size: $h55Size;
-        font-weight: $lightWeight;
-        appearance: none;
-        background-image: url("../img/down.webp");
-        background-repeat: no-repeat;
-        background-position: right 0.7rem top 50%;
-        background-size: 0.8rem auto;
-    }
-    .ligne{
+
+    .ligne {
         display: flex;
-        flex-direction:row;
+        flex-direction: row;
     }
 
     .photo_conteneur img {
         border-radius: 50%;
         width: 15rem;
         height: 15rem;
-        align-self: center ;
+        align-self: center;
     }
 }
 
 .wrapper {
     width: 100%;
-    box-sizing: border-box; /* Assure que le padding et la bordure sont inclus dans la largeur */
+    box-sizing: border-box; // Assure que le padding et la bordure sont inclus dans la largeur
 }
 
 .main__container {
     width: 100%;
 }
 
-.detail_mon_compte__conteneur {
-    width: 100%;
-}
-
-.header_info_compte{
+.header_info_compte {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
-.identifiant_client{
+
+.identifiant_client {
     display: flex;
     flex-direction: row;
 }
-
