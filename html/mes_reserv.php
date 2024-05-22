@@ -3,7 +3,7 @@
     require_once "../utils.php";
     //session_destroy();
     $id = client_connected_or_redirect();
-    $query = "SELECT sae._reservation.id_logement, sae._reservation.date_annulation ,sae._reservation.prix_ttc ,sae._logement.titre, sae._reservation.date_debut, sae._reservation.date_fin, sae._adresse.ville 
+    $query = "SELECT sae._reservation.id_logement, sae._reservation.date_annulation ,sae._reservation.prix_ttc ,sae._logement.titre, sae._reservation.date_debut, sae._reservation.date_fin, sae._adresse.commune 
     FROM sae._reservation 
     INNER JOIN sae._logement ON sae._reservation.id_logement = sae._logement.id
     INNER JOIN sae._adresse ON sae._logement.id = sae._adresse.id
@@ -53,7 +53,7 @@
                             <div class="mes__reserv__date">
                                 <h4><?php echo $result["date_debut"] ?> – <?php echo $result["date_fin"] ?></h4>
                                 <h4>.</h4>
-                                <h4><?php echo $result["ville"] ?></h4>
+                                <h4><?php echo $result["commune"] ?></h4>
                             </div>
                             <?php if($result["date_annulation"]==null) {?>
                                 <p class="green">Confirmé</p>

@@ -1,17 +1,19 @@
 <?php
     require "../utils.php";
-    //$idreservation = $_GET["id"]
-    //id du client = client_connected()
-    
+    session_start();
+    //$id_client = client_connected_or_redirect();
+    $id_client= client_connected_or_redirect();
     $idreservation = $_GET["id"];
     $sql = "SELECT id_client FROM sae._reservation WHERE id=$idreservation";
     $client = request($sql,true);
     // On vérifie que la réservation est bien associée au bon utilisateur
-    $sql = "SELECT * from sae._reservation where id_client=$client[id_client] and id=$idreservation";
+    $sql = "SELECT * from sae._reservation where id_client=$id_client and id=$idreservation";
     $reservation = request($sql,true);
     // Vérification que la reservation existe puis qu'elle est bien associé au client connecté
     if($reservation==null){
         // Redirection vers la page des réservations
+        header('Location: mes_reserv.php');
+        die();
     }
     // On recupère les données à afficher
     else{
