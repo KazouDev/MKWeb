@@ -42,7 +42,8 @@
     } else {
         require_once '../utils.php';
         $id = $_SESSION["client_id"];
-        $user_info = request("SELECT pseudo, photo_profile FROM sae._compte_client
+        $photo_user = $_SESSION["photo_user"];
+        $user_info = request("SELECT pseudo FROM sae._compte_client
         NATURAL JOIN sae._utilisateur
         WHERE id = '$id'", true);
 ?>
@@ -86,7 +87,7 @@
     <div class="header__form">
         <a href=""><i class="fa-regular fa-eye-slash" style="color: #222222;"></i></a>
             <div class="user__info" id="header__info">
-                <img src="../img/user.webp" alt="Photo User" class="user__photo">
+                <img src="../img/<?=$photo_user?>" alt="Photo User" class="user__photo">
                 <p><?= $user_info["pseudo"] ?></p>
                 <img src="../img/fleche.webp" alt="Ouvrir le menu" class="user__down">
             </div>                   

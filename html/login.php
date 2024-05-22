@@ -15,7 +15,7 @@
     if (isset($_POST["email"]) && isset($_POST["password"])){
         $email = strtolower($_POST["email"]);
 
-        $query = "SELECT sae._utilisateur.id, mot_de_passe FROM sae._compte_client 
+        $query = "SELECT sae._utilisateur.id, mot_de_passe, photo_profile FROM sae._compte_client 
         INNER JOIN sae._utilisateur ON sae._compte_client.id = sae._utilisateur.id 
         WHERE email = '$email'";
                 
@@ -27,6 +27,7 @@
             // On vérifie les mot de passe.
             if (password_verify($_POST["password"], $result["mot_de_passe"])){
                 $_SESSION["client_id"] = $result["id"];
+                $_SESSION["photo_user"] = $result["photo_profile"];
                 redirect();
                 exit; 
             } else {

@@ -71,7 +71,7 @@
 
     $query_note = "SELECT avg(note), count(*) from sae._avis where id_logement = $id_logement;";
     $query_amenagement = "SELECT amenagement FROM sae._amenagement_logement INNER JOIN sae._amenagement ON sae._amenagement_logement.id_amenagement = sae._amenagement.id  WHERE sae._amenagement_logement.id_logement = $id_logement;";
-    $query_hote = "select prenom, nom from sae._utilisateur inner join sae._logement on sae._utilisateur.id = sae._logement.id_proprietaire where sae._logement.id = $id_logement;";
+    $query_hote = "select prenom, nom, photo_profile from sae._utilisateur inner join sae._logement on sae._utilisateur.id = sae._logement.id_proprietaire where sae._logement.id = $id_logement;";
     $query_langue = "select langue from sae._utilisateur 
     inner join sae._langue_proprietaire on sae._utilisateur.id = sae._langue_proprietaire.id_proprietaire 
     inner join sae._langue on sae._langue_proprietaire.id_langue = sae._langue.id
@@ -126,6 +126,7 @@
     if (isset($note_hote)) {
         $note_hote = round($note_hote, 1);
     }
+    $source = $rep_hote['photo_profile'];
 
     $liste_amenagement = [];
     foreach($rep_amenagement as $cle => $amenagements){
@@ -295,7 +296,7 @@
                         </div>
                         <div class="hote">
                             <div class="hote__info">
-                                <img src="img/compte/<?php echo $source?>" alt="Hôte" id="hote__photo">
+                                <img src="img/<?php echo $source?>" alt="Hôte" id="hote__photo">
                                 <div class="hote__main">
                                     <div class="hote__nom">
                                         <h3>Hôte: <span id="hote__nm"><?php echo  $prenom_hote?></span></h3>
