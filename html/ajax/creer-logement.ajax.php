@@ -1,12 +1,8 @@
 <?php
-require_once '../../utils.php';
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
-echo "CONNECT OKKK";
+print "CONNECT OKKK";
 exit;
-  if (isset($_POST)){
+  /*if (isset($_POST)){
 
       $adresse = [
         "pays" => $_POST["pays"],
@@ -88,5 +84,5 @@ exit;
 } 
 
 print json_encode(["err" => "invalid data"]);
-
+*/
 ?>
