@@ -5,57 +5,6 @@
     session_start();
    
     $id_logement = $_GET['id'];       
-    $sql = 'SELECT base_tarif, duree_min_res, delai_avant_res FROM sae._logement';
-    $sql .= ' WHERE id = ' . $id_logement;
-    $res = request($sql,1);           
-    $base_tarif = $res['base_tarif'];
-    $base_tarif = $res['base_tarif'];
-    $min_jour = $res['duree_min_res'];
-    $delai_res = $res['delai_avant_res'];;
-
-    if (isset($_POST['acceptButton'])){
-        client_connected_or_redirect();
-        $dateDebut = $_POST['dateDebut'];
-        $dateFin = $_POST['dateFin'];
-        $prix_ht = $_POST['prix_ht'];
-        $prix_ttc = $_POST['prix_ttc'];
-        $nb_jours = $_POST['nb_jours'];
-        $nb_nuit = $_POST['nb_nuit'];
-        $taxe = $_POST['taxe'];
-        $frais = $_POST['frais'];
-        $nb_personne = $_POST['nombre_personnesDevis'];
-        print date('Y-m-d') . '<br>';
-        $reservation = array(
-            'id_logement' => $id_logement,
-            'id_client'=> client_connected(),
-            'date_reservation'=> date('Y-m-d'),
-            'date_debut'=>$dateDebut,
-            'date_fin'=>$dateFin,
-            'nb_occupant'=>$nb_personne,
-            'taxe_sejour'=>$taxe,
-            'taxe_commission'=>$frais,
-            'prix_ht'=>$prix_ht,
-            'prix_ttc'=>$prix_ttc,
-            'date_annulation'=> 'NULL',
-            'annulation'=>'false'
-        
-        );
-
-        $id_resa = insert('sae._reservation', array_keys($reservation), array_values($reservation), 1);
-        
-        $resa_prix_par_nuit = array(
-            'id_reservation'=>$id_resa,
-            'prix'=> $base_tarif,
-            'nb_nuit'=> $nb_nuit
-        );
-
-        insert('sae._reservation_prix_par_nuit', array_keys($resa_prix_par_nuit), array_values($resa_prix_par_nuit),0);
-        
-        header('Location: detail_reservation.php?id=' . $id_resa);
-        die;
-
-    }
-    //error_reporting(E_ERROR); ini_set("display_errors", 1);
     
     $query = "SELECT sae._logement.id AS log_id, * FROM sae._logement 
     INNER JOIN sae._adresse ON sae._logement.id_adresse = sae._adresse.id 
@@ -375,97 +324,7 @@
                   
                     
             
-                    
-                    <div class="logement__res" id="logement__reserver">
-                        <div class="form__logement">
-                            <h2><span  id="logement__prix"><?=$base_tarif?></span> € par  nuit</h2>
-                            <h1>Indiquez les dates pour voir les tarifs</h1>
-                            <form action="" method="post">
-                            <div id="myModal_cvg" class="modal_cvg">
-                                <div class="modal-content">
-                                    <span class="close">&times;</span>
-                                    <div class="accept_cvg">
-                                    <p>Je reconnais avoir pris connaissance et j'accepte <a href="img/cvg/CVG.pdf" target="_blank">les conditions générales de ventes</a></p>
-                                        <div class="button_cvg">
-                                            <input type="button" id="declineButton" value="Refuser">
-                                            <input type="submit" name="acceptButton" id="acceptButton" value="Accepter">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="res__fromulaire">
-                                
-                                    <input type="text" name="dateDebut"  hidden>
-                                    <input type="text" name="dateFin" hidden>
-
-                                    <input type="text" name="prix_ht"  hidden>
-                                    <input type="text" name="prix_ttc" hidden>
-                                    <input type="text" name="nb_jours" hidden>
-                                    <input type="text" name="nb_nuit" hidden>
-                                    <input type="text" name="taxe" hidden>
-                                    <input type="text" name="frais" hidden>
-                                    
-                                    <div id="container-calendar">
-                                    <div id="error_periode">Une réservation doit être supérieur à <?=$min_jour?> jours</div>
-                                        <h3>Arrivée - Départ</h3>
-                                        <div class="calendar-nav">
-                                            <button type="button" class="calendar-btn" id="prev">&lt;</button>
-                                            <span class="calendar-month" id="month"></span>
-                                            <button type="button" class="calendar-btn" id="next">&gt;</button>
-                                        </div>
-                                        <table id="calendar"></table>
-                                    </div>
-                                
-                                <div class="res__voy">
-                                    <label for="nb_personnesDevis">Voyageurs</label>
-                                    <input type="number" id="nb_personnesDevis" placeholder="1 voyageur" name="nombre_personnesDevis" min="1" max="13" required>
-                                </div>
-                                
-
-                            </div>
-
-                            <div id="appear_calcul" style="display:none">
-                                <div class="logement__calcules" >
-                                    <div class="calcules__ligne">
-                                        <div class="ttc__jours">
-                                            <p id="prix__TTC" class="calcules__under"></p>
-                                            <p class="calcules__under">€  x</p>
-                                            <p id="nb_jours" class="calcules__under"></p>
-                                            <p class="calcules__under">jours</p>
-                                        </div>
-                                        <div class="ttc_prix">
-                                            <p id="prix__total"></p>
-                                            <p>€  HT</p>
-                                        </div>
-                                    </div>
-                                    <div class="calcules__ligne">
-                                        <p class="calcules__under">Frais</p>
-                                        <div class="frais">
-                                            <p id="frais__total"> </p>
-                                            <p>€</p>
-                                        </div>
-                                    </div>
-                                    <div class="calcules__ligne">
-                                        <p class="calcules__under">Taxes</p>
-                                        <div class="frais">
-                                            <p id="taxes__total"></p>
-                                            <p>€</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="logement__total-ttc">
-                                    <p>Total TTC</p>
-                                    <p><span id="tot-ttc"></span>€</p>
-                                </div>
-                                <!--<input type="submit" id="reset" value="Annuler"> -->
-                                <input type="button" name="submit_resa" id="submit_resa" value="Réserver">
-                                
-                            </div>
-                        </form>
-                        </div>
-                    </div>
-            </div>
+                </div>
             </div>
         </main>
         <?php include_once 'footer.php'; ?>
@@ -473,6 +332,5 @@
     
     
     <script src="js/header_user.js"></script>
-    <script src="js/logement.js"></script>
 </body>
 </html>
