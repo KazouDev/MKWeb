@@ -588,7 +588,7 @@ SELECT
     l.id AS id_logement
 FROM _logement l
 CROSS JOIN (SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5) n
-WHERE l.id BETWEEN 1 AND 42;
+WHERE l.id BETWEEN 1 AND 45;
 
 INSERT INTO _avis(commentaire, note, id_logement, id_client) VALUES
 ('Très bel appartement avec vue sur la ville. Nous avons passé un excellent séjour !', 4.5, 1, 23),
