@@ -38,7 +38,7 @@ const verifyValue = (event) => {
     event.preventDefault();
   }
 
-  if (event.target.value > 13) {
+  if (event.target.value > 13 || event.target.value == 0 ) {
     event.target.value = "";
   }
   2;

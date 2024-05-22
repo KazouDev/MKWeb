@@ -24,7 +24,7 @@
         $taxe = $_POST['taxe'];
         $frais = $_POST['frais'];
         $nb_personne = $_POST['nombre_personnesDevis'];
-
+        print date('Y-m-d') . '<br>';
         $reservation = array(
             'id_logement' => $id_logement,
             'id_client'=> client_connected(),
@@ -36,8 +36,8 @@
             'taxe_commission'=>$frais,
             'prix_ht'=>$prix_ht,
             'prix_ttc'=>$prix_ttc,
-            'date_annulation'=>null,
-            'annulation'=>null
+            'date_annulation'=> 'NULL',
+            'annulation'=>'false'
         
         );
 
@@ -49,9 +49,9 @@
             'nb_nuit'=> $nb_nuit
         );
 
-        insert('sae._reservation_prix_par_nuit', array_keys($resa_prix_par_nuit), array_values($resa_prix_par_nuit));
+        insert('sae._reservation_prix_par_nuit', array_keys($resa_prix_par_nuit), array_values($resa_prix_par_nuit),0);
         
-        header('Location: detail_reservation?id=' . $id_resa);
+        header('Location: detail_reservation.php?id=' . $id_resa);
         die;
 
     }
