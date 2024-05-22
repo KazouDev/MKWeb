@@ -1,13 +1,20 @@
-<?php 
-session_start();
+<?php
+require_once '../../utils.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+error_reporting(E_ALL ^ E_DEPRECATED);
 
-  if (isset($_POST["titre"])){
+  if (isset($_POST)){
+
       $adresse = [
         "pays" => $_POST["pays"],
         "region" => $_POST["region"],
         "departement" => $_POST["departement"],
-        "ville" => $_POST["commune"],
-        "rue" => $_POST["num_voie"] . " " .$_POST["voie"],
+        "code_postal" => $_POST["cp"],
+        "commune" => $_POST["commune"],
+        "numero" => $_POST["num_voie"],
+        "nom_voie" => $_POST["voie"],
         "complement_1" => empty($_POST["comp1"]) ? "NULL" : $_POST["comp1"],
         "complement_2" => empty($_POST["comp2"]) ? "NULL" : $_POST["comp2"],
         "complement_3" => empty($_POST["comp3"]) ? "NULL" : $_POST["comp3"],
@@ -47,7 +54,7 @@ session_start();
         }
     }
 
-    /*Activite*/
+    
     if (isset($_POST["activite"])){
         foreach($_POST["activite"] as $activite){
             $activite = explode(";;" ,$activite);
@@ -66,11 +73,18 @@ session_start();
                 $tmp_name = $_FILES["images"]["tmp_name"][$key];
                 $name = basename($_FILES["images"]["name"][$key]);
                 move_uploaded_file($tmp_name, "$uploads_dir/$name");
+                if ($key === 0){
+                    insert("sae._image", ["src", "principale", "alt", "id_logement"], ["/logement/$id_logement/$name", "true", "Image du Logement", "$id_logement"], false);
+                } else {
+                    insert("sae._image", ["src", "principale", "alt", "id_logement"], ["/logement/$id_logement/$name", "false", "Image du Logement", "$id_logement"], false);
+                }
             }
         }
     }
+    
     print json_encode(["err" => false, "id" => $id_logement]);
-}
+    die;
+} 
 
 print json_encode(["err" => "invalid data"]);
 

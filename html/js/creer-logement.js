@@ -116,16 +116,14 @@ const updateSubmitingButton = () => {
   loadingModal.style.display = isSubmiting ? "flex" : "none";
 };
 
-document.addEventListener("click", () => {
-  updateSubmitingButton();
-  isSubmiting = !isSubmiting;
-});
-
 submitButton.addEventListener("click", async (e) => {
   e.preventDefault();
-  //if (!logementForm.reportValidity() || isSubmiting) return;
+  if (!logementForm.reportValidity() || isSubmiting) return;
 
-  /*if (imageList.length > 0) {
+  isSubmiting = true;
+  updateSubmitingButton();
+
+  if (imageList.length > 0) {
     const data = new DataTransfer();
 
     imageList.forEach((img) => {
@@ -135,6 +133,11 @@ submitButton.addEventListener("click", async (e) => {
     imageInput.files = data.files;
 
     imageInput.name = "images[]";
+  } else {
+    imageInput.focus();
+    isSubmiting = false;
+    updateSubmitingButton();
+    return;
   }
 
   let adresse =
@@ -165,22 +168,27 @@ submitButton.addEventListener("click", async (e) => {
   } else {
     console.error("Adresse invalide.");
     document.getElementById("voie").focus();
+    isSubmiting = false;
+    updateSubmitingButton();
     return;
-  }*/
+  }
 
   paysInput.disabled = false;
   regionInput.disabled = false;
 
   const formData = new FormData(logementForm);
+
   fetch("../ajax/creer-logement.ajax.php", {
     method: "POST",
     body: formData,
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       if (data.err == false) {
         window.location.href = "index.php?id=" + data.id;
+      } else {
+        isSubmiting = false;
+        updateSubmitingButton();
       }
     });
 });

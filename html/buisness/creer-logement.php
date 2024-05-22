@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/creer-logement.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <title>Nouveau Logement</title>
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
 </head>
@@ -34,11 +35,11 @@
                     <div class="field-container">
                         <div class="info_gen__input">
                             <label for="titre">Titre</label>
-                            <input type="text" id="titre" name="titre" placeholder="ex: Villa pieds dans la mer" requirednon>
+                            <input type="text" id="titre" name="titre" placeholder="ex: Villa pieds dans la mer" required>
                         </div>
                         <div class="info_gen__input">
                             <label for="categorie">Catégorie</label>
-                            <select name="categorie" id="categorie" placeholder="" requirednon>
+                            <select name="categorie" id="categorie" placeholder="" required>
                                 <option value="" disabled selected>Catégorie Logement</option>
                                 <?php foreach(request("SELECT * FROM sae._categorie_logement") as $cat){ ?>
                                     <option value=<?= $cat["id"]?>><?=$cat["categorie"]?></option>
@@ -47,7 +48,7 @@
                         </div>
                         <div class="info_gen__input">
                             <label for="titre">Type</label>
-                            <select name="type" id="type" requirednon>
+                            <select name="type" id="type" required>
                                 <option value="" disabled selected>Type de Logement</option>
                                 <?php foreach(request("SELECT * FROM sae._type_logement") as $cat){ ?>
                                     <option value=<?= $cat["id"]?>><?=$cat["type"]?></option>
@@ -56,31 +57,31 @@
                         </div>
                         <div class="info_gen__input">
                             <label for="surface">Surface</label>
-                            <input type="number" id="surface" name="surface" placeholder="Surface en m²" requirednon>
+                            <input type="number" id="surface" name="surface" placeholder="Surface en m²" required>
                         </div>
                         
                         <div class="info_gen__input">
                             <label for="chambre">Nombre de chambres</label>
-                            <input type="number" id="chambre" name="chambre" placeholder="Saisissez" requirednon>
+                            <input type="number" id="chambre" name="chambre" placeholder="Saisissez" required>
                         </div>
 
                         <div class="info_gen__input">
                             <label for="simple">Nombre de lit</label>
                             <div class="input__input">
-                                <input type="number" id="simple" name="simple" placeholder="Simple" requirednon>
-                                <input type="number" id="double" name="double" placeholder="Double" requirednon>
+                                <input type="number" id="simple" name="simple" placeholder="Simple" required>
+                                <input type="number" id="double" name="double" placeholder="Double" required>
                             </div>
                         </div>
 
                         <div class="full-size">
                             <div class="info_gen__input">
                                 <label for="accroche">Accroche</label>
-                                <textarea id="accroche" name="accroche" placeholder="Saisir descriptif" requirednon></textarea>
+                                <textarea id="accroche" name="accroche" placeholder="Saisir descriptif" required></textarea>
                             </div>
 
                             <div class="info_gen__input">
                                 <label for="description">Descriptif détaillé</label>
-                                <textarea id="description" name="description" placeholder="Saisir descriptif" requirednon></textarea>
+                                <textarea id="description" name="description" placeholder="Saisir descriptif" required></textarea>
                             </div>
                         </div>
                         
@@ -94,17 +95,17 @@
                     <div class="field-container">
                         <div class="info_gen__input">
                             <label for="pays">Pays</label>
-                            <input type="text" id="pays" name="pays" value="France" disabled requirednon>
+                            <input type="text" id="pays" name="pays" value="France" disabled required>
                         </div>
                         
                         <div class="info_gen__input">
                             <label for="region">Région</label>
-                            <input type="text" id="region" name="region" value="Bretagne" disabled requirednon>
+                            <input type="text" id="region" name="region" value="Bretagne" disabled required>
                         </div>
 
                         <div class="info_gen__input">
                             <label for="departement">Département</label>
-                            <select name="departement" id="departement" requirednon>
+                            <select name="departement" id="departement" required>
                                 <option value="" disabled selected>Selectionner</option>
                                 <option value="Finistère">Finistère</option>
                                 <option value="Morbihan">Morbihan</option>
@@ -115,26 +116,26 @@
 
                         <div class="info_gen__input">
                             <label for="commune">Commune</label>
-                            <input type="text" id="commune" name="commune" placeholder="Saisissez" requirednon>
+                            <input type="text" id="commune" name="commune" placeholder="Saisissez" required>
                         </div>
 
                         <div class="info_gen__input">
                             <label for="">Code Postal</label>
-                            <input type="number" id="cp" name="cp" placeholder="29400" requirednon>
+                            <input type="number" id="cp" name="cp" placeholder="29400" required>
                         </div>
 
-                        <input type="hidden" id="latitude" name="latitude" placeholder="Latitude" requirednon>
-                        <input type="hidden" id="longitude" name="longitude" placeholder="Longitude" requirednon>
+                        <input type="hidden" id="latitude" name="latitude" placeholder="Latitude" required>
+                        <input type="hidden" id="longitude" name="longitude" placeholder="Longitude" required>
 
                         <div class="info_gen__input adresse">
                             <label for="voie">Voie</label>
-                            <input type="text" id="voie" name="voie" placeholder="Nom de voie" requirednon>
+                            <input type="text" id="voie" name="voie" placeholder="Nom de voie" required>
                         </div>
 
                         <div class="info_gen__input">
                             <label for="num_voie">Numéro Voie</label>
                             <div class="input__input">
-                                <input type="number" id="num_voie" name="num_voie" placeholder="12" requirednon>
+                                <input type="number" id="num_voie" name="num_voie" placeholder="12" required>
                             </div>
                         </div>
 
@@ -162,33 +163,33 @@
                     <div class="field-container">
                         <div class="info_gen__input">
                             <label for="nbpersonne">Nombre max de personne</label>
-                            <input type="number" id="nbpersonne" name="nbpersonne" placeholder="6" requirednon>
+                            <input type="number" id="nbpersonne" name="nbpersonne" placeholder="6" required>
                         </div>
                         
                         <div class="info_gen__input">
                             <label for="prixht">Prix HT</label>
-                            <input type="number" id="prixht" name="prixht" placeholder="123.5" requirednon>
+                            <input type="number" id="prixht" name="prixht" placeholder="123.5" required>
                         </div>
 
                         <div class="info_gen__input">
                                 <label for="dureeloc">Durée minimum de location</label>
-                                <input type="number" id="dureeloc" name="dureeloc" placeholder="Saisissez" requirednon>
+                                <input type="number" id="dureeloc" name="dureeloc" placeholder="Saisissez" required>
                             </div>
 
                         <div class="info_gen__input">
                             <label for="delaires">Délai minimum réservation avant l'arrivée </label>
-                            <input type="number" id="delaires" name="delaires" placeholder="Saisissez" requirednon>
+                            <input type="number" id="delaires" name="delaires" placeholder="Saisissez" required>
                         </div>
 
                         <div class="info_gen__input">
                             <label for="delaires">Délai d'annulation </label>
-                            <input type="number" id="preavis" name="preavis" placeholder="Saisissez" requirednon>
+                            <input type="number" id="preavis" name="preavis" placeholder="Saisissez" required>
                         </div>
 
 
                         <div class="info_gen__input">
                             <label for="statut">Statut du logement</label>
-                            <select name="statut" id="statut" placeholder="" requirednon>
+                            <select name="statut" id="statut" placeholder="" required>
                                 <option value="" disabled selected>Choisir</option>
                                 <option value="0">En ligne</option>
                                 <option value="1">Hors ligne</option>
