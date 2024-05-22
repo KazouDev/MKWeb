@@ -23,7 +23,7 @@
                             <a href="index.php" class="menu__link">Contact</a>
                         </li>
                         <li class="menu__item hide">
-                            <a href="" class="menu__link" style="color: #5669FF;">Connexion</a>
+                            <a href="login.php" class="menu__link" style="color: #5669FF;">Connexion</a>
                         </li>
                     </ul>
                 </nav>
