@@ -47,7 +47,7 @@ btnAddAmenagement.addEventListener("click", () => {
   });
 
   input.type = "hidden";
-  input.name = "amenagement[]";
+  input.name = "activite[]";
   input.value = amenagement.name + ";;" + amenagement.distanceID;
 
   p.textContent = amenagement.name;
@@ -108,10 +108,21 @@ const paysInput = document.getElementById("pays");
 const voieInput = document.getElementById("voie");
 const numVoieInput = document.getElementById("num_voie");
 
-document.getElementById("form__submit").addEventListener("click", async (e) => {
-  console.log("click form submit");
+var isSubmiting = false;
+const submitButton = document.getElementById("form__submit");
+const loadingModal = document.querySelector(".loading__modal");
+
+const updateSubmitingButton = () => {
+  loadingModal.style.display = isSubmiting ? "flex" : "none";
+};
+
+submitButton.addEventListener("click", async (e) => {
   e.preventDefault();
-  if (!logementForm.reportValidity()) return;
+  if (!logementForm.reportValidity() || isSubmiting) return;
+
+  isSubmiting = true;
+  updateSubmitingButton();
+
   if (imageList.length > 0) {
     const data = new DataTransfer();
 
@@ -122,6 +133,11 @@ document.getElementById("form__submit").addEventListener("click", async (e) => {
     imageInput.files = data.files;
 
     imageInput.name = "images[]";
+  } else {
+    imageInput.focus();
+    isSubmiting = false;
+    updateSubmitingButton();
+    return;
   }
 
   let adresse =
@@ -152,11 +168,27 @@ document.getElementById("form__submit").addEventListener("click", async (e) => {
   } else {
     console.error("Adresse invalide.");
     document.getElementById("voie").focus();
+    isSubmiting = false;
+    updateSubmitingButton();
     return;
   }
 
   paysInput.disabled = false;
   regionInput.disabled = false;
 
-  logementForm.submit();
+  const formData = new FormData(logementForm);
+
+  fetch("../ajax/creer-logement.ajax.php", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.err == false) {
+        window.location.href = "index.php?id=" + data.id;
+      } else {
+        isSubmiting = false;
+        updateSubmitingButton();
+      }
+    });
 });
