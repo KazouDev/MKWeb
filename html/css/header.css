@@ -174,7 +174,7 @@
     border: 1px solid #878787;
     background: #FFF;
     position: fixed;
-    top: 10px;
+    top: 5px;
     right: 5px;
     z-index: 100;
     box-shadow: 4px 4px 16px 0px rgba(18, 18, 18, 0.06);
@@ -192,10 +192,13 @@
   #CmdMenu, #CmdMenuClose {
     height: 20px;
     z-index: 100;
-    margin-top: 15px;
   }
   .menu__item {
     width: 100%;
+    display: inline;
+  }
+  .card__reserv {
+    gap: 0rem;
   }
 }
 @media (min-width: 769px) {
