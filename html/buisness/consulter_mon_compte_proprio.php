@@ -162,7 +162,7 @@
                     <div class = "ensemble_flex">
                         <div class= "photo_conteneur">
                             <h3>Votre photo de profil</h3>
-                            <img src="<?= "../".$photo ?>" alt="photo de profil de l'utilisateur">
+                            <img src="<?= "../img/".$photo ?>" alt="photo de profil de l'utilisateur">
                             <!-- <p>source : <?= $src_photo ?></p> -->
     <!--                         <label for="photo_profile">Votre photo de profil</label>
                             <input type="file" id="photo_profile" name="photo_profile" accept="image/png, image/jpeg" /> -->
