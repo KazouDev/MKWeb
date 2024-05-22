@@ -68,7 +68,7 @@ function client_connected(){
   if (isset($_SESSION) && isset($_SESSION["client_id"])){
     return $_SESSION["client_id"];
   } else {
-    false;
+    return false;
   }
 }
 
@@ -86,7 +86,7 @@ function buisness_connected(){
   if (isset($_SESSION) && isset($_SESSION["business_id"])){
     return $_SESSION["business_id"];
   } else {
-    false;
+    return false;
   }
 }
 
