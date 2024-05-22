@@ -45,7 +45,7 @@ $results = request($query, false);
                         <a href="detail_reservation.php?id=<?php echo $result["id_logement"] ?>">
                             <div class="card__reserv">
                                 <img src="img/log1.webp" alt="">
-                                <div class="mes__reserv__container_desc_prix">
+                                <div class="mes__reserv__cont_desc_prix">
                                     <div class="mes__reserv__description">
                                         <h4><?php echo $result["titre"] ?></h4>
                                         <div class="mes_reserv__numero">
