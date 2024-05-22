@@ -54,7 +54,7 @@
             <div class="main__container">
                 <div class="connect-container">
                     <div class="connect__from">
-                        <h1>Inscrivez votre logement sur Alheiz Breizh</h1>
+                        <h1>Inscrivez votre logement sur ALHaiZ Breizh</h1>
                         <p>Vous avez un trésor caché en Bretagne? Partagez-le avec le monde en le proposant sur ALHaiZ Breizh et laissez-nous vous aider à transformer votre logement en une destination incontournable pour les voyageurs en quête d'aventure et d'authenticité !</p>
                         <form method="POST" action="">
                             <div class="connect__input">
