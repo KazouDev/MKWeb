@@ -192,12 +192,14 @@ section .field-container #list__amenagement div span {
   font-weight: 200;
   text-transform: lowercase;
 }
+section#section__image {
+  gap: 1rem;
+}
 section#section__image input[type=button] {
   background-color: #79da7d;
   color: #ffffff;
-  width: 50%;
+  width: 30%;
   border: none;
-  align-self: center;
 }
 
 input:not([type=checkbox]),
@@ -265,5 +267,37 @@ select {
   width: 25%;
   height: 40px;
   background-color: #5669ff;
-  margin: auto;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #5669ff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading__modal {
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  z-index: 4;
+  position: fixed;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
 }/*# sourceMappingURL=creer-logement.css.map */
