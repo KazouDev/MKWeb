@@ -51,7 +51,7 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/mon_compte.css">
-    <title>Document</title>
+    <title>Mon Compte</title>
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
 </head>
 <body>
