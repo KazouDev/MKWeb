@@ -43,17 +43,18 @@ $lineHeight: 1.5;
     
     h3 {
         font-size: $h3Size;
-    }
-    
-    #blue {
         color: $mainViolet;
     }
     
-    .info_perso_conteneur, .adresse_conteneur, .photo_conteneur, .mdp_conteneur {
+    #identifiant_client{
+        color: $mainNoir;
+    }
+    
+    .info_perso_conteneur, .adresse_conteneur, .photo_conteneur, .mdp_conteneur, .coord_bancaire_conteneur {
         display: flex;
         border-radius: 0.75em;
         flex-direction: column;
-        gap: 1.875em;
+        gap: 1rem;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         padding: 1.875em;
         margin-bottom: 2rem;
@@ -88,6 +89,8 @@ $lineHeight: 1.5;
             align-items: center;
             gap: 0.8rem;
         }
+
+        
     }
 
     .compte__input {
@@ -142,6 +145,7 @@ $lineHeight: 1.5;
         width: 15rem;
         height: 15rem;
         align-self: center;
+        margin: 1rem;
     }
 }
 
@@ -164,4 +168,50 @@ $lineHeight: 1.5;
 .identifiant_client {
     display: flex;
     flex-direction: row;
+}
+
+
+.ensemble_flex {
+    display: flex;
+    flex-direction: row;
+    gap: 5rem;
+}
+
+.sous_ensemble_flex {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+
+.photo_conteneur img{
+    display: inline;
+    align-items: center;
+}
+
+.mdp_conteneur label[for="showPassword"] {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+}
+
+#showPassword {
+    width: 1rem;
+}
+
+.detail_mon_compte__conteneur .photo_conteneur{
+    width: 60%;
+    gap: 7rem;
+}
+
+#photo_client {
+    width: 40%;
+    gap: 2rem;
+}
+
+#mdp_client{
+    width: 60%;
+    height: max-content;
 }
