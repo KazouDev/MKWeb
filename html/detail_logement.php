@@ -43,7 +43,6 @@
 
         $id_resa = insert('sae._reservation', array_keys($reservation), array_values($reservation), 1);
         
-
         $resa_prix_par_nuit = array(
             'id_reservation'=>$id_resa,
             'prix'=> $base_tarif,
@@ -58,8 +57,6 @@
     }
     //error_reporting(E_ERROR); ini_set("display_errors", 1);
     
-  
-
     $query = "SELECT sae._logement.id AS log_id, * FROM sae._logement 
     INNER JOIN sae._adresse ON sae._logement.id_adresse = sae._adresse.id 
     INNER JOIN sae._type_logement ON sae._logement.id_type = sae._type_logement.id 
@@ -159,7 +156,6 @@
         $liste_avis = $liste_avis . $avis['prenom'] . ", " . $avis['commune'] .', ' . $avis['pays'] .', ' .$avis['note'] .', ' . $avis['commentaire'];
     }
 
-    
     print <<<EOT
     <script>
         const JOUR_MIN = {$min_jour};
@@ -389,7 +385,7 @@
                                 <div class="modal-content">
                                     <span class="close">&times;</span>
                                     <div class="accept_cvg">
-                                        <p>Je reconnais avoir pris connaissance et j'accepte <a href="#">les conditions générales de ventes</a></p>
+                                    <p>Je reconnais avoir pris connaissance et j'accepte <a href="img/cvg/CVG.pdf" target="_blank">les conditions générales de ventes</a></p>
                                         <div class="button_cvg">
                                             <input type="button" id="declineButton" value="Refuser">
                                             <input type="submit" name="acceptButton" id="acceptButton" value="Accepter">
