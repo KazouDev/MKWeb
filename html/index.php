@@ -40,33 +40,20 @@ function genererListeLogement($where) {
             FROM sae._image 
             WHERE sae._image.id_logement = " . $logement["id"] . " AND sae._image.principale = true";
         $rep_image = request($query_image); */    
-    # Construction filtres dates
-        /*$where = "";
-        if ($f_date_arrive != "" && $f_date_arrive != "") {
-            $dateArrive = new DateTime($f_date_arrive);
-            $dateDepart = new DateTime($f_date_depart);
-            $dateDepart->modify('+1 day');
-
-            $interval = new DateInterval('P1D'); // Interval d'un jour
-            $dates = new DatePeriod($dateArrive, $interval, $dateDepart);
-
-            foreach ($dates as $d) {
-                if ($where == "") { $where = $where . " AND (sae._calendrier.date = '" . $d->format('Y-m-d') . "'"; } 
-                else { $where = $where. " OR sae._calendrier.date = '" . $d->format('Y-m-d') . "'"; }
-            }
-
-            if ($where != "") { $where = $where . ")"; }
-
-            # Recuperation des logements non disponible sur la periode
-            $query_calendrier = "SELECT * 
-                FROM sae._calendrier 
-                WHERE sae._calendrier.id_logement = " . $donnee["id_logement"] . $where;
-            $rep_calendier = request($query_calendrier);
-        }*/
+    
+    # Recuperation des logements non disponible sur la periode
 
         # Filtre des logements en fonction de la periode
         /*if (($f_date_arrive == "" || empty($rep_calendier))
             && ($f_date_depart == "" || empty($rep_calendier))) {*/
+}
+
+function genererPeriodePourListeLogement($where) {
+    $query = "SELECT DISTINCT sae._calendrier.id_logement 
+        FROM sae._calendrier 
+        WHERE sae._calendrier.statut <> ''".$where;
+    $reponse = request($query);
+    return $reponse;
 }
 
 
@@ -99,8 +86,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $reponse = genererListeLogement($where);
         echo json_encode(['reponse' => $reponse]);
     }  
-}
 
-/*password_hash(PASSWORD_BCRYPT) {}*/
+    if ($action == "genererPeriodePourListeLogement") {
+        $where = $_POST['where'];
+
+        if ($where == "") { $reponse = []; }
+        else { $reponse = genererPeriodePourListeLogement($where); }
+        echo json_encode(['reponse' => $reponse]);
+    }
+}
 
 ?>
