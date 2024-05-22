@@ -1,9 +1,7 @@
 <?php 
-
-    
-    require_once "../utils.php";
     session_start();
-   
+    require_once "../utils.php";
+
     $id_logement = $_GET['id'];       
     $sql = 'SELECT base_tarif, duree_min_res, delai_avant_res FROM sae._logement';
     $sql .= ' WHERE id = ' . $id_logement;
@@ -24,7 +22,6 @@
         $taxe = $_POST['taxe'];
         $frais = $_POST['frais'];
         $nb_personne = $_POST['nombre_personnesDevis'];
-        print date('Y-m-d') . '<br>';
         $reservation = array(
             'id_logement' => $id_logement,
             'id_client'=> client_connected(),
