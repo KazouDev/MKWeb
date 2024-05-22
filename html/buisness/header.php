@@ -6,8 +6,8 @@
         <div class="header__container">
             <div class="header__nav">
                 <div class="header__logo">
-                    <a href=""><img src="../img/trisquel.webp" alt="Logo trisquel"></a>
-                    <a href="" class="header__name" style="color: white;">ALHaiZ Breizh<span style="color: #FFD33C">Pro</span></a>
+                    <a href="index.php"><img src="../img/trisquel.webp" alt="Logo trisquel"></a>
+                    <a href="index.php" class="header__name" style="color: white;">ALHaiZ Breizh<span style="color: #FFD33C">Pro</span></a>
                 </div>
             </div>
             <div class="header__form">

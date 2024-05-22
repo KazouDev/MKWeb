@@ -195,16 +195,16 @@
                                 <i class="fas fa-star fa-lg" id="5star"></i> -->
                             </div>
                             <h6 id="logement__rate__valuernote"><?php echo  $moyenne_note?></h6>
-                            <a class="retour" href="" id="logement__retour"><img src="img/back.webp" alt="Retour"></a>
+                            <a class="retour" href="index.php" id="logement__retour"><img src="img/back.webp" alt="Retour"></a>
                         </div>
                         <div class="partager">
                             <img src="img/share.webp" alt="Partager">
-                            <a href="">Partager</a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://mkweb.ventsdouest.dev/detail_logement.php?id=<?= $id_logement?>" target="_blank">Partager</a>
                         </div>
                     </div>
                     <div class="logement__adr">
                         <h2 id="logement__adresse"><?php echo  $ville . ", " . $departement?></h2>
-                        <a href="#logement__verifier">Réserver</a>
+                        <a href="#logement__reserver">Réserver</a>
                     </div>
                 </div>
                 <div class="logement__photos">
@@ -385,7 +385,7 @@
                                 <div class="modal-content">
                                     <span class="close">&times;</span>
                                     <div class="accept_cvg">
-                                    <p>Je reconnais avoir pris connaissance et j'accepte <a href="img/cvg/CVG.pdf" target="_blank">les conditions générales de ventes</a></p>
+                                    <p>Je reconnais avoir pris connaissance et j'accepte <a href="/documents_pdf/CGV_CGU.pdf" target="_blank">les conditions générales de ventes</a></p>
                                         <div class="button_cvg">
                                             <input type="button" id="declineButton" value="Refuser">
                                             <input type="submit" name="acceptButton" id="acceptButton" value="Accepter">
