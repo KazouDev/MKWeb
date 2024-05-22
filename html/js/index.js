@@ -102,8 +102,8 @@ let genererCard = {
     }
 
     imgCouverture = document.createElement("img");
-    imgCouverture.setAttribute("src", "img/logement1.webp");
-    imgCouverture.setAttribute("alt", logement.titre);
+    imgCouverture.setAttribute("src", "./img" + logement.image_src);
+    imgCouverture.setAttribute("alt", logement.image_alt);
 
     divDescription = document.createElement("div");
     divDescription.classList.add("logement__wrapper_description");
@@ -192,8 +192,8 @@ let genererCard = {
     }
 
     imgCouverture = document.createElement("img");
-    imgCouverture.setAttribute("src", "img/logement1.webp");
-    imgCouverture.setAttribute("alt", logement.titre);
+    imgCouverture.setAttribute("src", "./img" + logement.image_src);
+    imgCouverture.setAttribute("alt", logement.image_alt);
 
     divDescription = document.createElement("div");
 

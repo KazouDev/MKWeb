@@ -26,26 +26,15 @@ function genererSelectProprietaire() {
 
 function genererListeLogement($where) {
     # Recuperation des donnees des logements
-    $query = "SELECT l.id AS id_logement, a.id AS id_adresse, l.titre, l.base_tarif as tarif, a.departement, a.commune,
-            (SELECT AVG(av.note)::numeric(10,2) 
-            FROM sae._avis av 
-            WHERE av.id_logement = l.id) AS note
-        FROM sae._logement l INNER JOIN sae._adresse a ON l.id_adresse = a.id
+    $query = "SELECT l.id AS id_logement, a.id AS id_adresse, l.titre, l.base_tarif AS tarif, a.departement, a.commune,
+            (SELECT AVG(av.note)::numeric(10,2) FROM sae._avis av WHERE av.id_logement = l.id) AS note, img.src AS image_src,
+            img.alt AS image_alt
+        FROM sae._logement l
+        INNER JOIN sae._adresse a ON l.id_adresse = a.id
+        LEFT JOIN sae._image img ON l.id = img.id_logement AND img.principale = true
         WHERE l.en_ligne = true".$where.";";
     $reponse = request($query);
     return $reponse;
-
-    # Recuperation des image de couverture d'un logement
-        /* $query_image = "SELECT * 
-            FROM sae._image 
-            WHERE sae._image.id_logement = " . $logement["id"] . " AND sae._image.principale = true";
-        $rep_image = request($query_image); */    
-    
-    # Recuperation des logements non disponible sur la periode
-
-        # Filtre des logements en fonction de la periode
-        /*if (($f_date_arrive == "" || empty($rep_calendier))
-            && ($f_date_depart == "" || empty($rep_calendier))) {*/
 }
 
 function genererPeriodePourListeLogement($where) {
