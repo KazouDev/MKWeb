@@ -459,15 +459,6 @@ INSERT INTO _utilisateur (nom, prenom, date_naissance, civilite, pseudo, mot_de_
 ('Louis', 'Maxence', '2029-02-01', 'Mr', 'MaxenceL', '$2y$10$HseoLyO4A/CPy6X1KvhEBeZRqvLePWFx2qjaxIoXHtIKfkBP3cZAG', '/compte/profile_maxencel.jpg', 'maxence.louis@gmail.com', '06 12 34 56 78', 41),
 ('Renault', 'Louise', '2030-04-18', 'Mme', 'LouiseR', '$2y$10$0GY/mAe8X41Cq2p4QeW9sukyWlGmdOFrfj.67Wla9PbiMYtDbxQQq', '/compte/profile_louiser.jpg', 'louise.renault@yahoo.com', '06 23 45 67 89', 42);
 
-<<<<<<< HEAD
-=======
-('Bernard', 'Sophie', '1953-11-05', 'Mme', 'SophieB', '$2y$10$X/3LCBxqfR9r5e.9g7x5QOCh05UOqTzH8vibS3ej7Q9RqjyGNHFcG', '/compte/profile_sophieb.jpg', 'sophie.bernard@free.com', '06 45 67 89 01', 12),
-('Dubois', 'Jacques', '1956-01-29', 'Mr', 'JacquesD', '$2y$10$G8a1JQ0zbcJ9kvcnK7PEmeDuoyXfXpyhBJaxHfaR0BKoxo9hHNsnG', '/compte/profile_jacquesd.jpg', 'jacques.dubois@orange.com', '06 56 78 90 12', 13),
-('Moreau', 'Camille', '1959-04-17', 'Mme', 'CamilleM', '$2y$10$ZoN3zC0CCtjt6F.7e6xTiOdyzL24G.tGDKqyqf8tB2wjZGNv.0e7G', '/compte/profile_camillem.jpg', 'camille.moreau@gmail.com', '06 67 89 01 23', 14),
-
-('Petit', 'Louis', '1962-07-08', 'Mr', 'LouisP', '$2y$10$h8Z1E0u8pz8fmluTIMmVCeCatHuYZDDrBG72PtoCYq3pIoeVhju.y', '/compte/profile_louisp.jpg', 'louis.petit@yahoo.com', '06 78 90 12 34', 15);
-
->>>>>>> e228d71b4b0d5844e8e399a8e8ab622b3dc91917
 INSERT INTO _compte_client (id) VALUES 
 (23), (24), (25), (26), (27), (28), (29), (30), (31), (32), 
 (33), (34), (35), (36) , (37), (38), (39), (40), (41), (42);
