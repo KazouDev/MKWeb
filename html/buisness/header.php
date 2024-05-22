@@ -1,9 +1,6 @@
-<link rel="stylesheet" href="../css/header.css">
-<link rel="stylesheet" href="css/header.css">
-
 <?php
     if (session_status() === PHP_SESSION_NONE){session_start();}
-    if (!isset($_SESSION["buisness_id"])){
+    if (!isset($_SESSION["business_id"])){
 ?>
     <header class="header buisness">
         <div class="header__container">
@@ -26,7 +23,7 @@
 <?php 
     } else {
         require_once '../../utils.php';
-        $id = $_SESSION["buisness_id"];
+        $id = $_SESSION["business_id"];
         $user_info = request("SELECT pseudo, photo_profile FROM sae._compte_proprietaire
         NATURAL JOIN sae._utilisateur
         WHERE id = '$id'", true);
