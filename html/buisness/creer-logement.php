@@ -191,8 +191,8 @@
                             <label for="statut">Statut du logement</label>
                             <select name="statut" id="statut" placeholder="" required>
                                 <option value="" disabled selected>Choisir</option>
-                                <option value="0">En ligne</option>
-                                <option value="1">Hors ligne</option>
+                                <option value="1">En ligne</option>
+                                <option value="0">Hors ligne</option>
                             </select>
                         </div>
                     </div>
