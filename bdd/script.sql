@@ -18,10 +18,16 @@ CREATE TABLE _utilisateur (
   id_adresse INT NOT NULL
 );
 
+CREATE TABLE _carte_identite (
+  id SERIAL PRIMARY KEY,
+  piece_id_recto VARCHAR(255) NOT NULL,
+  piece_id_verso VARCHAR(255) NOT NULL,
+  valide BOOLEAN NOT NULL
+); 
+
 CREATE TABLE _compte_proprietaire (
   id SERIAL PRIMARY KEY,
-  piece_id_recto VARCHAR(255),
-  piece_id_verso VARCHAR(255),
+  id_identite INT NOT NULL,
   IBAN VARCHAR(255) NOT NULL,
   BIC VARCHAR(255) NOT NULL,
   Titulaire VARCHAR(255) NOT NULL
@@ -135,6 +141,8 @@ CREATE TABLE _logement (
   nb_chambre INT NOT NULL,
   nb_lit_simple INT NOT NULL,
   nb_lit_double INT NOT NULL,
+  duree_min_res INT NOT NULL,
+  delai_avant_res INT NOT NULL,
   periode_preavis INT NOT NULL,
   en_ligne BOOLEAN NOT NULL,
   id_categorie INT NOT NULL,
@@ -153,6 +161,7 @@ CREATE TABLE _reservation (
   id SERIAL PRIMARY KEY,
   id_logement INT NOT NULL,
   id_client INT NOT NULL,
+  date_reservation DATE NOT NULL,
   date_debut DATE NOT NULL,
   date_fin DATE NOT NULL,
   nb_occupant FLOAT NOT NULL,
@@ -245,6 +254,10 @@ ALTER TABLE _reservation_prix_par_nuit
 ALTER TABLE _image
   ADD CONSTRAINT _image_logementid FOREIGN KEY (id_logement)
     REFERENCES _logement (id);
+
+ALTER TABLE _compte_proprietaire
+  ADD CONSTRAINT _compte_proprietaire_identite FOREIGN KEY (id_identite)
+    REFERENCES _carte_identite (id);
 
 -- TRIGGER
 
