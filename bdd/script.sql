@@ -1,3 +1,4 @@
+
 -- Table
 DROP SCHEMA IF EXISTS sae CASCADE;
 CREATE SCHEMA sae;
