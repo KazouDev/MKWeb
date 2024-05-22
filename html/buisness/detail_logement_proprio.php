@@ -1,7 +1,7 @@
 <?php 
 
     
-    require_once "../utils.php";
+    require_once "../../utils.php";
     session_start();
    
     $id_logement = $_GET['id'];       
@@ -105,13 +105,7 @@
         $liste_avis = $liste_avis . $avis['prenom'] . ", " . $avis['commune'] .', ' . $avis['pays'] .', ' .$avis['note'] .', ' . $avis['commentaire'];
     }
 
-    print <<<EOT
-    <script>
-        const JOUR_MIN = {$min_jour};
-        const DELAI_RES = {$delai_res};
-    </script>
 
-    EOT;
 ?>
 
 <!DOCTYPE html>
@@ -119,9 +113,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/logement.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/logement.css">
     <title>Document</title>
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
