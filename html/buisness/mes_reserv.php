@@ -1,4 +1,5 @@
-<?php
+<?php    
+session_start();
 require_once "../../utils.php";
 
 $id = buisness_connected_or_redirect();
