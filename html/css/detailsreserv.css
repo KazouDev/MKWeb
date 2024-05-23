@@ -109,8 +109,10 @@
   font-size: 1.8rem;
 }
 .detail-reservation__contenu > div.detail-reservation__section1 > img {
-  max-width: 21em;
-  max-height: auto;
+  width: 21em;
+  -o-object-fit: cover;
+     object-fit: cover;
+  max-height: 18rem;
 }
 .detail-reservation__contenu > div.detail-reservation__section2 {
   display: flex;

@@ -81,6 +81,10 @@
         $bis = $adresse["rep"] ?? "";
         $adresseRue = $adresse["numero"]." ".$bis." ".$adresse["nom_voie"].", ".$adresse["code_postal"].", ".$adresse["commune"];
         
+        $sql= "SELECT * from sae._image where id_logement=$logement[id] and principale=true";
+
+        $images = request($sql,true);
+
         $sql = "SELECT *
         FROM sae._langue_proprietaire
         INNER JOIN sae._langue ON sae._langue_proprietaire.id_langue = sae._langue.id
@@ -129,7 +133,7 @@
                 <!-- Contenu principal des informations de la réservation -->
                 <div class="detail-reservation__contenu">
                     <div class="detail-reservation__section1">
-                        <img src="img/log1.webp">
+                        <img src="<?= htmlspecialchars("img".$images['src']) ?>">
                         <div class="section1__article">
                             <div class="article__title">
                                 <p class="gras"><?=$logement["titre"]?></p>
@@ -182,11 +186,9 @@
                             <script>
                                 var lat = "<?php echo $latitude; ?>";
                                 var lng = "<?php echo $longitude; ?>";
-                                console.log(lat,lng)
                                 afficherCommuneSurMap(lat, lng);
 
                                 function afficherCommuneSurMap(lat, lng) {
-                                    console.log("coucou")
                                     var map = L.map('localisation').setView([lat, lng], 9); 
                                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                                         attribution: '© OpenStreetMap contributors'
