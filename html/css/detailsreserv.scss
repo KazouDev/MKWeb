@@ -145,8 +145,9 @@ $lineHeight: 1.5;
       }
     }
     > img {
-      max-width: $sizeLogement;
-      max-height: auto;
+      width: $sizeLogement;
+      object-fit: cover;
+      max-height: 18rem;
     }
   }
   > div.detail-reservation__section2 {
