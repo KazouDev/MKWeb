@@ -418,7 +418,7 @@ EOT;
 
                             <div class="res__fromulaire">
                                 
-                                    <input type="text" name="dateDebut"  hidden>
+                                    <input type="text" name="dateDebut" hidden>
                                     <input type="text" name="dateFin" hidden>
 
                                     <input type="text" name="prix_ht"  hidden>

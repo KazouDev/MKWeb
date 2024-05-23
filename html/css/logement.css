@@ -1036,6 +1036,8 @@
 
 .passed {
   background-color: #e1ebf4;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .reserved {

@@ -1050,6 +1050,8 @@ $lineHeight: 1.5;
 }
 .passed{
   background-color: $selectedBlanc ;
+  cursor: not-allowed;
+  pointer-events: none;
 
 }
 
