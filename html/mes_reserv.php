@@ -32,8 +32,8 @@ $results = request($query, false);
                 <div class="mes__reserv__titre">
                     <div class="test__TEST">
                         <h1>Mes réservations</h1>
-                        <img src="img/filter-3.webp" alt="">
-                        <img src="img/arrows.webp" alt="">
+                        <!-- <img src="img/filter-3.webp" alt="">
+                        <img src="img/arrows.webp" alt=""> -->
                     </div>
                     <!-- <a href="#" id="export-reservation-btn"><img src="img/downloads.webp" alt="Download"></a> -->
                 </div>
@@ -59,14 +59,14 @@ $results = request($query, false);
                                             <h4><?php echo $result["commune"] ?></h4>
                                         </div>
                                         <?php if ($result["date_annulation"] == null) { ?>
-                                            <p class="green">Confirmé</p>
+                                            <p class="green">Confirmée</p>
                                         <?php } else { ?>
                                             <p class="red">Annulée</p>
                                         <?php } ?>
                                     </div>
                                     <div class="mes__reserv__prix">
                                         <h4 class="mes__reserv__prix_color"><?php echo $result["prix_ttc"] . "€"; ?></h4>
-                                        <a href=""><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                                        <!-- <a href=""><i class="fa-solid fa-ellipsis-vertical"></i></a>-->
                                     </div>
                                 </div>
                             </div>

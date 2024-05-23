@@ -38,8 +38,8 @@ $current_date = date("Y-m-d"); // Obtient la date actuelle au format Y-m-d
                 <div class="mes__reserv__titre">
                     <div class="test__TEST">
                         <h1>Les réservations</h1>
-                        <img src="../img/filter-3.webp" alt="">
-                        <img src="../img/arrows.webp" alt="">
+                        <!-- <img src="../img/filter-3.webp" alt="">
+                        <img src="../img/arrows.webp" alt="">-->
                     </div>
                     <!--<a href="#" id="export-reservation-btn"><i class="fa-solid fa-download"></i></a> -->
                 </div>
@@ -103,10 +103,10 @@ $current_date = date("Y-m-d"); // Obtient la date actuelle au format Y-m-d
                                     <p class="<?php echo $status_class ?>"><?php echo $status ?></p>
                                 </div>
                                 <div>
-                                    <i class="fa-regular fa-eye"></i>
+                                    <!--<i class="fa-regular fa-eye"></i>
                                     <?php if ($status === "À venir") { ?>
                                         <i class="fa-solid fa-trash red"></i>
-                                    <?php } ?>
+                                    <?php } ?>-->
                                 </div>
                             </div>
                         </div>
