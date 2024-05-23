@@ -34,7 +34,7 @@ $results = request($query, false);
                         <img src="img/filter-3.webp" alt="">
                         <img src="img/arrows.webp" alt="">
                     </div>
-                    <a href="#" id="export-reservation-btn"><img src="img/downloads.webp" alt="Download"></a>
+                    <!-- <a href="#" id="export-reservation-btn"><img src="img/downloads.webp" alt="Download"></a> -->
                 </div>
                 <?php if (empty($results)) { ?>
                     <div class="mes__reserv__empty">
