@@ -4,9 +4,10 @@
     //$id_client = client_connected_or_redirect();
     $id_client= client_connected_or_redirect();
     $idreservation = $_GET["id"];
-    $sql = "SELECT sae._reservation.*, sae._utilisateur.photo_profile FROM sae._reservation";
-    $sql .= " INNER JOIN sae._utilisateur ON sae._utilisateur.id = sae._reservation.id_client";
-    $sql .= " WHERE sae._reservation.id=$idreservation AND id_client = $id_client";
+    $sql = "SELECT sae._reservation.*, sae._utilisateur.photo_profile FROM sae._reservation 
+    INNER JOIN sae._logement ON sae._logement.id = sae._reservation.id_logement 
+    INNER JOIN sae._utilisateur ON sae._utilisateur.id = sae._logement.id_proprietaire 
+    WHERE sae._reservation.id=$idreservation AND id_client = $id_client";
     $reservation = request($sql,true);
     // Vérification que la reservation existe puis qu'elle est bien associé au client connecté
     if($reservation==null){
