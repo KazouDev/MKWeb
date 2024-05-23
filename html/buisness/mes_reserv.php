@@ -10,7 +10,8 @@ FROM sae._reservation
 INNER JOIN sae._logement ON sae._reservation.id_logement = sae._logement.id
 INNER JOIN sae._compte_client ON sae._reservation.id_client = sae._compte_client.id
 INNER JOIN sae._utilisateur ON sae._compte_client.id = sae._utilisateur.id
-WHERE sae._logement.id_proprietaire = $id";
+WHERE sae._logement.id_proprietaire = $id
+ORDER BY Date_Debut DESC";
 
 $results = request($query, false);
 $current_date = date("Y-m-d"); // Obtient la date actuelle au format Y-m-d
