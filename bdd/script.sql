@@ -319,9 +319,8 @@ INSERT INTO _langue(langue) VALUES
 
 INSERT INTO _amenagement (amenagement) VALUES 
 ('Jardin'), 
-('Beer-Pong'),
 ('Cave à vin'),
-('Fut de Bière'),
+('Tireuse à Bière'),
 ('Balcon'), 
 ('Terrasse'), 
 ('Piscine'),

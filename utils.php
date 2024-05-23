@@ -27,42 +27,34 @@ try {
 }
 }
 
-function insert($table, $name, $value, $get_id = true){
+function insert($table, $columns, $values, $get_id = true) {
   require "connect_db/connect_param.php";
   
   try {
-    $connexion = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    $name = implode(", ", $name);
-
-    $values = implode(", ", array_map(function ($v){
-      if (strtolower($v) != "null"){
-        return "'$v'";
-      } else {
-        return $v;
-      }
-    }, $value));
-
-    $sql = "INSERT INTO $table($name) VALUES ($values)";
-
-    $requete = $connexion->prepare($sql);
-  
-    $requete->execute();
-    $id;
-    if ($get_id){
-      $id = $connexion->lastInsertId();
-    } else {
-      $id = true;
-    }
-    $connexion = null;
-    return $id;
+      $connexion = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+      $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      
+      $columnsList = implode(", ", $columns);
+      
+      $placeholders = implode(", ", array_fill(0, count($values), '?'));
+      
+      $sql = "INSERT INTO $table ($columnsList) VALUES ($placeholders)";
+      
+      $requete = $connexion->prepare($sql);
+      
+      $requete->execute($values);
+      
+      $id = $get_id ? $connexion->lastInsertId() : true;
+      
+      $connexion = null;
+      
+      return $id;
   } catch(PDOException $e) {
-    $connexion = null;
-    echo "Error : ".$e;
-    return false;
+      $connexion = null;
+      echo "Error : " . $e->getMessage();
+      return false;
   }
-  }
+}
 
 function client_connected(){
   if (isset($_SESSION) && isset($_SESSION["client_id"])){
