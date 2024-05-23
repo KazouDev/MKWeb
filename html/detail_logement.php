@@ -184,6 +184,7 @@ EOT;
     <script>
         const JOUR_MIN = {$min_jour};
         const DELAI_RES = {$delai_res};
+        const NB_VOY = {$nb_personne};
     </script>
 
     EOT;
@@ -252,11 +253,6 @@ EOT;
                                     <div class="feature"><?php echo  $nb_personne?> voyageurs</div>
                                 <?php } ?>
                                 <div class="feature"><?php echo  $nb_chambre?> chambres</div>
-                                <?php if ($nb_personne == 1) { ?>
-                                    <div class="feature">1 voyageur</div>
-                                <?php } else if ($nb_personne > 1) { ?>
-                                    <div class="feature"><?php echo  $nb_personne?> voyageurs</div>
-                                <?php } ?>
                                 <?php if ((!empty($nb_lit_simple)) && ($nb_lit_simple > 1)) { ?>
                                     <div class="feature"><?php echo  $nb_lit_simple?> lits simples</div>
                                 <?php } else if ((!empty($nb_lit_simple)) && ($nb_lit_simple == 1)) { ?>
