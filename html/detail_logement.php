@@ -22,12 +22,13 @@
         $taxe = $_POST['taxe'];
         $frais = $_POST['frais'];
         $nb_personne = $_POST['nombre_personnesDevis'];
+       
         $reservation = array(
             'id_logement' => $id_logement,
             'id_client'=> client_connected(),
             'date_reservation'=> date('Y-m-d'),
-            'date_debut'=>$dateDebut,
-            'date_fin'=>$dateFin,
+            'date_debut'=>(new DateTime($dateDebut))->format('Y-m-d'),
+            'date_fin'=> (new DateTime($dateFin))->format('Y-m-d'),
             'nb_occupant'=>$nb_personne,
             'taxe_sejour'=>$taxe,
             'taxe_commission'=>$frais,
@@ -38,18 +39,37 @@
         
         );
 
-        $id_resa = insert('sae._reservation', array_keys($reservation), array_values($reservation), 1);
+        //on revérifie si y'a pas une résa qui a été faite entre temps
+        $sql = 'SELECT * FROM sae._reservation r';
+        $sql .= ' WHERE r.id_logement = ' . $id_logement;
+        $sql .= " AND ((r.date_debut >= '$dateDebut' AND r.date_debut < '$dateFin') OR (r.date_fin > '$dateDebut' AND r.date_fin <= '$dateFin'))";
+        $ret = request($sql);
+      
+        if(count($ret) == 0){
+            $id_resa = insert('sae._reservation', array_keys($reservation), array_values($reservation), 1);
         
-        $resa_prix_par_nuit = array(
-            'id_reservation'=>$id_resa,
-            'prix'=> $base_tarif,
-            'nb_nuit'=> $nb_nuit
-        );
+            $resa_prix_par_nuit = array(
+                'id_reservation'=>$id_resa,
+                'prix'=> $base_tarif,
+                'nb_nuit'=> $nb_nuit
+            );
+    
+            insert('sae._reservation_prix_par_nuit', array_keys($resa_prix_par_nuit), array_values($resa_prix_par_nuit),0);
+            header('Location: detail_reservation.php?id=' . $id_resa);
+            die;
 
-        insert('sae._reservation_prix_par_nuit', array_keys($resa_prix_par_nuit), array_values($resa_prix_par_nuit),0);
-        
-        header('Location: detail_reservation.php?id=' . $id_resa);
-        die;
+        }else{
+            print <<<EOT
+                <div style="display:flex;" id="date_resa" class="modal_cvg">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <p> Nous sommes désolée cette date n'est plus disponible </p>
+                    </div>
+                </div>
+EOT;
+            
+        }
+       
 
     }
     //error_reporting(E_ERROR); ini_set("display_errors", 1);

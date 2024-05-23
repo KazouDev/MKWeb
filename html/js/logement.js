@@ -19,12 +19,15 @@ const toggleModal = (modalId, displayStyle) => {
   document.getElementById(modalId).style.display = displayStyle;
 }
 
+
 document.getElementById('submit_resa').addEventListener('click', () => {
   toggleModal('myModal_cvg', 'flex');
 });
 
 document.querySelector('.close').addEventListener('click', () => {
   toggleModal('myModal_cvg', 'none');
+  toggleModal('date_resa', 'none');
+  
 });
 
 document.getElementById('declineButton').addEventListener('click', () => {

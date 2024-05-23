@@ -5,6 +5,8 @@ require_once '../../utils.php';
 define('FRAIS',1.01);
 define('TAUX',1);
 
+
+
 $id = $_GET["id"];
 $sql = 'SELECT base_tarif FROM sae._logement';
 $sql .= ' WHERE id = ' . $id;
