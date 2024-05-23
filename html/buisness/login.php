@@ -27,7 +27,6 @@
             if (password_verify($_POST["password"], $result["mot_de_passe"])){
                 $_SESSION["business_id"] = $result["id"];
                 $_SESSION["business_photo"] = $result["photo_profile"];
-                unset($_SESSION["client_id"]);
                 redirect_business();
             } else {
                 $status = true;
