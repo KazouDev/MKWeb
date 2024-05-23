@@ -4,7 +4,8 @@
 .top {
   position: relative;
   height: 28rem;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)), url("../img/backgr.webp");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)),
+    url("../img/backgr.webp");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -111,28 +112,30 @@
   row-gap: 2rem;
 }
 
-.coup_de_coeurs .coups-coeur__container {
+.coup_de_coeurs .coups-coeur__cont {
   display: flex;
   flex-direction: row;
   box-shadow: 4px 4px 16px rgba(18, 18, 18, 0.06);
   height: 230px;
-  padding: 1rem 3rem 1rem 0rem;
+  padding: 1rem 3rem 1rem 1rem;
   gap: 1rem;
   font-size: 1rem;
   border-radius: 1rem;
   align-items: center;
   justify-content: space-between;
+  min-width: 38rem;
+  min-height: 15rem;
 }
 
-.coup_de_coeurs .coups-coeur__container_cacher {
+.coup_de_coeurs .coups-coeur__cont_cacher {
   display: none;
 }
 
-.coup_de_coeurs .coups-coeur__container > div > h1 {
+.coup_de_coeurs .coups-coeur__cont > div > h1 {
   color: #878787;
 }
 
-.coup_de_coeurs .coups-coeur__container img {
+.coup_de_coeurs .coups-coeur__cont img {
   height: 100%;
   border-radius: 0.5rem;
   aspect-ratio: 1/1;
@@ -140,7 +143,7 @@
   object-fit: cover;
 }
 
-.coup_de_coeurs .coups-coeur__container .coups-coeur__titre {
+.coup_de_coeurs .coups-coeur__cont .coups-coeur__titre {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -148,95 +151,99 @@
   justify-content: space-between;
 }
 
-.coup_de_coeurs .coups-coeur__container .coups-coeur__titre > h1 {
+.coup_de_coeurs .coups-coeur__cont .coups-coeur__titre > h1 {
   font-size: 1.25rem;
   margin-right: 1rem;
 }
 
-.coup_de_coeurs .coups-coeur__container .coups-coeur__titre h2 {
+.coup_de_coeurs .coups-coeur__cont .coups-coeur__titre h2 {
   color: #878787;
 }
 
-.coup_de_coeurs .coups-coeur__container .coups-coeur__titre h2 span {
+.coup_de_coeurs .coups-coeur__cont .coups-coeur__titre h2 span {
   margin-right: 0.25rem;
   color: #5669ff;
 }
 
-.coup_de_coeurs .coups-coeur__container .coups-coeur__note {
+.coup_de_coeurs .coups-coeur__cont .coups-coeur__note {
   display: flex;
   flex-direction: row;
   gap: 1rem;
 }
 
-.coup_de_coeurs .coups-coeur__container .coups-coeur__note i {
+.coup_de_coeurs .coups-coeur__cont .coups-coeur__note i {
   color: #ffd33c;
 }
 
-.card__container {
+.card__cont {
   display: flex;
   flex-direction: column;
   width: 325px;
   background-color: #ffffff;
   border-radius: 0.75rem;
   box-shadow: 4px 4px 16px rgba(18, 18, 18, 0.06);
+  min-height: 22rem;
 }
 
-.card__container_cacher {
+.card__cont_cacher {
   display: none;
 }
 
-.card__container img {
+.card__cont img {
   height: 216.42px;
   border-radius: 0.75rem 0.75rem 0 0;
 }
 
-.card__container .logement__wrapper_description {
+.card__cont .logement__wrapper_description {
   margin: 1rem;
 }
 
-.card__container .logement__wrapper_description .logement__titre {
+.card__cont .logement__wrapper_description .logement__titre {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.card__container .logement__wrapper_description .logement__titre .logement__nom {
+.card__cont .logement__wrapper_description .logement__titre .logement__nom {
   color: #222222;
   font-size: 1rem;
   font-weight: 600;
 }
 
-.card__container .logement__wrapper_description .logement__titre .logement__note {
+.card__cont .logement__wrapper_description .logement__titre .logement__note {
   display: flex;
   align-items: center;
   font-size: 1rem;
   font-weight: 600;
 }
 
-.card__container .logement__wrapper_description .logement__titre .logement__note i {
+.card__cont .logement__wrapper_description .logement__titre .logement__note i {
   margin-right: 0.5rem;
   color: #ffd33c;
 }
 
-.card__container .logement__wrapper_description .logement__localisation {
+.card__cont .logement__wrapper_description .logement__localisation {
   color: #878787;
   font-size: 1rem;
   font-weight: 600;
 }
 
-.card__container .logement__wrapper_description .logement__prix__alignement {
+.card__cont .logement__wrapper_description .logement__prix__alignement {
   display: flex;
 }
 
-.card__container .logement__wrapper_description .logement__prix__alignement h1 {
+.card__cont .logement__wrapper_description .logement__prix__alignement h1 {
   margin-right: 0.3rem;
 }
 
-.card__container .logement__wrapper_description .logement__prix__alignement h1.logement__prix {
+.card__cont
+  .logement__wrapper_description
+  .logement__prix__alignement
+  h1.logement__prix {
   font-size: 1rem;
   font-weight: 600;
   color: #5669ff;
-} 
+}
 /* Styles de base pour l'autocomplétion */
 .autocomplete-suggestions {
   border: 1px solid #ccc;
@@ -264,4 +271,4 @@
 
 .top {
   margin-bottom: 5rem;
-}/*# sourceMappingURL=index.css.map */
+} /*# sourceMappingURL=index.css.map */

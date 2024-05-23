@@ -91,15 +91,13 @@ let genererCard = {
     
     aLien=document.createElement("a");
     aLien.href="./detail_logement.php?id="+logement.id_logement;
-    
+    if (i >= 6) {
+      aLien.classList.add("card__cont_cacher");
+    } 
     divCard = document.createElement("div");
 
-    if (i < 6) {
-      divCard.classList.add("card__container");
-    } else {
-      divCard.classList.add("card__container");
-      divCard.classList.add("card__container_cacher");
-    }
+    divCard.classList.add("card__cont");
+
 
     imgCouverture = document.createElement("img");
     imgCouverture.setAttribute("src", "./img" + logement.image_src);
@@ -181,15 +179,13 @@ let genererCard = {
     
     aLien=document.createElement("a");
     aLien.href="./detail_logement.php?id="+logement.id_logement;
+    if (i >= 4) {
+      aLien.classList.add("coups-coeur__cont_cacher");
+    } 
 
     divCard = document.createElement("div");
 
-    if (i < 4) {
-      divCard.classList.add("coups-coeur__container");
-    } else {
-      divCard.classList.add("coups-coeur__container");
-      divCard.classList.add("coups-coeur__container_cacher");
-    }
+    divCard.classList.add("coups-coeur__cont");
 
     imgCouverture = document.createElement("img");
     imgCouverture.setAttribute("src", "./img" + logement.image_src);
@@ -583,7 +579,7 @@ let btn_decouvrir_moins = document.getElementById("decouvrir_moins");
 let nos_logements = document.getElementById("nos_logements");
 
 btn_decouvrir.addEventListener("click", function () {
-  var elements_caches = document.querySelectorAll(".card__container_cacher");
+  var elements_caches = document.querySelectorAll(".card__cont_cacher");
   elements_caches.forEach(function (element) {
     element.style.display = "flex";
   });
@@ -592,7 +588,7 @@ btn_decouvrir.addEventListener("click", function () {
 });
 
 btn_decouvrir_moins.addEventListener("click", function () {
-  var elements_caches = document.querySelectorAll(".card__container_cacher");
+  var elements_caches = document.querySelectorAll(".card__cont_cacher");
   elements_caches.forEach(function (element) {
     element.style.display = "none";
   });
@@ -610,7 +606,7 @@ let nos_coups_coeur = document.getElementById("nos_coups_coeur");
 
 btn_decouvrir_coeur.addEventListener("click", function () {
   var elements_caches = document.querySelectorAll(
-    ".coups-coeur__container_cacher"
+    ".coups-coeur__cont_cacher"
   );
   elements_caches.forEach(function (element) {
     element.style.display = "flex";
@@ -621,7 +617,7 @@ btn_decouvrir_coeur.addEventListener("click", function () {
 
 btn_decouvrir_coeur_moins.addEventListener("click", function () {
   var elements_caches = document.querySelectorAll(
-    ".coups-coeur__container_cacher"
+    ".coups-coeur__cont_cacher"
   );
   elements_caches.forEach(function (element) {
     element.style.display = "none";
