@@ -35,7 +35,7 @@
             'prix_ht'=>$prix_ht,
             'prix_ttc'=>$prix_ttc,
             'date_annulation'=> NULL,
-            'annulation'=>false
+            'annulation'=> 0
         
         );
 
