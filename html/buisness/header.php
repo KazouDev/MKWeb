@@ -7,7 +7,7 @@
             <div class="header__nav">
                 <div class="header__logo">
                     <a href="index.php"><img src="../img/trisquel.webp" alt="Logo trisquel"></a>
-                    <a href="index.php" class="header__name" style="color: white;">ALHaiZ Breizh<span style="color: #FFD33C">Pro</span></a>
+                    <a href="index.php" class="header__name" style="color: white;">ALHaiZ Breizh<span style="color: #FFD33C; text-transform: capitalize;"> Pro</span></a>
                 </div>
             </div>
             <div class="header__form">
@@ -35,7 +35,7 @@
     <div class="header__nav">
         <div class="header__logo">
             <a href="index.php"><img src="../img/trisquel.webp" alt="Logo trisquel"></a>
-            <a href="index.php" class="header__name">ALHaiZ Breizh<span style="color:#FFD33C; text-transform: capitalize;">Pro</span></a>
+            <a href="index.php" class="header__name">ALHaiZ Breizh<span style="color:#FFD33C; text-transform: capitalize;"> Pro</span></a>
         </div>
     </div>
     <div class="header__form">

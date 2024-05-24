@@ -17,21 +17,19 @@ const id = paramsGlobalURL.get("id");
 
 const toggleModal = (modalId, displayStyle) => {
   document.getElementById(modalId).style.display = displayStyle;
-}
+};
 
-
-document.getElementById('submit_resa').addEventListener('click', () => {
-  toggleModal('myModal_cvg', 'flex');
+document.getElementById("submit_resa").addEventListener("click", () => {
+  toggleModal("myModal_cvg", "flex");
 });
 
-document.querySelector('.close').addEventListener('click', () => {
-  toggleModal('myModal_cvg', 'none');
-  toggleModal('date_resa', 'none');
-  
+document.querySelector(".close").addEventListener("click", () => {
+  toggleModal("myModal_cvg", "none");
+  toggleModal("date_resa", "none");
 });
 
-document.getElementById('declineButton').addEventListener('click', () => {
-  toggleModal('myModal_cvg', 'none');
+document.getElementById("declineButton").addEventListener("click", () => {
+  toggleModal("myModal_cvg", "none");
 });
 
 const verifyValue = (event) => {
@@ -41,7 +39,7 @@ const verifyValue = (event) => {
     event.preventDefault();
   }
 
-  if (event.target.value > 13 || event.target.value == 0 ) {
+  if (event.target.value > NB_VOY || event.target.value == 0) {
     event.target.value = "";
   }
   2;
@@ -72,12 +70,16 @@ const verifyAndFetch = () => {
         document.getElementById("prix__total").innerHTML = responseData.prix_ht;
         document.getElementsByName("prix_ht")[0].value = responseData.prix_ht;
 
-        document.getElementById("prix__TTC").innerHTML = responseData.base_tarif;
+        document.getElementById("prix__TTC").innerHTML =
+          responseData.base_tarif;
 
-        document.getElementById("nb_jours").innerHTML = responseData.nombre_jour;
-        document.getElementsByName("nb_jours")[0].value = responseData.nombre_jour;
+        document.getElementById("nb_jours").innerHTML =
+          responseData.nombre_jour;
+        document.getElementsByName("nb_jours")[0].value =
+          responseData.nombre_jour;
 
-        document.getElementsByName("nb_nuit")[0].value = responseData.nombre_nuit;
+        document.getElementsByName("nb_nuit")[0].value =
+          responseData.nombre_nuit;
 
         document.getElementById("frais__total").innerHTML = responseData.frais;
         document.getElementsByName("frais")[0].value = responseData.frais;
@@ -328,7 +330,7 @@ const formatDate = (date) => {
 
 const updateCalendar = () => {
   let today = new Date();
-  today.setHours(0, 0, 0, 0); 
+  today.setHours(0, 0, 0, 0);
 
   let delaiDate = new Date(today);
   delaiDate.setDate(today.getDate() + DELAI_RES);
@@ -337,13 +339,18 @@ const updateCalendar = () => {
   cells.forEach(function (cell) {
     var day = parseInt(cell.innerHTML);
     var cellDate = new Date(annee, mois, day);
-    cellDate.setHours(0, 0, 0, 0); 
+    cellDate.setHours(0, 0, 0, 0);
 
-    cell.classList.remove("selected", "selected-start", "selected-end", "passed");
-   
+    cell.classList.remove(
+      "selected",
+      "selected-start",
+      "selected-end",
+      "passed"
+    );
+
     if (cellDate < delaiDate) {
       cell.classList.add("passed");
-      return; 
+      return;
     }
     if (dateDebut && cellDate.toDateString() === dateDebut.toDateString()) {
       cell.classList.add("selected-start");

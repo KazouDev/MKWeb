@@ -29,13 +29,13 @@ $taxe = $nuit * TAUX * $nombre_personne;
 $prix_ttc = $prix_ht + $frais + $taxe;
 
 $response = array(
-    'base_tarif' => $base_tarif,
-    'prix_ht' => $prix_ht,
-    'prix_ttc'=>$prix_ttc,
-    'frais' =>$frais,
-    'taxe'=>$taxe,
+    'base_tarif' => round($base_tarif, 3),
+    'prix_ht' => round($prix_ht, 3),
+    'prix_ttc'=> round($prix_ttc, 3),
+    'frais' => round($frais, 3),
+    'taxe'=>round($taxe, 3),
     'nombre_jour' => $jour,
-    'nombre_nuit'=>$nuit,
+    'nombre_nuit'=> $nuit,
 );
 
 print json_encode($response);
