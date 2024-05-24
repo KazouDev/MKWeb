@@ -14,9 +14,9 @@ if (session_status() === PHP_SESSION_NONE) {
         "commune" => $_POST["commune"],
         "numero" => $_POST["num_voie"],
         "nom_voie" => $_POST["voie"],
-        "complement_1" => empty($_POST["comp1"]) ? "NULL" : $_POST["comp1"],
-        "complement_2" => empty($_POST["comp2"]) ? "NULL" : $_POST["comp2"],
-        "complement_3" => empty($_POST["comp3"]) ? "NULL" : $_POST["comp3"],
+        "complement_1" => empty($_POST["comp1"]) ? null : $_POST["comp1"],
+        "complement_2" => empty($_POST["comp2"]) ? null : $_POST["comp2"],
+        "complement_3" => empty($_POST["comp3"]) ? null : $_POST["comp3"],
         "latitude" => $_POST["latitude"],
         "longitude" => $_POST["longitude"]
     ];
