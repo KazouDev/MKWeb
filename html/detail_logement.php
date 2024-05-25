@@ -34,8 +34,8 @@
             'taxe_commission'=>$frais,
             'prix_ht'=>$prix_ht,
             'prix_ttc'=>$prix_ttc,
-            'date_annulation'=> 'NULL',
-            'annulation'=>'false'
+            'date_annulation'=> NULL,
+            'annulation'=> 0
         
         );
 
