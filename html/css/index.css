@@ -4,8 +4,7 @@
 .top {
   position: relative;
   height: 28rem;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)),
-    url("../img/backgr.webp");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)), url("../img/backgr.webp");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -236,14 +235,11 @@
   margin-right: 0.3rem;
 }
 
-.card__cont
-  .logement__wrapper_description
-  .logement__prix__alignement
-  h1.logement__prix {
+.card__cont .logement__wrapper_description .logement__prix__alignement h1.logement__prix {
   font-size: 1rem;
   font-weight: 600;
   color: #5669ff;
-}
+} 
 /* Styles de base pour l'autocomplétion */
 .autocomplete-suggestions {
   border: 1px solid #ccc;
@@ -271,4 +267,4 @@
 
 .top {
   margin-bottom: 5rem;
-} /*# sourceMappingURL=index.css.map */
+}/*# sourceMappingURL=index.css.map */

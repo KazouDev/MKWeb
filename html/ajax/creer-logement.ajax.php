@@ -2,23 +2,23 @@
 require_once '../../utils.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
-}
+}   
 
-  if (isset($_POST)){
+  if (isset($_SESSION["form_data"])){
 
       $adresse = [
-        "pays" => $_POST["pays"],
-        "region" => $_POST["region"],
-        "departement" => $_POST["departement"],
-        "code_postal" => $_POST["cp"],
-        "commune" => $_POST["commune"],
-        "numero" => $_POST["num_voie"],
-        "nom_voie" => $_POST["voie"],
-        "complement_1" => empty($_POST["comp1"]) ? null : $_POST["comp1"],
-        "complement_2" => empty($_POST["comp2"]) ? null : $_POST["comp2"],
-        "complement_3" => empty($_POST["comp3"]) ? null : $_POST["comp3"],
-        "latitude" => $_POST["latitude"],
-        "longitude" => $_POST["longitude"]
+        "pays" => $_SESSION["form_data"]["pays"],
+        "region" => $_SESSION["form_data"]["region"],
+        "departement" => $_SESSION["form_data"]["departement"],
+        "code_postal" => $_SESSION["form_data"]["cp"],
+        "commune" => $_SESSION["form_data"]["commune"],
+        "numero" => $_SESSION["form_data"]["num_voie"],
+        "nom_voie" => $_SESSION["form_data"]["voie"],
+        "complement_1" => empty($_SESSION["form_data"]["comp1"]) ? null : $_SESSION["form_data"]["comp1"],
+        "complement_2" => empty($_SESSION["form_data"]["comp2"]) ? null : $_SESSION["form_data"]["comp2"],
+        "complement_3" => empty($_SESSION["form_data"]["comp3"]) ? null : $_SESSION["form_data"]["comp3"],
+        "latitude" => $_SESSION["form_data"]["latitude"],
+        "longitude" => $_SESSION["form_data"]["longitude"]
     ];
 
     if (!buisness_connected()){
@@ -26,36 +26,36 @@ if (session_status() === PHP_SESSION_NONE) {
     }
 
     $logement = [
-        "titre" => $_POST["titre"],
+        "titre" => $_SESSION["form_data"]["titre"],
         "id_proprietaire" => buisness_connected_or_redirect(),
         "id_adresse" => insert("sae._adresse", array_keys($adresse), array_values($adresse)),
-        "id_categorie" => $_POST["categorie"],
-        "id_type" => $_POST["type"],
-        "surface" => $_POST["surface"],
-        "nb_chambre" => $_POST["chambre"],
-        "nb_lit_simple" => $_POST["simple"],
-        "nb_lit_double" => $_POST["double"],
-        "accroche" => $_POST["accroche"],
-        "description" => $_POST["description"],
-        "nb_max_personne" => $_POST["nbpersonne"],
-        "base_tarif" => $_POST["prixht"],
-        "periode_preavis" => $_POST["preavis"],
-        "en_ligne" => $_POST["statut"],
-        "duree_min_res" => $_POST["dureeloc"],
-        "delai_avant_res" => $_POST["delaires"],
+        "id_categorie" => $_SESSION["form_data"]["categorie"],
+        "id_type" => $_SESSION["form_data"]["type"],
+        "surface" => $_SESSION["form_data"]["surface"],
+        "nb_chambre" => $_SESSION["form_data"]["chambre"],
+        "nb_lit_simple" => $_SESSION["form_data"]["simple"],
+        "nb_lit_double" => $_SESSION["form_data"]["double"],
+        "accroche" => $_SESSION["form_data"]["accroche"],
+        "description" => $_SESSION["form_data"]["description"],
+        "nb_max_personne" => $_SESSION["form_data"]["nbpersonne"],
+        "base_tarif" => $_SESSION["form_data"]["prixht"],
+        "periode_preavis" => $_SESSION["form_data"]["preavis"],
+        "en_ligne" => $_SESSION["form_data"]["statut"],
+        "duree_min_res" => $_SESSION["form_data"]["dureeloc"],
+        "delai_avant_res" => $_SESSION["form_data"]["delaires"],
     ];
 
     $id_logement = insert("sae._logement", array_keys($logement), array_values($logement));
 
-    if (isset($_POST["amenagements"])){
-        foreach($_POST["amenagements"] as $amenagement){
+    if (isset($_SESSION["form_data"]["amenagements"])){
+        foreach($_SESSION["form_data"]["amenagements"] as $amenagement){
             insert("sae._amenagement_logement", ["id_logement", "id_amenagement"], [$id_logement, $amenagement], false);
         }
     }
 
     
-    if (isset($_POST["activite"])){
-        foreach($_POST["activite"] as $activite){
+    if (isset($_SESSION["form_data"]["activite"])){
+        foreach($_SESSION["form_data"]["activite"] as $activite){
             $activite = explode(";;" ,$activite);
             insert("sae._activite_logement", ["id_logement", "activite", "id_distance"], [$id_logement, $activite[0], $activite[1]], false);
         }
@@ -66,20 +66,26 @@ if (session_status() === PHP_SESSION_NONE) {
         mkdir($uploads_dir, 0777, true);
     }
 
-    if (isset($_FILES["images"])){
-        foreach ($_FILES["images"]["error"] as $key => $error) {
-            if ($error == UPLOAD_ERR_OK) {
-                $tmp_name = $_FILES["images"]["tmp_name"][$key];
-                $name = basename($_FILES["images"]["name"][$key]);
-                move_uploaded_file($tmp_name, "$uploads_dir/$name");
-                if ($key === 0){
-                    insert("sae._image", ["src", "principale", "alt", "id_logement"], ["/logement/$id_logement/$name", "true", "Image du Logement", "$id_logement"], false);
-                } else {
-                    insert("sae._image", ["src", "principale", "alt", "id_logement"], ["/logement/$id_logement/$name", "false", "Image du Logement", "$id_logement"], false);
-                }
+
+    if (isset($_SESSION["form_images"])){
+        foreach ($_SESSION["form_images"] as $key => $img) {
+            $exp = explode("/", $img);
+            $name = end($exp);
+            rename("../img/".$img, "../img/logement/$id_logement/$name");
+            if ($key === 0){
+                insert("sae._image", ["src", "principale", "alt", "id_logement"], ["/logement/$id_logement/$name", "true", "Image du Logement", "$id_logement"], false);
+            } else {
+                insert("sae._image", ["src", "principale", "alt", "id_logement"], ["/logement/$id_logement/$name", "false", "Image du Logement", "$id_logement"], false);
             }
         }
     }
+
+    unset($_SESSION['form_data']);
+    unset($_SESSION['form_images']);
+    $id_proprio = buisness_connected_or_redirect();
+    $dirname = "../img/tmp/$id_proprio";
+    array_map('unlink', glob("$dirname/*.*"));
+    rmdir($dirname);
     
     print json_encode(["err" => false, "id" => $id_logement]);
     die;
