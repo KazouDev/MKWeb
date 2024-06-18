@@ -2,6 +2,10 @@
 session_start();
 require_once "../utils.php";
 
+if (isset($_SESSION["client_id"])){
+    redirect();
+}
+
 $status = false;
 $passwordMismatch = false;
 $emailExists = false;
@@ -13,8 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "region" => $_POST["region"],
         "departement" => $_POST["departement"],
         "code_postal" => $_POST["code"],
-        "ville" => $_POST["commune"],
-        "rue" => $_POST["rue"],
+        "commune" => $_POST["commune"],
+        "nom_voie" => $_POST["rue"],
+        "numero" => $_POST["numero"],
         "complement_1" => !empty($_POST["complement1"]) ? $_POST["complement1"] : null,
         "complement_2" => !empty($_POST["complement2"]) ? $_POST["complement2"] : null,
         "complement_3" => !empty($_POST["complement3"]) ? $_POST["complement3"] : null
@@ -24,11 +29,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "nom" => $_POST["nom"],
         "prenom" => $_POST["prenom"],
         "pseudo" => $_POST["pseudo"],
-        "date_naissance" => $_POST["date_naissance"],
+        "date_naissance" => (new DateTime($_POST["date_naissance"]))->format("Y-m-d"),
+        "civilite" => $_POST["civilite"],
         "telephone" => $_POST["telephone"],
         "email" => $_POST["email"],
         "mot_de_passe" => $_POST["mot_de_passe"],
-        "photo_profile" => $_FILES["photo_profil"]["name"] ?? null
+        "photo_profile" => null
     ];
 
     $mot_de_passe2 = $_POST['mot_de_passe2'];
@@ -47,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $email = $util["email"];
-    $query = "SELECT COUNT(*) AS count FROM sae._utilisateur WHERE email = $email";
+    $query = "SELECT COUNT(*) AS count FROM sae._utilisateur WHERE email = '$email'";
     $result = request($query, true);
     if ($result && $result["count"] > 0) {
         $emailExists = true;
@@ -77,7 +83,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user_id = insert('sae._utilisateur', $user_columns, $user_values);
 
         if ($user_id) {
+            if (isset($_FILES["photo_profil"]["tmp_name"])){
+                $extension = pathinfo($_FILES["photo_profil"]['name'], PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["photo_profil"]["tmp_name"], "img/compte/profile_$user_id.$extension");
+                request("UPDATE sae._utilisateur SET photo_profile = '/compte/profile_$user_id.$extension' WHERE id = $user_id");
+            }
+
+            insert('sae._compte_client', ["id"], [$user_id]);
             echo "Utilisateur créé avec succès.";
+            $_SESSION["client_id"] = $user_id;
+            $_SESSION["photo_user"] = "/compte/profile_$user_id.$extension";
             redirect(); 
             exit;
         } else {
@@ -106,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="connect__from">
                         <h1>Créer un compte <img src="img/hello.webp" alt="Hello"></h1>
                         <p>Plongez dans l'authenticité bretonne en choisissant parmi une gamme de logements uniques.</p>
-                        <form id="createAccountForm" enctype="multipart/form-data">
+                        <form id="createAccountForm" enctype="multipart/form-data" method="post">
                             <div class="connect__input__ligne">  
                                 <div class="connect__input">
                                     <label for="connect__name">Nom</label>
@@ -135,8 +150,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="connect__input">
                                     <label for="connect__gender">Civilité</label>
                                     <select name="civilite" id="connect__gender">
-                                        <option value="Monsieur">Mr</option>
-                                        <option value="Madame">Mme</option>
+                                        <option value="Mr">Mr</option>
+                                        <option value="Mme">Mme</option>
                                     </select>
                                 </div>
                             </div>
@@ -153,6 +168,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <input type="text" name="departement" id="connect__departement" placeholder="Votre département">
                                     <input type="text" name="commune" id="connect__ville" placeholder="Votre ville">
                                     <input type="text" name="code" id="connect__code" placeholder="Code postal">
+                                    <input type="number" name="numero" id="connect__numero" placeholder="Votre numéro">
                                     <input type="text" name="rue" id="connect__rue" placeholder="Votre rue">
                                 </div>
                                 <div class="connect__input__ligne">  
