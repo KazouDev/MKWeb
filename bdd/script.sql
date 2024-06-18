@@ -177,6 +177,15 @@ CREATE TABLE _reservation_prix_par_nuit (
   PRIMARY KEY (id_reservation, prix)
 );
 
+CREATE TABLE _api_keys (
+  key VARCHAR(64) NOT NULL PRIMARY KEY,
+  proprietaire INT NOT NULL,
+  permission bit('4') DEFAULT B'0111'
+);
+
+ALTER TABLE _api_keys
+ ADD CONSTRAINT api_proprio FOREIGN KEY (proprietaire) REFERENCES _utilisateur (id);
+
 -- Foreign Key
 ALTER TABLE _utilisateur
   ADD CONSTRAINT utilisateur_adresseid FOREIGN KEY (id_adresse) REFERENCES _adresse (id);
