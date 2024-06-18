@@ -2,12 +2,20 @@
 .connect-container {
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 
 .connect__photo {
   width: 40%;
-  -o-object-fit: contain;
-     object-fit: contain;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: all 0.4s ease-in-out;
+  filter: grayscale(100%);
+  padding-top: 3rem;
+}
+
+.connect__photo:hover {
+  filter: none;
 }
 
 .connect__from {
@@ -53,7 +61,7 @@
   font-size: 1rem;
 }
 
-.connect__input input {
+.connect__input input, .connect__input select {
   width: 100%;
   padding: 1rem;
   border-radius: 0.75rem;
@@ -61,12 +69,18 @@
   background: #FFF;
 }
 
+.connect__input select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 .connect__input input::-moz-placeholder {
   color: rgba(34, 34, 34, 0.5);
   font-size: 1rem;
 }
 
-.connect__input input::placeholder {
+.connect__input input::placeholder, .connect__input select, .connect__from input[type=date], .connect__from input[type=file] {
   color: rgba(34, 34, 34, 0.5);
   font-size: 1rem;
 }
@@ -146,4 +160,80 @@
   .connect__from h1 {
     font-size: 1.5rem;
   }
+}
+.connect__input__ligne {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  row-gap: 0.5rem;
+  width: 100%;
+}
+
+.connect__input__add .connect__input__ligne input, .connect__input__ligne .connect__input {
+  width: 45%;
+}
+
+#connect__complement3 {
+  width: 100%;
+}
+
+.slider {
+  width: 40%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  margin-left: 5%;
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  height: 100%;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.slider img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: all 0.4s ease-in-out;
+  filter: grayscale(100%);
+}
+
+.slider img:hover {
+  filter: none;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(86, 105, 255, 0.3);
 }/*# sourceMappingURL=connect.css.map */
