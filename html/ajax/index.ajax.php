@@ -9,14 +9,6 @@ function genererListeDepartement() {
     return $reponse;
 }
 
-function genererListeCommune($departement) {
-    $query = "SELECT DISTINCT sae._adresse.commune 
-        FROM sae._logement INNER JOIN sae._adresse ON sae._logement.id_adresse = sae._adresse.id
-        WHERE sae._adresse.departement = '".$departement."';";
-    $reponse = request($query);
-    return $reponse;
-}
-
 function genererSelectProprietaire() {
     $query = "SELECT sae._utilisateur.id, sae._utilisateur.nom, sae._utilisateur.prenom 
         FROM sae._utilisateur INNER JOIN sae._compte_proprietaire ON sae._utilisateur.id = sae._compte_proprietaire.id;";
@@ -54,13 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($action == "genererListeDepartement") {
         $reponse = genererListeDepartement();
-        echo json_encode(['reponse' => $reponse]);
-    }
-
-    if ($action == "genererListeCommune") {
-        $departement = $_POST['departement'];
-
-        $reponse = genererListeCommune($departement);
         echo json_encode(['reponse' => $reponse]);
     }
     

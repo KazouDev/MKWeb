@@ -20,57 +20,7 @@ let filtre = {
 };
 
 let tri = {
-  note: function (listeLogement, tri) {
-    let liste = new Array();
-    let listeID = new Array();
-    let e;
-
-    function sortAsc(listeID) {
-      let e;
-      let minimun;
-      for (let i = 0; i < listeLogement.length; i++) {
-        e = listeLogement[i];
-        if (
-          !listeID.includes(e.id_logement) &&
-          (minimun === undefined || e.note < minimun.note)
-        ) {
-          minimun = e;
-        }
-      }
-      return minimun;
-    }
-
-    function sortDesc(listeID) {
-      let e;
-      let maximun;
-      for (let i = 0; i < listeLogement.length; i++) {
-        e = listeLogement[i];
-        if (
-          !listeID.includes(e.id_logement) &&
-          (maximun === undefined || e.note > maximun.note)
-        ) {
-          maximun = e;
-        }
-      }
-      return maximun;
-    }
-
-    if (tri === "t_asc") {
-      while (liste.length < listeLogement.length) {
-        e = sortAsc(listeID);
-        liste.push(e);
-        listeID.push(e.id_logement);
-      }
-    } else if (tri === "t_desc") {
-      while (liste.length < listeLogement.length) {
-        e = sortDesc(listeID);
-        liste.push(e);
-        listeID.push(e.id_logement);
-      }
-    }
-
-    return liste;
-  },
+  
 };
 
 let genererCard = {
@@ -80,9 +30,6 @@ let genererCard = {
     let divDescription;
     let divTitre;
     let titre;
-    let divNote;
-    let iNote;
-    let note;
     let localisation;
     let divPrix;
     let prix;
@@ -114,18 +61,6 @@ let genererCard = {
     titre.id = "logement__nom";
     titre.innerHTML = logement.titre;
 
-    divNote = document.createElement("div");
-    divNote.classList.add("logement__note");
-
-    iNote = document.createElement("i");
-    iNote.classList.add("fas");
-    iNote.classList.add("fa-star");
-    iNote.classList.add("fa-sm");
-
-    note = document.createElement("h1");
-    note.classList.add("logement__note");
-    note.innerHTML = logement.note;
-
     localisation = document.createElement("h1");
     localisation.classList.add("logement__localisation");
     localisation.innerHTML = logement.commune + ", " + logement.departement;
@@ -141,11 +76,7 @@ let genererCard = {
     prixpar.classList.add("logement__localisation");
     prixpar.innerHTML = "/jour";
 
-    divNote.appendChild(iNote);
-    divNote.appendChild(note);
-
     divTitre.appendChild(titre);
-    divTitre.appendChild(divNote);
 
     divPrix.appendChild(prix);
     divPrix.appendChild(prixpar);
@@ -153,86 +84,6 @@ let genererCard = {
     divDescription.appendChild(divTitre);
     divDescription.appendChild(localisation);
     divDescription.appendChild(divPrix);
-
-    divCard.appendChild(imgCouverture);
-    divCard.appendChild(divDescription);
-
-    aLien.appendChild(divCard);
-
-    return aLien;
-  },
-
-  card_coups: function (i, logement) {
-    let divCard;
-    let imgCouverture;
-    let divDescription;
-    let divTitre;
-    let titre;
-    let tarif;
-    let span;
-    let divNote;
-    let div;
-    let iNote;
-    let note;
-    let localisation;
-    let aLien;
-    
-    aLien=document.createElement("a");
-    aLien.href="./detail_logement.php?id="+logement.id_logement;
-    if (i >= 4) {
-      aLien.classList.add("coups-coeur__cont_cacher");
-    } 
-
-    divCard = document.createElement("div");
-
-    divCard.classList.add("coups-coeur__cont");
-
-    imgCouverture = document.createElement("img");
-    imgCouverture.setAttribute("src", "./img" + logement.image_src);
-    imgCouverture.setAttribute("alt", logement.image_alt);
-
-    divDescription = document.createElement("div");
-
-    divTitre = document.createElement("div");
-    divTitre.classList.add("coups-coeur__titre");
-
-    titre = document.createElement("h1");
-    titre.innerHTML = logement.titre;
-
-    tarif = document.createElement("h2");
-    span = document.createElement("span");
-    span.innerHTML = logement.tarif + " €";
-
-    localisation = document.createElement("h1");
-    localisation.innerHTML = logement.commune + ", " + logement.departement;
-
-    divNote = document.createElement("div");
-    divNote.classList.add("coups-coeur__note");
-
-    div = document.createElement("div");
-    for (let i = 0; i < 5; i++) {
-      iNote = document.createElement("i");
-      iNote.classList.add("fas");
-      iNote.classList.add("fa-star");
-      iNote.classList.add("fa-sm");
-      div.appendChild(iNote);
-    }
-
-    note = document.createElement("h1");
-    note.innerHTML = logement.note;
-
-    tarif.appendChild(span);
-    tarif.append("/jour");
-
-    divTitre.appendChild(titre);
-    divTitre.appendChild(tarif);
-
-    divNote.appendChild(div);
-    divNote.appendChild(note);
-
-    divDescription.appendChild(divTitre);
-    divDescription.appendChild(localisation);
-    divDescription.appendChild(divNote);
 
     divCard.appendChild(imgCouverture);
     divCard.appendChild(divDescription);
@@ -431,32 +282,19 @@ async function php_genererListeLogement() {
   let f_nb_personnes = document.getElementById("nb_personnes").value;
   let f_tarif_min = document.getElementById("tarif_min").value;
   let f_tarif_max = document.getElementById("tarif_max").value;
-  let f_codePostaux = document.getElementById(
-    "filtre-commune-codePostal"
-  ).value;
+  let f_codePostaux = document.getElementById("filtre-commune-codePostal").value;
   let f_proprietaire = document.getElementById("filtre-propri-id").value;
 
   let where = "";
-  if (f_nb_personnes != "") {
-    where += " AND l.nb_max_personne >= " + f_nb_personnes;
-  }
-  if (f_tarif_min != "") {
-    where += " AND l.base_tarif >= " + f_tarif_min;
-  }
-  if (f_tarif_max != "") {
-    where += " AND l.base_tarif <= " + f_tarif_max;
-  }
-  if (f_proprietaire != undefined) {
-    where += " AND l.id_proprietaire = " + f_proprietaire;
-  }
-  if (f_codePostaux != undefined) {
+  if (f_nb_personnes != "") { where += " AND l.nb_max_personne >= " + f_nb_personnes; }
+  if (f_tarif_min != "") { where += " AND l.base_tarif >= " + f_tarif_min; }
+  if (f_tarif_max != "") { where += " AND l.base_tarif <= " + f_tarif_max; }
+  if (f_proprietaire != undefined) { where += " AND l.id_proprietaire = " + f_proprietaire; }
+  if (f_codePostaux != undefined) { 
     f_codePostaux = f_codePostaux.split(", ");
     for (let i = 0; i < f_codePostaux.length; i++) {
-      if (i == 0) {
-        where += " AND (a.code_postal = '" + f_codePostaux[i] + "'";
-      } else {
-        where += " OR a.code_postal = '" + f_codePostaux[i] + "'";
-      }
+      if (i == 0) { where += " AND (a.code_postal = '" + f_codePostaux[i] + "'"; } 
+      else { where += " OR a.code_postal = '" + f_codePostaux[i] + "'"; }
     }
     where += ")";
   }
@@ -484,10 +322,6 @@ async function php_genererListeLogement() {
 
       if (listeLogements.length > 0) {
         /* construction categorie "Nos logements" */
-        if (t_note != "t_init") {
-          listeLogements = tri.note(listeLogements, t_note);
-        }
-
         for (let i = 0; i < listeLogements.length; i++) {
           logement = listeLogements[i];
           divLogements.appendChild(genererCard.card_logements(i, logement));
@@ -505,56 +339,14 @@ async function php_genererListeLogement() {
   }
 }
 
-function php_genererListeCoupsCoeur() {
-  let where = "";
-
-  $.ajax({
-    url: "ajax/index.ajax.php",
-    type: "POST",
-    data: { action: "genererListeLogement", where: where },
-    dataType: "json",
-    success: function (reponse) {
-      if (reponse.reponse) {
-        let listeLogements = reponse.reponse;
-        let logement;
-
-        let divCoups = document.getElementById("les__coups");
-        divCoups.innerHTML = "";
-
-        if (listeLogements.length > 0) {
-          /* construction categorie "Nos coups de coeur" */
-          listeLogements = tri.note(listeLogements, "t_desc");
-
-          let nb_card = 0;
-          for (let i = 0; i < listeLogements.length; i++) {
-            logement = listeLogements[i];
-
-            if (logement.note >= 3.5) {
-              divCoups.appendChild(genererCard.card_coups(nb_card, logement));
-              nb_card++;
-            }
-          }
-        } else {
-          let divVide = document.createElement("div");
-          let pVide = document.createElement("p");
-          pVide.innerHTML =
-            "Aucun logement n'est sélectionné dans la catégorie coups de cœur.";
-          divVide.appendChild(pVide);
-          divCoups.appendChild(divVide);
-        }
-      }
-    },
-  });
-}
 
 $(document).ready(function () {
   /* Appel de les fonctions au chargement de la page */
   php_genererAutocompletCommune();
   php_genererAutocompletProprietaire();
   php_genererListeLogement();
-  php_genererListeCoupsCoeur();
 
-  /* Appel des fonctions php_genererListeLogement et php_genererListeCoupsCoeur au clic sur le bouton Recherche */
+  /* Appel des fonctions php_genererListeLogement au clic sur le bouton Recherche */
   $("#executeRecherche").click(function () {
     php_genererListeLogement();
   });
@@ -597,36 +389,7 @@ btn_decouvrir_moins.addEventListener("click", function () {
   nos_logements.scrollIntoView({ behavior: "smooth" });
 });
 
-/* Gestion buton découvrir plus / Voir moins des coups de coeurs */
-let btn_decouvrir_coeur = document.getElementById("decouvrir_plus_coup_coeur");
-let btn_decouvrir_coeur_moins = document.getElementById(
-  "decouvrir_plus_coup_coeur_moins"
-);
-let nos_coups_coeur = document.getElementById("nos_coups_coeur");
-
-btn_decouvrir_coeur.addEventListener("click", function () {
-  var elements_caches = document.querySelectorAll(
-    ".coups-coeur__cont_cacher"
-  );
-  elements_caches.forEach(function (element) {
-    element.style.display = "flex";
-  });
-  btn_decouvrir_coeur.style.display = "none";
-  btn_decouvrir_coeur_moins.style.display = "block";
-});
-
-btn_decouvrir_coeur_moins.addEventListener("click", function () {
-  var elements_caches = document.querySelectorAll(
-    ".coups-coeur__cont_cacher"
-  );
-  elements_caches.forEach(function (element) {
-    element.style.display = "none";
-  });
-  btn_decouvrir_coeur.style.display = "block";
-  btn_decouvrir_coeur_moins.style.display = "none";
-  nos_coups_coeur.scrollIntoView({ behavior: "smooth" });
-});
-
+/* Gestion du calendrier */
 $(function () {
   $('input[name="daterange"]').daterangepicker(
     {
@@ -638,20 +401,10 @@ $(function () {
         applyLabel: "Confirmer",
         cancelLabel: "Annuler",
         daysOfWeek: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-        monthNames: [
-          "Janvier",
-          "Février",
-          "Mars",
-          "Avril",
-          "Mai",
-          "Juin",
-          "Juillet",
-          "Août",
-          "Septembre",
-          "Octobre",
-          "Novembre",
-          "Décembre",
-        ],
+        monthNames: ["Janvier", "Février",  "Mars",
+                     "Avril",   "Mai",      "Juin",
+                     "Juillet", "Août",     "Septembre",
+                     "Octobre", "Novembre", "Décembre",],
         firstDay: 1,
       },
       applyButtonClasses: "custom-apply-button",

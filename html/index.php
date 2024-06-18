@@ -9,29 +9,13 @@ session_start();
     <link rel="stylesheet" href="css/header.css" />
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/index.css" />
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
-    ></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
-    />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <title>ALHaiZ Breizh</title>
-    <script
-      src="https://kit.fontawesome.com/7f17ac2dfc.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <div class="wrapper">
@@ -49,7 +33,7 @@ session_start();
                   <input
                     type="text"
                     id="communeInput"
-                    placeholder="Commune ?"
+                    placeholder="Où ?"
                   />
                   <div
                     id="autocomplete-list-commune"
@@ -138,20 +122,6 @@ session_start();
             <button
               class="logement__plus"
               id="decouvrir_moins"
-              style="display: none"
-            >
-              Voir moins
-            </button>
-          </div>
-          <div class="coup_de_coeurs">
-            <h3 class="list__titre" id="nos_coups_coeur">Nos coups de cœur</h3>
-            <div class="les__coups" id="les__coups"></div>
-            <button class="logement__plus" id="decouvrir_plus_coup_coeur">
-              Découvrir plus
-            </button>
-            <button
-              class="logement__plus"
-              id="decouvrir_plus_coup_coeur_moins"
               style="display: none"
             >
               Voir moins
