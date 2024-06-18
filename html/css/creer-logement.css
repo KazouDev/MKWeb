@@ -300,4 +300,15 @@ select {
   left: 0px;
   width: 100vw;
   height: 100vh;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+#form__preview {
+  background-color: #dd69fa;
 }/*# sourceMappingURL=creer-logement.css.map */

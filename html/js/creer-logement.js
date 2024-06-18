@@ -65,34 +65,45 @@ btnAddAmenagement.addEventListener("click", () => {
 imageInput.addEventListener("change", (e) => {
   const files = e.target.files;
   const preview = document.getElementById("image-preview");
+  var imgPreviews = Array.from(document.querySelectorAll(".img_preview"));
+  imgPreviews = imgPreviews.map((m) => {
+    let arr = m.src.split("/");
+    return arr[arr.length - 1];
+  });
 
-  if (imageList.length == 0) previewDiv.innerHTML = "";
+  console.log(imgPreviews);
+
+  if (imgPreviews.length == 0) previewDiv.innerHTML = "";
 
   Array.from(files).forEach((file) => {
-    imageList.push(file);
+    if (!imgPreviews.includes(file.name)) {
+      imageList.push(file);
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const btnDel = document.createElement("button");
-      const div = document.createElement("div");
-      const img = document.createElement("img");
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const btnDel = document.createElement("button");
+        const div = document.createElement("div");
+        const img = document.createElement("img");
 
-      btnDel.type = "button";
-      btnDel.classList.add("btn__remove");
-      btnDel.textContent = "X";
+        img.classList.add("img_preview");
 
-      btnDel.addEventListener("click", () => {
-        div.remove();
-        imageList = imageList.filter((f) => f.name != file.name);
-        console.log(imageList);
-      });
+        btnDel.type = "button";
+        btnDel.classList.add("btn__remove");
+        btnDel.textContent = "X";
 
-      img.src = e.target.result;
-      div.append(img);
-      div.append(btnDel);
-      preview.appendChild(div);
-    };
-    reader.readAsDataURL(file);
+        btnDel.addEventListener("click", () => {
+          div.remove();
+          imageList = imageList.filter((f) => f.name != file.name);
+          console.log(imageList);
+        });
+
+        img.src = e.target.result;
+        div.append(img);
+        div.append(btnDel);
+        preview.appendChild(div);
+      };
+      reader.readAsDataURL(file);
+    }
   });
 
   e.target.value = "";
@@ -112,18 +123,21 @@ var isSubmiting = false;
 const submitButton = document.getElementById("form__submit");
 const loadingModal = document.querySelector(".loading__modal");
 
+const previewButton = document.getElementById("form__preview");
+
 const updateSubmitingButton = () => {
   loadingModal.style.display = isSubmiting ? "flex" : "none";
 };
 
 submitButton.addEventListener("click", async (e) => {
   e.preventDefault();
+  var imgPreviews = Array.from(document.querySelectorAll(".img_preview"));
   if (!logementForm.reportValidity() || isSubmiting) return;
 
   isSubmiting = true;
   updateSubmitingButton();
 
-  if (imageList.length > 0) {
+  if (imgPreviews.length > 0) {
     const data = new DataTransfer();
 
     imageList.forEach((img) => {
@@ -178,18 +192,112 @@ submitButton.addEventListener("click", async (e) => {
 
   const formData = new FormData(logementForm);
 
-  console.log(formData);
-  fetch("../ajax/creer-logement.ajax.php", {
+  await fetch("../ajax/store-form-data.ajax.php", {
     method: "POST",
     body: formData,
+  });
+
+  fetch("../ajax/creer-logement.ajax.php", {
+    method: "POST",
   })
-    .then((response) => response.json())
+    .then((response) => response.text())
     .then((data) => {
+      console.log(data);
       if (data.err == false) {
-        window.location.href = "index.php?id=" + data.id;
+        isSubmiting = false;
+        updateSubmitingButton();
+        //window.location.href = "index.php?id=" + data.id;
       } else {
         isSubmiting = false;
         updateSubmitingButton();
       }
     });
+});
+
+previewButton.addEventListener("click", async (e) => {
+  e.preventDefault();
+  var imgPreviews = Array.from(document.querySelectorAll(".img_preview"));
+  if (!logementForm.reportValidity() || isSubmiting) return;
+
+  isSubmiting = true;
+  updateSubmitingButton();
+
+  if (imgPreviews.length > 0) {
+    const data = new DataTransfer();
+
+    imageList.forEach((img) => {
+      data.items.add(img);
+    });
+
+    imageInput.files = data.files;
+
+    imageInput.name = "images[]";
+  } else {
+    imageInput.focus();
+    isSubmiting = false;
+    updateSubmitingButton();
+    return;
+  }
+
+  let adresse =
+    numVoieInput.value +
+    " " +
+    voieInput.value +
+    " " +
+    villeInput.value +
+    " " +
+    departementInput.value +
+    " " +
+    regionInput.value +
+    " " +
+    paysInput.value;
+
+  const url =
+    "https://api.opencagedata.com/geocode/v1/json?q=" +
+    encodeURIComponent(adresse) +
+    "&key=90a3f846aa9e490d927a787facf78c7e";
+
+  const response = await fetch(url);
+  const data = await response.json();
+
+  if (data.results.length > 0) {
+    latitudeInput.value = data.results[0].geometry.lat;
+    longitudeInput.value = data.results[0].geometry.lng;
+  } else {
+    console.error("Adresse invalide.");
+    document.getElementById("voie").focus();
+    isSubmiting = false;
+    updateSubmitingButton();
+    return;
+  }
+
+  paysInput.disabled = false;
+  regionInput.disabled = false;
+
+  const formData = new FormData(logementForm);
+
+  await fetch("../ajax/store-form-data.ajax.php", {
+    method: "POST",
+    body: formData,
+  });
+
+  isSubmiting = false;
+  updateSubmitingButton();
+  logementForm.submit();
+});
+
+const resetButton = document.getElementById("reset");
+resetButton.addEventListener("click", async () => {
+  await fetch("../ajax/reset-form-data.ajax.php", {
+    method: "POST",
+  });
+  location.reload();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("#image-preview .btn__remove").forEach((b) => {
+    b.addEventListener("click", () => {
+      b.parentElement.remove();
+    });
+  });
 });
