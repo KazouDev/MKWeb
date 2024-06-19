@@ -1052,12 +1052,14 @@ $lineHeight: 1.5;
   background-color: $selectedBlanc ;
   cursor: not-allowed;
   pointer-events: none;
+ 
 
 }
 
 .reserved {
   background-color: #ffc0cb;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 .style_calendar {

@@ -2,6 +2,13 @@ var date = new Date();
 var mois = date.getMonth();
 var annee = date.getFullYear();
 
+const ERROR_DELAI_MAX =
+  "Une réservation doit être supérieur à " +
+  JOUR_MIN +
+  " jour" +
+  (JOUR_MIN < 2 ? "" : "s");
+const ERROR_DATE_RESA = "Vous ne pouvez pas choir des dates déjà réservée";
+
 var dateDebut = null;
 var dateFin = null;
 var inputDateDebut = document.getElementsByName("dateDebut")[0];
@@ -39,10 +46,11 @@ const verifyValue = (event) => {
     event.preventDefault();
   }
 
-  if (event.target.value > NB_VOY || event.target.value == 0) {
+  if (event.target.value > NB_VOY) {
+    event.target.value = NB_VOY;
+  } else if (event.target.value == 0) {
     event.target.value = "";
   }
-  2;
 };
 
 inputNombrePersonne.addEventListener("keydown", verifyValue);
@@ -61,6 +69,7 @@ const verifyAndFetch = () => {
     params.append("id", id);
 
     xhr.open("GET", "../ajax/afficher-prix.ajax.php?" + params, true);
+    //xhr.open("GET", "http://localhost/MKWEB/MKWeb/html/ajax/afficher-prix.ajax.php?" + params, true);
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
@@ -74,9 +83,9 @@ const verifyAndFetch = () => {
           responseData.base_tarif;
 
         document.getElementById("nb_jours").innerHTML =
-          responseData.nombre_jour;
+          responseData.nombre_nuit;
         document.getElementsByName("nb_jours")[0].value =
-          responseData.nombre_jour;
+          responseData.nombre_nuit;
 
         document.getElementsByName("nb_nuit")[0].value =
           responseData.nombre_nuit;
@@ -188,9 +197,10 @@ const afficherCalendrier = (mois, annee) => {
             Math.round((dateFin - dateDebut) / (1000 * 60 * 60 * 24)) + 1;
           if (diffDays <= JOUR_MIN) {
             displayError.style.display = "block";
+            displayError.innerHTML = ERROR_DELAI_MAX;
             setTimeout(() => {
               displayError.style.display = "none";
-            }, 1000);
+            }, 3000);
 
             dateDebut = "";
             dateFin = "";
@@ -202,6 +212,11 @@ const afficherCalendrier = (mois, annee) => {
           // Vérifier si des dates réservées se situent entre dateDebut et dateFin
           var datesEntreDebutFin = getDatesEntreDebutFin(dateDebut, dateFin);
           if (datesEntreDebutFin.some((date) => estReservee(date))) {
+            displayError.innerHTML = ERROR_DATE_RESA;
+            displayError.style.display = "block";
+            setTimeout(() => {
+              displayError.style.display = "none";
+            }, 3000);
             dateFin = null;
             dateDebut = null;
             inputDateFin.value = "";
@@ -276,9 +291,10 @@ const afficherCalendrier = (mois, annee) => {
               Math.round((dateFin - dateDebut) / (1000 * 60 * 60 * 24)) + 1;
             if (diffDays <= JOUR_MIN) {
               displayError.style.display = "block";
+              displayError.innerHTML = ERROR_DELAI_MAX;
               setTimeout(() => {
                 displayError.style.display = "none";
-              }, 1000);
+              }, 3000);
               dateDebut = "";
               dateFin = "";
               inputDateFin.value = "";
@@ -288,6 +304,13 @@ const afficherCalendrier = (mois, annee) => {
             // Vérifier si des dates réservées se situent entre dateDebut et dateFin
             var datesEntreDebutFin = getDatesEntreDebutFin(dateDebut, dateFin);
             if (datesEntreDebutFin.some((date) => estReservee(date))) {
+              displayError.style.display = "block";
+              displayError.innerHTML = ERROR_DATE_RESA;
+
+              setTimeout(() => {
+                displayError.style.display = "none";
+              }, 3000);
+
               dateFin = null;
               dateDebut = null;
               inputDateFin.value = "";
@@ -408,7 +431,7 @@ const params = new URLSearchParams();
 params.append("id", id);
 
 xhr.open("GET", "../ajax/calendrier.ajax.php?" + params, true);
-
+//xhr.open("GET", "http://localhost/MKWEB/MKWeb/html/ajax/calendrier.ajax.php?" + params, true);
 xhr.onreadystatechange = function () {
   if (xhr.readyState == 4 && xhr.status == 200) {
     var dateRanges = JSON.parse(xhr.responseText);
