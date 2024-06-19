@@ -69,6 +69,9 @@
                 <li class="menu__item">
                     <a href="index.php" class="menu__link">Contact</a>
                 </li>
+                <li class="menu__item">
+                            <a href="buisness/index.php" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
+                 </li>
                 <li class="menu__item hide">
                     <a href="consulter_mon_compte.php" class="menu__link">Mon compte</a>
                 </li>
