@@ -76,7 +76,7 @@
                         <p class="p_ligne">Ou</p>
                         <div class="connect__google"><img src="../img/google.webp" alt="Google"><a href="">Continuer avec Google</a></div>
                         <div class="connect__face"><img src="../img/facebook.webp" alt="Facebook"><a href="">Continuer avec Facebook</a></div>
-                        <p style="align-self: center; text-align:center;">Vous n'avez pas de compte ?  <a href="" style="color: #5669FF;">S'inscrire</a></p>
+                        <p style="align-self: center; text-align:center;">Vous n'avez pas de compte ?  <a href="creer_compte.php" style="color: #5669FF;">S'inscrire</a></p>
                     </div>
                     <div class="slider">
                         <div class="slides">

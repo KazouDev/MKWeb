@@ -1,18 +1,19 @@
 <?php
 session_start();
-require_once "../utils.php";
+require_once "../../utils.php";
 
-// if (isset($_SESSION["client_id"])) {
-//     redirect();
-// }
-
+// Si déjà connecté on renvoie sur l'acceuil.
+if (buisness_connected()) {
+    redirect_business();
+    exit;
+}
 $status = false;
 $passwordMismatch = false;
 $emailExists = false;
 $mailInvalid = false;
 $passwordLengthInvalid = false;
 $allow = true;
-$dateMin = date('Y') - 16 . '-01-01';
+$dateMin = date('Y') - 18 . '-01-01';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $adresse = [
@@ -39,6 +40,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "mot_de_passe" => $_POST["mot_de_passe"],
         "photo_profile" => "img/anonymus.webp"
     ];
+    $proprio =[
+        "bic" => $_POST["bic"],
+        "iban" => $_POST["iban"],
+        "titulaire" => $_POST["titulaire"]
+    ];
+
 
     $mot_de_passe2 = $_POST['mot_de_passe2'];
 
@@ -48,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         empty($util["telephone"]) || empty($util["email"]) || empty($util["mot_de_passe"]) ||
         empty($mot_de_passe2) || empty($adresse["pays"]) || empty($adresse["region"]) ||
         empty($adresse["departement"]) || empty($adresse["ville"]) || empty($adresse["code_postal"]) ||
-        empty($adresse["rue"])
+        empty($adresse["rue"]) || empty($proprio["bic"])
     ) {
         $status = true;
     }
@@ -137,8 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="main__container">
                 <div class="connect-container">
                     <div class="connect__from">
-                        <h1>Créer un compte <img src="img/hello.webp" alt="Hello"></h1>
-                        <p>Plongez dans l'authenticité bretonne en choisissant parmi une gamme de logements uniques.</p>
+                        <h1>Créer un compte propriétaire</h1>
                         <form id="createAccountForm" enctype="multipart/form-data" method="post">
                             <div class="connect__input__ligne">
                                 <div class="connect__input">
@@ -165,8 +171,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="connect__input__ligne">
                                 <div class="connect__input">
                                     <label for="connect__phone">Téléphone portable</label>
-                                    <input type="tel" name="telephone" id="connect__phone" placeholder="Votre numéro"
-                                        required>
+                                    <input type="tel" name="telephone" id="connect__phone" placeholder="Votre numéro" required>
                                 </div>
                                 <div class="connect__input">
                                     <label for="connect__gender">Civilité</label>
@@ -186,11 +191,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="connect__input__ligne">
                                     <input type="text" name="pays" id="connect__pays" placeholder="Pays" required>
                                     <input type="text" name="region" id="connect__region" placeholder="Région" required>
-                                    <input type="text" name="departement" id="connect__departement" placeholder="Département" required>
+                                    <input type="text" name="departement" id="connect__departement"
+                                        placeholder="Département" required>
                                     <input type="text" name="commune" id="connect__ville" placeholder="Ville" required>
-                                    <input type="text" name="code" id="connect__code" placeholder="Code postal" required>
-                                    <input type="number" name="numero" id="connect__numero" placeholder="Numéro de rue" required>
-                                    <input type="text" name="rue" id="connect__rue" placeholder="Nom de la rue" required>
+                                    <input type="text" name="code" id="connect__code" placeholder="Code postal"
+                                        required>
+                                    <input type="number" name="numero" id="connect__numero" placeholder="Numéro de rue"
+                                        required>
+                                    <input type="text" name="rue" id="connect__rue" placeholder="Nom de la rue"
+                                        required>
                                 </div>
                                 <div class="connect__input__ligne">
                                     <input type="text" name="complement1" id="connect__complement1"
@@ -202,10 +211,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
                             <div class="connect__input">
-                                <label for="connect__email">Adresse e-mail</label>
+                                <label for="connect__identit">Vérification de l'identité</label>
+                                <p class="mdp_oublie"> Enregistrez les détails de votre passeport pour vérifier votre
+                                    identité. Choisissez des photos recto-verso.</p>
+                            </div>
+                            <div class="connect__input__ligne">
+                                <div class="connect__input">
+                                    <label for="connect__recto">Photo du recto</label>
+                                    <input type="file" name="photo_recto" id="connect__recto" required>
+                                </div>
+                                <div class="connect__input">
+                                    <label for="connect__verso">Photo du verso</label>
+                                    <input type="file" name="photo_verso" id="connect__verso" required>
+                                </div>
+                            </div>
+                            <div class="connect__input">
+                                <label for="connect__iban">Informations de versement</label>
+                                <p class="mdp_oublie" style="align-self:flex-start;">Ajoutez votre RIB</p>
+                            </div>
+                            <div class="connect__input">
+                                    <input type="text" name="iban" id="connect__iban" placeholder="IBAN" required>
+                            </div>
+                            <div class="connect__input">
+                                    <input type="text" name="bic" id="connect_bic" placeholder="BIC" required>
+                                </div>
+                            <div class="connect__input">
+                                    <input type="text" name="titulaire" id="connect_titulaire" placeholder="Titulaire" required>    
+                            </div>
+                            <div class="connect__input">
+                            <label for="connect__email">Adresse e-mail</label>
                                 <input type="email" name="email" id="connect__email"
                                     placeholder="Ex : exemple@domaine.com" required>
                             </div>
+
                             <div class="connect__input">
                                 <label for="connect__pass">Mot de passe</label>
                                 <input type="password" name="mot_de_passe" id="connect__pass"
