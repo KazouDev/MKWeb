@@ -277,8 +277,6 @@ function genererPeriodePourListeLogement(listeLogement) {
 }
 
 async function php_genererListeLogement() {
-  let t_note = document.getElementById("tri-note-value").textContent;
-
   let f_nb_personnes = document.getElementById("nb_personnes").value;
   let f_tarif_min = document.getElementById("tarif_min").value;
   let f_tarif_max = document.getElementById("tarif_max").value;
@@ -350,19 +348,6 @@ $(document).ready(function () {
   $("#executeRecherche").click(function () {
     php_genererListeLogement();
   });
-
-  /* Appel de la fonction php_genererListeLogement au clic sur la tri */
-  document.getElementById("tri_note").onclick = function () {
-    let mode = document.getElementById("tri-note-value");
-    if (mode.textContent === "t_init") {
-      mode.textContent = "t_desc";
-    } else if (mode.textContent === "t_desc") {
-      mode.textContent = "t_asc";
-    } else if (mode.textContent === "t_asc") {
-      mode.textContent = "t_init";
-    }
-    php_genererListeLogement();
-  };
 });
 
 /* Gestion buton découvrir plus / Voir moins des logements */
