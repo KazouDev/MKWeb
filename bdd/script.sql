@@ -183,8 +183,32 @@ CREATE TABLE _api_keys (
   permission bit('4') DEFAULT B'0111'
 );
 
+CREATE TABLE _ical_token (
+  token VARCHAR(64) NOT NULL PRIMARY KEY,
+  proprietaire INT NOT NULL,
+  date_debut DATE NOT NULL,
+  date_fin DATE NOT NULL
+);
+
+CREATE TABLE _ical_token_logements (
+  token VARCHAR(64) NOT NULL,
+  logement INT NOT NULL
+);
+
+ALTER TABLE _ical_token_logements
+  ADD CONSTRAINT _ical_token_primary_key PRIMARY KEY (token, logement);
+
+ALTER TABLE _ical_token
+  ADD CONSTRAINT _ical_proprio FOREIGN KEY (proprietaire) REFERENCES _compte_proprietaire (id);
+
+ALTER TABLE _ical_token_logements
+  ADD CONSTRAINT _ical_token_token FOREIGN KEY (token) REFERENCES _ical_token (token);
+
+ALTER TABLE _ical_token_logements
+  ADD CONSTRAINT _ical_logements FOREIGN KEY (logement) REFERENCES _logement (id);
+
 ALTER TABLE _api_keys
- ADD CONSTRAINT api_proprio FOREIGN KEY (proprietaire) REFERENCES _utilisateur (id);
+ ADD CONSTRAINT api_proprio FOREIGN KEY (proprietaire) REFERENCES _compte_proprietaire (id);
 
 -- Foreign Key
 ALTER TABLE _utilisateur
@@ -858,3 +882,10 @@ JOIN
     generate_series(0, CAST(EXTRACT(DAY FROM AGE(_reservation.date_fin, _reservation.date_debut)) AS INTEGER)) AS n
 ON
     (_reservation.date_debut + n * INTERVAL '1 DAY') <= _reservation.date_fin;
+
+INSERT INTO _api_keys(key, proprietaire) VALUES ('api_key_test', 1);
+
+
+INSERT INTO _ical_token(token, proprietaire, date_debut, date_fin) VALUES ('token_test', 1, '2024-07-10', '2024-07-30');
+
+INSERT INTO _ical_token_logements VALUES ('token_test', 1);

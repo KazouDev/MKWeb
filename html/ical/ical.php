@@ -1,43 +1,60 @@
 <?php
 require_once "../../utils.php";
-$token = $_GET['token'];
-$scope = request("SELECT date_debut, date_fin FROM sae._ical_token WHERE token='$token'",1);
+if (isset($_GET["token"])) {
 
-if(!empty($events)){
-    $logements = request("SELECT logement FROM sae._ical_token_logements WHERE token='$token'");
+    $token = $_GET['token'];
+    $scope = request("SELECT date_debut, date_fin FROM sae._ical_token WHERE token='$token'",1);
     
-    foreach($logements as $id_logement){
-        
-        $sql = 'SELECT statut FROM sae._calendrier c WHERE c.date >= ' . $scope['date_debut'];
-        $sql .= ' AND c.date <= ' . $scope['date_fin'];
-        $sql .= ' WHERE id_logement = ' . $id_logement;
-        $status = request($sql);
-        foreach($status as $s){
-            print $s;
+    if(!empty($scope)){
+        header('Content-Type: text/calendar; charset=utf-8');
+        header('Content-Disposition: attachment; filename="cal.ics"');
+    
+        print "BEGIN:VCALENDAR\n";
+        print "VERSION:2.0\n";
+        print "PRODID:-//AlhaizBreizh//Icalator//EN\n";
+        $logements = request("SELECT titre, l.id FROM sae._ical_token_logements t INNER JOIN sae._logement l ON t.logement = l.id WHERE token='$token'");
+        foreach($logements as $logement){
+            $id_logement = $logement["id"];
+            $titre = $logement["titre"];
+            $sql = "SELECT date, statut FROM sae._calendrier c WHERE c.date >= '" . $scope['date_debut'];
+            $sql .= "' AND c.date <= '" . $scope['date_fin'];
+            $sql .= "' AND id_logement = $id_logement";
+            $status = request($sql);
+
+            $sql = "SELECT pays, region, departement, commune, numero, nom_voie FROM sae._adresse a";
+            $sql .= " INNER JOIN sae._logement l ON a.id = l.id_adresse";
+            $sql .= " WHERE l.id = $id_logement";
+            $adresse = join(" ", request($sql, 1));
+
+            foreach($status as $s){
+                $nom;
+                $status_event = "CONFIRMED";
+                switch ($s["statut"]){
+                    case 'R':
+                        $nom = "Réservation";
+                        break;
+                    case 'D':
+                        $nom = "Devis en cours";
+                        $status_event = "TENTATIVE";
+                        break;
+                    case 'I':
+                        $nom = "Indisponible";
+                        break;
+                    default:
+                        $nom = "Invalide";
+                }
+                print "BEGIN:VEVENT\n";
+                print "DTSTART:" . gmdate('Ymd', strtotime($s['date'])) . "\n";
+                print "DTEND:" . gmdate('Ymd', strtotime($s['date'])) . "\n";
+                print "SUMMARY:" . $nom.": ". $titre . "\n";
+                print "LOCATION:".$adresse."\n";
+                print "STATUS:".$status_event."\n";
+                print "DESCRIPTION:Description ici pour bientôt\n";
+                print "END:VEVENT\n";
+            }
+            
         }
-        
+        print "END:VCALENDAR";
     }
-/*
-    header('Content-Type: text/calendar; charset=utf-8');
-    header('Content-Disposition: attachment; filename="cal.ics"');
-
-    print "BEGIN:VCALENDAR\n";
-    print "VERSION:2.0\n";
-    print "PRODID:-//Your Company//Your Product//EN\n";
-
-    foreach($events as $event) {
-        print "BEGIN:VEVENT\n";
-        print "UID:" . uniqid() . "@yourdomain.com\n";
-        print "DTSTAMP:" . gmdate('Ymd\THis\Z') . "\n";
-        print "DTSTART:" . gmdate('Ymd\THis\Z', strtotime($event['date_debut'])) . "\n";
-        print "DTEND:" . gmdate('Ymd\THis\Z', strtotime($event['date_fin'])) . "\n";
-        print "SUMMARY:" . $event['type'] . "\n";
-        print "DESCRIPTION:Client Info: " . $event['client_info'] . ", Property Info: " . $event['property_info'] . "\n";
-        print "END:VEVENT\n";
-    }
-    print "END:VCALENDAR";*/
-}else{}
-
-
-
+}
 ?>
