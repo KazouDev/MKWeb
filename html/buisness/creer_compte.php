@@ -14,6 +14,9 @@ $mailInvalid = false;
 $passwordLengthInvalid = false;
 $allow = true;
 $dateMin = date('Y') - 18 . '-01-01';
+$ibanInvalid = false;
+$bicInvalid = false;
+$accountHolderInvalid = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $adresse = [
@@ -41,9 +44,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "photo_profile" => "img/anonymus.webp"
     ];
     $proprio =[
+        "id_identite" => null,
         "bic" => $_POST["bic"],
         "iban" => $_POST["iban"],
         "titulaire" => $_POST["titulaire"]
+    ];
+
+    $doc=[
+        "piece_id_recto" => null,
+        "piece_id_verso" => null,
+        "valide" => true
     ];
 
 
@@ -55,9 +65,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         empty($util["telephone"]) || empty($util["email"]) || empty($util["mot_de_passe"]) ||
         empty($mot_de_passe2) || empty($adresse["pays"]) || empty($adresse["region"]) ||
         empty($adresse["departement"]) || empty($adresse["ville"]) || empty($adresse["code_postal"]) ||
-        empty($adresse["rue"]) || empty($proprio["bic"])
+        empty($adresse["rue"]) || empty($proprio["bic"]) || empty($proprio["iban"]) || empty($proprio["titulaire"]) 
     ) {
         $status = true;
+        $allow = false;
     }
 
     if (!filter_var($util["email"], FILTER_VALIDATE_EMAIL)) {
@@ -80,6 +91,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Vérification de la correspondance des mots de passe
     if ($util["mot_de_passe"] !== $mot_de_passe2) {
         $passwordMismatch = true;
+        $allow = false;
+    }
+    // Vérification des informations de paiement
+    if (!validateIBAN($proprio["iban"])) {
+        $ibanInvalid = true;
+        $allow = false;
+    }
+
+    if (!validateBIC($proprio["bic"])) {
+        $bicInvalid = true;
+        $allow = false;
+    }
+
+    if (!validateAccountHolder($proprio["titulaire"])) {
+        $accountHolderInvalid = true;
         $allow = false;
     }
     if ($allow) {
@@ -121,7 +147,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+function validateIBAN($iban) {
+    $iban = strtoupper(str_replace(' ', '', $iban));
+    $iban_length = [
+        'AL' => 28, 'AD' => 24, 'AT' => 20, 'AZ' => 28, 'BH' => 22, 'BY' => 28, 'BE' => 16, 'BA' => 20, 'BR' => 29,
+        'BG' => 22, 'CR' => 22, 'HR' => 21, 'CY' => 28, 'CZ' => 24, 'DK' => 18, 'DO' => 28, 'EG' => 29, 'SV' => 28,
+        'EE' => 20, 'FO' => 18, 'FI' => 18, 'FR' => 27, 'GE' => 22, 'DE' => 22, 'GI' => 23, 'GR' => 27, 'GL' => 18,
+        'GT' => 28, 'HU' => 28, 'IS' => 26, 'IQ' => 23, 'IE' => 22, 'IL' => 23, 'IT' => 27, 'JO' => 30, 'KZ' => 20,
+        'XK' => 20, 'KW' => 30, 'LV' => 21, 'LB' => 28, 'LI' => 21, 'LT' => 20, 'LU' => 20, 'MT' => 31, 'MR' => 27,
+        'MU' => 30, 'MD' => 24, 'MC' => 27, 'ME' => 22, 'NL' => 18, 'MK' => 19, 'NO' => 15, 'PK' => 24, 'PS' => 29,
+        'PL' => 28, 'PT' => 25, 'QA' => 29, 'RO' => 24, 'LC' => 32, 'SM' => 27, 'ST' => 25, 'SA' => 24, 'RS' => 22,
+        'SC' => 31, 'SK' => 24, 'SI' => 19, 'ES' => 24, 'SE' => 24, 'CH' => 21, 'TL' => 23, 'TN' => 24, 'TR' => 26,
+        'UA' => 29, 'AE' => 23, 'GB' => 22, 'VG' => 24
+    ];
 
+    $country_code = substr($iban, 0, 2);
+    if (!array_key_exists($country_code, $iban_length) || strlen($iban) != $iban_length[$country_code]) {
+        return false;
+    }
+
+    $iban = substr($iban, 4) . substr($iban, 0, 4);
+    $iban = preg_replace_callback('/[A-Z]/', function ($match) {
+        return ord($match[0]) - 55;
+    }, $iban);
+
+    $checksum = intval($iban[0]);
+    for ($i = 1, $len = strlen($iban); $i < $len; $i++) {
+        $checksum = intval($checksum . $iban[$i]) % 97;
+    }
+
+    return $checksum === 1;
+}
+
+function validateBIC($bic) {
+    return preg_match('/^[A-Za-z]{4}[A-Za-z]{2}[A-Za-z0-9]{2}([A-Za-z0-9]{3})?$/', $bic);
+}
+
+function validateAccountHolder($holder) {
+    return !empty($holder) && is_string($holder);
+}
 
 ?>
 <!DOCTYPE html>
