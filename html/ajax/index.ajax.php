@@ -2,13 +2,6 @@
 
 require "../../utils.php";
 
-function genererListeDepartement() {
-    $query = "SELECT DISTINCT sae._adresse.departement 
-        FROM sae._logement INNER JOIN sae._adresse ON sae._logement.id_adresse = sae._adresse.id;";
-    $reponse = request($query);
-    return $reponse;
-}
-
 function genererSelectProprietaire() {
     $query = "SELECT sae._utilisateur.id, sae._utilisateur.nom, sae._utilisateur.prenom 
         FROM sae._utilisateur INNER JOIN sae._compte_proprietaire ON sae._utilisateur.id = sae._compte_proprietaire.id;";
@@ -18,9 +11,8 @@ function genererSelectProprietaire() {
 
 function genererListeLogement($where) {
     # Recuperation des donnees des logements
-    $query = "SELECT l.id AS id_logement, a.id AS id_adresse, l.titre, l.base_tarif AS tarif, a.departement, a.commune,
-            (SELECT AVG(av.note)::numeric(10,2) FROM sae._avis av WHERE av.id_logement = l.id) AS note, img.src AS image_src,
-            img.alt AS image_alt
+    $query = "SELECT l.id AS id_logement, a.id AS id_adresse, l.titre, l.base_tarif AS tarif, a.departement, a.commune, 
+            img.src AS image_src, img.alt AS image_alt
         FROM sae._logement l
         INNER JOIN sae._adresse a ON l.id_adresse = a.id
         LEFT JOIN sae._image img ON l.id = img.id_logement AND img.principale = true
@@ -42,11 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $action = ""; 
     if (isset($_POST['action'])) {
         $action = $_POST['action'];
-    }
-
-    if ($action == "genererListeDepartement") {
-        $reponse = genererListeDepartement();
-        echo json_encode(['reponse' => $reponse]);
     }
     
     if ($action == "genererSelectProprietaire") {
