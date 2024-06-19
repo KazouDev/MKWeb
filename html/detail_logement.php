@@ -179,6 +179,7 @@ EOT;
     <script>
         const JOUR_MIN = {$min_jour};
         const DELAI_RES = {$delai_res};
+        const NB_VOY = {$nb_personne};
     </script>
 
     EOT;
@@ -451,7 +452,7 @@ EOT;
                                             <p id="prix__TTC" class="calcules__under"></p>
                                             <p class="calcules__under">€  x</p>
                                             <p id="nb_jours" class="calcules__under"></p>
-                                            <p class="calcules__under">jours</p>
+                                            <p class="calcules__under">nuits</p>
                                         </div>
                                         <div class="ttc_prix">
                                             <p id="prix__total"></p>

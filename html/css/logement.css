@@ -1043,6 +1043,7 @@
 .reserved {
   background-color: #ffc0cb;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 .style_calendar {

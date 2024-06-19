@@ -27,7 +27,7 @@ try {
 }
 }
 
-function insert($table, $name, $value, $get_id = true){
+function insert(string $table, array $name, array $value, bool $get_id = true){
   require "connect_db/connect_param.php";
   
   try {
@@ -44,7 +44,9 @@ function insert($table, $name, $value, $get_id = true){
       }
     }, $value));
 
+
     $sql = "INSERT INTO $table($name) VALUES ($values)";
+    print $sql .'<br>'.'<br>';
 
     $requete = $connexion->prepare($sql);
   

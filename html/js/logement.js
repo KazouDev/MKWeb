@@ -2,6 +2,9 @@ var date = new Date();
 var mois = date.getMonth();
 var annee = date.getFullYear();
 
+const ERROR_DELAI_MAX = "Une réservation doit être supérieur à " + JOUR_MIN + " jour" + (JOUR_MIN < 2 ? "" : "s");
+const ERROR_DATE_RESA = 'Vous ne pouvez pas choir des dates déjà réservée';
+
 var dateDebut = null;
 var dateFin = null;
 var inputDateDebut = document.getElementsByName("dateDebut")[0];
@@ -17,21 +20,19 @@ const id = paramsGlobalURL.get("id");
 
 const toggleModal = (modalId, displayStyle) => {
   document.getElementById(modalId).style.display = displayStyle;
-}
+};
 
-
-document.getElementById('submit_resa').addEventListener('click', () => {
-  toggleModal('myModal_cvg', 'flex');
+document.getElementById("submit_resa").addEventListener("click", () => {
+  toggleModal("myModal_cvg", "flex");
 });
 
-document.querySelector('.close').addEventListener('click', () => {
-  toggleModal('myModal_cvg', 'none');
-  toggleModal('date_resa', 'none');
-  
+document.querySelector(".close").addEventListener("click", () => {
+  toggleModal("myModal_cvg", "none");
+  toggleModal("date_resa", "none");
 });
 
-document.getElementById('declineButton').addEventListener('click', () => {
-  toggleModal('myModal_cvg', 'none');
+document.getElementById("declineButton").addEventListener("click", () => {
+  toggleModal("myModal_cvg", "none");
 });
 
 const verifyValue = (event) => {
@@ -41,10 +42,14 @@ const verifyValue = (event) => {
     event.preventDefault();
   }
 
-  if (event.target.value > 13 || event.target.value == 0 ) {
-    event.target.value = "";
+  if (event.target.value > NB_VOY   ) {
+    event.target.value = NB_VOY;
   }
-  2;
+  else if (event.target.value  == 0){
+    event.target.value = '';
+
+  }
+  
 };
 
 inputNombrePersonne.addEventListener("keydown", verifyValue);
@@ -63,6 +68,7 @@ const verifyAndFetch = () => {
     params.append("id", id);
 
     xhr.open("GET", "../ajax/afficher-prix.ajax.php?" + params, true);
+    //xhr.open("GET", "http://localhost/MKWEB/MKWeb/html/ajax/afficher-prix.ajax.php?" + params, true);
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
@@ -72,12 +78,16 @@ const verifyAndFetch = () => {
         document.getElementById("prix__total").innerHTML = responseData.prix_ht;
         document.getElementsByName("prix_ht")[0].value = responseData.prix_ht;
 
-        document.getElementById("prix__TTC").innerHTML = responseData.base_tarif;
+        document.getElementById("prix__TTC").innerHTML =
+          responseData.base_tarif;
 
-        document.getElementById("nb_jours").innerHTML = responseData.nombre_jour;
-        document.getElementsByName("nb_jours")[0].value = responseData.nombre_jour;
+        document.getElementById("nb_jours").innerHTML =
+          responseData.nombre_nuit;
+        document.getElementsByName("nb_jours")[0].value =
+          responseData.nombre_nuit;
 
-        document.getElementsByName("nb_nuit")[0].value = responseData.nombre_nuit;
+        document.getElementsByName("nb_nuit")[0].value =
+          responseData.nombre_nuit;
 
         document.getElementById("frais__total").innerHTML = responseData.frais;
         document.getElementsByName("frais")[0].value = responseData.frais;
@@ -186,9 +196,10 @@ const afficherCalendrier = (mois, annee) => {
             Math.round((dateFin - dateDebut) / (1000 * 60 * 60 * 24)) + 1;
           if (diffDays <= JOUR_MIN) {
             displayError.style.display = "block";
+            displayError.innerHTML = ERROR_DELAI_MAX;
             setTimeout(() => {
               displayError.style.display = "none";
-            }, 1000);
+            }, 3000);
 
             dateDebut = "";
             dateFin = "";
@@ -200,6 +211,11 @@ const afficherCalendrier = (mois, annee) => {
           // Vérifier si des dates réservées se situent entre dateDebut et dateFin
           var datesEntreDebutFin = getDatesEntreDebutFin(dateDebut, dateFin);
           if (datesEntreDebutFin.some((date) => estReservee(date))) {
+            displayError.innerHTML  = ERROR_DATE_RESA;
+            displayError.style.display = "block";
+              setTimeout(() => {
+                displayError.style.display = "none";
+              }, 3000);
             dateFin = null;
             dateDebut = null;
             inputDateFin.value = "";
@@ -274,9 +290,10 @@ const afficherCalendrier = (mois, annee) => {
               Math.round((dateFin - dateDebut) / (1000 * 60 * 60 * 24)) + 1;
             if (diffDays <= JOUR_MIN) {
               displayError.style.display = "block";
+              displayError.innerHTML = ERROR_DELAI_MAX;
               setTimeout(() => {
                 displayError.style.display = "none";
-              }, 1000);
+              }, 3000);
               dateDebut = "";
               dateFin = "";
               inputDateFin.value = "";
@@ -286,6 +303,14 @@ const afficherCalendrier = (mois, annee) => {
             // Vérifier si des dates réservées se situent entre dateDebut et dateFin
             var datesEntreDebutFin = getDatesEntreDebutFin(dateDebut, dateFin);
             if (datesEntreDebutFin.some((date) => estReservee(date))) {
+
+              displayError.style.display = "block";
+              displayError.innerHTML  = ERROR_DATE_RESA;
+             
+              setTimeout(() => {
+                displayError.style.display = "none";
+              }, 3000);
+                
               dateFin = null;
               dateDebut = null;
               inputDateFin.value = "";
@@ -328,7 +353,7 @@ const formatDate = (date) => {
 
 const updateCalendar = () => {
   let today = new Date();
-  today.setHours(0, 0, 0, 0); 
+  today.setHours(0, 0, 0, 0);
 
   let delaiDate = new Date(today);
   delaiDate.setDate(today.getDate() + DELAI_RES);
@@ -337,13 +362,18 @@ const updateCalendar = () => {
   cells.forEach(function (cell) {
     var day = parseInt(cell.innerHTML);
     var cellDate = new Date(annee, mois, day);
-    cellDate.setHours(0, 0, 0, 0); 
+    cellDate.setHours(0, 0, 0, 0);
 
-    cell.classList.remove("selected", "selected-start", "selected-end", "passed");
-   
+    cell.classList.remove(
+      "selected",
+      "selected-start",
+      "selected-end",
+      "passed"
+    );
+
     if (cellDate < delaiDate) {
       cell.classList.add("passed");
-      return; 
+      return;
     }
     if (dateDebut && cellDate.toDateString() === dateDebut.toDateString()) {
       cell.classList.add("selected-start");
@@ -388,6 +418,7 @@ const estReservee = (date) => {
     var endDate = new Date(datesReservees[i].end);
     endDate.setHours(0, 0, 0, 0);
     if (date >= startDate && date <= endDate) {
+    
       return true;
     }
   }
@@ -401,7 +432,7 @@ const params = new URLSearchParams();
 params.append("id", id);
 
 xhr.open("GET", "../ajax/calendrier.ajax.php?" + params, true);
-
+//xhr.open("GET", "http://localhost/MKWEB/MKWeb/html/ajax/calendrier.ajax.php?" + params, true);
 xhr.onreadystatechange = function () {
   if (xhr.readyState == 4 && xhr.status == 200) {
     var dateRanges = JSON.parse(xhr.responseText);
