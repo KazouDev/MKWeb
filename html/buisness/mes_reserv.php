@@ -26,31 +26,36 @@ $current_date = date("Y-m-d");
 // Initialisation des compteurs de réservations à venir, en cours et annulées
 $avenir = 0;
 $encours = 0;
+$pass = 0;
 $annulé = 0;
+
 
 // Vérification des résultats et calcul des statistiques de réservations
 if (!empty($results)) {
     foreach ($results as $result) {
         $date_debut = $result["date_debut"];
+        $date_fin = $result["date_fin"];
         $date_annulation = $result["date_annulation"];
-        $statusChip = getColorChipForDate($date_debut, $date_annulation);
+        $statusChip = getColorChipForDate($date_debut,$date_fin,$date_annulation);
 
         if ($statusChip["status"] === "À venir") {
             $avenir++;
-        } elseif ($statusChip["status"] === "En cours") {
-            $encours++;
+        } elseif ($statusChip["status"] === "Passée") {
+            $pass++;
         } elseif ($statusChip["status"] === "Annulée") {
             $annulé++;
+        }else{
+            $encours++;
         }
     }
 }
 
 // Fonction pour déterminer le statut de la réservation et sa classe CSS associée
-function getColorChipForDate($dateD, $dateA)
+function getColorChipForDate($dateD, $dateF,$dateA)
 {
     global $current_date;
 
-    if ($dateA === null && $current_date <= $dateD) {
+    if ($dateA === null && $current_date < $dateD) {
         $status = "À venir";
         $status_class = "green";
         $status_short = "venir";
@@ -58,10 +63,14 @@ function getColorChipForDate($dateD, $dateA)
         $status = "Annulée";
         $status_class = "red";
         $status_short = "annu";
-    } else {
+    } elseif($current_date >= $dateD && $current_date <= $dateF) {
         $status = "En cours";
         $status_class = "green";
         $status_short = "cours";
+    }elseif($dateF < $current_date){
+        $status = "Passée";
+        $status_class = "green";
+        $status_short = "pass";
     }
 
     return array("status" => $status, "status_class" => $status_class, "status_short" => $status_short);
@@ -125,7 +134,9 @@ function formatDateWithShortMonth($date)
                             <input type="radio" id="radio-2" name="tabs" />
                             <label class="tab" for="radio-2" data-category="cours">En cours<span class="notification"><?php echo $encours; ?></span></label>
                             <input type="radio" id="radio-3" name="tabs" />
-                            <label class="tab" for="radio-3" data-category="annu">Annulée<span class="notification"><?php echo $annulé; ?></span></label>
+                            <label class="tab" for="radio-3" data-category="pass">Passée<span class="notification"><?php echo $pass; ?></span></label>
+                            <input type="radio" id="radio-4" name="tabs" />
+                            <label class="tab" for="radio-4" data-category="annu">Annulée<span class="notification"><?php echo $annulé; ?></span></label>
                             <span class="glider"></span>
                         </div>
                     </div>
@@ -139,7 +150,7 @@ function formatDateWithShortMonth($date)
                         $date_debut = $result["date_debut"];
                         $date_fin = $result["date_fin"];
                         $date_annulation = $result["date_annulation"];
-                        $statusChip =  getColorChipForDate($date_debut, $date_annulation);
+                        $statusChip =  getColorChipForDate($date_debut, $date_fin,$date_annulation);
                         $statusClass = strtolower($statusChip["status_short"]);
                 ?>
                         <div class="card__reserv <?php echo $statusClass; ?>">
