@@ -15,32 +15,55 @@ WHERE id_client = $id";
 
 // Exécution de la requête SQL pour obtenir les résultats
 $results = request($query, false);
-
 // Fonction pour récupérer le statut de la réservation et sa classe de couleur
-function getColorChipForDate($dateA)
+function getColorChipForDate($dateD, $dateF,$dateA)
 {
-    if ($dateA == null) {
-        $status = "Confirmée";
+    global $current_date;
+
+    if ($dateA === null && $current_date < $dateD) {
+        $status = "À venir";
         $status_class = "green";
-    } else {
+        $status_short = "venir";
+    } elseif ($dateA !== null) {
         $status = "Annulée";
         $status_class = "red";
+        $status_short = "annu";
+    } elseif($current_date >= $dateD && $current_date <= $dateF) {
+        $status = "En cours";
+        $status_class = "green";
+        $status_short = "cours";
+    }elseif($dateF < $current_date){
+        $status = "Passée";
+        $status_class = "green";
+        $status_short = "pass";
     }
-    return array("status" => $status, "status_class" => $status_class);
+
+    return array("status" => $status, "status_class" => $status_class, "status_short" => $status_short);
 }
 
-// Initialisation des compteurs de réservations confirmées et annulées
-$confirme = 0;
-$annule = 0;
+// Initialisation des compteurs de réservations à venir, en cours et annulées
+$avenir = 0;
+$encours = 0;
+$pass = 0;
+$annulé = 0;
 
-// Boucle pour compter le nombre de réservations confirmées et annulées
-if(!empty($results)){
+
+// Vérification des résultats et calcul des statistiques de réservations
+if (!empty($results)) {
     foreach ($results as $result) {
-        $statusChip = getColorChipForDate($result["date_annulation"]);
-        if ($statusChip["status"] === "Confirmée") {
-            $confirme++;
+        $date_debut = $result["date_debut"];
+        $date_fin = $result["date_fin"];
+        $date_annulation = $result["date_annulation"];
+        $statusChip = getColorChipForDate($date_debut,$date_fin,$date_annulation);
+
+        if ($statusChip["status"] === "À venir") {
+            $avenir++;
+        } elseif ($statusChip["status"] === "Passée") {
+            $pass++;
         } elseif ($statusChip["status"] === "Annulée") {
-            $annule++;
+            $annulé++;
+        }else{
+            $encours++;
         }
     }
 }
@@ -92,11 +115,15 @@ function formatDateWithShortMonth($date)
                         <h1>Mes réservations</h1>
                     </div>
                     <div class="container">
-                        <div class="tabs">
+                    <div class="tabs">
                             <input type="radio" id="radio-1" name="tabs" checked />
-                            <label class="tab" for="radio-1" data-category="Confirmée">Confirmée<span class="notification"><?php echo $confirme; ?></span></label>
+                            <label class="tab" for="radio-1" data-category="venir">À venir<span class="notification"><?php echo $avenir; ?></span></label>
                             <input type="radio" id="radio-2" name="tabs" />
-                            <label class="tab" for="radio-2" data-category="Annulée">Annulée<span class="notification"><?php echo $annule; ?></span></label>
+                            <label class="tab" for="radio-2" data-category="cours">En cours<span class="notification"><?php echo $encours; ?></span></label>
+                            <input type="radio" id="radio-3" name="tabs" />
+                            <label class="tab" for="radio-3" data-category="pass">Passée<span class="notification"><?php echo $pass; ?></span></label>
+                            <input type="radio" id="radio-4" name="tabs" />
+                            <label class="tab" for="radio-4" data-category="annu">Annulée<span class="notification"><?php echo $annulé; ?></span></label>
                             <span class="glider"></span>
                         </div>
                     </div>
@@ -107,10 +134,12 @@ function formatDateWithShortMonth($date)
                     </div>
                 <?php } else {
                     foreach ($results as $result) {
-                        $statusChip = getColorChipForDate($result["date_annulation"]);
+                        $statusChip = getColorChipForDate($result["date_debut"], $result["date_fin"],$result["date_annulation"]);
+                        $statusClass = strtolower($statusChip["status_short"]);
+
                 ?>
                         <a href="detail_reservation.php?id=<?php echo $result["id"] ?>">
-                            <div class="card__reserv <?php echo $statusChip["status"] ?>">
+                        <div class="card__reserv <?php echo $statusClass; ?>">
                                 <img src=<?= "img/" . $result["src"] ?> alt=<?= $result["alt"] ?>>
                                 <div class="mes__reserv__cont_desc_prix">
                                     <div class="mes__reserv__description">
@@ -152,7 +181,7 @@ function formatDateWithShortMonth($date)
             }
 
             // Afficher les réservations de la catégorie par défaut (Confirmée)
-            showReservations('Confirmée');
+            showReservations('venir');
 
             // Ajouter un gestionnaire d'événements pour chaque onglet
             document.querySelectorAll('.tab').forEach(function(tab) {
