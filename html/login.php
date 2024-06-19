@@ -78,13 +78,22 @@
                         <div class="connect__face"><img src="../img/facebook.webp" alt="Facebook"><a href="">Continuer avec Facebook</a></div>
                         <p style="align-self: center; text-align:center;">Vous n'avez pas de compte ?  <a href="" style="color: #5669FF;">S'inscrire</a></p>
                     </div>
-                    <img class="connect__photo" src="../img/sea.webp" alt="Sea">
+                    <div class="slider">
+                        <div class="slides">
+                            <div class="slide"><img src="../img/slider1.webp" alt="Slide 1"></div>
+                            <div class="slide"><img src="../img/slider2.webp" alt="Slide 2"></div>
+                            <div class="slide"><img src="../img/slider3.webp" alt="Slide 3"></div>
+                            <div class="slide"><img src="../img/slider4.webp" alt="Slide 4"></div>
+                        </div>
+                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                    </div>
                 </div>
             </div>
 
         </main>
         <?php require_once "footer.php" ?>
     </div>
-    <script src="../js/script.js"></script>
+    <script src="../js/creer_compte.js"></script>
 </body>
 </html>

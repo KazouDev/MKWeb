@@ -21,19 +21,32 @@ $interval = $reservArrDate->diff($reservDepDate);
 $base_tarif = $res['base_tarif'];
 $jour = $interval->days + 1;
                                     
-$prix_ht = $base_tarif * (empty($jour) ? 1 : $jour) * $nombre_personne;
+
 $nuit = empty($jour) ? 0 : $jour - 1;
-$frais = ($prix_ht * FRAIS) - $prix_ht;
-$taxe = $nuit * TAUX * $nombre_personne;
-                                
-$prix_ttc = $prix_ht + $frais + $taxe;
+$prix_ht = $base_tarif * (empty($nuit) ? 1 : $nuit) ;//* $nombre_personne;
+$prix_ttc = $prix_ht * 1.20;
+$frais = $prix_ttc * 0.01;
+$taxe = $nuit + $nombre_personne;
+
+
+
+$prix_total = $prix_ttc + $frais + $taxe;
+
+//TODO update base
+
+
+
+//$frais = ($prix_ht * FRAIS) - $prix_ht;
+//$taxe = $nuit * TAUX * $nombre_personne;
+                          
+//$prix_ttc = $prix_ht + $frais + $taxe;
 
 $response = array(
-    'base_tarif' => round($base_tarif, 3),
-    'prix_ht' => round($prix_ht, 3),
-    'prix_ttc'=> round($prix_ttc, 3),
-    'frais' => round($frais, 3),
-    'taxe'=>round($taxe, 3),
+    'base_tarif' =>  number_format($base_tarif,2,',',' '),
+    'prix_ht' => number_format($prix_ht,2,',',' ' ),
+    'prix_ttc'=>number_format($prix_ttc,2,',',' ' ),
+    'frais' =>number_format($frais,2,',',' ' ),
+    'taxe'=>number_format($taxe,2,',',' ' ),
     'nombre_jour' => $jour,
     'nombre_nuit'=> $nuit,
 );

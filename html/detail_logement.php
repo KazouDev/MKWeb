@@ -414,8 +414,8 @@ EOT;
 
                             <div class="res__fromulaire">
                                 
-                                    <input type="text" name="dateDebut" hidden>
-                                    <input type="text" name="dateFin" hidden>
+                                    <input type="text" name="dateDebut" >
+                                    <input type="text" name="dateFin" >
 
                                     <input type="text" name="prix_ht"  hidden>
                                     <input type="text" name="prix_ttc" hidden>
@@ -450,7 +450,7 @@ EOT;
                                             <p id="prix__TTC" class="calcules__under"></p>
                                             <p class="calcules__under">€  x</p>
                                             <p id="nb_jours" class="calcules__under"></p>
-                                            <p class="calcules__under">jours</p>
+                                            <p class="calcules__under">nuits</p>
                                         </div>
                                         <div class="ttc_prix">
                                             <p id="prix__total"></p>

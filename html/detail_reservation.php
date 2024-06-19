@@ -10,7 +10,7 @@
     WHERE sae._reservation.id=$idreservation AND id_client = $id_client";
     $reservation = request($sql,true);
     // Vérification que la reservation existe puis qu'elle est bien associé au client connecté
-    if($reservation==null){
+    if(!$reservation){
         // Redirection vers la page des réservations
         header('Location: mes_reserv.php');
         die();
@@ -27,19 +27,19 @@
 	        
 	        // Définir le tableau associatif des mois
             $arrayMonth = [
-                1 => "jan",2 => "fév",3 => "mar",
-                4 => "avr",5 => "mai",6 => "jun",
-                7 => "jul",8 => "aou",9 => "sep",
-                10 => "oct",11 => "nov",12 => "déc"
+                1 => "jan",2 => "fév",3 => "mars",
+                4 => "avr",5 => "mai",6 => "juin",
+                7 => "juill",8 => "août",9 => "sept",
+                10 => "oct",11 => "nov",12 => "dec"
             ];
-
-            
             if (array_key_exists($date, $arrayMonth)) {
                 $mois = $arrayMonth[$date];
             } else {
                 return false; 
             }
 	        return $mois;
+
+            
  
         }
         
@@ -53,7 +53,8 @@
             $dateReservation = $date1['day']." ".$moisEnLettreDebut.". ".$date1['year']." - ".$date2['day']." ".$moisEnLettreFin.". ".$date2['year'];
         
         }
-    
+        //  Récupération des valeurs du logement et propriétaire
+
         $idLogement = $reservation["id_logement"];
         $sql = "SELECT * from sae._logement where id=$idLogement";
         $logement = request($sql,true);
@@ -64,17 +65,23 @@
         
         $sql = "SELECT * from sae._reservation_prix_par_nuit WHERE id_reservation=$reservation[id]";
 
+        // Calcul et formatage des différents prix de la réservation
+
         $prixParNuit = request($sql,true);
 
-        $prixHTTNuit = round($reservation["prix_ht"]/$prixParNuit["nb_nuit"],2);
-
+        $prixHTTNuit = number_format(round($reservation["prix_ht"]/$prixParNuit["nb_nuit"],2),2,",","");
         
-        $prixTTCnuit =round( $reservation["prix_ttc"]/$prixParNuit["nb_nuit"],2);
+        $prixTTCnuit =number_format(round($reservation["prix_ttc"]/$prixParNuit["nb_nuit"],2),2,",","");
 
-        $taxeSejour = $reservation["taxe_sejour"];
+        $reservationPrixTTC =number_format($reservation["prix_ttc"],2,",","");
         
-        $locationTTC = $prixParNuit["nb_nuit"] * $prixTTCnuit;
+        $taxeSejour = number_format($reservation["taxe_sejour"],2,",","");
 
+        $total =  number_format($reservation["prix_total"],2,",","");
+
+        $comission = number_format($reservation["taxe_commission"],2,",","");
+        
+        // Coordonnées de la réservation pour la carte
         $latitude = $adresse["latitude"];
         $longitude = $adresse["longitude"];
         
@@ -85,15 +92,14 @@
 
         $images = request($sql,true);
 
+        // Langues maîtrisées par le propriétaire
+
         $sql = "SELECT *
         FROM sae._langue_proprietaire
         INNER JOIN sae._langue ON sae._langue_proprietaire.id_langue = sae._langue.id
         WHERE sae._langue_proprietaire.id_proprietaire = $proprio[id]";
 
         $languesProprio = request($sql,false);
-        
-        
-
     }
 ?>
 <!DOCTYPE html>
@@ -117,7 +123,6 @@
                 <div class="detail-reservation__entete">
                     <div>
                         <h1 class="entete__titre">Détails de la réservation</h1>
-                        <a href="/detail_logement.php?id=<?= $idLogement?>"><img src="img/back.webp" alt="Back"></a>
                     </div>
                     <div>
                         <div class="entete__textinfo1">
@@ -183,6 +188,7 @@
                             <div class="section2__article3" id="localisation">
                                 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
                             </div>
+                            <!-- Carte qui situe la réservation -->
                             <script>
                                 var lat = "<?php echo $latitude; ?>";
                                 var lng = "<?php echo $longitude; ?>";
@@ -248,9 +254,9 @@
                             <div class="partiemontant__soustitre">
                                <div>
                                     <p>Location TTC</p>
-                                    <p class="texteGras"><?=$reservation["prix_ttc"]?> €</p>
+                                    <p class="texteGras"><?=$reservationPrixTTC?> €</p>
                                </div>
-                               <p>Prix par nuit TTC × nombre de nuits</p>
+                               <p>Prix par nuit TTC × <?=$prixParNuit["nb_nuit"]?>   nuits</p>
                             </div>
                             <div class="partiemontant__soustitre">
                                <div>
@@ -265,11 +271,11 @@
                             </div>
                             <div class="partiemontant__sanssoustitre">
                                 <p>1% de la commission de la plateforme</p>
-                                <p class="texteGras"><?=$reservation["taxe_commission"]?> €</p>
+                                <p class="texteGras"><?=$comission?> €</p>
                             </div>
                             <div class="montantFinal">
                                 <p>Montant Final TTC</p>
-                                <p class="texteGras"><?=$reservation["prix_ttc"]+$reservation["taxe_commission"]+$taxeSejour?> €</p>
+                                <p class="texteGras"><?=$total?> €</p>
                             </div>
                             
                         </div>
