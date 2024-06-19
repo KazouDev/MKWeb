@@ -90,7 +90,6 @@ EOT;
         die;
     }
 
-    $query_note = "SELECT avg(note), count(*) from sae._avis where id_logement = $id_logement;";
     $query_amenagement = "SELECT amenagement FROM sae._amenagement_logement INNER JOIN sae._amenagement ON sae._amenagement_logement.id_amenagement = sae._amenagement.id  WHERE sae._amenagement_logement.id_logement = $id_logement;";
     $query_hote = "select prenom, nom, photo_profile from sae._utilisateur inner join sae._logement on sae._utilisateur.id = sae._logement.id_proprietaire where sae._logement.id = $id_logement;";
     $query_langue = "select langue from sae._utilisateur 
@@ -102,33 +101,13 @@ EOT;
     inner join sae._logement on sae._activite_logement.id_logement = sae._logement.id  
     inner join sae._distance on sae._activite_logement.id_distance = sae._distance.id
     where sae._logement.id = $id_logement;";
-    $query_avis = "select commentaire, note, prenom, commune, pays from sae._avis 
-    inner join sae._utilisateur on sae._avis.id_client = sae._utilisateur.id 
-    inner join sae._adresse on sae._adresse.id = sae._utilisateur.id_adresse
-    where sae._avis.id_logement =$id_logement;";
-    $query_note_hote = "SELECT AVG(sae._avis.note) 
-    FROM sae._avis 
-    INNER JOIN sae._logement ON sae._avis.id_logement = sae._logement.id  
-    WHERE sae._logement.id_proprietaire = (
-        SELECT sae._logement.id_proprietaire 
-        FROM sae._logement 
-        WHERE sae._logement.id = $id_logement
-    );";
-    $rep_note = request($query_note)[0];
     $rep_amenagement = request($query_amenagement);
     $rep_hote = request($query_hote)[0];
     $rep_langue = request($query_langue);
     $rep_activite = request($query_activite);
-    $rep_avis = request($query_avis);
-    $rep_note_hote = request($query_note_hote)[0];
     $rep_photo = request($query_photo);
 
     $titre_logement =  $rep_logement['titre'] ;
-    $moyenne_note = $rep_note['avg'];
-    if (isset($moyenne_note)) {
-        $moyenne_note = round($moyenne_note, 1);
-    }
-    
 
     $ville = $rep_logement['commune'];
     $departement = $rep_logement['departement'];
@@ -140,14 +119,9 @@ EOT;
     $nb_chambre = $rep_logement['nb_chambre'];
     $nb_lit_simple =  $rep_logement['nb_lit_simple'];
     $nb_lit_double = $rep_logement['nb_lit_double'];
-    $nb_commentaire = $rep_note['count'];
     $description = $rep_logement['description'];
     $nom_hote = $rep_hote['nom'];
     $prenom_hote = $rep_hote['prenom'];
-    $note_hote = $rep_note_hote['avg'];
-    if (isset($note_hote)) {
-        $note_hote = round($note_hote, 1);
-    }
     $source = $rep_hote['photo_profile'];
 
     $liste_amenagement = [];
@@ -168,15 +142,6 @@ EOT;
     $liste_activite = [];
     foreach($rep_activite as $cle => $activite){
         $liste_activite[$activite['activite']] = $activite['perimetre'] ;
-    }
-
-    $liste_avis = "";
-    foreach($rep_avis as $cle => $avis){
-        
-        if ($cle > 0) {
-            $liste_avis = $liste_avis  . "<br>";
-        }
-        $liste_avis = $liste_avis . $avis['prenom'] . ", " . $avis['commune'] .', ' . $avis['pays'] .', ' .$avis['note'] .', ' . $avis['commentaire'];
     }
 
 
@@ -212,15 +177,6 @@ EOT;
                     <div class="logement__nom">
                         <div class="nom">
                             <h1 id="logement__nom"><?php echo  $titre_logement?></h1>
-                            <div class="stars" id="logement__rate">
-                                <i class="fas fa-star fa-lg" id="1star"></i>
-                                <!-- <i class="fas fa-star fa-lg" id="2star"></i>
-                                <i class="fas fa-star fa-lg" id="3star"></i>
-                                <i class="fas fa-star fa-lg" id="4star"></i>
-                                <i class="fas fa-star fa-lg" id="5star"></i> -->
-                            </div>
-                            <h6 id="logement__rate__valuernote"><?php echo  $moyenne_note?></h6>
-                            <a class="retour" href="index.php" id="logement__retour"><img src="img/back.webp" alt="Retour"></a>
                         </div>
                         <div class="partager">
                             <img src="img/share.webp" alt="Partager">
@@ -263,9 +219,8 @@ EOT;
                                 <?php } else if ((!empty($nb_lit_double)) && ($nb_lit_double == 1)) { ?>
                                     <div class="feature">1 lit double</div>
                                 <?php } ?>
-                                
-                                
                             </div>
+
                             <h3>Ce logement vous propose</h3>
                             <div class="logement__proposNote">
                                 <?php if (empty($liste_amenagement)) { ?> 
@@ -280,28 +235,6 @@ EOT;
                                         <a href="">Conditions d’annulation</a>
                                     </div>
                                 <?php }?>  
-                                <div class="logement__note">
-                                    <h2 id="note"><?php echo  $moyenne_note?> / 5</h2>
-                                    <div class="details__stars" id="logement__rate__details">
-                                        <i class="fas fa-star fa-lg" id="1star_details"></i>
-                                        <!-- <i class="fas fa-star fa-lg" id="2star_details"></i>
-                                        <i class="fas fa-star fa-lg" id="3star_details"></i>
-                                        <i class="fas fa-star fa-lg" id="4star_details"></i>
-                                        <i class="fas fa-star fa-lg" id="5star_details"></i> -->
-                                    </div>
-                                    <?php 
-                                        if($nb_commentaire == 1){?>
-                                            <a href=""><span id="nb_comment"></span>1 Commentaire</a>
-                                        <?php } else if ($nb_commentaire > 1) { ?>
-                                            <a href=""><span id="nb_comment"><?php echo  $nb_commentaire . " "?></span>Commentaires</a>
-                                        <?php } else { ?>
-                                            <p><span id="nb_comment">Aucun commentaire</span><p>
-                                        <?php }
-                                    ?>
-                                    
-
-                                </div>
-
                             </div>
                         </div>
                         <div class="apropos">
@@ -317,14 +250,6 @@ EOT;
                                 <div class="hote__main">
                                     <div class="hote__nom">
                                         <h3>Hôte: <span id="hote__nm"><?php echo  $prenom_hote?></span></h3>
-                                        <div class="hote_rate" id="hote__rate">
-                                            <i class="fas fa-star fa-xs" ></i>
-                                            <!-- <i class="fas fa-star fa-xs" ></i>
-                                            <i class="fas fa-star fa-xs" ></i>
-                                            <i class="fas fa-star fa-xs" ></i>
-                                            <i class="fas fa-star fa-xs" ></i> -->
-                                        </div>
-                                        <h6 id="hote__valuernote"><?= $note_hote?></h6>
                                     </div>
                                     <div class="hote__langues">
                                         <i class="fa-solid fa-earth-americas" style="color: #222222;"></i>
