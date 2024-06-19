@@ -1,24 +1,3 @@
-let listeIDLogements = [];
-
-let filtre = {
-  id: function (listeLogement) {
-    let listeID = new Array();
-    let liste = new Array();
-
-    for (let i = 0; i < listeIDLogements.length; i++) {
-      listeID.push(listeIDLogements[i].id_logement);
-    }
-
-    for (let i = 0; i < listeLogement.length; i++) {
-      if (!listeID.includes(listeLogement[i].id_logement)) {
-        liste.push(listeLogement[i]);
-      }
-    }
-
-    return liste;
-  },
-};
-
 let tri = {
   
 };
@@ -47,7 +26,7 @@ let genererCard = {
 
 
     imgCouverture = document.createElement("img");
-    imgCouverture.setAttribute("src", "./img" + logement.image_src);
+    imgCouverture.setAttribute("src", "../img" + logement.image_src);
     imgCouverture.setAttribute("alt", logement.image_alt);
 
     divDescription = document.createElement("div");
@@ -166,19 +145,19 @@ function php_genererAutocompletProprietaire() {
 
         let f_propri = document.getElementById("filtre-propri-id");
         let proprietaireInput = document.getElementById("proprietaireInput");
-        let autocompleteList = document.getElementById(
-          "autocomplete-list-proprietaire"
-        );
+        let autocompleteList = document.getElementById("autocomplete-list-proprietaire");
 
-        let filterSuggestions = (input) => {
+        // Fonction pour filtrer les suggestions
+        let filterSuggestions = () => {
+          let inputValue = proprietaireInput.value.trim().toLowerCase();
           autocompleteList.innerHTML = "";
-          if (!input) return;
 
-          let lowerCaseInput = input.toLowerCase();
+          if (!inputValue) return;
+
           let filteredProprietaires = listeProprietaire.filter(
             (proprietaire) =>
-              proprietaire.nom.toLowerCase().startsWith(lowerCaseInput) ||
-              proprietaire.prenom.toLowerCase().startsWith(lowerCaseInput)
+              proprietaire.nom.toLowerCase().includes(inputValue) ||
+              proprietaire.prenom.toLowerCase().includes(inputValue)
           );
 
           filteredProprietaires.forEach((proprietaire) => {
@@ -186,7 +165,7 @@ function php_genererAutocompletProprietaire() {
             suggestionItem.classList.add("autocomplete-suggestion");
             suggestionItem.textContent = `${proprietaire.nom} ${proprietaire.prenom}`;
             suggestionItem.addEventListener("click", () => {
-              f_propri.value = `${proprietaire.id}`;
+              f_propri.value = proprietaire.id;
               proprietaireInput.value = `${proprietaire.nom} ${proprietaire.prenom}`;
               autocompleteList.innerHTML = "";
             });
@@ -195,17 +174,11 @@ function php_genererAutocompletProprietaire() {
         };
 
         // Add event listener for input changes
-        proprietaireInput.addEventListener("input", () => {
-          let inputValue = proprietaireInput.value;
-          filterSuggestions(inputValue);
-        });
+        proprietaireInput.addEventListener("input", filterSuggestions);
 
         // Hide suggestions when clicking outside
         document.addEventListener("click", (e) => {
-          if (
-            !autocompleteList.contains(e.target) &&
-            e.target !== proprietaireInput
-          ) {
+          if (!autocompleteList.contains(e.target) && e.target !== proprietaireInput) {
             autocompleteList.innerHTML = "";
           }
         });
@@ -214,106 +187,66 @@ function php_genererAutocompletProprietaire() {
   });
 }
 
-function genererPeriodePourListeLogement(listeLogement) {
+function php_genererListeLogement() {
+  let f_nb_personnes = document.getElementById("nb_personnes").value;
+  let f_tarif_min = document.getElementById("tarif_min").value;
+  let f_tarif_max = document.getElementById("tarif_max").value;
+  let f_codePostal = undefined; 
+  if (document.getElementById("communeInput").value !== "") {
+    f_codePostal = document.getElementById("filtre-commune-codePostal").value;
+  }
+  let f_proprietaire = undefined; 
+  if (document.getElementById("proprietaireInput").value !== "") {
+    f_proprietaire = document.getElementById("filtre-propri-id").value;
+  }
+
   let f_date_deb = undefined;
   let f_date_fin = undefined;
-
   if ($('input[name="daterange"]').val() != "") {
     f_date_deb = document.getElementById("filtre-date-deb").value;
     f_date_fin = document.getElementById("filtre-date-fin").value;
   }
+  let dateArrive = new Date(f_date_deb);
+  let dateDepart = new Date(f_date_fin);
 
-  let where = "";
-  if (f_date_deb !== undefined && f_date_fin !== undefined) {
-    for (let i = 0; i < listeLogement.length; i++) {
-      if (i == 0) {
-        where +=
-          " AND (sae._calendrier.id_logement = " + listeLogement[i].id_logement;
-      } else {
-        where +=
-          " OR sae._calendrier.id_logement = " + listeLogement[i].id_logement;
-      }
+  let where_req1 = "";
+  if (f_nb_personnes != "") { where_req1 += " AND l.nb_max_personne >= " + f_nb_personnes; }
+  if (f_tarif_min != "") { where_req1 += " AND l.base_tarif >= " + f_tarif_min; }
+  if (f_tarif_max != "") { where_req1 += " AND l.base_tarif <= " + f_tarif_max; }
+  if (f_proprietaire != undefined) { where_req1 += " AND l.id_proprietaire = " + f_proprietaire; }
+  if (f_codePostal != undefined) {
+    f_codePostal = f_codePostal.split(", ");
+    for (let i = 0; i < f_codePostal.length; i++) {
+      if (i == 0) { where_req1 += " AND (a.code_postal = '" + f_codePostal[i] + "'"; } 
+      else { where_req1 += " OR a.code_postal = '" + f_codePostal[i] + "'"; }
     }
-    if (where !== "") {
-      where += ")";
-    }
-
-    let dateArrive = new Date(f_date_deb);
-    let dateDepart = new Date(f_date_fin);
-    dateDepart.setDate(dateDepart.getDate() + 1);
-    let i = 0;
-    for (
-      let d = new Date(dateArrive);
-      d < dateDepart;
-      d.setDate(d.getDate() + 1)
-    ) {
-      let formattedDate = d.toISOString().split("T")[0];
-      if (i == 0) {
-        where += " AND (sae._calendrier.date = '" + formattedDate + "'";
-      } else {
-        where += " OR sae._calendrier.date = '" + formattedDate + "'";
-      }
-      i++;
-    }
-    if (where !== "") {
-      where += ")";
-    }
+    where_req1 += ")";
   }
 
-  return new Promise((resolve, reject) => {
-    $.ajax({
-      url: "ajax/index.ajax.php",
-      type: "POST",
-      data: { action: "genererPeriodePourListeLogement", where: where },
-      dataType: "json",
-      success: function (reponse) {
-        if (reponse.reponse) {
-          listeIDLogements = reponse.reponse;
-          resolve();
-        }
-      },
-    });
-  });
-}
-
-async function php_genererListeLogement() {
-  let f_nb_personnes = document.getElementById("nb_personnes").value;
-  let f_tarif_min = document.getElementById("tarif_min").value;
-  let f_tarif_max = document.getElementById("tarif_max").value;
-  let f_codePostaux = document.getElementById("filtre-commune-codePostal").value;
-  let f_proprietaire = document.getElementById("filtre-propri-id").value;
-
-  let where = "";
-  if (f_nb_personnes != "") { where += " AND l.nb_max_personne >= " + f_nb_personnes; }
-  if (f_tarif_min != "") { where += " AND l.base_tarif >= " + f_tarif_min; }
-  if (f_tarif_max != "") { where += " AND l.base_tarif <= " + f_tarif_max; }
-  if (f_proprietaire != undefined) { where += " AND l.id_proprietaire = " + f_proprietaire; }
-  if (f_codePostaux != undefined) { 
-    f_codePostaux = f_codePostaux.split(", ");
-    for (let i = 0; i < f_codePostaux.length; i++) {
-      if (i == 0) { where += " AND (a.code_postal = '" + f_codePostaux[i] + "'"; } 
-      else { where += " OR a.code_postal = '" + f_codePostaux[i] + "'"; }
-    }
-    where += ")";
+  let where_req2 = ""; 
+  dateDepart.setDate(dateDepart.getDate() + 1);
+  let i = 0;
+  for (let d = new Date(dateArrive) ; d < dateDepart ; d.setDate(d.getDate() + 1)) {
+    let formattedDate = d.toISOString().split("T")[0];
+    if (i == 0) { where_req2 += " AND (sae._calendrier.date = '" + formattedDate + "'"; } 
+    else { where_req2 += " OR sae._calendrier.date = '" + formattedDate + "'"; }
+    i++;
   }
+  if (where_req2 !== "") { where_req2 += ")"; }
 
-  try {
-    let reponse = await $.ajax({
-      url: "ajax/index.ajax.php",
-      type: "POST",
-      data: { action: "genererListeLogement", where: where },
-      dataType: "json",
-    });
+  // Afficher chargement
+  document.getElementById("loading-overlay").style.display = "flex";
 
+  $.ajax({
+    url: "ajax/index.ajax.php",
+    type: "POST",
+    data: { action: "genererListeLogement", where_req1: where_req1, where_req2: where_req2 },
+    dataType: "json",
+  })
+  .done(function(reponse) {
     if (reponse.reponse) {
       let listeLogements = reponse.reponse;
       let logement;
-
-      await genererPeriodePourListeLogement(listeLogements);
-
-      if (listeIDLogements != undefined) {
-        listeLogements = filtre.id(listeLogements);
-      }
 
       let divLogements = document.getElementById("les__logements");
       divLogements.innerHTML = "";
@@ -332,9 +265,14 @@ async function php_genererListeLogement() {
         divLogements.appendChild(divVide);
       }
     }
-  } catch (error) {
+  })
+  .fail(function(error) {
     console.error("Error in php_genererListeLogement:", error);
-  }
+  })
+  .always(function() {
+    // Cacher chargement
+    document.getElementById("loading-overlay").style.display = "none";
+  });
 }
 
 
@@ -406,3 +344,4 @@ $(function () {
     }
   );
 });
+

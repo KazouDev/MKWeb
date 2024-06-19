@@ -47,8 +47,8 @@
                 <div class="tri__element">
                   <label for="tarif">Tarif/jour</label>
                   <div id="tarif_range">
-                    <input type="number" placeholder="min" id="tarif_min" name="tarif_min" min="0" step="5"/>
-                    <input type="number" placeholder="max" id="tarif_max" name="tarif_max" min="0" step="5"/>
+                    <input type="number" placeholder="Min" id="tarif_min" name="tarif_min" min="0" step="5"/>
+                    <input type="number" placeholder="Max" id="tarif_max" name="tarif_max" min="0" step="5"/>
                   </div>
                 </div>
                 <div class="tri__element">
@@ -64,10 +64,13 @@
           </div>
         </div>
         <div class="main__container main__logement">
-          <div class="list__logements">
+          <div class="list__logements" style="position: relative;">
             <div class="titre_nos_log">
               <h3 class="list__titre" id="nos_logements">Nos logements</h3>
               <!--<button id=""><img src="img/sort.webp" alt="Sort"/></button>-->
+            </div>
+            <div id="loading-overlay" style="display: none;">
+              <div class="loader"></div>
             </div>
             <div class="les__logements" id="les__logements"></div>
             <button class="logement__plus" id="decouvrir_plus">Découvrir plus</button>
