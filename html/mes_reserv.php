@@ -1,27 +1,85 @@
 <?php
 session_start();
 require_once "../utils.php";
+
+// Vérification de la session et récupération de l'ID client connecté
 $id = client_connected_or_redirect();
-$query = "SELECT sae._reservation.id, sae._reservation.id_logement, sae._reservation.date_annulation ,sae._reservation.prix_ttc ,sae._logement.titre, sae._reservation.date_debut, sae._reservation.date_fin, sae._adresse.commune, img.*
+
+// Requête SQL pour récupérer les réservations du client
+$query = "SELECT sae._reservation.id, sae._reservation.id_logement, sae._reservation.date_annulation, sae._reservation.prix_ttc, sae._logement.titre, sae._reservation.date_debut, sae._reservation.date_fin, sae._adresse.commune, img.*
 FROM sae._reservation 
 INNER JOIN sae._logement ON sae._reservation.id_logement = sae._logement.id
 INNER JOIN sae._adresse ON sae._logement.id_adresse = sae._adresse.id
 INNER JOIN sae._image img ON sae._reservation.id_logement = img.id_logement AND img.principale = true
 WHERE id_client = $id";
+
+// Exécution de la requête SQL pour obtenir les résultats
 $results = request($query, false);
+
+// Fonction pour récupérer le statut de la réservation et sa classe de couleur
+function getColorChipForDate($dateA)
+{
+    if ($dateA == null) {
+        $status = "Confirmée";
+        $status_class = "green";
+    } else {
+        $status = "Annulée";
+        $status_class = "red";
+    }
+    return array("status" => $status, "status_class" => $status_class);
+}
+
+// Initialisation des compteurs de réservations confirmées et annulées
+$confirme = 0;
+$annule = 0;
+
+// Boucle pour compter le nombre de réservations confirmées et annulées
+if(!empty($results)){
+    foreach ($results as $result) {
+        $statusChip = getColorChipForDate($result["date_annulation"]);
+        if ($statusChip["status"] === "Confirmée") {
+            $confirme++;
+        } elseif ($statusChip["status"] === "Annulée") {
+            $annule++;
+        }
+    }
+}
+
+
+// Fonction pour formater une date avec mois abrégé
+function formatDateWithShortMonth($date)
+{
+    $shortMonths = array(
+        "01" => "janv.", "02" => "févr.", "03" => "mars", "04" => "avr.", 
+        "05" => "mai", "06" => "juin", "07" => "juil.", "08" => "août", 
+        "09" => "sept.", "10" => "oct.", "11" => "nov.", "12" => "déc."
+    );
+    $dateObj = new DateTime($date);
+    $day = $dateObj->format('d');
+    $month = $dateObj->format('m');
+    $year = $dateObj->format('Y');
+    $shortMonth = $shortMonths[$month];
+    return $day . ' ' . $shortMonth . ' ' . $year;
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes réservations</title>
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/logement.css">
     <link rel="stylesheet" href="css/mes_reserv.css">
-    <title>Mes réservations</title>
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
+    <style>
+        .card__reserv {
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="page">
@@ -32,20 +90,28 @@ $results = request($query, false);
                 <div class="mes__reserv__titre">
                     <div class="test__TEST">
                         <h1>Mes réservations</h1>
-                        <!-- <img src="img/filter-3.webp" alt="">
-                        <img src="img/arrows.webp" alt=""> -->
                     </div>
-                    <!-- <a href="#" id="export-reservation-btn"><img src="img/downloads.webp" alt="Download"></a> -->
+                    <div class="container">
+                        <div class="tabs">
+                            <input type="radio" id="radio-1" name="tabs" checked />
+                            <label class="tab" for="radio-1" data-category="Confirmée">Confirmée<span class="notification"><?php echo $confirme; ?></span></label>
+                            <input type="radio" id="radio-2" name="tabs" />
+                            <label class="tab" for="radio-2" data-category="Annulée">Annulée<span class="notification"><?php echo $annule; ?></span></label>
+                            <span class="glider"></span>
+                        </div>
+                    </div>
                 </div>
                 <?php if (empty($results)) { ?>
                     <div class="mes__reserv__empty">
                         <h4>Vous n'avez pas encore de réservations</h4>
                     </div>
                 <?php } else {
-                    foreach ($results as $result) { ?>
+                    foreach ($results as $result) {
+                        $statusChip = getColorChipForDate($result["date_annulation"]);
+                ?>
                         <a href="detail_reservation.php?id=<?php echo $result["id"] ?>">
-                            <div class="card__reserv">
-                                <img src=<?= "img/".$result["src"]?> alt=<?=$result["alt"]?>>
+                            <div class="card__reserv <?php echo $statusChip["status"] ?>">
+                                <img src=<?= "img/" . $result["src"] ?> alt=<?= $result["alt"] ?>>
                                 <div class="mes__reserv__cont_desc_prix">
                                     <div class="mes__reserv__description">
                                         <h4><?php echo $result["titre"] ?></h4>
@@ -54,56 +120,46 @@ $results = request($query, false);
                                             <h4><?php echo $result["id"] ?></h4>
                                         </div>
                                         <div class="mes__reserv__date">
-                                            <h4><?php echo $result["date_debut"] ?> – <?php echo $result["date_fin"] ?></h4>
+                                            <h4><?php echo formatDateWithShortMonth($result["date_debut"]) ?> – <?php echo formatDateWithShortMonth($result["date_fin"]) ?></h4>
                                             <i class="fa-solid fa-circle" style="color: #222222;"></i>
                                             <h4><?php echo $result["commune"] ?></h4>
                                         </div>
-                                        <?php if ($result["date_annulation"] == null) { ?>
-                                            <p class="green">Confirmée</p>
-                                        <?php } else { ?>
-                                            <p class="red">Annulée</p>
-                                        <?php } ?>
+                                        <p class="<?php echo $statusChip["status_class"] ?>"><?php echo $statusChip["status"] ?></p>
                                     </div>
                                     <div class="mes__reserv__prix">
-                                        <h4 class="mes__reserv__prix_color"><?php echo $result["prix_ttc"] . "€"; ?></h4>
-                                        <!-- <a href=""><i class="fa-solid fa-ellipsis-vertical"></i></a>-->
-                                    </div>
+                                        <h4 class="mes__reserv__prix_color"><?php echo $result["prix_ttc"] . "€"; ?></h4>                                    </div>
                                 </div>
                             </div>
                         </a>
-                    <?php } ?>
-                <?php } ?>
+                <?php }
+                } ?>
             </div>
         </main>
         <?php require_once 'footer.php'; ?>
     </div>
     <script src="js/script.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var exportButton = document.getElementById("export-reservation-btn");
-            exportButton.addEventListener("click", function (e) {
-                e.preventDefault();
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fonction pour afficher les réservations en fonction de la catégorie sélectionnée
+            function showReservations(category) {
+                document.querySelectorAll('.card__reserv').forEach(function(card) {
+                    if (card.classList.contains(category)) {
+                        card.style.display = 'flex'; // Affiche la carte de réservation
+                    } else {
+                        card.style.display = 'none'; // Masque la carte de réservation
+                    }
+                });
+            }
 
-                fetch("../exporter_reservation.php?id=<?php echo $id ?>&type=0")
-                    .then(function (response) {
-                        if (!response.ok) {
-                            throw new Error("Une erreur s'est produite lors du téléchargement des réservations.");
-                        }
-                        return response.blob();
-                    })
-                    .then(function (blob) {
-                        var url = window.URL.createObjectURL(blob);
-                        var a = document.createElement('a');
-                        a.href = url;
-                        a.download = 'reservations.csv';
-                        document.body.appendChild(a);
-                        a.click();
+            // Afficher les réservations de la catégorie par défaut (Confirmée)
+            showReservations('Confirmée');
 
-                        window.URL.revokeObjectURL(url);
-                    })
-                    .catch(function (error) {
-                        alert(error.message);
-                    });
+            // Ajouter un gestionnaire d'événements pour chaque onglet
+            document.querySelectorAll('.tab').forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    var category = tab.getAttribute('data-category');
+                    showReservations(category); // Appel de la fonction pour afficher les réservations selon la catégorie
+                });
             });
         });
     </script>

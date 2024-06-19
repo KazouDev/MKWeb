@@ -1,17 +1,218 @@
 @import url("setup.css");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+:root {
+  --primary-color: #5669ff;
+  --secondary-color: #e6eef9;
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: rgba(230, 238, 249, 0.5);
+}
+
+.container {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tabs {
+  display: flex;
+  position: relative;
+  background-color: #fff;
+  box-shadow: 4px 4px 16px rgba(18, 18, 18, 0.06);
+  padding: 0.75rem;
+  border-radius: 99px;
+}
+.tabs * {
+  z-index: 2;
+}
+
+input[type=radio] {
+  display: none;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 54px;
+  width: 200px;
+  font-size: 1.25rem;
+  font-weight: 500;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: color 0.15s ease-in;
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-left: 0.75rem;
+  border-radius: 50%;
+  background-color: var(--secondary-color);
+  transition: 0.15s ease-in;
+}
+
+input[type=radio]:checked + label {
+  color: var(--primary-color);
+}
+input[type=radio]:checked + label > .notification {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+input[id=radio-1]:checked ~ .glider {
+  transform: translateX(0);
+}
+
+input[id=radio-2]:checked ~ .glider {
+  transform: translateX(100%);
+}
+
+input[id=radio-3]:checked ~ .glider {
+  transform: translateX(200%);
+}
+
+.glider {
+  position: absolute;
+  display: flex;
+  height: 54px;
+  width: 200px;
+  background-color: var(--secondary-color);
+  z-index: 1;
+  border-radius: 99px;
+  transition: 0.25s ease-out;
+}
+
+@media (max-width: 900px) {
+  .tabs {
+    transform: scale(0.8);
+  }
+}
+@media (max-width: 750px) {
+  .mes__reserv__titre h1 {
+    font-size: 2rem;
+  }
+  .tabs {
+    transform: scale(0.7);
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix h4 {
+    font-size: 1.25rem !important;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix :last-child {
+    font-size: 1.5rem;
+  }
+  .card__reserv {
+    gap: 1rem;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
+    font-size: 1rem;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description {
+    height: initial;
+    gap: 1rem;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description p {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 600px) {
+  .card__reserv img {
+    height: 100px;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description {
+    gap: 0.5rem;
+  }
+  .card__reserv {
+    align-items: center;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 500px) {
+  .card__reserv img {
+    display: none;
+  }
+  .mes__reserv__titre h1 {
+    font-size: 1.5rem;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description p {
+    padding: 0.3rem 0.5rem;
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 400px) {
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix {
+    flex-direction: column;
+  }
+  .card__reserv .mes__reserv__date {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .card__reserv .mes__reserv__date i {
+    display: none;
+  }
+  .card__reserv {
+    gap: 0rem;
+    padding: 0.5rem;
+  }
+  .mes__reserv__titre h1 {
+    font-size: 1.25rem;
+  }
+  .mes__reserv__titre img {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+.icon-right {
+  margin-left: auto;
+  align-self: center;
+  background-color: #dd69fa;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  color: white;
+}
+
 .buisness_mes_reserv_line {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
   width: 100%;
+}
+.buisness_mes_reserv_line .ligne__status {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  width: 40%;
+  justify-content: space-between;
 }
 .buisness_mes_reserv_line .buisness_left_big_box {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 2rem;
+  width: 100%;
+  gap: 6rem;
 }
 .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box {
   display: flex;
@@ -46,35 +247,11 @@
   width: -moz-fit-content;
   width: fit-content;
 }
-.buisness_mes_reserv_line .fa-eye,
-.buisness_mes_reserv_line .fa-trash {
-  font-size: 1.5rem;
-  color: #ffffff;
-  padding: 1rem 1rem;
-  border-radius: 0.75rem;
-  width: -moz-fit-content;
-  width: fit-content;
-  background-color: #dd69fa;
-}
 .buisness_mes_reserv_line .green {
   background-color: #79da7d;
 }
 .buisness_mes_reserv_line .red {
   background-color: #ff6258;
-}
-
-.mes__reserv__exporter {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.test__TEST {
-  display: flex;
-  flex-direction: row;
-  gap: 1.5rem;
-  align-items: center;
 }
 
 .mes__reserv__titre {
@@ -186,79 +363,16 @@
   text-align: center;
 }
 
-@media (max-width: 750px) {
-  .mes__reserv__titre h1 {
-    font-size: 2rem;
-  }
-  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix h4 {
-    font-size: 1.25rem !important;
-  }
-  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix :last-child {
-    font-size: 1.5rem;
-  }
-  .card__reserv {
-    gap: 1rem;
-  }
-  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
-    font-size: 1rem;
-  }
-  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description {
-    height: initial;
-    gap: 1rem;
-  }
-  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description p {
-    padding: 0.5rem 0.8rem;
-    font-size: 0.8rem;
-  }
+.mes__reserv__exporter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
-@media (max-width: 600px) {
-  .card__reserv img {
-    height: 100px;
-  }
-  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description {
-    gap: 0.5rem;
-  }
-  .card__reserv {
-    align-items: center;
-  }
-  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
-    font-size: 0.8rem;
-  }
-}
-@media (max-width: 500px) {
-  .card__reserv img {
-    display: none;
-  }
-  .mes__reserv__titre h1 {
-    font-size: 1.5rem;
-  }
-  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description p {
-    padding: 0.3rem 0.5rem;
-  }
-  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
-    font-size: 1rem;
-  }
-}
-@media (max-width: 400px) {
-  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix {
-    flex-direction: column;
-  }
-  .card__reserv .mes__reserv__date {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .card__reserv .mes__reserv__date i {
-    display: none;
-  }
-  .card__reserv {
-    gap: 0rem;
-    padding: 0.5rem;
-  }
-  .mes__reserv__titre h1 {
-    font-size: 1.25rem;
-  }
-  .mes__reserv__titre img {
-    width: 1rem;
-    height: 1rem;
-  }
+
+.test__TEST {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  align-items: center;
 }/*# sourceMappingURL=mes_reserv.css.map */
