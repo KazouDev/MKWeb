@@ -59,6 +59,8 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/mon_compte.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <title>Mon Compte</title>
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
 </head>
@@ -190,12 +192,83 @@
                                     </div>
                                 </form>
                             </div>
+                            
+                            <div class="token_conteneur">
+                                <div class="modal_sup">
+                                    <div class="modal" id="modal">
+                                    <div class="modal-content">
+                                        <p id="text-content">Êtes-vous sûr de vouloir supprimer ?</p>
+                                            <div class="modal-actions">
+                                                <button id="confirmBtn">Oui</button>
+                                                <button id="cancelBtn">Non</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal_enreg" id="modal_enreg">
+    <div class="modal">
+        <div class="modal-content">
+            <div class="date">
+                <p class="date_debut">Date de début: <span>15 juin 2024</span></p>
+                <p class="date_fin">Date de fin: <span>20 juin 2024</span></p>
+            </div>
+            <div class="content">
+                <div class="selectAll">
+                    <label for="selectall">Tout sélectionner</label>
+                    <input id="selectall" type="checkbox" value="1" name="selectall">
+                </div>
+                <div class="logement">
+                    <label for="select">Sélectionner</label>
+                    <input id="select" type="checkbox" value="1" name="select">
+                    <div class="description">
+                        <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget felis ac dolor commodo consequat.</p>
+                        <img src="img/carte-bretagne.jpg" alt="Carte de la Bretagne">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="confirmBtn">Annuler</button>
+                <button id="cancelBtn">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>
+                                    
+
+                                </div>
+                                <h3>Token Icalendar</h3>
+                                <form action="" method="post">
+                                    <?php
+                                    $sql = 'SELECT token FROM sae._ical_token';
+                                    $res = request($sql);
+                                    foreach($res as $token):
+                                    ?>
+                                        <div class="token ">
+                                            <div>
+                                                <input class="token_id"type="password" value="<?=$token['token']?>" readonly="readonly">
+                                            </div>
+                                            <div class="action">
+                                                <div class="cross"><i class="fas fa-times"></i></div>
+                                                <div class="copier"><i class="fas fa-copy"></i></div>
+                                                <div class="modifier"><i class="fas fa-pencil-alt"></i></div>
+                                                <div class="eyes"><i class="fas fa-eye"></i></div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach ?>
+                                <button type="button" value="Générer Token">Générer Token</button>
+                                </form>
+                                
+                            </div>
                         </div>                        
                     </div>                    
                 </div>
             </div>
         </main>
-        <?php include "./footer.php"; ?>
+        <?php include "./footer.php"; 
+        ?>
+        <?php
+        $serverName = $_SERVER['SERVER_NAME']  . ':' . $_SERVER['SERVER_PORT'] . '/ical/ical.php?token=';?>
+
     </div>
     <script>
         function togglePasswordVisibility() {
@@ -208,6 +281,80 @@
                 passwordInput.type = "password";
             }
         }
+
+
+        var token = document.querySelectorAll('.token_id');
+        var text_content = document.getElementById('text-content');
+        var cross = document.querySelectorAll('.cross');
+        var copier = document.querySelectorAll('.copier');
+        var eyes  = document.querySelectorAll('.eyes');
+        var modifiers = document.querySelectorAll('.modifier');
+       
+
+        const modalEnreg = document.getElementById('modal_enreg');
+
+        modifiers.forEach(modifier => {
+            modifier.addEventListener('click', () => {
+          
+                modalEnreg.style.display = 'flex';
+            });
+        });
+
+        
+        modalEnreg.addEventListener('click', (e) => {
+            if (e.target === modalEnreg) {
+                modalEnreg.style.display = 'none';
+            }
+        });
+                
+
+        eyes.forEach((v,k) => {
+            v.addEventListener('click', () => {
+                if(token[k].type === "password") token[k].type="text";
+                else token[k].type="password";
+            });
+          
+        });
+        copier.forEach((v,k) => {
+            v.addEventListener('click', () => {
+                let url = '<?php print $serverName ?>' + token[k].value;
+                navigator.clipboard.writeText(url);
+                        
+            });
+          
+        });
+
+        cross.forEach((v,k) => {
+            v.addEventListener('click', () => {
+                showModal();
+                text_content.innerHTML = `Êtes vous sur de vouloir supprimer le token ${token[k].value} ?
+                                          En cas de suppression les calendriers utilisant ce token ne fonctionnerons plus.`;
+              
+            });
+          
+        });
+
+        const showModal = () => {
+            document.getElementById('modal').classList.add('show');
+        }
+
+       
+        const hideModal = () => {
+            document.getElementById('modal').classList.remove('show');
+        }
+
+       
+        document.getElementById('confirmBtn').addEventListener('click', function() {
+      
+            hideModal();
+        });
+
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            hideModal();
+        });
+
+    
+        //
     </script>
 </body>
 </html>

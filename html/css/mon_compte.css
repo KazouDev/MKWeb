@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("setup.css");
 .detail_mon_compte__conteneur {
   display: flex;
@@ -15,7 +16,7 @@
 .detail_mon_compte__conteneur #identifiant_client {
   color: #222222;
 }
-.detail_mon_compte__conteneur .info_perso_conteneur, .detail_mon_compte__conteneur .adresse_conteneur, .detail_mon_compte__conteneur .photo_conteneur, .detail_mon_compte__conteneur .mdp_conteneur, .detail_mon_compte__conteneur .coord_bancaire_conteneur {
+.detail_mon_compte__conteneur .info_perso_conteneur, .detail_mon_compte__conteneur .adresse_conteneur, .detail_mon_compte__conteneur .photo_conteneur, .detail_mon_compte__conteneur .mdp_conteneur, .detail_mon_compte__conteneur .coord_bancaire_conteneur, .detail_mon_compte__conteneur .token_conteneur {
   display: flex;
   border-radius: 0.75em;
   flex-direction: column;
@@ -170,4 +171,178 @@
   width: 60%;
   height: -moz-max-content;
   height: max-content;
+}
+
+.token {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid black;
+}
+
+.token div input {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #222222;
+  background: #ffffff;
+}
+.token div input::-moz-placeholder {
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 1rem;
+}
+.token div input::placeholder {
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 1rem;
+}
+
+.action {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.action div {
+  display: flex;
+  align-items: center;
+}
+
+.token_conteneur {
+  position: relative;
+}
+.token_conteneur .modal_sup .modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s;
+  z-index: 9999;
+}
+.token_conteneur .modal_sup .modal.show {
+  visibility: visible;
+  opacity: 1;
+}
+.token_conteneur .modal_sup .modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  max-width: 80%;
+}
+.token_conteneur .modal_sup .modal-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.token_conteneur .modal_sup button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 1rem;
+}
+.token_conteneur .modal_sup #confirmBtn {
+  background: red;
+  color: white;
+}
+.token_conteneur .modal_sup #cancelBtn {
+  background: #ccc;
+  color: black;
+}
+.token_conteneur .modal_sup button:hover {
+  opacity: 0.9;
+}
+
+.copied {
+  animation: fade 1s ease-out;
+}
+
+.modal_enreg {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour l'arrière-plan */
+  z-index: 1000; /* Assure que la modal soit au premier plan */
+}
+.modal_enreg .modal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 100%;
+  max-height: 80%;
+  overflow-y: auto; /* Permet le scrolling si le contenu dépasse */
+}
+.modal_enreg .modal-content {
+  /* Styles pour le contenu de la modal */
+}
+.modal_enreg .date {
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+.modal_enreg .date_debut, .modal_enreg .date_fin {
+  margin: 5px 0;
+}
+.modal_enreg .content {
+  /* Styles pour le contenu principal */
+}
+.modal_enreg .selectAll, .modal_enreg .logement {
+  margin-bottom: 10px;
+}
+.modal_enreg label {
+  display: block;
+  margin-bottom: 5px;
+}
+.modal_enreg input[type=checkbox] {
+  margin-right: 5px;
+}
+.modal_enreg .description {
+  margin-top: 10px;
+}
+.modal_enreg .description p {
+  margin-bottom: 10px;
+}
+.modal_enreg .description img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+.modal_enreg .modal-actions {
+  margin-top: 20px;
+  text-align: right;
+}
+.modal_enreg .modal-actions button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ddd;
+  cursor: pointer;
+}
+.modal_enreg .modal-actions button:hover {
+  background-color: #ccc;
+}
+.modal_enreg .modal-actions #cancelBtn {
+  background-color: #4CAF50;
+  color: white;
+}
+.modal_enreg .modal-actions #cancelBtn:hover {
+  background-color: #45a049;
 }/*# sourceMappingURL=mon_compte.css.map */

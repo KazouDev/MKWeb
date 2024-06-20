@@ -50,7 +50,7 @@ $lineHeight: 1.5;
         color: $mainNoir;
     }
     
-    .info_perso_conteneur, .adresse_conteneur, .photo_conteneur, .mdp_conteneur, .coord_bancaire_conteneur {
+    .info_perso_conteneur, .adresse_conteneur, .photo_conteneur, .mdp_conteneur, .coord_bancaire_conteneur, .token_conteneur {
         display: flex;
         border-radius: 0.75em;
         flex-direction: column;
@@ -214,4 +214,201 @@ $lineHeight: 1.5;
 #mdp_client{
     width: 60%;
     height: max-content;
+}
+
+.token {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+
+.token div input {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid $mainNoir;
+    background: $mainBlanc;
+
+    &::placeholder {
+        color: rgba($mainNoir, 0.50);
+        font-size: $h55Size;
+    }
+}
+
+
+.action {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    div{
+        display: flex;
+        align-items: center;
+    }
+}
+
+
+.token_conteneur{
+    position:relative;
+    .modal_sup{
+        .modal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s;
+            z-index: 9999; 
+        }
+        
+        .modal.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.75rem; 
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); 
+            max-width: 80%; 
+        }
+        
+        .modal-actions {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        button {
+            padding: 0.75rem 1.5rem; 
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 1rem; 
+        }
+        
+        #confirmBtn {
+            background: red;
+            color: white;
+        }
+        
+        #cancelBtn {
+            background: #ccc;
+            color: black;
+        }
+        
+        button:hover {
+            opacity: 0.9;
+        }
+    }
+    
+}
+.copied {
+    animation: fade 1s ease-out;
+}
+
+.modal_enreg{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour l'arrière-plan */
+    z-index: 1000; /* Assure que la modal soit au premier plan */
+    .modal {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        max-width: 600px;
+        width: 100%;
+        max-height: 80%;
+        overflow-y: auto; /* Permet le scrolling si le contenu dépasse */
+    }
+    
+    .modal-content {
+        /* Styles pour le contenu de la modal */
+    }
+    
+    .date {
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+    
+    .date_debut, .date_fin {
+        margin: 5px 0;
+    }
+    
+    .content {
+        /* Styles pour le contenu principal */
+    }
+    
+    .selectAll, .logement {
+        margin-bottom: 10px;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    input[type="checkbox"] {
+        margin-right: 5px;
+    }
+    
+    .description {
+        margin-top: 10px;
+    }
+    
+    .description p {
+        margin-bottom: 10px;
+    }
+    
+    .description img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 8px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+    
+    .modal-actions {
+        margin-top: 20px;
+        text-align: right;
+    }
+    
+    .modal-actions button {
+        padding: 10px 20px;
+        margin-left: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #ddd;
+        cursor: pointer;
+    }
+    
+    .modal-actions button:hover {
+        background-color: #ccc;
+    }
+    
+    .modal-actions #cancelBtn {
+        background-color: #4CAF50;
+        color: white;
+    }
+    
+    .modal-actions #cancelBtn:hover {
+        background-color: #45a049;
+    }
 }
