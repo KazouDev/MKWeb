@@ -430,6 +430,7 @@
   -moz-column-break-inside: avoid;
   font-weight: 300;
   font-size: 1rem;
+  margin-right: 20px;
 }
 
 .logement__note {
