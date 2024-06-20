@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("setup.css");
 .checkLogement {
   border-radius: 0.625rem;
@@ -69,78 +70,105 @@
   background-size: 0.8rem auto;
 }
 
-.dropbtn {
-  cursor: pointer;
-  text-align: left;
-  width: 10rem;
-  border-radius: 0.3125rem;
-  border: 1px solid #222;
-  padding: 0.5rem;
-  color: rgba(34, 34, 34, 0.5);
-  font-size: 1rem;
-  font-weight: 300;
-  background-image: url("../img/down.webp");
-  background-repeat: no-repeat;
-  background-position: right 0.7rem top 50%;
-  background-size: 0.8rem auto;
-}
-
-.dropdown-content {
-  display: none;
-}
-
 .dropdown {
-  display: inline-block;
-}
-
-.dropdown-content {
-  border-radius: 0.75rem;
-  border: 1px solid #909090;
-  background: #FFF;
-  padding: 1rem;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.3125rem;
-}
-
-.dropdown-element {
-  width: 100%;
-  display: flex;
-  padding: 0.5rem;
-  gap: 0.6rem;
-  align-items: center;
-  line-height: normal;
-}
-
-label.dropdown-element.dep {
-  background-image: url("../img/next.webp");
-  background-repeat: no-repeat;
-  background-position: right 0.7rem top 50%;
-  background-size: 0.8rem auto;
-}
-
-input.dropdown-element.search {
-  background-image: url("../img/search.webp");
-  background-repeat: no-repeat;
-  background-position: right 0.7rem top 50%;
-  background-size: 0.8rem auto;
-}
-
-label.dropdown-element:hover {
-  background-color: #E1EBF4;
-}
-
-#departments-dropdown {
+  display: none;
   position: absolute;
-  top: -20px;
+  margin-top: 5px;
+  width: 320px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  padding: 15px;
+  border-radius: 5px;
 }
 
-#communs-dropdown-container {
-  position: absolute;
-  top: -20px;
-  left: 230px;
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.drops {
+.image-container {
   position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border 0.3s;
+  text-align: center;
+  padding: 4px;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.image-grid img {
+  width: 130px;
+  height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.3s;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.image-container figcaption {
+  margin: 5px 0;
+  font-size: 0.8em;
+  color: #333;
+}
+
+.image-container:hover:not(.selected) {
+  border: none;
+  box-shadow: 0 0 0 4px #273EFC inset; /* Blue border on hover, inset */
+  border-radius: 10px;
+}
+
+.image-container:hover:not(.selected) img {
+  filter: none;
+}
+
+.image-container.selected {
+  border: none;
+  box-shadow: 0 0 0 4px #273EFC inset; /* Blue border on selected, inset */
+  border-radius: 10px;
+}
+
+.image-container.selected img {
+  filter: none;
+}
+
+.input-container {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none; /* Ensures the icon doesn't intercept clicks */
+}
+
+/* Styles de base pour l'autocomplétion */
+.autocomplete-suggestions {
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: #fff;
+  position: absolute;
+  margin-top: 5px;
+  z-index: 1;
+}
+
+.autocomplete-suggestion {
+  padding: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.autocomplete-suggestion:hover {
+  background-color: #e9e9e9;
+  z-index: 2;
 }/*# sourceMappingURL=verifier.css.map */

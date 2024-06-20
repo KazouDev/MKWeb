@@ -31,11 +31,36 @@
             <div class="checkLogement">
               <h2>Vérifier la disponibilité</h2>
               <div class="checkLogement__tri">
+                
                 <div class="tri__element">
-                  <label for="communeInput">Commune</label>
-                  <input type="text" id="communeInput" placeholder="Où ?"/>
-                  <div id="autocomplete-list-commune" class="autocomplete-suggestions"></div>
+                  <label for="communeInput">Destination</label>
+                  <div class="input-container">
+                    <input type="text" id="communeInput" placeholder="Où ?"/>
+                    <img src="../img/down.webp" alt="Icon" class="input-icon">
+                    <div id="autocomplete-list-commune" class="autocomplete-suggestions"></div>
+                    <div id="dropdown" class="dropdown">
+                      <div class="image-grid">
+                        <div class="image-container" data-value="Finistère" data-code="29">
+                          <img src="../img/carte-bretagne.gif" alt="Finistère" >
+                          <figcaption>Finistère</figcaption>
+                        </div>
+                        <div class="image-container" data-value="Côte-d'Armor" data-code="22">
+                          <img src="../img/carte-bretagne.gif" alt="Côte-d'Armor">
+                          <figcaption>Côte-d'Armor</figcaption>
+                        </div>
+                        <div class="image-container" data-value="Ille-et-Vilaine" data-code="35">
+                          <img src="../img/carte-bretagne.gif" alt="Ille-et-Vilaine">
+                          <figcaption>Ille-et-Vilaine</figcaption>
+                        </div>
+                        <div class="image-container" data-value="Morbihan" data-code="56">
+                          <img src="../img/carte-bretagne.gif" alt="Morbihan">
+                          <figcaption>Morbihan</figcaption>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+                
                 <div class="tri__element">
                   <label for="daterange">Arrivée - Départ</label>
                   <input type="text" id="daterange" name="daterange" placeholder="Période ?"/>
@@ -53,8 +78,10 @@
                 </div>
                 <div class="tri__element">
                   <label for="proprietaireInput">Propriétaires</label>
-                  <input type="text" id="proprietaireInput" placeholder="Qui ?"/>
-                  <div id="autocomplete-list-proprietaire" class="autocomplete-suggestions"></div>
+                  <div class="input-container">
+                    <input type="text" id="proprietaireInput" placeholder="Qui ?"/>
+                    <div id="autocomplete-list-proprietaire" class="autocomplete-suggestions"></div>
+                  </div>
                 </div>
                 <div class="tri__element">
                   <input id="executeRecherche" type="submit" value="Rechercher"/>
@@ -67,7 +94,7 @@
           <div class="list__logements" style="position: relative;">
             <div class="titre_nos_log">
               <h3 class="list__titre" id="nos_logements">Nos logements</h3>
-              <!--<button id=""><img src="img/sort.webp" alt="Sort"/></button>-->
+              <div class="info__nb_logement" id="nb_logement_trouve"></div>
             </div>
             <div id="loading-overlay" style="display: none;">
               <div class="loader"></div>

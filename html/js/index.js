@@ -24,7 +24,6 @@ let genererCard = {
 
     divCard.classList.add("card__cont");
 
-
     imgCouverture = document.createElement("img");
     imgCouverture.setAttribute("src", "../img" + logement.image_src);
     imgCouverture.setAttribute("alt", logement.image_alt);
@@ -72,66 +71,6 @@ let genererCard = {
     return aLien;
   },
 };
-
-function php_genererAutocompletCommune() {
-  let f_commune = document.getElementById("filtre-commune-codePostal");
-  let communeInput = document.getElementById("communeInput");
-  let autocompleteList = document.getElementById("autocomplete-list-commune");
-
-  let communes = [];
-
-  // Fetch data from API
-  fetch("https://geo.api.gouv.fr/communes?codeRegion=53")
-    .then((response) => response.json())
-    .then((data) => {
-      communes = data;
-    })
-    .catch((error) => console.error("Erreur:", error));
-
-  // Function to filter and display suggestions
-  let filterSuggestions = (input) => {
-    autocompleteList.innerHTML = "";
-    if (!input) return;
-
-    let filteredCommunes = communes.filter((commune) => {
-      let lowerCaseInput = input.toLowerCase();
-      return (
-        commune.nom.toLowerCase().startsWith(lowerCaseInput) ||
-        commune.codesPostaux.some((codePostal) =>
-          codePostal.startsWith(lowerCaseInput)
-        )
-      );
-    });
-
-    filteredCommunes.forEach((commune) => {
-      let suggestionItem = document.createElement("div");
-      suggestionItem.classList.add("autocomplete-suggestion");
-      suggestionItem.textContent = `${commune.nom} (${commune.codesPostaux.join(
-        ", "
-      )})`;
-      suggestionItem.addEventListener("click", () => {
-        f_commune.value = `${commune.codesPostaux.join(", ")}`;
-        communeInput.value =
-          commune.nom + " (" + commune.codesPostaux.join(", ") + ")";
-        autocompleteList.innerHTML = "";
-      });
-      autocompleteList.appendChild(suggestionItem);
-    });
-  };
-
-  // Add event listener for input changes
-  communeInput.addEventListener("input", () => {
-    let inputValue = communeInput.value;
-    filterSuggestions(inputValue);
-  });
-
-  // Hide suggestions when clicking outside
-  document.addEventListener("click", (e) => {
-    if (!autocompleteList.contains(e.target) && e.target !== communeInput) {
-      autocompleteList.innerHTML = "";
-    }
-  });
-}
 
 function php_genererAutocompletProprietaire() {
   $.ajax({
@@ -191,10 +130,9 @@ function php_genererListeLogement() {
   let f_nb_personnes = document.getElementById("nb_personnes").value;
   let f_tarif_min = document.getElementById("tarif_min").value;
   let f_tarif_max = document.getElementById("tarif_max").value;
-  let f_codePostal = undefined; 
-  if (document.getElementById("communeInput").value !== "") {
-    f_codePostal = document.getElementById("filtre-commune-codePostal").value;
-  }
+  let f_codeDepartement = document.getElementById("filtre-departement-code").getAttribute("value");
+  let f_codePostal = document.getElementById("filtre-commune-codePostal").getAttribute("value");
+
   let f_proprietaire = undefined; 
   if (document.getElementById("proprietaireInput").value !== "") {
     f_proprietaire = document.getElementById("filtre-propri-id").value;
@@ -214,14 +152,8 @@ function php_genererListeLogement() {
   if (f_tarif_min != "") { where_req1 += " AND l.base_tarif >= " + f_tarif_min; }
   if (f_tarif_max != "") { where_req1 += " AND l.base_tarif <= " + f_tarif_max; }
   if (f_proprietaire != undefined) { where_req1 += " AND l.id_proprietaire = " + f_proprietaire; }
-  if (f_codePostal != undefined) {
-    f_codePostal = f_codePostal.split(", ");
-    for (let i = 0; i < f_codePostal.length; i++) {
-      if (i == 0) { where_req1 += " AND (a.code_postal = '" + f_codePostal[i] + "'"; } 
-      else { where_req1 += " OR a.code_postal = '" + f_codePostal[i] + "'"; }
-    }
-    where_req1 += ")";
-  }
+  if (f_codeDepartement != null && f_codeDepartement != "") { where_req1 += " AND a.departement = '" + f_codeDepartement.trim() + "'"; }
+  if (f_codePostal != null && f_codePostal != "") { where_req1 += " AND a.code_postal = '" + f_codePostal + "'"; }
 
   let where_req2 = ""; 
   dateDepart.setDate(dateDepart.getDate() + 1);
@@ -245,11 +177,15 @@ function php_genererListeLogement() {
   })
   .done(function(reponse) {
     if (reponse.reponse) {
+      const nb_logement_trouve = document.getElementById("nb_logement_trouve"); 
+      
       let listeLogements = reponse.reponse;
       let logement;
 
       let divLogements = document.getElementById("les__logements");
       divLogements.innerHTML = "";
+
+      nb_logement_trouve.textContent = listeLogements.length;
 
       if (listeLogements.length > 0) {
         /* construction categorie "Nos logements" */
@@ -276,17 +212,143 @@ function php_genererListeLogement() {
 }
 
 
-$(document).ready(function () {
-  /* Appel de les fonctions au chargement de la page */
+document.addEventListener("DOMContentLoaded", () => {
+  const communeInput = document.getElementById("communeInput");
+  const dropdown = document.getElementById("dropdown");
+  const imageContainers = document.querySelectorAll(".image-container");
+  const filtreCommuneCodePostal = document.getElementById("filtre-commune-codePostal");
+  const filtreDepartementCode = document.getElementById("filtre-departement-code");
+
+  // Initialisation de l'autocomplete commune
   php_genererAutocompletCommune();
+  // Initialisation de l'autocomplete propriétaire
   php_genererAutocompletProprietaire();
+  
   php_genererListeLogement();
 
-  /* Appel des fonctions php_genererListeLogement au clic sur le bouton Recherche */
+  /* Appel des fonctions au clic sur le bouton Recherche */
   $("#executeRecherche").click(function () {
     php_genererListeLogement();
   });
+
+  
+  communeInput.addEventListener("click", () => {
+    dropdown.style.display = "block";
+  });
+
+  // Ajouter un événement pour réinitialiser le champ caché et communeInput si le texte est effacé
+  communeInput.addEventListener("input", () => {
+    if (communeInput.value.trim() === "") {
+        imageContainers.forEach((cont) => cont.classList.remove("selected"));
+        filtreDepartementCode.setAttribute("value", "");
+        filtreCommuneCodePostal.setAttribute("value", "");
+        dropdown.style.display = "block";
+    } else {
+        dropdown.style.display = "none";
+    }
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target !== communeInput && !dropdown.contains(event.target)) {
+      dropdown.style.display = "none";
+    }
+  });
+
+  imageContainers.forEach((container) => {
+    container.addEventListener("click", () => {
+        // Retirer la classe 'selected' de toutes les autres images
+        imageContainers.forEach((cont) => cont.classList.remove("selected"));
+
+        // Ajouter la classe 'selected' à l'image cliquée
+        container.classList.add("selected");
+
+        // Mettre à jour le champ communeInput avec le nom et le code du département
+        const departmentName = container.getAttribute("data-value");
+        const departmentCode = container.getAttribute("data-code");
+        communeInput.value = `${departmentName} (${departmentCode})`;
+
+        // Mettre à jour le champ caché avec le code du département
+        filtreDepartementCode.setAttribute("value", departmentName);
+
+        // Réinitialiser le champ filtreCommuneCodePostal
+        filtreCommuneCodePostal.setAttribute("value", "");
+
+        // Fermer le dropdown
+        dropdown.style.display = "none";
+    });
+  });
+
+
+  // Fonction de gestion de l'autocomplete
+  function php_genererAutocompletCommune() {
+    // Fetch des données depuis l'API (adapter à votre API)
+    let communes = [];
+
+    fetch("https://geo.api.gouv.fr/communes?codeRegion=53")
+        .then((response) => response.json())
+        .then((data) => {
+            communes = data;
+        })
+        .catch((error) => console.error("Erreur:", error));
+
+    // Filtrage et affichage des suggestions
+    communeInput.addEventListener("input", () => {
+        let inputValue = communeInput.value.trim().toLowerCase();
+        let filteredCommunes = communes.filter((commune) =>
+            commune.nom.toLowerCase().startsWith(inputValue)
+        );
+
+        let suggestions = filteredCommunes.map((commune) => {
+            return `${commune.nom} (${commune.codesPostaux.join(", ")})`;
+        });
+
+        // Affichage des suggestions
+        displaySuggestions(suggestions);
+    });
+
+    // Affichage des suggestions dans l'élément autocomplete-list-commune
+    function displaySuggestions(suggestions) {
+        let autocompleteList = document.getElementById("autocomplete-list-commune");
+        autocompleteList.innerHTML = "";
+
+        suggestions.forEach((suggestion) => {
+            let suggestionItem = document.createElement("div");
+            suggestionItem.classList.add("autocomplete-suggestion");
+            suggestionItem.textContent = suggestion;
+            suggestionItem.addEventListener("click", () => {
+                let selectedText = suggestionItem.textContent;
+                let selectedCommune = communes.find((commune) =>
+                    selectedText.includes(commune.nom)
+                );
+
+                if (selectedCommune) {
+                    let codePostal = selectedCommune.codesPostaux[0];
+                    filtreCommuneCodePostal.setAttribute("value", codePostal);
+                    communeInput.value = selectedText;
+
+                    // Réinitialiser le champ de sélection de département
+                    imageContainers.forEach((cont) => cont.classList.remove("selected"));
+                    filtreDepartementCode.setAttribute("value", "");
+
+                    // Fermer le dropdown
+                    dropdown.style.display = "none";
+                }
+            });
+            autocompleteList.appendChild(suggestionItem);
+        });
+    }
+
+    // Gestion de la fermeture des suggestions au clic en dehors
+    document.addEventListener("click", (e) => {
+        let autocompleteList = document.getElementById("autocomplete-list-commune");
+        if (!autocompleteList.contains(e.target) && e.target !== communeInput) {
+            autocompleteList.innerHTML = "";
+        }
+    });
+  }
+  
 });
+
 
 /* Gestion buton découvrir plus / Voir moins des logements */
 let btn_decouvrir = document.getElementById("decouvrir_plus");
