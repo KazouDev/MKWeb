@@ -10,7 +10,7 @@ CREATE TABLE _utilisateur (
   nom VARCHAR(255) NOT NULL,
   prenom VARCHAR(255) NOT NULL,
   date_naissance DATE NOT NULL,
-  civilite VARCHAR(4) NOT NULL,
+  civilite VARCHAR(4),
   pseudo VARCHAR(255) NOT NULL,
   mot_de_passe VARCHAR(255) NOT NULL,
   photo_profile VARCHAR(255) NOT NULL,
@@ -28,7 +28,6 @@ CREATE TABLE _carte_identite (
 
 CREATE TABLE _compte_proprietaire (
   id SERIAL PRIMARY KEY,
-  id_identite INT NOT NULL,
   IBAN VARCHAR(255) NOT NULL,
   BIC VARCHAR(255) NOT NULL,
   Titulaire VARCHAR(255) NOT NULL
@@ -277,10 +276,6 @@ ALTER TABLE _image
   ADD CONSTRAINT _image_logementid FOREIGN KEY (id_logement)
     REFERENCES _logement (id);
 
-ALTER TABLE _compte_proprietaire
-  ADD CONSTRAINT _compte_proprietaire_identite FOREIGN KEY (id_identite)
-    REFERENCES _carte_identite (id);
-
 -- TRIGGER
 
 CREATE OR REPLACE FUNCTION insert_cal_trigger()
@@ -509,27 +504,27 @@ INSERT INTO _carte_identite (piece_id_recto, piece_id_verso, valide) VALUES
 ('/piece/19_Pires_recto.jpg', '/piece/19_Pires_verso.jpg', true), 
 ('/piece/20_Blanc_recto.jpg', '/piece/20_Blanc_verso.jpg', true);
 
-INSERT INTO _compte_proprietaire (id, id_identite, IBAN, BIC, Titulaire) VALUES 
-(1, 1, 'FR7612345678901234567890123', 'AGRIFRPPXXX', 'Dupont Jean'),
-(2, 2, 'FR7612345678901234567890124', 'AGRIFRPPXXX', 'Martin Marie'),
-(3, 3, 'FR7612345678901234567890125', 'AGRIFRPPXXX', 'Lefevre Pierre'),
-(4, 4, 'FR7612345678901234567890126', 'AGRIFRPPXXX', 'Bernard Sophie'),
-(5, 4, 'FR7612345678901234567890127', 'AGRIFRPPXXX', 'Dubois Jacques'),
-(6, 6, 'FR7612345678901234567890128', 'AGRIFRPPXXX', 'Moreau Camille'),
-(7, 7, 'FR7612345678901234567890129', 'AGRIFRPPXXX', 'Petit Louis'),
-(8, 8, 'FR7612345678901234567890130', 'AGRIFRPPXXX', 'Laurent Emma'),
-(9, 9, 'FR7612345678901234567890131', 'AGRIFRPPXXX', 'Simon Paul'),
-(10, 10, 'FR7612345678901234567890132', 'AGRIFRPPXXX', 'Michel Julie'),
-(11, 11, 'FR7612345678901234567890133', 'AGRIFRPPXXX', 'Richard Henri'),
-(12, 12, 'FR7612345678901234567890134', 'AGRIFRPPXXX', 'Robert Claire'),
-(13, 13, 'FR7612345678901234567890135', 'AGRIFRPPXXX', 'Durand Marc'),
-(14, 14, 'FR7612345678901234567890136', 'AGRIFRPPXXX', 'Dubreuil Isabelle'),
-(15, 15, 'FR7612345678901234567890137', 'AGRIFRPPXXX', 'Legrand Philippe'),
-(16, 16, 'FR7612345678901234567890138', 'AGRIFRPPXXX', 'Fournier Elise'),
-(17, 17, 'FR7612345678901234567890139', 'AGRIFRPPXXX', 'Girard Nicolas'),
-(18, 18, 'FR7612345678901234567890140', 'AGRIFRPPXXX', 'Roux Alice'),
-(19, 19, 'FR7612345678901234567890141', 'AGRIFRPPXXX', 'Pires Antoine'),
-(20, 20, 'FR7612345678901234567890142', 'AGRIFRPPXXX', 'Blanc Lucie');
+INSERT INTO _compte_proprietaire (id, IBAN, BIC, Titulaire) VALUES 
+(1, 'FR7612345678901234567890123', 'AGRIFRPPXXX', 'Dupont Jean'),
+(2, 'FR7612345678901234567890124', 'AGRIFRPPXXX', 'Martin Marie'),
+(3, 'FR7612345678901234567890125', 'AGRIFRPPXXX', 'Lefevre Pierre'),
+(4, 'FR7612345678901234567890126', 'AGRIFRPPXXX', 'Bernard Sophie'),
+(5, 'FR7612345678901234567890127', 'AGRIFRPPXXX', 'Dubois Jacques'),
+(6, 'FR7612345678901234567890128', 'AGRIFRPPXXX', 'Moreau Camille'),
+(7, 'FR7612345678901234567890129', 'AGRIFRPPXXX', 'Petit Louis'),
+(8, 'FR7612345678901234567890130', 'AGRIFRPPXXX', 'Laurent Emma'),
+(9, 'FR7612345678901234567890131', 'AGRIFRPPXXX', 'Simon Paul'),
+(10, 'FR7612345678901234567890132', 'AGRIFRPPXXX', 'Michel Julie'),
+(11, 'FR7612345678901234567890133', 'AGRIFRPPXXX', 'Richard Henri'),
+(12, 'FR7612345678901234567890134', 'AGRIFRPPXXX', 'Robert Claire'),
+(13, 'FR7612345678901234567890135', 'AGRIFRPPXXX', 'Durand Marc'),
+(14, 'FR7612345678901234567890136', 'AGRIFRPPXXX', 'Dubreuil Isabelle'),
+(15, 'FR7612345678901234567890137', 'AGRIFRPPXXX', 'Legrand Philippe'),
+(16, 'FR7612345678901234567890138', 'AGRIFRPPXXX', 'Fournier Elise'),
+(17, 'FR7612345678901234567890139', 'AGRIFRPPXXX', 'Girard Nicolas'),
+(18, 'FR7612345678901234567890140', 'AGRIFRPPXXX', 'Roux Alice'),
+(19, 'FR7612345678901234567890141', 'AGRIFRPPXXX', 'Pires Antoine'),
+(20, 'FR7612345678901234567890142', 'AGRIFRPPXXX', 'Blanc Lucie');
 
 INSERT INTO _langue_proprietaire(id_proprietaire, id_langue) VALUES
 (1, 1), (1, 2), (1, 3), -- Propriétaire 1 (Français, Anglais, Allemand)
@@ -602,13 +597,35 @@ INSERT INTO _logement(titre, description, accroche, base_tarif, surface, nb_max_
 
 INSERT INTO _image (src, principale, alt, id_logement)
 SELECT 
+    CONCAT('/logement/', l.id, '/', n.num, '.webp') AS src,
+    CASE WHEN n.num = 1 THEN true ELSE false END AS principale,
+    l.titre AS alt,
+    l.id AS id_logement
+FROM _logement l
+CROSS JOIN (SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5) n
+WHERE l.id BETWEEN 1 AND 5;
+
+INSERT INTO _image (src, principale, alt, id_logement)
+SELECT 
+    CONCAT('/logement/', l.id, '/', n.num, '.webp') AS src,
+    CASE WHEN n.num = 1 THEN true ELSE false END AS principale,
+    l.titre AS alt,
+    l.id AS id_logement
+FROM _logement l
+CROSS JOIN (SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5) n
+WHERE l.id BETWEEN 6 AND 18
+AND n.num = 1;
+
+INSERT INTO _image (src, principale, alt, id_logement)
+SELECT 
     CONCAT('/logement/', l.id, '/', n.num, '.jpg') AS src,
     CASE WHEN n.num = 1 THEN true ELSE false END AS principale,
     l.titre AS alt,
     l.id AS id_logement
 FROM _logement l
 CROSS JOIN (SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5) n
-WHERE l.id BETWEEN 1 AND 45;
+WHERE l.id BETWEEN 19 AND 45
+AND n.num = 1;
 
 INSERT INTO _activite_logement(id_logement, activite, id_distance) VALUES 
 (1, 'Baignade', 1),
