@@ -346,33 +346,68 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
   }
+
+  /* Gestion buton découvrir plus / Voir moins des logements */
+  let btn_decouvrir = document.getElementById("decouvrir_plus");
+  let btn_decouvrir_moins = document.getElementById("decouvrir_moins");
+  let nos_logements = document.getElementById("nos_logements");
+
+  btn_decouvrir.addEventListener("click", function () {
+    var elements_caches = document.querySelectorAll(".card__cont_cacher");
+    elements_caches.forEach(function (element) {
+      element.style.display = "flex";
+    });
+    btn_decouvrir.style.display = "none";
+    btn_decouvrir_moins.style.display = "block";
+  });
+
+  btn_decouvrir_moins.addEventListener("click", function () {
+    var elements_caches = document.querySelectorAll(".card__cont_cacher");
+    elements_caches.forEach(function (element) {
+      element.style.display = "none";
+    });
+    btn_decouvrir.style.display = "block";
+    btn_decouvrir_moins.style.display = "none";
+    nos_logements.scrollIntoView({ behavior: "smooth" });
+  });
+
+  /* Gestion Image tri */
+  const triImage = document.getElementById('tri_image');
+  const up = triImage.querySelector('.tri__up');
+  const upDark = triImage.querySelector('.tri__up-dark');
+  const down = triImage.querySelector('.tri__down');
+  const downDark = triImage.querySelector('.tri__down-dark');
+
+  let clickCount = 0;
+
+  triImage.addEventListener('click', () => {
+    clickCount++;
+    switch (clickCount) {
+      case 1:
+        up.style.display = 'none';
+        upDark.style.display = 'block';
+        down.style.display = 'block';
+        downDark.style.display = 'none';
+        break;
+      case 2:
+        up.style.display = 'block';
+        upDark.style.display = 'none';
+        down.style.display = 'none';
+        downDark.style.display = 'block';
+        break;
+      default:
+        clickCount = 0;
+        up.style.display = 'block';
+        upDark.style.display = 'none';
+        down.style.display = 'block';
+        downDark.style.display = 'none';
+        break;
+    }
+    
+  });
   
 });
 
-
-/* Gestion buton découvrir plus / Voir moins des logements */
-let btn_decouvrir = document.getElementById("decouvrir_plus");
-let btn_decouvrir_moins = document.getElementById("decouvrir_moins");
-let nos_logements = document.getElementById("nos_logements");
-
-btn_decouvrir.addEventListener("click", function () {
-  var elements_caches = document.querySelectorAll(".card__cont_cacher");
-  elements_caches.forEach(function (element) {
-    element.style.display = "flex";
-  });
-  btn_decouvrir.style.display = "none";
-  btn_decouvrir_moins.style.display = "block";
-});
-
-btn_decouvrir_moins.addEventListener("click", function () {
-  var elements_caches = document.querySelectorAll(".card__cont_cacher");
-  elements_caches.forEach(function (element) {
-    element.style.display = "none";
-  });
-  btn_decouvrir.style.display = "block";
-  btn_decouvrir_moins.style.display = "none";
-  nos_logements.scrollIntoView({ behavior: "smooth" });
-});
 
 /* Gestion du calendrier */
 $(function () {

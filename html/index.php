@@ -36,7 +36,7 @@
                   <label for="communeInput">Destination</label>
                   <div class="input-container">
                     <input type="text" id="communeInput" placeholder="Où ?"/>
-                    <img src="../img/down.webp" alt="Icon" class="input-icon">
+                    <img src="../img/down.png" alt="Icon" class="input-icon">
                     <div id="autocomplete-list-commune" class="autocomplete-suggestions"></div>
                     <div id="dropdown" class="dropdown">
                       <div class="image-grid">
@@ -93,8 +93,19 @@
         <div class="main__container main__logement">
           <div class="list__logements" style="position: relative;">
             <div class="titre_nos_log">
-              <h3 class="list__titre" id="nos_logements">Nos logements</h3>
-              <div class="info__nb_logement" id="nb_logement_trouve"></div>
+              <div class="titre__logement">
+                <h3 class="list__titre" id="nos_logements">Nos logements</h3>
+                <div class="info__nb_logement" id="nb_logement_trouve"></div>
+              </div>
+              <div class="tri__logements">
+                <p>Tri par tarif</p>
+                <div class="image-stack" id="tri_image">
+                  <img class="tri__up" src="../img/up.png" alt="Croissant">
+                  <img class="tri__up-dark" src="../img/up-dark.png" alt="Croissant">
+                  <img class="tri__down" src="../img/down.png" alt="Décroissant">
+                  <img class="tri__down-dark" src="../img/down-dark.png" alt="Croissant">
+                </div>
+              </div>
             </div>
             <div id="loading-overlay" style="display: none;">
               <div class="loader"></div>
