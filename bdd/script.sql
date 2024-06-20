@@ -613,18 +613,7 @@ SELECT
     l.id AS id_logement
 FROM _logement l
 CROSS JOIN (SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5) n
-WHERE l.id BETWEEN 6 AND 18
-AND n.num = 1;
-
-INSERT INTO _image (src, principale, alt, id_logement)
-SELECT 
-    CONCAT('/logement/', l.id, '/', n.num, '.jpg') AS src,
-    CASE WHEN n.num = 1 THEN true ELSE false END AS principale,
-    l.titre AS alt,
-    l.id AS id_logement
-FROM _logement l
-CROSS JOIN (SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5) n
-WHERE l.id BETWEEN 19 AND 45
+WHERE l.id BETWEEN 6 AND 45
 AND n.num = 1;
 
 INSERT INTO _activite_logement(id_logement, activite, id_distance) VALUES 
