@@ -133,19 +133,12 @@ function php_genererListeLogement() {
   let f_codeDepartement = document.getElementById("filtre-departement-code").getAttribute("value");
   let f_codePostal = document.getElementById("filtre-commune-codePostal").getAttribute("value");
 
+  let t_tarif = document.getElementById("tri-tarif").getAttribute("value");
+
   let f_proprietaire = undefined; 
   if (document.getElementById("proprietaireInput").value !== "") {
     f_proprietaire = document.getElementById("filtre-propri-id").value;
   }
-
-  let f_date_deb = undefined;
-  let f_date_fin = undefined;
-  if ($('input[name="daterange"]').val() != "") {
-    f_date_deb = document.getElementById("filtre-date-deb").value;
-    f_date_fin = document.getElementById("filtre-date-fin").value;
-  }
-  let dateArrive = new Date(f_date_deb);
-  let dateDepart = new Date(f_date_fin);
 
   let where_req1 = "";
   if (f_nb_personnes != "") { where_req1 += " AND l.nb_max_personne >= " + f_nb_personnes; }
@@ -155,7 +148,19 @@ function php_genererListeLogement() {
   if (f_codeDepartement != null && f_codeDepartement != "") { where_req1 += " AND a.departement = '" + f_codeDepartement.trim() + "'"; }
   if (f_codePostal != null && f_codePostal != "") { where_req1 += " AND a.code_postal = '" + f_codePostal + "'"; }
 
-  let where_req2 = ""; 
+  if (t_tarif != null && f_codePostal != "") { where_req1 += " ORDER BY l.base_tarif"; }
+  if (t_tarif === "desc") { where_req1 += " DESC"; }
+
+  /*let f_date_deb = undefined;
+  let f_date_fin = undefined;
+  if ($('input[name="daterange"]').val() != "") {
+    f_date_deb = document.getElementById("filtre-date-deb").value;
+    f_date_fin = document.getElementById("filtre-date-fin").value;
+  }
+  let dateArrive = new Date(f_date_deb);
+  let dateDepart = new Date(f_date_fin);
+
+  */let where_req2 = ""; /*
   dateDepart.setDate(dateDepart.getDate() + 1);
   let i = 0;
   for (let d = new Date(dateArrive) ; d < dateDepart ; d.setDate(d.getDate() + 1)) {
@@ -164,7 +169,7 @@ function php_genererListeLogement() {
     else { where_req2 += " OR sae._calendrier.date = '" + formattedDate + "'"; }
     i++;
   }
-  if (where_req2 !== "") { where_req2 += ")"; }
+  if (where_req2 !== "") { where_req2 += ")"; }*/
 
   // Afficher chargement
   document.getElementById("loading-overlay").style.display = "flex";
@@ -377,6 +382,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const upDark = triImage.querySelector('.tri__up-dark');
   const down = triImage.querySelector('.tri__down');
   const downDark = triImage.querySelector('.tri__down-dark');
+  const tri_tarif = document.getElementById('tri-tarif');
 
   let clickCount = 0;
 
@@ -388,12 +394,14 @@ document.addEventListener("DOMContentLoaded", () => {
         upDark.style.display = 'block';
         down.style.display = 'block';
         downDark.style.display = 'none';
+        tri_tarif.setAttribute("value", "asc");
         break;
       case 2:
         up.style.display = 'block';
         upDark.style.display = 'none';
         down.style.display = 'none';
         downDark.style.display = 'block';
+        tri_tarif.setAttribute("value", "desc");
         break;
       default:
         clickCount = 0;
@@ -401,9 +409,10 @@ document.addEventListener("DOMContentLoaded", () => {
         upDark.style.display = 'none';
         down.style.display = 'block';
         downDark.style.display = 'none';
+        tri_tarif.setAttribute("value", "");
         break;
     }
-    
+    php_genererListeLogement();
   });
   
 });

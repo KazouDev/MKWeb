@@ -127,6 +127,8 @@
     <div id="filtre-propri-id" style="display: none"></div>
     <div id="filtre-date-deb" style="display: none"></div>
     <div id="filtre-date-fin" style="display: none"></div>
+    
+    <div id="tri-tarif" style="display: none"></div>
 
     <script src="js/index.js"></script>
   </body>
