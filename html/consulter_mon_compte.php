@@ -61,7 +61,7 @@
             <div class="detail_mon_compte__conteneur">
                 <div class="header_info_compte">
                     <h2>Mon Compte</h2>
-                    <div class ="identifiant_client"><h3 id="identifiant_client">Identifiant client : </h3><h3><?= " " . $id_utilisateur ?></h3></div>
+                    <div class ="identifiant_client"><h3 id="identifiant_client">Identifiant client : </h3><h3><?= "  " . $id_utilisateur ?></h3></div>
                 </div>
               
                 <div class="compte_form">

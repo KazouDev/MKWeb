@@ -106,9 +106,7 @@ EOT;
     $rep_langue = request($query_langue);
     $rep_activite = request($query_activite);
     $rep_photo = request($query_photo);
-
     $titre_logement =  $rep_logement['titre'] ;
-
     $ville = $rep_logement['commune'];
     $departement = $rep_logement['departement'];
     $accroche = $rep_logement['accroche'];
@@ -143,8 +141,6 @@ EOT;
     foreach($rep_activite as $cle => $activite){
         $liste_activite[$activite['activite']] = $activite['perimetre'] ;
     }
-
-
     print <<<EOT
     <script>
         const JOUR_MIN = {$min_jour};
@@ -339,8 +335,8 @@ EOT;
 
                             <div class="res__fromulaire">
                                 
-                                    <input type="text" name="dateDebut" >
-                                    <input type="text" name="dateFin" >
+                                    <input type="text" name="dateDebut" hidden>
+                                    <input type="text" name="dateFin" hidden>
 
                                     <input type="text" name="prix_ht"  hidden>
                                     <input type="text" name="prix_ttc" hidden>
