@@ -19,7 +19,6 @@
 
         </div>
     </header>
-    <script src="../js/header.js"></script>
 <?php 
     } else {
         require_once '../../utils.php';

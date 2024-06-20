@@ -185,7 +185,6 @@ function formatDateWithShortMonth($date)
         </main>
         <?php require_once './footer.php'; ?>
     </div>
-    <script src="js/script.js"></script>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 // Fonction pour afficher les réservations en fonction de la catégorie sélectionnée
