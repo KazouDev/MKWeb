@@ -23,7 +23,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
     )
       return;
     if (e.target === fermerMenu || !menu.contains(e.target)) {
-      
       menu.style.display = "none";
     }
   });

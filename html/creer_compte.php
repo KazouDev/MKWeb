@@ -96,14 +96,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user_id) {
                 if (isset($_FILES["photo_profil"]["tmp_name"]) && $_FILES["photo_profil"]["tmp_name"] !== "") {
                     $extension = pathinfo($_FILES["photo_profil"]['name'], PATHINFO_EXTENSION);
-                    $photo_path = "/compte/profile_$pseudo.$extension";
+                    $photo_path = "img/compte/profile_$pseudo.$extension";
+                    $photo_path_bdd = "/compte/profile_$pseudo.$extension";
                     move_uploaded_file($_FILES["photo_profil"]["tmp_name"], $photo_path);
                 } else {
                     $extension = pathinfo("img/anonymus.webp", PATHINFO_EXTENSION);
-                    $photo_path = "/compte/profile_anonymous.$extension";
+                    $photo_path = "img/compte/profile_anonymous.$extension";
+                    $photo_path_bdd = "/compte/profile_anonymous.$extension";
                 }
 
-                request("UPDATE sae._utilisateur SET photo_profile = '$photo_path' WHERE id = $user_id");
+                request("UPDATE sae._utilisateur SET photo_profile = '$photo_path_bdd' WHERE id = $user_id");
+
 
                 insert('sae._compte_client', ["id"], [$user_id]);
                 echo "Utilisateur créé avec succès.";
@@ -210,7 +213,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="connect__input">
                                 <label for="connect__pass">Mot de passe</label>
                                 <input type="password" name="mot_de_passe" id="connect__pass"
-                                    placeholder="Au moins avoir 8 caractères" required>
+                                    placeholder="Au moins 8 caractères" required>
                             </div>
                             <div class="connect__input">
                                 <label for="connect__pass2">Entrez le mot de passe à nouveau</label>

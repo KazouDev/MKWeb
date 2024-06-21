@@ -414,7 +414,7 @@ function validateAccountHolder($holder)
                             <div class="connect__input">
                                 <label for="connect__pass">Mot de passe</label>
                                 <input type="password" name="mot_de_passe" id="connect__pass"
-                                    placeholder="Au moins avoir 8 caractères" required>
+                                    placeholder="Au moins 8 caractères" required>
                             </div>
                             <div class="connect__input">
                                 <label for="connect__pass2">Entrez le mot de passe à nouveau</label>
