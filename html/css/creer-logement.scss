@@ -51,17 +51,22 @@ $lineHeight: 1.5;
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex-direction: row;
 
     > div {
       display: flex;
       align-items: center;
       flex-direction: row;
+      
 
       img {
         max-width: $sizeIcone;
         margin-left: 1.1em;
       }
+    }
+    &> i{
+        font-size: 1.875rem;
     }
   }
 

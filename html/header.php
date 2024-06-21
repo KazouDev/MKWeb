@@ -69,6 +69,9 @@
                 <li class="menu__item">
                     <a href="index.php" class="menu__link">Contact</a>
                 </li>
+                <li class="menu__item">
+                    <a href="buisness/index.php" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
+                 </li>
                 <li class="menu__item hide">
                     <a href="consulter_mon_compte.php" class="menu__link">Mon compte</a>
                 </li>
@@ -90,7 +93,7 @@
     <div class="header__form">
         <a href=""><i class="fa-regular fa-eye-slash" style="color: #222222;"></i></a>
             <div class="user__info" id="header__info">
-                <img src="../img/<?=$photo_user?>" alt="Photo User" class="user__photo">
+                <img src="../img<?=$photo_user?>" alt="Photo User" class="user__photo">
                 <p><?= $user_info["pseudo"] ?></p>
                 <img src="../img/fleche.webp" alt="Ouvrir le menu" class="user__down">
             </div>                   
