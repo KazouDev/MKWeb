@@ -66,7 +66,7 @@
                 </div>
                 <div class="tri__element daterange">
                   <label for="daterange">Arrivée - Départ</label>
-                  <input type="text" id="daterange" name="daterange" placeholder="Période ?"/>
+                  <input type="text" id="daterange" name="daterange" placeholder="Période ?" readonly/>
                 </div>
                 <div class="tri__element nb_personnes">
                   <label for="nb_personnes">Nombre de voyageurs</label>

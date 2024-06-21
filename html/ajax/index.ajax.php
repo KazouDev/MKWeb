@@ -18,15 +18,15 @@ function genererListeLogement($where_req1, $where_req2) {
                 LEFT JOIN sae._image img ON l.id = img.id_logement AND img.principale = true
             WHERE l.en_ligne = true
                 ".$where_req1; 
-    /*if ($where_req2 != "") {
+    if ($where_req2 != "") {
         $query = $query . "
                 AND l.id NOT IN (
                     SELECT DISTINCT c.id_logement
                     FROM sae._calendrier c
-                    WHERE c.statut <> '' 
+                    WHERE c.statut <> ''
                         ".$where_req2."
             )";
-    }*/
+    }
     $query = $query . ";";
     $reponse = request($query);
     return $reponse;
