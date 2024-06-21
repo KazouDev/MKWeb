@@ -291,4 +291,8 @@ header.buisness .header__connexion {
 }
 header.buisness .header__form a i {
   color: #FFFFFF;
+}
+
+.header {
+  margin-bottom: 0px;
 }/*# sourceMappingURL=header.css.map */

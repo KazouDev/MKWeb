@@ -12,10 +12,10 @@ window.addEventListener("DOMContentLoaded", (event) => {
   CmdMenu.addEventListener("click", function () {
     if (LeMenu.style.display === "none") {
       LeMenu.style.display = "";
-      CmdMenu.src = "../img/fermer.webp"; // Change l'icône en icône de fermeture
+      CmdMenu.src = "/html/img/fermer.webp"; // Change l'icône en icône de fermeture
     } else {
       LeMenu.style.display = "none";
-      CmdMenu.src = "../img/menu.webp"; // Change l'icône en icône de menu
+      CmdMenu.src = "/html/img/menu.webp"; // Change l'icône en icône de menu
     }
   });
   window.onload = function () {
