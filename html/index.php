@@ -29,14 +29,18 @@
             <h1>Votre retraite bretonne vous attend</h1>
             <h2 class="top__nom">Trouvez votre hébergement idéal</h2>
             <div class="checkLogement">
-              <h2>Vérifier la disponibilité</h2>
+              <div class="checkLogement__titre">
+                <h2>Vérifier la disponibilité</h2>
+                <img src="../img/filter-3.webp" alt="Filtres">
+              </div>
               <div class="checkLogement__tri">
-                
-                <div class="tri__element">
+                <div class="tri__element filtre__complet">
+                  <input id="filtre_complet" placeholder="Destination" name="filtre__complet" readonly/>
+                </div>
+                <div class="tri__element communeInput">
                   <label for="communeInput">Destination</label>
                   <div class="input-container">
                     <input type="text" id="communeInput" placeholder="Où ?"/>
-                    <img src="../img/down.webp" alt="Icon" class="input-icon">
                     <div id="autocomplete-list-commune" class="autocomplete-suggestions"></div>
                     <div id="dropdown" class="dropdown">
                       <div class="image-grid">
@@ -60,23 +64,22 @@
                     </div>
                   </div>
                 </div>
-                
-                <div class="tri__element">
+                <div class="tri__element daterange">
                   <label for="daterange">Arrivée - Départ</label>
                   <input type="text" id="daterange" name="daterange" placeholder="Période ?"/>
                 </div>
-                <div class="tri__element">
+                <div class="tri__element nb_personnes">
                   <label for="nb_personnes">Nombre de voyageurs</label>
                   <input type="number" id="nb_personnes" placeholder="Combien ?" name="nombre_personnes" min="1"/>
                 </div>
-                <div class="tri__element">
+                <div class="tri__element tarif">
                   <label for="tarif">Tarif/jour</label>
                   <div id="tarif_range">
                     <input type="number" placeholder="Min" id="tarif_min" name="tarif_min" min="0" step="5"/>
                     <input type="number" placeholder="Max" id="tarif_max" name="tarif_max" min="0" step="5"/>
                   </div>
                 </div>
-                <div class="tri__element">
+                <div class="tri__element proprietaireInput">
                   <label for="proprietaireInput">Propriétaires</label>
                   <div class="input-container">
                     <input type="text" id="proprietaireInput" placeholder="Qui ?"/>
