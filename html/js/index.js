@@ -336,6 +336,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             autocompleteList.appendChild(suggestionItem);
         });
+        // Afficher les suggestions
+        autocompleteList.style.display = "block";
     }
 
     // Masquer les suggestions
