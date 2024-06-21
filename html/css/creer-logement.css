@@ -15,6 +15,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-direction: row;
 }
 .main__container > .top > div {
@@ -25,6 +26,9 @@
 .main__container > .top > div img {
   max-width: 2.5em;
   margin-left: 1.1em;
+}
+.main__container > .top > i {
+  font-size: 1.875rem;
 }
 .main__container h1 {
   text-align: left;
