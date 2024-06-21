@@ -148,25 +148,35 @@ function php_genererListeLogement() {
   if (t_tarif != null && t_tarif != "") { where_req1 += " ORDER BY l.base_tarif"; }
   if (t_tarif === "desc") { where_req1 += " DESC"; }
 
-  /*let f_date_deb = undefined;
-  let f_date_fin = undefined;
-  if ($('input[name="daterange"]').val() != "") {
-    f_date_deb = document.getElementById("filtre-date-deb").value;
-    f_date_fin = document.getElementById("filtre-date-fin").value;
+  let f_date_deb = document.getElementById("filtre-date-deb").getAttribute("value");
+  let f_date_fin = document.getElementById("filtre-date-fin").getAttribute("value");
+  
+  let where_req2 = "";
+  if ((f_date_deb != null && f_date_deb != "") && (f_date_fin != null && f_date_fin != "")) {
+    // Convertir les valeurs en objets Date
+    let dateArrive = new Date(f_date_deb);
+    let dateDepart = new Date(f_date_fin);
+  
+    // Ajouter un jour à la date de départ pour l'inclusivité
+    dateDepart.setDate(dateDepart.getDate() + 1);
+  
+    let i = 0;
+  
+    // Itérer sur chaque jour de la plage de dates
+    for (let d = new Date(dateArrive); d < dateDepart; d.setDate(d.getDate() + 1)) {
+      let formattedDate = d.toISOString().split("T")[0];
+      if (i === 0) {
+        where_req2 += " AND (c.date = '" + formattedDate + "'";
+      } else {
+        where_req2 += " OR c.date = '" + formattedDate + "'";
+      }
+      i++;
+    }
+  
+    if (where_req2 !== "") {
+      where_req2 += ")";
+    }
   }
-  let dateArrive = new Date(f_date_deb);
-  let dateDepart = new Date(f_date_fin);
-
-  */let where_req2 = ""; /*
-  dateDepart.setDate(dateDepart.getDate() + 1);
-  let i = 0;
-  for (let d = new Date(dateArrive) ; d < dateDepart ; d.setDate(d.getDate() + 1)) {
-    let formattedDate = d.toISOString().split("T")[0];
-    if (i == 0) { where_req2 += " AND (sae._calendrier.date = '" + formattedDate + "'"; } 
-    else { where_req2 += " OR sae._calendrier.date = '" + formattedDate + "'"; }
-    i++;
-  }
-  if (where_req2 !== "") { where_req2 += ")"; }*/
 
   // Afficher chargement
   document.getElementById("loading-overlay").style.display = "flex";
@@ -418,39 +428,76 @@ document.addEventListener("DOMContentLoaded", () => {
     php_genererListeLogement();
   });
   
-});
+  /* Gestion du calendrier */
+  $(function () {
+    // Fonction pour initialiser le date range picker
+    function initializeDateRangePicker() {
+      $('input[name="daterange"]').daterangepicker(
+        {
+          minDate: moment(),
+          autoUpdateInput: false,
+          locale: {
+            format: "DD/MM/YYYY",
+            applyLabel: "Confirmer",
+            cancelLabel: "Annuler",
+            daysOfWeek: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+            monthNames: [
+              "Janvier",   "Février", "Mars",     "Avril",
+              "Mai",       "Juin",    "Juillet",  "Août",
+              "Septembre", "Octobre", "Novembre", "Décembre"
+            ],
+            firstDay: 1,
+          },
+          applyButtonClasses: "custom-apply-button",
+          cancelButtonClasses: "custom-cancel-button",
+        },
+        function (start, end, label) {
+          let displayText;
+          if (start.isSame(end, 'day')) {
+            displayText = start.format("DD/MM/YYYY");
+          } else {
+            displayText = start.format("DD/MM/YYYY") + " - " 
+                        + end.format("DD/MM/YYYY");
+          }
 
-
-/* Gestion du calendrier */
-$(function () {
-  $('input[name="daterange"]').daterangepicker(
-    {
-      opens: "right",
-      startDate: moment(),
-      autoUpdateInput: false,
-      locale: {
-        format: "DD/MM/YYYY",
-        applyLabel: "Confirmer",
-        cancelLabel: "Annuler",
-        daysOfWeek: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-        monthNames: ["Janvier", "Février",  "Mars", 
-                     "Avril",   "Mai",      "Juin",
-                     "Juillet", "Août",     "Septembre",
-                     "Octobre", "Novembre", "Décembre",],
-        firstDay: 1,
-      },
-      applyButtonClasses: "custom-apply-button",
-      cancelButtonClasses: "custom-cancel-button",
-    },
-    function (start, end, label) {
-      $('input[name="daterange"]').val(
-        start.format("DD/MM/YYYY") + " - " + end.format("DD/MM/YYYY")
+          $('input[name="daterange"]').val(displayText);
+          
+          // Mettre à jour les filtres de date
+          document.getElementById("filtre-date-deb").setAttribute("value", start.format("YYYY-MM-DD"));
+          document.getElementById("filtre-date-fin").setAttribute("value", end.format("YYYY-MM-DD"));
+        }
       );
-      document.getElementById("filtre-date-deb").value =
-        start.format("YYYY-MM-DD");
-      document.getElementById("filtre-date-fin").value =
-        end.format("YYYY-MM-DD");
-    }
-  );
-});
 
+      // Événement pour le bouton "Annuler"
+      $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+        document.getElementById("filtre-date-deb").setAttribute("value", "");
+        document.getElementById("filtre-date-fin").setAttribute("value", "");
+        // Réinitialiser les dates sur le calendrier à partir de moment()
+        picker.setStartDate(moment());
+        picker.setEndDate(moment());
+        picker.updateView();
+      });
+
+      // Événement pour détecter la modification manuelle de l'input
+      $('input[name="daterange"]').on('input', function() {
+        if (!$(this).val()) {
+          // Vider les filtres de date
+          document.getElementById("filtre-date-deb").setAttribute("value", "");
+          document.getElementById("filtre-date-fin").setAttribute("value", "");
+          // Réinitialiser les dates sur le calendrier à partir de moment()
+          let picker = $(this).data('daterangepicker');
+          picker.setStartDate(moment());
+          picker.setEndDate(moment());
+          picker.updateView();
+        }
+      });
+
+      
+    }
+
+    // Initialisation du date range picker
+    initializeDateRangePicker();
+  });
+
+});

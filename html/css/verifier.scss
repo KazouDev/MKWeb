@@ -60,24 +60,23 @@ $lineHeight: 1.5;
 .tri__element input[type="submit"] {
     color: #FFF;
     line-height: normal;
-    font-weight: 400; /* Remplacez $normalWeight par une valeur fixe si nécessaire */
+    font-weight: 400;
     padding: 0.625rem;
     border-radius: 0.3125rem;
-    background: #273EFC; /* Remplacez $mainViolet par une valeur fixe si nécessaire */
+    background: #273EFC;
     cursor: pointer;
     border: none !important;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ajout d'une ombre pour un effet 3D */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 .tri__element input[type="submit"]:hover {
-    background: #273EFC; /* Couleur légèrement plus claire pour l'effet de survol */
+    background: #273EFC;
+}
+.tri__element input[type="submit"]:active {
+    background: #5669FF; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    transform: translateY(2px); 
 }
 
-.tri__element input[type="submit"]:active {
-    background: #5669FF; /* Couleur légèrement plus foncée pour l'effet de clic */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Réduction de l'ombre pour un effet de clic */
-    transform: translateY(2px); /* Déplacement du bouton pour simuler un clic */
-}
 .tri__element input[name="daterange"]{
     width:12rem;
 }
@@ -188,4 +187,49 @@ $lineHeight: 1.5;
 .autocomplete-suggestion:hover {
     background-color: #e9e9e9;
     z-index: 2;
+}
+
+.custom-apply-button {
+    color: #FFF;
+    border-radius: 0.3125rem;
+    background: #273EFC;
+    cursor: pointer;
+    border: 1px solid #273EFC;
+}
+.custom-apply-button:hover {
+    background: #5669FF;
+}
+.custom-apply-button:active {
+    background: #5669FF; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+}
+
+.custom-cancel-button {
+    color: #FF6258;
+    border-radius: 0.3125rem;
+    cursor: pointer;
+    border: 1px solid #FF6258;
+}
+.custom-cancel-button:hover {
+    background: #ffd9d6;
+}
+.custom-cancel-button:active {
+    background: #ffd9d6; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+}
+
+.daterangepicker td.disabled, .daterangepicker option.disabled {
+    text-decoration: none !important;
+}
+
+.daterangepicker td.in-range {
+    background-color: #dce0ff !important;
+}
+
+.daterangepicker td.active {
+    background-color: #5669FF !important;
+}
+
+.prev.available:hover, .next.available:hover {
+    background-color: #dce0ff !important;
 }
