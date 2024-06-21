@@ -51,7 +51,7 @@
             <a href="consulter_mon_compte_proprio.php" class="menu__link">Mon compte</a>
         </li>
         <li class="menu__item ">
-            <a href="index.php" class="menu__link">Mes Logements</a>
+            <a href="liste-logement.php" class="menu__link">Mes Logements</a>
         </li>
         <li class="menu__item ">
             <a href="mes_reserv.php" class="menu__link">Les Réservations</a>
