@@ -23,7 +23,7 @@
                 <div>
                     <h1 class="entete__titre">Ajouter un logement</h1>
                 </div>
-                <h2 id="reset" class="entete__titre">RESET</h2>
+                <i id="reset" class="fa-solid fa-rotate"></i>
 
             </div>
             
