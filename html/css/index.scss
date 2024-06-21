@@ -74,82 +74,29 @@
   padding: 0.8rem 4rem;
 }
 
-.coup_de_coeurs {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3rem;
-}
-.coup_de_coeurs .list__titre {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-.coup_de_coeurs .logement__plus {
-  cursor: pointer;
-  align-self: center;
-  border-radius: 0.5rem;
-  background-color: #5669ff;
-  color: #ffffff;
-  padding: 0.8rem 4rem;
-}
-.coup_de_coeurs .les__coups {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  row-gap: 2rem;
-}
-.coup_de_coeurs .coups-coeur__cont {
-  display: flex;
-  flex-direction: row;
-  box-shadow: 4px 4px 16px rgba(18, 18, 18, 0.06);
-  height: 230px;
-  padding: 1rem 3rem 1rem 1rem;
-  gap: 1rem;
-  font-size: 1rem;
-  border-radius: 1rem;
-  align-items: center;
-  justify-content: space-between;
-  min-width: 38rem;
-  min-height: 15rem;
-}
-.coup_de_coeurs .coups-coeur__cont_cacher {
-  display: none;
-}
-.coup_de_coeurs .coups-coeur__cont > div > h1 {
-  color: #878787;
-}
-.coup_de_coeurs .coups-coeur__cont img {
+#loading-overlay {
+  position: absolute;
+  width: 100%;
   height: 100%;
-  border-radius: 0.5rem;
-  aspect-ratio: 1/1;
-  -o-object-fit: cover;
-  object-fit: cover;
-}
-.coup_de_coeurs .coups-coeur__cont .coups-coeur__titre {
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 9999;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  width: 20rem;
-  justify-content: space-between;
 }
-.coup_de_coeurs .coups-coeur__cont .coups-coeur__titre > h1 {
-  font-size: 1.25rem;
-  margin-right: 1rem;
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #273EFC; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
 }
-.coup_de_coeurs .coups-coeur__cont .coups-coeur__titre h2 {
-  color: #878787;
-}
-.coup_de_coeurs .coups-coeur__cont .coups-coeur__titre h2 span {
-  margin-right: 0.25rem;
-  color: #5669ff;
-}
-.coup_de_coeurs .coups-coeur__cont .coups-coeur__note {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-}
-.coup_de_coeurs .coups-coeur__cont .coups-coeur__note i {
-  color: #ffd33c;
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .card__cont {
@@ -158,7 +105,7 @@
   width: 325px;
   background-color: #ffffff;
   border-radius: 0.75rem;
-  box-shadow: 4px 4px 16px rgba(18, 18, 18, 0.06);
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
   min-height: 22rem;
 
 }
@@ -222,27 +169,58 @@
   color: #5669ff;
 } /*# sourceMappingURL=index.css.map */
 
-/* Styles de base pour l'autocomplétion */
-.autocomplete-suggestions {
-  border: 1px solid #ccc;
-  max-height: 150px;
-  overflow-y: auto;
-  background-color: #fff;
-  position: absolute;
-  margin-top: 80px;
-}
-.autocomplete-suggestion {
-  padding: 10px;
-  cursor: pointer;
-}
-.autocomplete-suggestion:hover {
-  background-color: #e9e9e9;
-}
 .titre_nos_log{
   display: flex;
   gap: 1rem;
   align-items: center;
+  width: 100%;
+  justify-content: space-between;
 }
 .top{
   margin-bottom: 5rem;
+}
+
+.info__nb_logement {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 2px solid #5669ff;
+  width: 30px;
+  height: 30px;
+  background-color: #E1EBF4;
+  text-align: center;
+  line-height: 30px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.titre__logement {
+  display: flex;
+}
+.titre__logement .list__titre {
+  margin-right: 1em;
+}
+
+.tri__logements {
+  display: flex;
+  align-items: center;
+  margin-right: 1em;
+}
+.tri__logements p {
+  margin-right: 1em;
+}
+.image-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  cursor: pointer;
+}
+.image-stack img {
+  width: 20px; 
+  height: auto;
+}
+
+.tri__up-dark, .tri__down-dark {
+  display: none;
 }

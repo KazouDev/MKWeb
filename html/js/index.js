@@ -1,28 +1,3 @@
-let listeIDLogements = [];
-
-let filtre = {
-  id: function (listeLogement) {
-    let listeID = new Array();
-    let liste = new Array();
-
-    for (let i = 0; i < listeIDLogements.length; i++) {
-      listeID.push(listeIDLogements[i].id_logement);
-    }
-
-    for (let i = 0; i < listeLogement.length; i++) {
-      if (!listeID.includes(listeLogement[i].id_logement)) {
-        liste.push(listeLogement[i]);
-      }
-    }
-
-    return liste;
-  },
-};
-
-let tri = {
-  
-};
-
 let genererCard = {
   card_logements: function (i, logement) {
     let divCard;
@@ -45,9 +20,8 @@ let genererCard = {
 
     divCard.classList.add("card__cont");
 
-
     imgCouverture = document.createElement("img");
-    imgCouverture.setAttribute("src", "./img" + logement.image_src);
+    imgCouverture.setAttribute("src", "../img" + logement.image_src);
     imgCouverture.setAttribute("alt", logement.image_alt);
 
     divDescription = document.createElement("div");
@@ -94,66 +68,7 @@ let genererCard = {
   },
 };
 
-function php_genererAutocompletCommune() {
-  let f_commune = document.getElementById("filtre-commune-codePostal");
-  let communeInput = document.getElementById("communeInput");
-  let autocompleteList = document.getElementById("autocomplete-list-commune");
-
-  let communes = [];
-
-  // Fetch data from API
-  fetch("https://geo.api.gouv.fr/communes?codeRegion=53")
-    .then((response) => response.json())
-    .then((data) => {
-      communes = data;
-    })
-    .catch((error) => console.error("Erreur:", error));
-
-  // Function to filter and display suggestions
-  let filterSuggestions = (input) => {
-    autocompleteList.innerHTML = "";
-    if (!input) return;
-
-    let filteredCommunes = communes.filter((commune) => {
-      let lowerCaseInput = input.toLowerCase();
-      return (
-        commune.nom.toLowerCase().startsWith(lowerCaseInput) ||
-        commune.codesPostaux.some((codePostal) =>
-          codePostal.startsWith(lowerCaseInput)
-        )
-      );
-    });
-
-    filteredCommunes.forEach((commune) => {
-      let suggestionItem = document.createElement("div");
-      suggestionItem.classList.add("autocomplete-suggestion");
-      suggestionItem.textContent = `${commune.nom} (${commune.codesPostaux.join(
-        ", "
-      )})`;
-      suggestionItem.addEventListener("click", () => {
-        f_commune.value = `${commune.codesPostaux.join(", ")}`;
-        communeInput.value =
-          commune.nom + " (" + commune.codesPostaux.join(", ") + ")";
-        autocompleteList.innerHTML = "";
-      });
-      autocompleteList.appendChild(suggestionItem);
-    });
-  };
-
-  // Add event listener for input changes
-  communeInput.addEventListener("input", () => {
-    let inputValue = communeInput.value;
-    filterSuggestions(inputValue);
-  });
-
-  // Hide suggestions when clicking outside
-  document.addEventListener("click", (e) => {
-    if (!autocompleteList.contains(e.target) && e.target !== communeInput) {
-      autocompleteList.innerHTML = "";
-    }
-  });
-}
-
+/* Fonction de gestion de l'autocomplete Propriétaire */
 function php_genererAutocompletProprietaire() {
   $.ajax({
     url: "ajax/index.ajax.php",
@@ -166,19 +81,22 @@ function php_genererAutocompletProprietaire() {
 
         let f_propri = document.getElementById("filtre-propri-id");
         let proprietaireInput = document.getElementById("proprietaireInput");
-        let autocompleteList = document.getElementById(
-          "autocomplete-list-proprietaire"
-        );
+        let autocompleteList = document.getElementById("autocomplete-list-proprietaire");
 
-        let filterSuggestions = (input) => {
+        // Fonction pour filtrer les suggestions
+        let filterSuggestions = () => {
+          let inputValue = proprietaireInput.value.trim().toLowerCase();
           autocompleteList.innerHTML = "";
-          if (!input) return;
 
-          let lowerCaseInput = input.toLowerCase();
+          if (!inputValue) {
+            f_propri.setAttribute("value", "");
+            return;
+          }
+
           let filteredProprietaires = listeProprietaire.filter(
             (proprietaire) =>
-              proprietaire.nom.toLowerCase().startsWith(lowerCaseInput) ||
-              proprietaire.prenom.toLowerCase().startsWith(lowerCaseInput)
+              proprietaire.nom.toLowerCase().includes(inputValue) ||
+              proprietaire.prenom.toLowerCase().includes(inputValue)
           );
 
           filteredProprietaires.forEach((proprietaire) => {
@@ -186,7 +104,7 @@ function php_genererAutocompletProprietaire() {
             suggestionItem.classList.add("autocomplete-suggestion");
             suggestionItem.textContent = `${proprietaire.nom} ${proprietaire.prenom}`;
             suggestionItem.addEventListener("click", () => {
-              f_propri.value = `${proprietaire.id}`;
+              f_propri.setAttribute("value", proprietaire.id);
               proprietaireInput.value = `${proprietaire.nom} ${proprietaire.prenom}`;
               autocompleteList.innerHTML = "";
             });
@@ -194,131 +112,82 @@ function php_genererAutocompletProprietaire() {
           });
         };
 
-        // Add event listener for input changes
-        proprietaireInput.addEventListener("input", () => {
-          let inputValue = proprietaireInput.value;
-          filterSuggestions(inputValue);
-        });
+        proprietaireInput.addEventListener("input", filterSuggestions);
 
-        // Hide suggestions when clicking outside
         document.addEventListener("click", (e) => {
-          if (
-            !autocompleteList.contains(e.target) &&
-            e.target !== proprietaireInput
-          ) {
+          if (!autocompleteList.contains(e.target) && e.target !== proprietaireInput) {
             autocompleteList.innerHTML = "";
           }
         });
       }
     },
+    error: function (error) {
+      console.error("Erreur:", error);
+    }
   });
 }
 
-function genererPeriodePourListeLogement(listeLogement) {
-  let f_date_deb = undefined;
-  let f_date_fin = undefined;
+function php_genererListeLogement() {
+  let f_nb_personnes = document.getElementById("nb_personnes").value;
+  let f_tarif_min = document.getElementById("tarif_min").value;
+  let f_tarif_max = document.getElementById("tarif_max").value;
+  let f_codeDepartement = document.getElementById("filtre-departement-code").getAttribute("value");
+  let f_codePostal = document.getElementById("filtre-commune-codePostal").getAttribute("value");
+  let f_proprietaire = document.getElementById("filtre-propri-id").getAttribute("value");
 
+  let t_tarif = document.getElementById("tri-tarif").getAttribute("value");
+
+  let where_req1 = "";
+  if (f_nb_personnes != "") { where_req1 += " AND l.nb_max_personne >= " + f_nb_personnes; }
+  if (f_tarif_min != "") { where_req1 += " AND l.base_tarif >= " + f_tarif_min; }
+  if (f_tarif_max != "") { where_req1 += " AND l.base_tarif <= " + f_tarif_max; }
+  if (f_proprietaire != null && f_proprietaire != "") { where_req1 += " AND l.id_proprietaire = " + f_proprietaire; }
+  if (f_codeDepartement != null && f_codeDepartement != "") { where_req1 += " AND a.departement = '" + f_codeDepartement.trim() + "'"; }
+  if (f_codePostal != null && f_codePostal != "") { where_req1 += " AND a.code_postal = '" + f_codePostal + "'"; }
+
+  if (t_tarif != null && t_tarif != "") { where_req1 += " ORDER BY l.base_tarif"; }
+  if (t_tarif === "desc") { where_req1 += " DESC"; }
+
+  /*let f_date_deb = undefined;
+  let f_date_fin = undefined;
   if ($('input[name="daterange"]').val() != "") {
     f_date_deb = document.getElementById("filtre-date-deb").value;
     f_date_fin = document.getElementById("filtre-date-fin").value;
   }
+  let dateArrive = new Date(f_date_deb);
+  let dateDepart = new Date(f_date_fin);
 
-  let where = "";
-  if (f_date_deb !== undefined && f_date_fin !== undefined) {
-    for (let i = 0; i < listeLogement.length; i++) {
-      if (i == 0) {
-        where +=
-          " AND (sae._calendrier.id_logement = " + listeLogement[i].id_logement;
-      } else {
-        where +=
-          " OR sae._calendrier.id_logement = " + listeLogement[i].id_logement;
-      }
-    }
-    if (where !== "") {
-      where += ")";
-    }
-
-    let dateArrive = new Date(f_date_deb);
-    let dateDepart = new Date(f_date_fin);
-    dateDepart.setDate(dateDepart.getDate() + 1);
-    let i = 0;
-    for (
-      let d = new Date(dateArrive);
-      d < dateDepart;
-      d.setDate(d.getDate() + 1)
-    ) {
-      let formattedDate = d.toISOString().split("T")[0];
-      if (i == 0) {
-        where += " AND (sae._calendrier.date = '" + formattedDate + "'";
-      } else {
-        where += " OR sae._calendrier.date = '" + formattedDate + "'";
-      }
-      i++;
-    }
-    if (where !== "") {
-      where += ")";
-    }
+  */let where_req2 = ""; /*
+  dateDepart.setDate(dateDepart.getDate() + 1);
+  let i = 0;
+  for (let d = new Date(dateArrive) ; d < dateDepart ; d.setDate(d.getDate() + 1)) {
+    let formattedDate = d.toISOString().split("T")[0];
+    if (i == 0) { where_req2 += " AND (sae._calendrier.date = '" + formattedDate + "'"; } 
+    else { where_req2 += " OR sae._calendrier.date = '" + formattedDate + "'"; }
+    i++;
   }
+  if (where_req2 !== "") { where_req2 += ")"; }*/
 
-  return new Promise((resolve, reject) => {
-    $.ajax({
-      url: "ajax/index.ajax.php",
-      type: "POST",
-      data: { action: "genererPeriodePourListeLogement", where: where },
-      dataType: "json",
-      success: function (reponse) {
-        if (reponse.reponse) {
-          listeIDLogements = reponse.reponse;
-          resolve();
-        }
-      },
-    });
-  });
-}
+  // Afficher chargement
+  document.getElementById("loading-overlay").style.display = "flex";
 
-async function php_genererListeLogement() {
-  let t_note = document.getElementById("tri-note-value").textContent;
-
-  let f_nb_personnes = document.getElementById("nb_personnes").value;
-  let f_tarif_min = document.getElementById("tarif_min").value;
-  let f_tarif_max = document.getElementById("tarif_max").value;
-  let f_codePostaux = document.getElementById("filtre-commune-codePostal").value;
-  let f_proprietaire = document.getElementById("filtre-propri-id").value;
-
-  let where = "";
-  if (f_nb_personnes != "") { where += " AND l.nb_max_personne >= " + f_nb_personnes; }
-  if (f_tarif_min != "") { where += " AND l.base_tarif >= " + f_tarif_min; }
-  if (f_tarif_max != "") { where += " AND l.base_tarif <= " + f_tarif_max; }
-  if (f_proprietaire != undefined) { where += " AND l.id_proprietaire = " + f_proprietaire; }
-  if (f_codePostaux != undefined) { 
-    f_codePostaux = f_codePostaux.split(", ");
-    for (let i = 0; i < f_codePostaux.length; i++) {
-      if (i == 0) { where += " AND (a.code_postal = '" + f_codePostaux[i] + "'"; } 
-      else { where += " OR a.code_postal = '" + f_codePostaux[i] + "'"; }
-    }
-    where += ")";
-  }
-
-  try {
-    let reponse = await $.ajax({
-      url: "ajax/index.ajax.php",
-      type: "POST",
-      data: { action: "genererListeLogement", where: where },
-      dataType: "json",
-    });
-
+  $.ajax({
+    url: "ajax/index.ajax.php",
+    type: "POST",
+    data: { action: "genererListeLogement", where_req1: where_req1, where_req2: where_req2 },
+    dataType: "json",
+  })
+  .done(function(reponse) {
     if (reponse.reponse) {
+      const nb_logement_trouve = document.getElementById("nb_logement_trouve"); 
+      
       let listeLogements = reponse.reponse;
       let logement;
 
-      await genererPeriodePourListeLogement(listeLogements);
-
-      if (listeIDLogements != undefined) {
-        listeLogements = filtre.id(listeLogements);
-      }
-
       let divLogements = document.getElementById("les__logements");
       divLogements.innerHTML = "";
+
+      nb_logement_trouve.textContent = listeLogements.length;
 
       if (listeLogements.length > 0) {
         /* construction categorie "Nos logements" */
@@ -334,60 +203,223 @@ async function php_genererListeLogement() {
         divLogements.appendChild(divVide);
       }
     }
-  } catch (error) {
+  })
+  .fail(function(error) {
     console.error("Error in php_genererListeLogement:", error);
-  }
+  })
+  .always(function() {
+    // Cacher chargement
+    document.getElementById("loading-overlay").style.display = "none";
+  });
 }
 
 
-$(document).ready(function () {
-  /* Appel de les fonctions au chargement de la page */
+document.addEventListener("DOMContentLoaded", () => {
+  const communeInput = document.getElementById("communeInput");
+  const dropdown = document.getElementById("dropdown");
+  const imageContainers = document.querySelectorAll(".image-container");
+  const filtreCommuneCodePostal = document.getElementById("filtre-commune-codePostal");
+  const filtreDepartementCode = document.getElementById("filtre-departement-code");
+
+  // Initialisation de l'autocomplete commune
   php_genererAutocompletCommune();
+  // Initialisation de l'autocomplete propriétaire
   php_genererAutocompletProprietaire();
+  
   php_genererListeLogement();
 
-  /* Appel des fonctions php_genererListeLogement au clic sur le bouton Recherche */
+  /* Appel des fonctions au clic sur le bouton Recherche */
   $("#executeRecherche").click(function () {
     php_genererListeLogement();
   });
 
-  /* Appel de la fonction php_genererListeLogement au clic sur la tri */
-  document.getElementById("tri_note").onclick = function () {
-    let mode = document.getElementById("tri-note-value");
-    if (mode.textContent === "t_init") {
-      mode.textContent = "t_desc";
-    } else if (mode.textContent === "t_desc") {
-      mode.textContent = "t_asc";
-    } else if (mode.textContent === "t_asc") {
-      mode.textContent = "t_init";
+  communeInput.addEventListener("click", () => {
+    dropdown.style.display = "block";
+  });
+
+  // Ajouter un événement pour réinitialiser le champ caché et communeInput si le texte est effacé
+  communeInput.addEventListener("input", () => {
+    if (communeInput.value.trim() === "") {
+        imageContainers.forEach((cont) => cont.classList.remove("selected"));
+        filtreDepartementCode.setAttribute("value", "");
+        filtreCommuneCodePostal.setAttribute("value", "");
+        dropdown.style.display = "block";
+    } else {
+        dropdown.style.display = "none";
+    }
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target !== communeInput && !dropdown.contains(event.target)) {
+      dropdown.style.display = "none";
+    }
+  });
+
+  imageContainers.forEach((container) => {
+    container.addEventListener("click", () => {
+        // Retirer la classe 'selected' de toutes les autres images
+        imageContainers.forEach((cont) => cont.classList.remove("selected"));
+
+        // Ajouter la classe 'selected' à l'image cliquée
+        container.classList.add("selected");
+
+        // Mettre à jour le champ communeInput avec le nom et le code du département
+        const departmentName = container.getAttribute("data-value");
+        const departmentCode = container.getAttribute("data-code");
+        communeInput.value = `${departmentName} (${departmentCode})`;
+
+        // Mettre à jour le champ caché avec le code du département
+        filtreDepartementCode.setAttribute("value", departmentName);
+
+        // Réinitialiser le champ filtreCommuneCodePostal
+        filtreCommuneCodePostal.setAttribute("value", "");
+
+        // Fermer le dropdown
+        dropdown.style.display = "none";
+    });
+  });
+
+  /* Fonction de gestion de l'autocomplete Commune */
+  function php_genererAutocompletCommune() {
+    // Fetch des données depuis l'API (adapter à votre API)
+    let communes = [];
+
+    fetch("https://geo.api.gouv.fr/communes?codeRegion=53")
+        .then((response) => response.json())
+        .then((data) => {
+            communes = data;
+        })
+        .catch((error) => console.error("Erreur:", error));
+
+    // Filtrage et affichage des suggestions
+    communeInput.addEventListener("input", () => {
+        let inputValue = communeInput.value.trim().toLowerCase();
+        let filteredCommunes = communes.filter((commune) =>
+            commune.nom.toLowerCase().startsWith(inputValue)
+        );
+
+        let suggestions = filteredCommunes.map((commune) => {
+            return `${commune.nom} (${commune.codesPostaux.join(", ")})`;
+        });
+
+        // Affichage des suggestions
+        displaySuggestions(suggestions);
+    });
+
+    // Affichage des suggestions dans l'élément autocomplete-list-commune
+    function displaySuggestions(suggestions) {
+        let autocompleteList = document.getElementById("autocomplete-list-commune");
+        autocompleteList.innerHTML = "";
+
+        suggestions.forEach((suggestion) => {
+            let suggestionItem = document.createElement("div");
+            suggestionItem.classList.add("autocomplete-suggestion");
+            suggestionItem.textContent = suggestion;
+            suggestionItem.addEventListener("click", () => {
+                let selectedText = suggestionItem.textContent;
+                let selectedCommune = communes.find((commune) =>
+                    selectedText.includes(commune.nom)
+                );
+
+                if (selectedCommune) {
+                    let codePostal = selectedCommune.codesPostaux[0];
+                    filtreCommuneCodePostal.setAttribute("value", codePostal);
+                    communeInput.value = selectedText;
+
+                    // Réinitialiser le champ de sélection de département
+                    imageContainers.forEach((cont) => cont.classList.remove("selected"));
+                    filtreDepartementCode.setAttribute("value", "");
+
+                    // Fermer le dropdown
+                    hideSuggestions();
+                }
+            });
+            autocompleteList.appendChild(suggestionItem);
+        });
+        // Afficher les suggestions
+        autocompleteList.style.display = "block";
+    }
+
+    // Masquer les suggestions
+    function hideSuggestions() {
+      let autocompleteList = document.getElementById("autocomplete-list-commune");
+      autocompleteList.style.display = "none";
+    }
+
+    // Gestion de la fermeture des suggestions au clic en dehors
+    document.addEventListener("click", (e) => {
+        let autocompleteList = document.getElementById("autocomplete-list-commune");
+        if (!autocompleteList.contains(e.target) && e.target !== communeInput) {
+            autocompleteList.innerHTML = "";
+        }
+    });
+  }
+
+  /* Gestion buton découvrir plus / Voir moins des logements */
+  const btn_decouvrir = document.getElementById("decouvrir_plus");
+  const btn_decouvrir_moins = document.getElementById("decouvrir_moins");
+  const nos_logements = document.getElementById("nos_logements");
+
+  btn_decouvrir.addEventListener("click", function () {
+    var elements_caches = document.querySelectorAll(".card__cont_cacher");
+    elements_caches.forEach(function (element) {
+      element.style.display = "flex";
+    });
+    btn_decouvrir.style.display = "none";
+    btn_decouvrir_moins.style.display = "block";
+  });
+
+  btn_decouvrir_moins.addEventListener("click", function () {
+    var elements_caches = document.querySelectorAll(".card__cont_cacher");
+    elements_caches.forEach(function (element) {
+      element.style.display = "none";
+    });
+    btn_decouvrir.style.display = "block";
+    btn_decouvrir_moins.style.display = "none";
+    nos_logements.scrollIntoView({ behavior: "smooth" });
+  });
+
+  /* Gestion Image tri */
+  const triImage = document.getElementById('tri_image');
+  const up = triImage.querySelector('.tri__up');
+  const upDark = triImage.querySelector('.tri__up-dark');
+  const down = triImage.querySelector('.tri__down');
+  const downDark = triImage.querySelector('.tri__down-dark');
+  const tri_tarif = document.getElementById('tri-tarif');
+
+  let clickCount = 0;
+
+  triImage.addEventListener('click', () => {
+    clickCount++;
+    switch (clickCount) {
+      case 1:
+        up.style.display = 'none';
+        upDark.style.display = 'block';
+        down.style.display = 'block';
+        downDark.style.display = 'none';
+        tri_tarif.setAttribute("value", "asc");
+        break;
+      case 2:
+        up.style.display = 'block';
+        upDark.style.display = 'none';
+        down.style.display = 'none';
+        downDark.style.display = 'block';
+        tri_tarif.setAttribute("value", "desc");
+        break;
+      default:
+        clickCount = 0;
+        up.style.display = 'block';
+        upDark.style.display = 'none';
+        down.style.display = 'block';
+        downDark.style.display = 'none';
+        tri_tarif.setAttribute("value", "");
+        break;
     }
     php_genererListeLogement();
-  };
-});
-
-/* Gestion buton découvrir plus / Voir moins des logements */
-let btn_decouvrir = document.getElementById("decouvrir_plus");
-let btn_decouvrir_moins = document.getElementById("decouvrir_moins");
-let nos_logements = document.getElementById("nos_logements");
-
-btn_decouvrir.addEventListener("click", function () {
-  var elements_caches = document.querySelectorAll(".card__cont_cacher");
-  elements_caches.forEach(function (element) {
-    element.style.display = "flex";
   });
-  btn_decouvrir.style.display = "none";
-  btn_decouvrir_moins.style.display = "block";
+  
 });
 
-btn_decouvrir_moins.addEventListener("click", function () {
-  var elements_caches = document.querySelectorAll(".card__cont_cacher");
-  elements_caches.forEach(function (element) {
-    element.style.display = "none";
-  });
-  btn_decouvrir.style.display = "block";
-  btn_decouvrir_moins.style.display = "none";
-  nos_logements.scrollIntoView({ behavior: "smooth" });
-});
 
 /* Gestion du calendrier */
 $(function () {
@@ -401,7 +433,7 @@ $(function () {
         applyLabel: "Confirmer",
         cancelLabel: "Annuler",
         daysOfWeek: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-        monthNames: ["Janvier", "Février",  "Mars",
+        monthNames: ["Janvier", "Février",  "Mars", 
                      "Avril",   "Mai",      "Juin",
                      "Juillet", "Août",     "Septembre",
                      "Octobre", "Novembre", "Décembre",],
@@ -421,3 +453,4 @@ $(function () {
     }
   );
 });
+
