@@ -103,7 +103,7 @@
                   <img class="tri__up" src="../img/up.png" alt="Croissant">
                   <img class="tri__up-dark" src="../img/up-dark.png" alt="Croissant">
                   <img class="tri__down" src="../img/down.png" alt="Décroissant">
-                  <img class="tri__down-dark" src="../img/down-dark.png" alt="Croissant">
+                  <img class="tri__down-dark" src="../img/down-dark.png" alt="Décroissant">
                 </div>
               </div>
             </div>
