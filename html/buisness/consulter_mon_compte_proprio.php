@@ -2,7 +2,53 @@
     session_start();
     require_once "../../utils.php";
    
+    if (isset($_POST['valider']) && $_POST['action'] == 'update'){
+       
+        $date_fin = $_POST['date_fin'];
+        $date_debut = $_POST['date_debut'];
+        $token = $_POST['token'];
+        $id_logements = $_POST['check_logement'] ?? array();
+        
+        $sql = 'UPDATE sae._ical_token SET date_debut = \'' . $date_debut . '\', date_fin = \'' . $date_fin . '\' WHERE token = \'' . $token . '\'';
+
+        request($sql);
+
+        $alreadyIn = explode('/',$_POST['alreadyIn']) ?? array();
+       
+        //LOGEMENT A SUPPRIMER
+        $valuesNotInIdLogements = array_diff($alreadyIn, $id_logements);
+       
+        $valuesNotInIdLogements = array_values($valuesNotInIdLogements);
+        if (!empty($valuesNotInIdLogements[0])){
+            foreach($valuesNotInIdLogements as $id){
+                $sql = 'DELETE FROM sae._ical_token_logements WHERE logement = ' . $id;
+                
+                request($sql);
+            }
+
+        }
+        $logementToInsert = array_filter($id_logements, fn($v)=>!in_array($v,$alreadyIn));
+        $logementToInsert = array_values($logementToInsert);
+        if (!empty($logementToInsert[0])){
+            foreach($logementToInsert as $id){
+                $sql = 'INSERT INTO sae._ical_token_logements VALUES ';
+                $sql .= '(\'' . $token . '\', ' . $id . ')';
+                
+                request($sql);
     
+
+            }
+            
+        }
+        
+        
+    }
+    if (isset($_POST['valider']) && $_POST['action'] == 'create'){
+        
+
+        
+        
+    }
 
     $id_utilisateur =  buisness_connected_or_redirect();
 
@@ -192,48 +238,54 @@
                                     </div>
                                 </form>
                             </div>
-                            
-                            <div class="token_conteneur">
-                                <div class="modal_sup">
-                                    <div class="modal" id="modal">
-                                    <div class="modal-content">
-                                        <p id="text-content">Êtes-vous sûr de vouloir supprimer ?</p>
-                                            <div class="modal-actions">
-                                                <button id="confirmBtn">Oui</button>
-                                                <button id="cancelBtn">Non</button>
+                            <form action="" method="post">
+                                <div class="token_conteneur">
+                                    <div class="modal_sup">
+                                        <div class="modal" id="modal">
+                                        <div class="modal-content">
+                                            <p id="text-content">Êtes-vous sûr de vouloir supprimer ?</p>
+                                                <div class="modal-actions">
+                                                    
+                                                    <button id="cancelBtn">Non</button>
+                                                    <button type="submit" name="supp_token" id="confirmBtn">Oui</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
+                                
+                                
+                                <form action="" method="POST">
                                 <div class="modal_enreg" id="modal_enreg">
-    <div class="modal">
-        <div class="modal-content">
-            <div class="date">
-                <p class="date_debut">Date de début: <span>15 juin 2024</span></p>
-                <p class="date_fin">Date de fin: <span>20 juin 2024</span></p>
-            </div>
-            <div class="content">
-                <div class="selectAll">
-                    <label for="selectall">Tout sélectionner</label>
-                    <input id="selectall" type="checkbox" value="1" name="selectall">
-                </div>
-                <div class="logement">
-                    <label for="select">Sélectionner</label>
-                    <input id="select" type="checkbox" value="1" name="select">
-                    <div class="description">
-                        <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget felis ac dolor commodo consequat.</p>
-                        <img src="img/carte-bretagne.jpg" alt="Carte de la Bretagne">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button id="confirmBtn">Annuler</button>
-                <button id="cancelBtn">Enregistrer</button>
-            </div>
-        </div>
-    </div>
-</div>
-                                    
+                                    <input type="hidden"  name ="alreadyIn" id="alreadyIn">
+                                    <input type="hidden"  name ="token" id="token">
+                                    <input type="hidden"  name ="action" id="action" value="update">
+                                    <div class="modal-content">
+                                        <span class="close" id="closeModalBtn">&times;</span>
+                                        <h3>Modifier Token</h3>
+                                        <div class="dates">
+                                            <label for="date_debut">Date début
+                                                <input type="date" id="date_debut" name="date_debut">
+                                            </label>
+                                            <label for="date_fin">Date fin
+                                                <input type="date" id="date_fin" name="date_fin">
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input type="checkbox" id="selectAllCheckbox"> Sélectionner tous les logements
+                                            </label>
+                                        </div>
+                                        <div class="logements-container" id="logementsContainer"></div>
+                                        
+                                        <div class="buttons">
+                                            <button type="button" class="open-modal-btn" id="closeBtn" style="background-color: #dc3545;">Annuler</button>
+                                            <button type="submit" name="valider" class="open-modal-btn">Valider</button>
+                                        </div>
+                            
+                                </div>
+                                </form> 
+
 
                                 </div>
                                 <h3>Token Icalendar</h3>
@@ -242,6 +294,7 @@
                                     $sql = 'SELECT token FROM sae._ical_token';
                                     $res = request($sql);
                                     foreach($res as $token):
+                                        
                                     ?>
                                         <div class="token ">
                                             <div>
@@ -255,7 +308,7 @@
                                             </div>
                                         </div>
                                     <?php endforeach ?>
-                                <button type="button" value="Générer Token">Générer Token</button>
+                                <button type="button" id="generer_token" value="Générer Token">Générer Token</button>
                                 </form>
                                 
                             </div>
@@ -282,6 +335,8 @@
             }
         }
 
+        var gen_token = document.getElementById('generer_token');
+
 
         var token = document.querySelectorAll('.token_id');
         var text_content = document.getElementById('text-content');
@@ -289,24 +344,193 @@
         var copier = document.querySelectorAll('.copier');
         var eyes  = document.querySelectorAll('.eyes');
         var modifiers = document.querySelectorAll('.modifier');
-       
+        var logementCheckboxes = document.querySelectorAll(".logementCheckbox")
+        var modalEnreg = document.getElementById("modal_enreg");
+        var annulerBtn = document.getElementById("closeBtn");
+        var closeModalBtn = document.getElementById("closeModalBtn");
 
-        const modalEnreg = document.getElementById('modal_enreg');
+        var alreadyIn = document.getElementById("alreadyIn");
 
-        modifiers.forEach(modifier => {
+        var date_fin =  document.getElementById("date_fin");
+        var date_debut =  document.getElementById("date_debut");
+        var action = document.getElementById('action');
+        gen_token.addEventListener('click',()=>{
+            action.value ="create";
+            modalEnreg.style.display = "block";
+            var xhr = new XMLHttpRequest();
+            const params = new URLSearchParams();
+            params.append("action", "create");
+            params.append('id',"<?=$_SESSION["business_id"]?>");
+
+            xhr.open("GET", "../ajax/ical.ajax.php?" + params, true);
+            //xhr.open("GET", "http://localhost/MKWEB/MKWeb/html/ajax/calendrier.ajax.php?" + params, true);
+            xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                
+                var data = JSON.parse(xhr.responseText);
+                for (logement of data['logement']){
+                        
+                            console.log(logement);
+                            //console.log(logement['titre']);
+                            const logementDiv = document.createElement('div');
+                            logementDiv.classList.add('logement');
+
+                            const checkboxDiv = document.createElement('div');
+                            checkboxDiv.classList.add('checkbox');
+                            const checkbox = document.createElement('input');
+                            checkbox.type = 'checkbox';
+                            checkbox.value = logement['id_logement'];
+                            checkbox.name = 'check_logement[]';
+                            
+                            checkbox.classList.add('logementCheckbox');
+                            checkboxDiv.appendChild(checkbox);
+
+                            const descriptionDiv = document.createElement('div');
+                            descriptionDiv.classList.add('description');
+                            const img = document.createElement('img');
+                            img.src = '../img' + logement['img'];
+                            img.alt = logement['titre'];
+                            const p = document.createElement('p');
+                            p.textContent = logement['titre'];
+                            descriptionDiv.appendChild(img);
+                            descriptionDiv.appendChild(p);
+                            logementDiv.appendChild(checkboxDiv);
+                            logementDiv.appendChild(descriptionDiv);
+
+                            logementsContainer.appendChild(logementDiv);
+
+                        }
+                        
+               
+                
+                
+
+                
+            }
+            };
+            xhr.send();
+
+
+        });
+        closeModalBtn.onclick = function () {
+            modalEnreg.style.display = "none";
+            document.body.classList.remove("no-scroll");
+            logementsContainer.innerHTML = ''
+            document.getElementById('token').value="";
+            alreadyIn.value ="";
+        }
+        annulerBtn.onclick = function () {
+            modalEnreg.style.display = "none";
+            document.body.classList.remove("no-scroll");
+            logementsContainer.innerHTML = ''
+            document.getElementById('token').value="";
+            alreadyIn.value ="";
+        }
+        
+        modifiers.forEach((modifier,k) => {
             modifier.addEventListener('click', () => {
+                action.value ="update";
+               
+                modalEnreg.style.display = "block";
+                document.body.classList.add("no-scroll");
+                // Requête AJAX
+
+                var xhr = new XMLHttpRequest();
+                const params = new URLSearchParams();
+                params.append("action", "update");
+                document.getElementById('token').value=token[k].value;
+              
+                params.append("token", token[k].value);
+                //console.log(token[k].value);
+
+
+                xhr.open("GET", "../ajax/ical.ajax.php?" + params, true);
+                //xhr.open("GET", "http://localhost/MKWEB/MKWeb/html/ajax/calendrier.ajax.php?" + params, true);
+                xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    //console.log(xhr.responseText);
+                    var data = JSON.parse(xhr.responseText);
+                    date_fin.value = data.date_fin;
+                    date_debut.value = data.date_debut;
+                    
+                    const logementsContainer = document.getElementById('logementsContainer');
+                    console.log(data['logement']);
+                    for (logement of data['logement']){
+                   
+                        //console.log(logement['titre']);
+                        const logementDiv = document.createElement('div');
+                        logementDiv.classList.add('logement');
+
+                        const checkboxDiv = document.createElement('div');
+                        checkboxDiv.classList.add('checkbox');
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.value = logement['id_logement'];
+                        alreadyIn.value = alreadyIn.value == "" ? logement['id_logement'] : alreadyIn.value + '/'+ logement['id_logement']  ;
+                        checkbox.name = 'check_logement[]';
+                        checkbox.checked = 'checked';
+                        checkbox.classList.add('logementCheckbox');
+                        checkboxDiv.appendChild(checkbox);
+
+                        const descriptionDiv = document.createElement('div');
+                        descriptionDiv.classList.add('description');
+                        const img = document.createElement('img');
+                        img.src = '../img' + logement['img'];
+                        img.alt = logement['titre'];
+                        const p = document.createElement('p');
+                        p.textContent = logement['titre'];
+                        descriptionDiv.appendChild(img);
+                        descriptionDiv.appendChild(p);
+                        logementDiv.appendChild(checkboxDiv);
+                        logementDiv.appendChild(descriptionDiv);
+
+                        logementsContainer.appendChild(logementDiv);
+                    }
+                    val_already = alreadyIn.value.split('/');
+                    for (logement of data['all_logement']){
+                        
+                        if( !val_already.includes(logement['id_logement'].toString())){
+                            //console.log(logement['titre']);
+                            const logementDiv = document.createElement('div');
+                            logementDiv.classList.add('logement');
+
+                            const checkboxDiv = document.createElement('div');
+                            checkboxDiv.classList.add('checkbox');
+                            const checkbox = document.createElement('input');
+                            checkbox.type = 'checkbox';
+                            checkbox.value = logement['id_logement'];
+                            checkbox.name = 'check_logement[]';
+                            
+                            checkbox.classList.add('logementCheckbox');
+                            checkboxDiv.appendChild(checkbox);
+
+                            const descriptionDiv = document.createElement('div');
+                            descriptionDiv.classList.add('description');
+                            const img = document.createElement('img');
+                            img.src = '../img' + logement['img'];
+                            img.alt = logement['titre'];
+                            const p = document.createElement('p');
+                            p.textContent = logement['titre'];
+                            descriptionDiv.appendChild(img);
+                            descriptionDiv.appendChild(p);
+                            logementDiv.appendChild(checkboxDiv);
+                            logementDiv.appendChild(descriptionDiv);
+
+                            logementsContainer.appendChild(logementDiv);
+
+                        }
+                        
+               }
+                   
+                    
+                }
+                };
+                xhr.send();
           
-                modalEnreg.style.display = 'flex';
+               
             });
         });
 
-        
-        modalEnreg.addEventListener('click', (e) => {
-            if (e.target === modalEnreg) {
-                modalEnreg.style.display = 'none';
-            }
-        });
-                
 
         eyes.forEach((v,k) => {
             v.addEventListener('click', () => {
@@ -333,6 +557,13 @@
             });
           
         });
+        selectAllCheckbox.onclick = function () {
+            
+            document.querySelectorAll(".logementCheckbox").forEach((checkbox) =>{
+                checkbox.checked = selectAllCheckbox.checked;
+
+            });
+        }
 
         const showModal = () => {
             document.getElementById('modal').classList.add('show');

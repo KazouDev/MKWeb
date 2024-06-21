@@ -412,3 +412,134 @@ $lineHeight: 1.5;
         background-color: #45a049;
     }
 }
+
+.modal_enreg{
+    .open-modal-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    
+        &:hover {
+            background-color: #0056b3;
+        }
+    }
+    
+    // Styles pour la fenêtre modale
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    
+    // Contenu de la modale
+    .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 800px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        animation-name: modalopen;
+        animation-duration: 0.4s;
+        border-radius: 10px;
+    }
+    
+    // Animation de la modale
+    @keyframes modalopen {
+        from {
+            opacity: 0;
+        }
+    
+        to {
+            opacity: 1;
+        }
+    }
+    
+    // Bouton de fermeture
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    
+        &:hover,
+        &:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+    
+    .dates {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    h3 {
+        text-align: center;
+        margin-top: 0;
+    }
+    
+    .logements-container {
+        border: 1px solid black;
+        border-radius: 5%;
+        overflow-y: scroll;
+        height: 300px;
+        width: 80%;
+        overflow-x: hidden;
+        margin: 0 auto;
+        margin-top: 2%;
+    }
+    
+    .buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 2%;
+    }
+    
+    .logement {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    
+        .description {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+    
+            img {
+                width: 100px;
+                height: auto;
+                margin-right: 20px;
+            }
+        }
+    
+        .checkbox {
+            display: flex;
+            align-items: center;
+        }
+    }
+    
+    // Empêcher le défilement de la page
+    .no-scroll {
+        overflow: hidden;
+    }
+    
+}
