@@ -279,7 +279,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-
   /* Fonction de gestion de l'autocomplete Commune */
   function php_genererAutocompletCommune() {
     // Fetch des données depuis l'API (adapter à votre API)
@@ -332,11 +331,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     filtreDepartementCode.setAttribute("value", "");
 
                     // Fermer le dropdown
-                    dropdown.style.display = "none";
+                    hideSuggestions();
                 }
             });
             autocompleteList.appendChild(suggestionItem);
         });
+    }
+
+    // Masquer les suggestions
+    function hideSuggestions() {
+      let autocompleteList = document.getElementById("autocomplete-list-commune");
+      autocompleteList.style.display = "none";
     }
 
     // Gestion de la fermeture des suggestions au clic en dehors
