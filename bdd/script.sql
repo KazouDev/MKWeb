@@ -297,6 +297,53 @@ BEFORE INSERT ON _calendrier
 FOR EACH ROW
 EXECUTE PROCEDURE insert_cal_trigger();
 
+-- Fonction pour générer une clé API hexadécimale
+CREATE OR REPLACE FUNCTION generate_hex_key(length INTEGER) RETURNS TEXT AS $$
+DECLARE
+  result TEXT := '';
+  chars TEXT := '0123456789abcdef';
+  i INTEGER;
+BEGIN
+  FOR i IN 1..length LOOP
+    result := result || substr(chars, (random() * 15)::integer + 1, 1);
+  END LOOP;
+  RETURN result;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Fonction pour créer une clé API pour un propriétaire
+CREATE OR REPLACE FUNCTION add_api_key_for_proprietor(proprietaire_id INT, permissions BIT DEFAULT B'0111') RETURNS TEXT AS $$
+DECLARE
+  new_key TEXT;
+BEGIN
+  LOOP
+    new_key := sae.generate_hex_key(64);
+    BEGIN
+      INSERT INTO sae._api_keys (key, proprietaire, permission) VALUES (new_key, proprietaire_id, permissions);
+      EXIT;
+    EXCEPTION WHEN unique_violation THEN
+      -- Si déjà dans la table: on génére une nouvelle clé
+      CONTINUE;
+    END;
+  END LOOP;
+  RETURN new_key;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger qui appelle la fonction add_api_key_for_proprietor après insertion dans _compte_proprietaire
+CREATE OR REPLACE FUNCTION create_api_key_trigger() RETURNS TRIGGER AS $$
+BEGIN
+  PERFORM sae.add_api_key_for_proprietor(NEW.id);
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER after_compte_proprietaire_insert
+AFTER INSERT ON _compte_proprietaire
+FOR EACH ROW
+EXECUTE FUNCTION sae.create_api_key_trigger();
+
+
 -- PEUPLEMENT 
 INSERT INTO _categorie_logement (id, categorie) VALUES
 (1, 'Appartement'),
