@@ -243,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
     php_genererListeLogement();
   });
 
+  // Ouverture de la div pour filtre par departement
   communeInput.addEventListener("click", () => {
     dropdown.style.display = "block";
   });
@@ -499,5 +500,26 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialisation du date range picker
     initializeDateRangePicker();
   });
+
+
+  /* Gestion div filtre */
+  const filtreIcon = document.getElementById('filtre_icon');
+  const filtreDropdown = document.getElementById('filtre__dropdown');
+
+  filtreIcon.addEventListener('click', function(event) {
+    event.stopPropagation();
+    filtreDropdown.style.display = filtreDropdown.style.display === 'none' ? 'block' : 'none';
+  });
+
+  document.addEventListener('click', function(event) {
+    if (!filtreDropdown.contains(event.target) && event.target !== filtreIcon) {
+      filtreDropdown.style.display = 'none';
+    }
+  });
+
+  filtreDropdown.addEventListener('click', function(event) {
+    event.stopPropagation();
+  });
+  
 
 });

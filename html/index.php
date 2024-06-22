@@ -31,7 +31,63 @@
             <div class="checkLogement">
               <div class="checkLogement__titre">
                 <h2>Vérifier la disponibilité</h2>
-                <img src="../img/filter-3.webp" alt="Filtres">
+                <img src="../img/filter-3.webp" alt="Filtres" id="filtre_icon">
+                <div id="filtre__dropdown" class="dropdown">
+
+                  <div class="tri__element_filtre communeInput">
+                    <label for="communeInput">Destination</label>
+                    <div class="input-container">
+                      <input type="text" id="communeInput" placeholder="Où ?"/>
+                      <div id="autocomplete-list-commune" class="autocomplete-suggestions"></div>
+                      <div id="dropdown" class="dropdown">
+                        <div class="image-grid">
+                          <div class="image-container" data-value="Finistère" data-code="29">
+                            <img src="../img/carte-bretagne.gif" alt="Finistère">
+                            <figcaption>Finistère</figcaption>
+                          </div>
+                          <div class="image-container" data-value="Côte-d'Armor" data-code="22">
+                            <img src="../img/carte-bretagne.gif" alt="Côte-d'Armor">
+                            <figcaption>Côte-d'Armor</figcaption>
+                          </div>
+                          <div class="image-container" data-value="Ille-et-Vilaine" data-code="35">
+                            <img src="../img/carte-bretagne.gif" alt="Ille-et-Vilaine">
+                            <figcaption>Ille-et-Vilaine</figcaption>
+                          </div>
+                          <div class="image-container" data-value="Morbihan" data-code="56">
+                            <img src="../img/carte-bretagne.gif" alt="Morbihan">
+                            <figcaption>Morbihan</figcaption>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tri__element_filtre daterange">
+                    <label for="daterange">Arrivée - Départ</label>
+                    <input type="text" id="daterange" name="daterange" placeholder="Période ?" readonly/>
+                  </div>
+                  <div class="tri__element_filtre nb_personnes">
+                    <label for="nb_personnes">Nombre de voyageurs</label>
+                    <input type="number" id="nb_personnes" placeholder="Combien ?" name="nombre_personnes" min="1"/>
+                  </div>
+                  <div class="tri__element_filtre tarif">
+                    <label for="tarif">Tarif/jour</label>
+                    <div id="tarif_range_f">
+                      <input type="number" placeholder="Min" id="tarif_min" name="tarif_min" min="0" step="5"/>
+                      <input type="number" placeholder="Max" id="tarif_max" name="tarif_max" min="0" step="5"/>
+                    </div>
+                  </div>
+                  <div class="tri__element_filtre proprietaireInput">
+                    <label for="proprietaireInput">Propriétaires</label>
+                    <div class="input-container">
+                      <input type="text" id="proprietaireInput" placeholder="Qui ?"/>
+                      <div id="autocomplete-list-proprietaire" class="autocomplete-suggestions"></div>
+                    </div>
+                  </div>
+                  <div class="tri__element_filtre btn__validate">
+                    <input id="executeValidation" type="submit" value="Valider"/>
+                  </div>
+
+                </div>
               </div>
               <div class="checkLogement__tri">
                 <div class="tri__element filtre__complet">
