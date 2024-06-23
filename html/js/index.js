@@ -503,6 +503,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* Gestion Dropdown filtres  */
-  
+  const filtreIcon = document.getElementById("filtre_icon");
+  const filtreComplet = document.getElementById("filtre_complet");
+  const filtreDropdown = document.getElementById("filtre__dropdown");
+  const executeValider = document.getElementById('executeValider');
+
+  filtreIcon.addEventListener("click", () => {
+    filtreDropdown.style.display = "flex";
+  });
+
+  filtreComplet.addEventListener("click", () => {
+    filtreDropdown.style.display = "flex";
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target !== filtreIcon && !filtreDropdown.contains(event.target) && !filtreComplet.contains(event.target)) {
+      filtreDropdown.style.display = "none";
+    }
+  });
+
+  executeValider.addEventListener('click', () => {
+    filtreDropdown.style.display = "none";
+  });
 
 });

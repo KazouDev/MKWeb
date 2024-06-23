@@ -55,7 +55,8 @@
   display: none;
 }
 
-.tri__element input[type=submit] {
+.tri__element input[type=submit],
+.f_tri__element input[type=submit] {
   color: #FFF;
   line-height: normal;
   font-weight: 400;
@@ -67,11 +68,13 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.tri__element input[type=submit]:hover {
+.tri__element input[type=submit]:hover,
+.f_tri__element input[type=submit]:hover {
   background: #273EFC;
 }
 
-.tri__element input[type=submit]:active {
+.tri__element input[type=submit]:active,
+.f_tri__element input[type=submit]:active {
   background: #5669FF;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transform: translateY(2px);
@@ -110,10 +113,34 @@
   margin-top: 5px;
   width: 320px;
   background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
   z-index: 1;
   padding: 15px;
   border-radius: 5px;
+}
+
+.f_dropdown {
+  flex-direction: column;
+}
+
+.f_dropdown input {
+  width: 100%;
+}
+
+.f_dropdown .f_tri__element {
+  margin-bottom: 1rem;
+}
+
+.f_dropdown .f_tri__element #f_tarif_range {
+  display: flex;
+}
+
+.f_dropdown .f_tri__element #f_tarif_min {
+  margin-right: 2px;
+}
+
+.f_dropdown .f_tri__element #f_tarif_max {
+  margin-left: 2px;
 }
 
 .image-grid {
