@@ -5,8 +5,8 @@ require_once '../../utils.php';
 $action = $_GET['action'] ?? '';
 
 if ($action === 'update') {
-    $data = [];
-    $all_logements = [];
+    $data = array();
+    $all_logements = array();
     $token = $_GET['token'];
 
     
@@ -29,11 +29,11 @@ if ($action === 'update') {
     $data_logement = request($sql);
 
     foreach ($data_logement as $val) {
-        $data[] = [
+        $data[] = array(
             'titre' => $val['titre'],
             'img' => $val['src'],
             'id_logement' => $val['id'],
-        ];
+        );
     }
 
  
@@ -49,18 +49,18 @@ if ($action === 'update') {
     $all_logements_result = request($sql);
 
     foreach ($all_logements_result as $val) {
-        $all_logements[] = [
+        $all_logements[] = array(
             'titre' => $val['titre'],
             'img' => $val['src'],
             'id_logement' => $val['id'],
-        ];
+        );
     }
     
     
     $response = array_merge($date, ['logement' => $data], ['all_logement' => $all_logements]);
 
 
-    echo json_encode($response);
+    print json_encode($response);
 }
 
 if ($action == 'create'){
@@ -77,13 +77,29 @@ if ($action == 'create'){
     $all_logements_result = request($sql);
 
     foreach ($all_logements_result as $val) {
-        $all_logements[] = [
+        $all_logements[] = array(
             'titre' => $val['titre'],
             'img' => $val['src'],
             'id_logement' => $val['id'],
-        ];
+        );
     }
     print json_encode(array('logement' => $all_logements));
+
+}
+
+if ($action == 'delete'){
+    $token = $_GET['token'];
+    
+    $sql = 'DELETE FROM sae._ical_token_logements WHERE token = '  . '\'' . $token . '\'';
+    
+    request($sql);
+    $sql = 'DELETE FROM sae._ical_token WHERE token = ' . '\'' . $token . '\'';
+ 
+    print $sql . '<br><br>';
+    
+    print $sql;
+    request($sql);
+
 
 }
 

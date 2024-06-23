@@ -339,6 +339,33 @@ FOR EACH ROW
 EXECUTE FUNCTION sae.create_api_key_trigger();
 
 
+-- creation token
+CREATE OR REPLACE FUNCTION generate_ical_token_for_user(
+  proprietaire_id INT,
+  date_debut DATE,
+  date_fin DATE
+) RETURNS TEXT AS $$
+DECLARE
+  new_token TEXT;
+BEGIN
+  LOOP
+    -- Générer un token hexadécimal de 64 caractères
+    new_token := sae.generate_hex_key(64);
+    BEGIN
+      -- Essayer d'insérer le token dans la table
+      INSERT INTO _ical_token (token, proprietaire, date_debut, date_fin) 
+      VALUES (new_token, proprietaire_id, date_debut, date_fin);
+      EXIT;
+    EXCEPTION
+      WHEN SQLSTATE '23505' THEN
+        -- Si le token est déjà dans la table, en générer un nouveau
+        CONTINUE;
+    END;
+  END LOOP;
+  RETURN new_token;
+END;
+$$ LANGUAGE plpgsql;
+
 -- PEUPLEMENT 
 INSERT INTO _categorie_logement (id, categorie) VALUES
 (1, 'Appartement'),

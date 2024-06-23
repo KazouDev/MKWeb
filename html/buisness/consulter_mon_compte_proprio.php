@@ -1,104 +1,110 @@
-<?php 
-    session_start();
-    require_once "../../utils.php";
-   
-    if (isset($_POST['valider']) && $_POST['action'] == 'update'){
-       
-        $date_fin = $_POST['date_fin'];
-        $date_debut = $_POST['date_debut'];
-        $token = $_POST['token'];
-        $id_logements = $_POST['check_logement'] ?? array();
-        
-        $sql = 'UPDATE sae._ical_token SET date_debut = \'' . $date_debut . '\', date_fin = \'' . $date_fin . '\' WHERE token = \'' . $token . '\'';
+<?php
+session_start();
+require_once "../../utils.php";
 
+
+if (isset($_POST['valider']) && $_POST['action'] == 'update') {
+
+    $date_fin = (new DateTime($_POST['date_fin']))->format('Y-m-d');
+    $date_debut = (new DateTime($_POST['date_debut']))->format('Y-m-d');
+    $token = $_POST['token'];
+    $id_logements = $_POST['check_logement'] ?? array();
+
+    $sql = 'UPDATE sae._ical_token SET date_debut = \'' . $date_debut . '\', date_fin = \'' . $date_fin . '\' WHERE token = \'' . $token . '\'';
+
+    request($sql);
+
+    $alreadyIn = explode('/', $_POST['alreadyIn']) ?? array();
+
+    //LOGEMENT A SUPPRIMER
+    $valuesNotInIdLogements = array_diff($alreadyIn, $id_logements);
+
+    $valuesNotInIdLogements = array_values($valuesNotInIdLogements);
+    if (!empty($valuesNotInIdLogements[0])) {
+        foreach ($valuesNotInIdLogements as $id) {
+            $sql = 'DELETE FROM sae._ical_token_logements WHERE logement = ' . $id;
+
+            request($sql);
+        }
+    }
+    $logementToInsert = array_filter($id_logements, fn ($v) => !in_array($v, $alreadyIn));
+    $logementToInsert = array_values($logementToInsert);
+    if (!empty($logementToInsert[0])) {
+        foreach ($logementToInsert as $id) {
+            $sql = 'INSERT INTO sae._ical_token_logements VALUES ';
+            $sql .= '(\'' . $token . '\', ' . $id . ')';
+
+            request($sql);
+        }
+    }
+}
+if (isset($_POST['valider']) && $_POST['action'] == 'create') {
+    $date_fin = (new DateTime($_POST['date_fin']))->format('Y-m-d');
+    $date_debut = (new DateTime($_POST['date_debut']))->format('Y-m-d');
+    $user_id = (int) $_SESSION['business_id'];
+    $id_logements = $_POST['check_logement'] ?? array();
+    $sql = 'SELECT sae.generate_ical_token_for_user(' . $user_id;
+    $sql .= ', \'' . $date_debut . '\',\'' . $date_fin . '\') as token;';
+    $res = request($sql, 0);
+    $token = $res[0]['token'];
+    //print $token . '<br>';
+    foreach ($id_logements as $id) {
+        $sql = 'INSERT INTO sae._ical_token_logements VALUES ';
+        $sql .= '(\'' . $token . '\', ' . $id . ')';
         request($sql);
-
-        $alreadyIn = explode('/',$_POST['alreadyIn']) ?? array();
-       
-        //LOGEMENT A SUPPRIMER
-        $valuesNotInIdLogements = array_diff($alreadyIn, $id_logements);
-       
-        $valuesNotInIdLogements = array_values($valuesNotInIdLogements);
-        if (!empty($valuesNotInIdLogements[0])){
-            foreach($valuesNotInIdLogements as $id){
-                $sql = 'DELETE FROM sae._ical_token_logements WHERE logement = ' . $id;
-                
-                request($sql);
-            }
-
-        }
-        $logementToInsert = array_filter($id_logements, fn($v)=>!in_array($v,$alreadyIn));
-        $logementToInsert = array_values($logementToInsert);
-        if (!empty($logementToInsert[0])){
-            foreach($logementToInsert as $id){
-                $sql = 'INSERT INTO sae._ical_token_logements VALUES ';
-                $sql .= '(\'' . $token . '\', ' . $id . ')';
-                
-                request($sql);
-    
-
-            }
-            
-        }
-        
-        
     }
-    if (isset($_POST['valider']) && $_POST['action'] == 'create'){
-        
+}
 
-        
-        
-    }
+$id_utilisateur =  buisness_connected_or_redirect();
 
-    $id_utilisateur =  buisness_connected_or_redirect();
-
-    $query_utilisateur = "select nom, prenom, pseudo, commune, pays, region, departement,
+$query_utilisateur = "select nom, prenom, pseudo, commune, pays, region, departement,
     numero, nom_voie, civilite, photo_profile, email, telephone, date_naissance, mot_de_passe, iban, bic, complement_1, complement_2, complement_3
     from sae._utilisateur
     inner join sae._adresse on sae._adresse.id = sae._utilisateur.id_adresse
     inner join sae._compte_proprietaire on sae._compte_proprietaire.id = sae._utilisateur.id
     where sae._utilisateur.id = $id_utilisateur;";
-    $rep_utilisateur = request($query_utilisateur, true);
-    
-    //$id = $rep_utilisateur['id'];
-    $prenom = $rep_utilisateur['prenom'];
-    $nom = $rep_utilisateur['nom'];
-    $ville = $rep_utilisateur['commune'];
-    $region = $rep_utilisateur['region'];
-    $departement = $rep_utilisateur['departement'];
-    $numero = $rep_utilisateur['numero'];
-    $voie = $rep_utilisateur['nom_voie'];
-    $pays = $rep_utilisateur['pays'];
-    $email = $rep_utilisateur['email'];
-    $telephone = $rep_utilisateur['telephone'];
-    $mdp = $rep_utilisateur['mot_de_passe'];
-    $civilite = $rep_utilisateur['civilite'];
-    $date_naissance = $rep_utilisateur['date_naissance'];
-    $pseudo = $rep_utilisateur['pseudo'];
-    $iban = $rep_utilisateur['iban'];
-    $bic = $rep_utilisateur['bic'];
-    $photo = $rep_utilisateur['photo_profile'];
-    $complement1 = $rep_utilisateur['complement_1'];
-    $complement2 = $rep_utilisateur['complement_2'];
-    $complement3 = $rep_utilisateur['complement_3'];
+$rep_utilisateur = request($query_utilisateur, true);
+
+//$id = $rep_utilisateur['id'];
+$prenom = $rep_utilisateur['prenom'];
+$nom = $rep_utilisateur['nom'];
+$ville = $rep_utilisateur['commune'];
+$region = $rep_utilisateur['region'];
+$departement = $rep_utilisateur['departement'];
+$numero = $rep_utilisateur['numero'];
+$voie = $rep_utilisateur['nom_voie'];
+$pays = $rep_utilisateur['pays'];
+$email = $rep_utilisateur['email'];
+$telephone = $rep_utilisateur['telephone'];
+$mdp = $rep_utilisateur['mot_de_passe'];
+$civilite = $rep_utilisateur['civilite'];
+$date_naissance = $rep_utilisateur['date_naissance'];
+$pseudo = $rep_utilisateur['pseudo'];
+$iban = $rep_utilisateur['iban'];
+$bic = $rep_utilisateur['bic'];
+$photo = $rep_utilisateur['photo_profile'];
+$complement1 = $rep_utilisateur['complement_1'];
+$complement2 = $rep_utilisateur['complement_2'];
+$complement3 = $rep_utilisateur['complement_3'];
 
 
 
 
 
-    if ($rep_utilisateur['civilite'] == "Mr"){
-        $genre = "Homme";
-    } else if ($rep_utilisateur['civilite'] == "Mme"){
-        $genre = "Femme";
-    } else {
-        $genre = "Autre";
-    }
-    $src_photo = $rep_utilisateur['photo_profile'];
+if ($rep_utilisateur['civilite'] == "Mr") {
+    $genre = "Homme";
+} else if ($rep_utilisateur['civilite'] == "Mme") {
+    $genre = "Femme";
+} else {
+    $genre = "Autre";
+}
+$src_photo = $rep_utilisateur['photo_profile'];
 ?>
 
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -110,16 +116,20 @@
     <title>Mon Compte</title>
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <div class="wrapper">
-        <?php     include "./header.php"; ?>
+        <?php include "./header.php"; ?>
         <main class="main__container">
             <div class="detail_mon_compte__conteneur">
                 <div class="header_info_compte">
                     <h2>Mon Compte</h2>
-                    <div class ="identifiant_client" ><h3 id="identifiant_client">Identifiant propriétaire : </h3><h3><?= " " . $id_utilisateur ?></h3></div>
+                    <div class="identifiant_client">
+                        <h3 id="identifiant_client">Identifiant propriétaire : </h3>
+                        <h3><?= " " . $id_utilisateur ?></h3>
+                    </div>
                 </div>
-              
+
                 <div class="compte_form">
                     <div class="info_perso_conteneur">
                         <h3>Informations personnelles</h3>
@@ -149,7 +159,7 @@
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__date_naissance">Date de naissance</label>
-                                    <input type="date" name="date_naissance" id="compte__date_naissance" value ="<?=$date_naissance?>" readonly>
+                                    <input type="date" name="date_naissance" id="compte__date_naissance" value="<?= $date_naissance ?>" readonly>
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__telephone">Téléphone</label>
@@ -164,10 +174,10 @@
                             </div>
                         </form>
                     </div>
-                    
 
-                
-                    <div class= "adresse_conteneur">
+
+
+                    <div class="adresse_conteneur">
                         <h3>Adresse</h3>
                         <form method="POST" action="">
                             <div class="ligne">
@@ -196,28 +206,28 @@
                             </div>
                             <div class="compte__input">
                                 <label for="compte__complement">Complément d'adresse</label>
-                                <input type="text" name="complement" id="compte__complement1"  value= "<?= $complement1?>" placeholder="Complément" readonly>
+                                <input type="text" name="complement" id="compte__complement1" value="<?= $complement1 ?>" placeholder="Complément" readonly>
                             </div>
                             <div class="compte__input">
                                 <label for="compte__complement">Complément d'adresse</label>
-                                <input type="text" name="complement" id="compte__complement2" value= "<?= $complement2?>" placeholder="Complément" readonly>
+                                <input type="text" name="complement" id="compte__complement2" value="<?= $complement2 ?>" placeholder="Complément" readonly>
                             </div>
                             <div class="compte__input">
                                 <label for="compte__complement">Complément d'adresse</label>
-                                <input type="text" name="complement" id="compte__complement3" value= "<?= $complement3?>" placeholder="Complément" readonly>
+                                <input type="text" name="complement" id="compte__complement3" value="<?= $complement3 ?>" placeholder="Complément" readonly>
                             </div>
                         </form>
                     </div>
-                    <div class = "ensemble_flex">
-                        <div class= "photo_conteneur">
+                    <div class="ensemble_flex">
+                        <div class="photo_conteneur">
                             <h3>Votre photo de profil</h3>
-                            <img src="<?= "../img/".$photo ?>" alt="photo de profil de l'utilisateur">
+                            <img src="<?= "../img/" . $photo ?>" alt="photo de profil de l'utilisateur">
                             <!-- <p>source : <?= $src_photo ?></p> -->
-    <!--                         <label for="photo_profile">Votre photo de profil</label>
+                            <!--                         <label for="photo_profile">Votre photo de profil</label>
                             <input type="file" id="photo_profile" name="photo_profile" accept="image/png, image/jpeg" /> -->
                         </div>
                         <div class="sous_ensemble_flex">
-                            <div class= "mdp_conteneur" style="display: none;">  
+                            <div class="mdp_conteneur" style="display: none;">
                                 <h3>Mot de passe</h3>
                                 <div class="compte__input">
                                     <label for="compte__mdp">Mot de passe :</label>
@@ -238,89 +248,90 @@
                                     </div>
                                 </form>
                             </div>
-                            <form action="" method="post">
-                                <div class="token_conteneur">
-                                    <div class="modal_sup">
-                                        <div class="modal" id="modal">
+
+                            <input type="hidden" name="action" value="delete">
+                            <div class="token_conteneur">
+                                <div class="modal_sup">
+                                    <div class="modal" id="modal">
                                         <div class="modal-content">
                                             <p id="text-content">Êtes-vous sûr de vouloir supprimer ?</p>
-                                                <div class="modal-actions">
-                                                    
-                                                    <button id="cancelBtn">Non</button>
-                                                    <button type="submit" name="supp_token" id="confirmBtn">Oui</button>
-                                                </div>
+                                            <div class="modal-actions">
+
+                                                <button type="button" id="cancelBtn">Non</button>
+                                                <button type="button" name="supp_token" id="confirmBtn">Oui</button>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-                                
-                                
+                                </div>
+
+
+
                                 <form action="" method="POST">
-                                <div class="modal_enreg" id="modal_enreg">
-                                    <input type="hidden"  name ="alreadyIn" id="alreadyIn">
-                                    <input type="hidden"  name ="token" id="token">
-                                    <input type="hidden"  name ="action" id="action" value="update">
-                                    <div class="modal-content">
-                                        <span class="close" id="closeModalBtn">&times;</span>
-                                        <h3>Modifier Token</h3>
-                                        <div class="dates">
-                                            <label for="date_debut">Date début
-                                                <input type="date" id="date_debut" name="date_debut">
-                                            </label>
-                                            <label for="date_fin">Date fin
-                                                <input type="date" id="date_fin" name="date_fin">
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label>
-                                                <input type="checkbox" id="selectAllCheckbox"> Sélectionner tous les logements
-                                            </label>
-                                        </div>
-                                        <div class="logements-container" id="logementsContainer"></div>
-                                        
-                                        <div class="buttons">
-                                            <button type="button" class="open-modal-btn" id="closeBtn" style="background-color: #dc3545;">Annuler</button>
-                                            <button type="submit" name="valider" class="open-modal-btn">Valider</button>
-                                        </div>
-                            
-                                </div>
-                                </form> 
-
-
-                                </div>
-                                <h3>Token Icalendar</h3>
-                                <form action="" method="post">
-                                    <?php
-                                    $sql = 'SELECT token FROM sae._ical_token';
-                                    $res = request($sql);
-                                    foreach($res as $token):
-                                        
-                                    ?>
-                                        <div class="token ">
+                                    <div class="modal_enreg" id="modal_enreg">
+                                        <input type="hidden" name="alreadyIn" id="alreadyIn">
+                                        <input type="hidden" name="token" id="token">
+                                        <input type="hidden" name="action" id="action" value="">
+                                        <div class="modal-content">
+                                            <span class="close" id="closeModalBtn">&times;</span>
+                                            <h3>Modifier Token</h3>
+                                            <div class="dates">
+                                                <label for="date_debut">Date début
+                                                    <input required="required" type="date" id="date_debut" name="date_debut">
+                                                </label>
+                                                <label for="date_fin">Date fin
+                                                    <input required="required" type="date" id="date_fin" name="date_fin">
+                                                </label>
+                                            </div>
                                             <div>
-                                                <input class="token_id"type="password" value="<?=$token['token']?>" readonly="readonly">
+                                                <label>
+                                                    <input type="checkbox" id="selectAllCheckbox"> Sélectionner tous les logements
+                                                </label>
                                             </div>
-                                            <div class="action">
-                                                <div class="cross"><i class="fas fa-times"></i></div>
-                                                <div class="copier"><i class="fas fa-copy"></i></div>
-                                                <div class="modifier"><i class="fas fa-pencil-alt"></i></div>
-                                                <div class="eyes"><i class="fas fa-eye"></i></div>
+                                            <div class="logements-container" id="logementsContainer"></div>
+
+                                            <div class="buttons">
+                                                <button type="button" class="open-modal-btn" id="closeBtn" style="background-color: #dc3545;">Annuler</button>
+                                                <button type="submit" name="valider" class="open-modal-btn">Valider</button>
                                             </div>
+
                                         </div>
-                                    <?php endforeach ?>
-                                <button type="button" id="generer_token" value="Générer Token">Générer Token</button>
                                 </form>
-                                
+
+
                             </div>
-                        </div>                        
-                    </div>                    
+                            <h3>Token Icalendar</h3>
+                            <form action="" method="post">
+                                <?php
+                                $sql = 'SELECT token FROM sae._ical_token';
+                                $res = request($sql);
+                                foreach ($res as $token) :
+
+                                ?>
+                                    <div class="token ">
+                                        <div>
+                                            <input class="token_id" type="password" value="<?= $token['token'] ?>" readonly="readonly">
+                                        </div>
+                                        <div class="action">
+                                            <div class="cross"><i class="fas fa-times"></i></div>
+                                            <div class="copier"><i class="fas fa-copy"></i></div>
+                                            <div class="modifier"><i class="fas fa-pencil-alt"></i></div>
+                                            <div class="eyes"><i class="fas fa-eye"></i></div>
+                                        </div>
+                                    </div>
+                                <?php endforeach ?>
+                                <button type="button" id="generer_token" value="Générer Token">Générer Token</button>
+                            </form>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-        </main>
-        <?php include "./footer.php"; 
-        ?>
-        <?php
-        $serverName = $_SERVER['SERVER_NAME']  . ':' . $_SERVER['SERVER_PORT'] . '/ical/ical.php?token=';?>
+    </div>
+    </main>
+    <?php include "./footer.php";
+    ?>
+    <?php
+    $serverName = $_SERVER['SERVER_NAME']  . ':' . $_SERVER['SERVER_PORT'] . '/ical/ical.php?token='; ?>
 
     </div>
     <script>
@@ -342,7 +353,7 @@
         var text_content = document.getElementById('text-content');
         var cross = document.querySelectorAll('.cross');
         var copier = document.querySelectorAll('.copier');
-        var eyes  = document.querySelectorAll('.eyes');
+        var eyes = document.querySelectorAll('.eyes');
         var modifiers = document.querySelectorAll('.modifier');
         var logementCheckboxes = document.querySelectorAll(".logementCheckbox")
         var modalEnreg = document.getElementById("modal_enreg");
@@ -351,112 +362,26 @@
 
         var alreadyIn = document.getElementById("alreadyIn");
 
-        var date_fin =  document.getElementById("date_fin");
-        var date_debut =  document.getElementById("date_debut");
+        var date_fin = document.getElementById("date_fin");
+        var date_debut = document.getElementById("date_debut");
         var action = document.getElementById('action');
-        gen_token.addEventListener('click',()=>{
-            action.value ="create";
+        gen_token.addEventListener('click', () => {
+            action.value = "create";
             modalEnreg.style.display = "block";
             var xhr = new XMLHttpRequest();
             const params = new URLSearchParams();
             params.append("action", "create");
-            params.append('id',"<?=$_SESSION["business_id"]?>");
+            params.append('id', "<?= $_SESSION["business_id"] ?>");
 
             xhr.open("GET", "../ajax/ical.ajax.php?" + params, true);
             //xhr.open("GET", "http://localhost/MKWEB/MKWeb/html/ajax/calendrier.ajax.php?" + params, true);
-            xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                
-                var data = JSON.parse(xhr.responseText);
-                for (logement of data['logement']){
-                        
-                            console.log(logement);
-                            //console.log(logement['titre']);
-                            const logementDiv = document.createElement('div');
-                            logementDiv.classList.add('logement');
-
-                            const checkboxDiv = document.createElement('div');
-                            checkboxDiv.classList.add('checkbox');
-                            const checkbox = document.createElement('input');
-                            checkbox.type = 'checkbox';
-                            checkbox.value = logement['id_logement'];
-                            checkbox.name = 'check_logement[]';
-                            
-                            checkbox.classList.add('logementCheckbox');
-                            checkboxDiv.appendChild(checkbox);
-
-                            const descriptionDiv = document.createElement('div');
-                            descriptionDiv.classList.add('description');
-                            const img = document.createElement('img');
-                            img.src = '../img' + logement['img'];
-                            img.alt = logement['titre'];
-                            const p = document.createElement('p');
-                            p.textContent = logement['titre'];
-                            descriptionDiv.appendChild(img);
-                            descriptionDiv.appendChild(p);
-                            logementDiv.appendChild(checkboxDiv);
-                            logementDiv.appendChild(descriptionDiv);
-
-                            logementsContainer.appendChild(logementDiv);
-
-                        }
-                        
-               
-                
-                
-
-                
-            }
-            };
-            xhr.send();
-
-
-        });
-        closeModalBtn.onclick = function () {
-            modalEnreg.style.display = "none";
-            document.body.classList.remove("no-scroll");
-            logementsContainer.innerHTML = ''
-            document.getElementById('token').value="";
-            alreadyIn.value ="";
-        }
-        annulerBtn.onclick = function () {
-            modalEnreg.style.display = "none";
-            document.body.classList.remove("no-scroll");
-            logementsContainer.innerHTML = ''
-            document.getElementById('token').value="";
-            alreadyIn.value ="";
-        }
-        
-        modifiers.forEach((modifier,k) => {
-            modifier.addEventListener('click', () => {
-                action.value ="update";
-               
-                modalEnreg.style.display = "block";
-                document.body.classList.add("no-scroll");
-                // Requête AJAX
-
-                var xhr = new XMLHttpRequest();
-                const params = new URLSearchParams();
-                params.append("action", "update");
-                document.getElementById('token').value=token[k].value;
-              
-                params.append("token", token[k].value);
-                //console.log(token[k].value);
-
-
-                xhr.open("GET", "../ajax/ical.ajax.php?" + params, true);
-                //xhr.open("GET", "http://localhost/MKWEB/MKWeb/html/ajax/calendrier.ajax.php?" + params, true);
-                xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    //console.log(xhr.responseText);
+
                     var data = JSON.parse(xhr.responseText);
-                    date_fin.value = data.date_fin;
-                    date_debut.value = data.date_debut;
-                    
-                    const logementsContainer = document.getElementById('logementsContainer');
-                    console.log(data['logement']);
-                    for (logement of data['logement']){
-                   
+                    for (logement of data['logement']) {
+
+                        //console.log(logement);
                         //console.log(logement['titre']);
                         const logementDiv = document.createElement('div');
                         logementDiv.classList.add('logement');
@@ -466,9 +391,8 @@
                         const checkbox = document.createElement('input');
                         checkbox.type = 'checkbox';
                         checkbox.value = logement['id_logement'];
-                        alreadyIn.value = alreadyIn.value == "" ? logement['id_logement'] : alreadyIn.value + '/'+ logement['id_logement']  ;
                         checkbox.name = 'check_logement[]';
-                        checkbox.checked = 'checked';
+
                         checkbox.classList.add('logementCheckbox');
                         checkboxDiv.appendChild(checkbox);
 
@@ -485,11 +409,62 @@
                         logementDiv.appendChild(descriptionDiv);
 
                         logementsContainer.appendChild(logementDiv);
+
                     }
-                    val_already = alreadyIn.value.split('/');
-                    for (logement of data['all_logement']){
-                        
-                        if( !val_already.includes(logement['id_logement'].toString())){
+
+
+
+                }
+            };
+            xhr.send();
+
+
+        });
+        closeModalBtn.onclick = function() {
+            modalEnreg.style.display = "none";
+            document.body.classList.remove("no-scroll");
+            logementsContainer.innerHTML = ''
+            document.getElementById('token').value = "";
+            alreadyIn.value = "";
+        }
+        annulerBtn.onclick = function() {
+            modalEnreg.style.display = "none";
+            document.body.classList.remove("no-scroll");
+            logementsContainer.innerHTML = ''
+            document.getElementById('token').value = "";
+            alreadyIn.value = "";
+        }
+
+        modifiers.forEach((modifier, k) => {
+            modifier.addEventListener('click', () => {
+                action.value = "update";
+
+                modalEnreg.style.display = "block";
+                document.body.classList.add("no-scroll");
+                // Requête AJAX
+
+                var xhr = new XMLHttpRequest();
+                const params = new URLSearchParams();
+                params.append("action", "update");
+                document.getElementById('token').value = token[k].value;
+
+                params.append("token", token[k].value);
+                //console.log(token[k].value);
+
+
+                xhr.open("GET", "../ajax/ical.ajax.php?" + params, true);
+                //xhr.open("GET", "http://localhost/MKWEB/MKWeb/html/ajax/calendrier.ajax.php?" + params, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        //console.log(xhr.responseText);
+                        var data = JSON.parse(xhr.responseText);
+                        date_fin.value = data.date_fin;
+                        date_debut.value = data.date_debut;
+
+                        const logementsContainer = document.getElementById('logementsContainer');
+                        //console.log(data['logement']);
+                        for (logement of data['logement']) {
+
                             //console.log(logement['titre']);
                             const logementDiv = document.createElement('div');
                             logementDiv.classList.add('logement');
@@ -499,8 +474,9 @@
                             const checkbox = document.createElement('input');
                             checkbox.type = 'checkbox';
                             checkbox.value = logement['id_logement'];
+                            alreadyIn.value = alreadyIn.value == "" ? logement['id_logement'] : alreadyIn.value + '/' + logement['id_logement'];
                             checkbox.name = 'check_logement[]';
-                            
+                            checkbox.checked = 'checked';
                             checkbox.classList.add('logementCheckbox');
                             checkboxDiv.appendChild(checkbox);
 
@@ -517,49 +493,127 @@
                             logementDiv.appendChild(descriptionDiv);
 
                             logementsContainer.appendChild(logementDiv);
+                        }
+                        val_already = alreadyIn.value.split('/');
+                        for (logement of data['all_logement']) {
+
+                            if (!val_already.includes(logement['id_logement'].toString())) {
+                                //console.log(logement['titre']);
+                                const logementDiv = document.createElement('div');
+                                logementDiv.classList.add('logement');
+
+                                const checkboxDiv = document.createElement('div');
+                                checkboxDiv.classList.add('checkbox');
+                                const checkbox = document.createElement('input');
+                                checkbox.type = 'checkbox';
+                                checkbox.value = logement['id_logement'];
+                                checkbox.name = 'check_logement[]';
+
+                                checkbox.classList.add('logementCheckbox');
+                                checkboxDiv.appendChild(checkbox);
+
+                                const descriptionDiv = document.createElement('div');
+                                descriptionDiv.classList.add('description');
+                                const img = document.createElement('img');
+                                img.src = '../img' + logement['img'];
+                                img.alt = logement['titre'];
+                                const p = document.createElement('p');
+                                p.textContent = logement['titre'];
+                                descriptionDiv.appendChild(img);
+                                descriptionDiv.appendChild(p);
+                                logementDiv.appendChild(checkboxDiv);
+                                logementDiv.appendChild(descriptionDiv);
+
+                                logementsContainer.appendChild(logementDiv);
+
+                            }
 
                         }
-                        
-               }
-                   
-                    
-                }
+
+
+                    }
                 };
                 xhr.send();
-          
-               
+
+
             });
         });
 
 
-        eyes.forEach((v,k) => {
+        eyes.forEach((v, k) => {
             v.addEventListener('click', () => {
-                if(token[k].type === "password") token[k].type="text";
-                else token[k].type="password";
+                if (token[k].type === "password") {
+                    token[k].type = "text";
+                    v.firstElementChild.classList = '';
+                    v.firstElementChild.classList.add('fas', 'fa-eye-slash', 'eye-icon');
+
+                } else {
+                    token[k].type = "password";
+                    v.firstElementChild.classList = '';
+                    v.firstElementChild.classList.add('fas', 'fa-eye');
+
+
+                }
+
             });
-          
+
         });
-        copier.forEach((v,k) => {
+        copier.forEach((v, k) => {
             v.addEventListener('click', () => {
                 let url = '<?php print $serverName ?>' + token[k].value;
                 navigator.clipboard.writeText(url);
-                        
+
+
+                v.firstElementChild.classList = '';
+                v.firstElementChild.classList.add('fas', 'fa-check-double', 'copied-icon');
+                setTimeout(() => {
+                    v.firstElementChild.classList.add('fas', 'fa-copy');
+
+
+                }, 2000);
+
+
+
             });
-          
+
         });
 
-        cross.forEach((v,k) => {
+        cross.forEach((v, k) => {
             v.addEventListener('click', () => {
+                tokenToDelete = token[k].value
                 showModal();
                 text_content.innerHTML = `Êtes vous sur de vouloir supprimer le token ${token[k].value} ?
                                           En cas de suppression les calendriers utilisant ce token ne fonctionnerons plus.`;
-              
+
+
             });
-          
+
         });
-        selectAllCheckbox.onclick = function () {
-            
-            document.querySelectorAll(".logementCheckbox").forEach((checkbox) =>{
+        // Attacher un gestionnaire d'événements unique au bouton 'confirmBtn'
+        confirmBtn.addEventListener('click', () => {
+            if (tokenToDelete !== '') {
+                const xhr = new XMLHttpRequest();
+                const params = new URLSearchParams();
+                params.append("action", "delete");
+                params.append("token", tokenToDelete);
+
+                xhr.open("GET", "../ajax/ical.ajax.php?" + params, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        //console.log(xhr.responseText);
+
+                        hideModal(); // Cacher la modal après la suppression
+                        tokenToDelete = ''; // Réinitialiser le token à supprimer
+                        location.reload();
+                    }
+                };
+                xhr.send();
+
+            }
+        });
+        selectAllCheckbox.onclick = function() {
+
+            document.querySelectorAll(".logementCheckbox").forEach((checkbox) => {
                 checkbox.checked = selectAllCheckbox.checked;
 
             });
@@ -569,14 +623,14 @@
             document.getElementById('modal').classList.add('show');
         }
 
-       
+
         const hideModal = () => {
             document.getElementById('modal').classList.remove('show');
         }
 
-       
+
         document.getElementById('confirmBtn').addEventListener('click', function() {
-      
+
             hideModal();
         });
 
@@ -584,8 +638,9 @@
             hideModal();
         });
 
-    
+
         //
     </script>
 </body>
+
 </html>
