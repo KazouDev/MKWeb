@@ -366,6 +366,7 @@ $src_photo = $rep_utilisateur['photo_profile'];
         var date_debut = document.getElementById("date_debut");
         var action = document.getElementById('action');
         gen_token.addEventListener('click', () => {
+            document.body.style.overflow = 'hidden';
             action.value = "create";
             modalEnreg.style.display = "block";
             var xhr = new XMLHttpRequest();
@@ -426,6 +427,7 @@ $src_photo = $rep_utilisateur['photo_profile'];
             logementsContainer.innerHTML = ''
             document.getElementById('token').value = "";
             alreadyIn.value = "";
+            document.body.style.overflow = 'visible';
         }
         annulerBtn.onclick = function() {
             modalEnreg.style.display = "none";
@@ -433,11 +435,13 @@ $src_photo = $rep_utilisateur['photo_profile'];
             logementsContainer.innerHTML = ''
             document.getElementById('token').value = "";
             alreadyIn.value = "";
+            document.body.style.overflow = 'visible';
         }
 
         modifiers.forEach((modifier, k) => {
             modifier.addEventListener('click', () => {
                 action.value = "update";
+                document.body.style.overflow = 'hidden';
 
                 modalEnreg.style.display = "block";
                 document.body.classList.add("no-scroll");
@@ -621,11 +625,13 @@ $src_photo = $rep_utilisateur['photo_profile'];
 
         const showModal = () => {
             document.getElementById('modal').classList.add('show');
+            document.body.style.overflow = 'hidden';
         }
 
 
         const hideModal = () => {
             document.getElementById('modal').classList.remove('show');
+            document.body.style.overflow = 'visible';
         }
 
 
