@@ -56,14 +56,14 @@ $lineHeight: 1.5;
     justify-content: space-between;
     align-items:flex-end;
 }
-.tri__element, .tri__element_filtre {
+.tri__element {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
     margin: 0 3px;
 
 }
-.tri__element label, .tri__element_filtre label{
+.tri__element label {
     font-size: $h55Size;
     font-weight: $lightWeight;
     line-height: normal;
@@ -77,8 +77,7 @@ $lineHeight: 1.5;
 .tri__element.filtre__complet {
     display: none;
 }
-.tri__element input[type="submit"], 
-.tri__element_filtre input[type="submit"] {
+.tri__element input[type="submit"] {
     color: #FFF;
     line-height: normal;
     font-weight: 400;
@@ -89,12 +88,10 @@ $lineHeight: 1.5;
     border: none !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-.tri__element input[type="submit"]:hover,
-.tri__element_filtre input[type="submit"]:hover {
+.tri__element input[type="submit"]:hover {
     background: #273EFC;
 }
-.tri__element input[type="submit"]:active,
-.tri__element_filtre input[type="submit"]:active {
+.tri__element input[type="submit"]:active {
     background: #5669FF; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
     transform: translateY(2px); 
@@ -104,7 +101,7 @@ $lineHeight: 1.5;
     width:12rem;
 }
 
-.tri__element input, .tri__element_filtre input, select {
+.tri__element input, select {
     border-radius: 0.3125rem;
     border: 1px solid #222;
     padding: 0.5rem;
@@ -115,31 +112,12 @@ $lineHeight: 1.5;
 .tri__element #tarif_range input {
     width: 4rem;
 }
-.tri__element select, 
-.tri__element_filtre select {
+.tri__element select {
   appearance: none;
   background-image: url("../img/down.webp");
   background-repeat: no-repeat;
   background-position: right 0.7rem top 50%;
   background-size: 0.8rem auto;
-}
-.tri__element_filtre {
-    display: none;
-    width: 100%;
-    margin-bottom: 1rem;
-}
-.tri__element_filtre input {
-    width: 100%;
-}
-.tri__element_filtre #tarif_range_f input {
-    margin-right: 2px;
-}
-.tri__element_filtre #tarif_range_f input + input {
-    margin-right: 0;
-    margin-left: 2px;
-}
-.tri__element_filtre #tarif_range_f {
-    display: flex;
 }
 
 .dropdown {
@@ -282,10 +260,6 @@ $lineHeight: 1.5;
     .checkLogement__titre img {
         display: block;
     }
-
-    .tri__element_filtre.proprietaireInput, .tri__element_filtre.btn__validate {
-        display: flex;
-    }
 }
 
 @media (max-width: 1200.00px) {
@@ -302,19 +276,11 @@ $lineHeight: 1.5;
     .tri__element.tarif {
         display: none !important;
     }
-
-    .tri__element_filtre.tarif {
-        display: flex;
-    }
 }
 
 @media (max-width: 970.00px) {
     .tri__element.nb_personnes {
         display: none !important;
-    }
-
-    .tri__element_filtre.nb_personnes {
-        display: flex;
     }
 }
 
@@ -354,10 +320,6 @@ $lineHeight: 1.5;
         display: none !important;
     }
 
-    .tri__element_filtre.daterange {
-        display: flex;
-    }
-
     .tri__element.communeInput,
     .tri__element.communeInput input {
         width: 100%;
@@ -376,10 +338,6 @@ $lineHeight: 1.5;
 
     .tri__element.communeInput {
         display: none !important;
-    }
-
-    .tri__element_filtre.communeInput {
-        display: flex;
     }
     
     .checkLogement__titre img {
