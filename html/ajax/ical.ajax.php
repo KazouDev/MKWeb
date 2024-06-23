@@ -95,9 +95,7 @@ if ($action == 'delete'){
     request($sql);
     $sql = 'DELETE FROM sae._ical_token WHERE token = ' . '\'' . $token . '\'';
  
-    print $sql . '<br><br>';
     
-    print $sql;
     request($sql);
 
 
