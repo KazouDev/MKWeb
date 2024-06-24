@@ -71,12 +71,13 @@ imageInput.addEventListener("change", (e) => {
     return arr[arr.length - 1];
   });
 
-  console.log(imgPreviews);
-
   if (imgPreviews.length == 0) previewDiv.innerHTML = "";
 
   Array.from(files).forEach((file) => {
     if (!imgPreviews.includes(file.name)) {
+      if (imageList.length > 6) {
+        return;
+      }
       imageList.push(file);
 
       const reader = new FileReader();
@@ -129,8 +130,12 @@ const updateSubmitingButton = () => {
   loadingModal.style.display = isSubmiting ? "flex" : "none";
 };
 
+const prixHT = document.getElementById("prixht");
+const surface = document.getElementById("surface");
+
 submitButton.addEventListener("click", async (e) => {
   e.preventDefault();
+  prixHT.value = prixHT.value.replace(/,/g, ".");
   var imgPreviews = Array.from(document.querySelectorAll(".img_preview"));
   if (!logementForm.reportValidity() || isSubmiting) return;
 
@@ -216,6 +221,7 @@ submitButton.addEventListener("click", async (e) => {
 
 previewButton.addEventListener("click", async (e) => {
   e.preventDefault();
+  prixHT.value = prixHT.value.replace(/,/g, ".");
   var imgPreviews = Array.from(document.querySelectorAll(".img_preview"));
   if (!logementForm.reportValidity() || isSubmiting) return;
 
@@ -301,3 +307,75 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+const verifyValueInt = (event) => {
+  const key = event.key || event.target.value;
+
+  if (
+    key === "Backspace" ||
+    key === "Tab" ||
+    key === "ArrowLeft" ||
+    key === "ArrowRight"
+  ) {
+    return;
+  }
+
+  if (!/^\d+$/.test(key)) {
+    event.preventDefault();
+  }
+};
+
+const verifyValueFloat = (event) => {
+  const key = event.key;
+
+  if (
+    key === "Backspace" ||
+    key === "Tab" ||
+    key === "ArrowLeft" ||
+    key === "ArrowRight"
+  ) {
+    return;
+  }
+
+  if (!/[0-9.,]/.test(key)) {
+    event.preventDefault();
+    return;
+  }
+
+  const inputValue = event.target.value;
+  if (inputValue.includes(",")) {
+    event.target.value = inputValue.replace(",", ".");
+  }
+};
+
+const nbPersonne = document.getElementById("nbpersonne");
+const dureeLoc = document.getElementById("dureeloc");
+const preavis = document.getElementById("preavis");
+
+const chambre = document.getElementById("chambre");
+const simple = document.getElementById("simple");
+const double = document.getElementById("double");
+
+prixHT.addEventListener("keydown", verifyValueFloat);
+prixHT.addEventListener("input", verifyValueFloat);
+
+nbPersonne.addEventListener("keydown", verifyValueInt);
+nbPersonne.addEventListener("input", verifyValueInt);
+
+dureeLoc.addEventListener("keydown", verifyValueInt);
+dureeLoc.addEventListener("input", verifyValueInt);
+
+preavis.addEventListener("keydown", verifyValueInt);
+preavis.addEventListener("input", verifyValueInt);
+
+surface.addEventListener("keydown", verifyValueFloat);
+surface.addEventListener("input", verifyValueFloat);
+
+chambre.addEventListener("keydown", verifyValueInt);
+chambre.addEventListener("input", verifyValueInt);
+
+simple.addEventListener("keydown", verifyValueInt);
+simple.addEventListener("input", verifyValueInt);
+
+double.addEventListener("keydown", verifyValueInt);
+double.addEventListener("input", verifyValueInt);
