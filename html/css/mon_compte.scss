@@ -224,6 +224,18 @@ $lineHeight: 1.5;
     border: 1px solid black;
     margin-bottom: 1rem;
     padding-right: 1rem;
+    .action{
+        
+        div  {
+            cursor:pointer;
+            &:hover i{
+                color:$mainViolet;
+
+
+            }
+        }
+
+    }
 
     
 }
@@ -538,7 +550,7 @@ $lineHeight: 1.5;
     
     .logements-container {
         border: 1px solid black;
-        border-radius: 5%;
+        border-radius: 0.75rem;
         overflow-y: scroll;
         height: 300px;
         width: 80%;
@@ -560,23 +572,31 @@ $lineHeight: 1.5;
         align-items: center;
         justify-content: space-between;
         padding: 10px;
+        position:relative;
+        height:30%;
         border-bottom: 1px solid #ddd;
     
         .description {
             display: flex;
             flex-direction: row;
             align-items: center;
+            width:90%;
+            height:100%;
+            position:relative;
     
             img {
                 width: 100px;
                 height: auto;
                 margin-right: 20px;
+                max-height: 90%;
             }
         }
     
         .checkbox {
             display: flex;
             align-items: center;
+            width:10%;
+            justify-content: center;
         }
     }
     

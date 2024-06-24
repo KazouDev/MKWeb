@@ -182,6 +182,12 @@
   margin-bottom: 1rem;
   padding-right: 1rem;
 }
+.token .action div {
+  cursor: pointer;
+}
+.token .action div:hover i {
+  color: #5669ff;
+}
 
 .token div input {
   width: 100%;
@@ -446,7 +452,7 @@
 }
 .modal_enreg .logements-container {
   border: 1px solid black;
-  border-radius: 5%;
+  border-radius: 0.75rem;
   overflow-y: scroll;
   height: 300px;
   width: 80%;
@@ -466,21 +472,29 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px;
+  position: relative;
+  height: 30%;
   border-bottom: 1px solid #ddd;
 }
 .modal_enreg .logement .description {
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 90%;
+  height: 100%;
+  position: relative;
 }
 .modal_enreg .logement .description img {
   width: 100px;
   height: auto;
   margin-right: 20px;
+  max-height: 90%;
 }
 .modal_enreg .logement .checkbox {
   display: flex;
   align-items: center;
+  width: 10%;
+  justify-content: center;
 }
 .modal_enreg .no-scroll {
   overflow: hidden;

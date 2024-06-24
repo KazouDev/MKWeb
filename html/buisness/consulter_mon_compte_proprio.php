@@ -257,8 +257,8 @@ $src_photo = $rep_utilisateur['photo_profile'];
                                             <p id="text-content">Êtes-vous sûr de vouloir supprimer ?</p>
                                             <div class="modal-actions">
 
-                                                <button type="button" id="cancelBtn">Non</button>
-                                                <button type="button" name="supp_token" id="confirmBtn">Oui</button>
+                                                <button type="button" id="cancelBtn">Annuler</button>
+                                                <button type="button" name="supp_token" id="confirmBtn">Supprimer</button>
                                             </div>
                                         </div>
                                     </div>
@@ -365,6 +365,21 @@ $src_photo = $rep_utilisateur['photo_profile'];
         var date_fin = document.getElementById("date_fin");
         var date_debut = document.getElementById("date_debut");
         var action = document.getElementById('action');
+
+        date_fin.addEventListener('change',function(e){
+            if (new Date(date_fin.value ) < new Date(date_debut.value )){
+                alert("La date de fin doit être supérieur à celle du début.");
+                date_fin.value='';
+            }
+        });
+        
+        date_debut.addEventListener('change',function(e){
+            if (new Date(date_fin.value ) < new Date(date_debut.value )){
+                alert("La date de fin doit être supérieur à celle du début.");
+                date_debut.value='';   
+            }
+        });
+        
         gen_token.addEventListener('click', () => {
             document.body.style.overflow = 'hidden';
             action.value = "create";
