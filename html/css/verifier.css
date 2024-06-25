@@ -129,6 +129,7 @@
 
 .f_dropdown .f_tri__element {
   margin-bottom: 1rem;
+  display: none;
 }
 
 .f_dropdown .f_tri__element #f_tarif_range {
@@ -219,7 +220,7 @@
   background-color: #fff;
   position: absolute;
   margin-top: 5px;
-  z-index: 1;
+  z-index: 500;
 }
 
 .autocomplete-suggestion {
@@ -230,7 +231,7 @@
 
 .autocomplete-suggestion:hover {
   background-color: #e9e9e9;
-  z-index: 2;
+  z-index: 501;
 }
 
 .custom-apply-button {
@@ -289,6 +290,10 @@
   .checkLogement__titre img {
     display: block;
   }
+  .f_tri__element.f_proprietaireInput,
+  .f_tri__element.f_executer {
+    display: flex;
+  }
 }
 @media (max-width: 1200px) {
   .top [class*=__container] {
@@ -302,10 +307,16 @@
   .tri__element.tarif {
     display: none !important;
   }
+  .f_tri__element.f_tarif {
+    display: flex;
+  }
 }
 @media (max-width: 970px) {
   .tri__element.nb_personnes {
     display: none !important;
+  }
+  .f_tri__element.f_nb_personnes {
+    display: flex;
   }
 }
 @media (max-width: 900px) {
@@ -336,6 +347,9 @@
   .tri__element.daterange {
     display: none !important;
   }
+  .f_tri__element.f_daterange {
+    display: flex;
+  }
   .tri__element.communeInput,
   .tri__element.communeInput input {
     width: 100%;
@@ -350,6 +364,9 @@
   }
   .tri__element.communeInput {
     display: none !important;
+  }
+  .f_tri__element.f_communeInput {
+    display: flex;
   }
   .checkLogement__titre img {
     display: none;

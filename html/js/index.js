@@ -79,20 +79,32 @@ function php_genererAutocompletProprietaire() {
       if (reponse.reponse) {
         let listeProprietaire = reponse.reponse;
 
-        let f_propri = document.getElementById("filtre-propri-id");
+        let filtre_propri = document.getElementById("filtre-propri-id");
+
         let proprietaireInput = document.getElementById("proprietaireInput");
         let autocompleteList = document.getElementById("autocomplete-list-proprietaire");
+        let f_proprietaireInput = document.getElementById("f_proprietaireInput");
+        let f_autocompleteList = document.getElementById("f_autocomplete-list-proprietaire");
 
         // Fonction pour filtrer les suggestions
         let filterSuggestions = () => {
-          let inputValue = proprietaireInput.value.trim().toLowerCase();
+          let inputValue;
+          if (document.activeElement === proprietaireInput) {
+            inputValue = proprietaireInput.value.trim().toLowerCase();
+          }
+          else if (document.activeElement === f_proprietaireInput) {
+            inputValue = f_proprietaireInput.value.trim().toLowerCase();
+          }
           autocompleteList.innerHTML = "";
-
+          f_autocompleteList.innerHTML = "";
+          
           if (!inputValue) {
-            f_propri.setAttribute("value", "");
+            filtre_propri.setAttribute("value", "");
+            proprietaireInput.value = "";
+            f_proprietaireInput.value = "";
             return;
           }
-
+          
           let filteredProprietaires = listeProprietaire.filter(
             (proprietaire) =>
               proprietaire.nom.toLowerCase().includes(inputValue) ||
@@ -101,22 +113,37 @@ function php_genererAutocompletProprietaire() {
 
           filteredProprietaires.forEach((proprietaire) => {
             let suggestionItem = document.createElement("div");
+            let f_suggestionItem = document.createElement("div");
             suggestionItem.classList.add("autocomplete-suggestion");
+            f_suggestionItem.classList.add("autocomplete-suggestion");
             suggestionItem.textContent = `${proprietaire.nom} ${proprietaire.prenom}`;
+            f_suggestionItem.textContent = `${proprietaire.nom} ${proprietaire.prenom}`;
             suggestionItem.addEventListener("click", () => {
-              f_propri.setAttribute("value", proprietaire.id);
+              filtre_propri.setAttribute("value", proprietaire.id);
               proprietaireInput.value = `${proprietaire.nom} ${proprietaire.prenom}`;
+              f_proprietaireInput.value = `${proprietaire.nom} ${proprietaire.prenom}`;
               autocompleteList.innerHTML = "";
             });
+            f_suggestionItem.addEventListener("click", () => {
+              filtre_propri.setAttribute("value", proprietaire.id);
+              proprietaireInput.value = `${proprietaire.nom} ${proprietaire.prenom}`;
+              f_proprietaireInput.value = `${proprietaire.nom} ${proprietaire.prenom}`;
+              f_autocompleteList.innerHTML = "";
+            });
             autocompleteList.appendChild(suggestionItem);
+            f_autocompleteList.appendChild(f_suggestionItem);
           });
         };
 
         proprietaireInput.addEventListener("input", filterSuggestions);
+        f_proprietaireInput.addEventListener("input", filterSuggestions);
 
         document.addEventListener("click", (e) => {
           if (!autocompleteList.contains(e.target) && e.target !== proprietaireInput) {
             autocompleteList.innerHTML = "";
+          }
+          if (!f_autocompleteList.contains(e.target) && e.target !== f_proprietaireInput) {
+            f_autocompleteList.innerHTML = "";
           }
         });
       }
@@ -226,8 +253,11 @@ function php_genererListeLogement() {
 
 document.addEventListener("DOMContentLoaded", () => {
   const communeInput = document.getElementById("communeInput");
+  const f_communeInput = document.getElementById("f_communeInput");
   const dropdown = document.getElementById("dropdown");
+  const f_dropdown = document.getElementById("f_dropdown");
   const imageContainers = document.querySelectorAll(".image-container");
+  const f_imageContainers = document.querySelectorAll(".f_image-container");
   const filtreCommuneCodePostal = document.getElementById("filtre-commune-codePostal");
   const filtreDepartementCode = document.getElementById("filtre-departement-code");
 
@@ -248,6 +278,10 @@ document.addEventListener("DOMContentLoaded", () => {
     dropdown.style.display = "block";
   });
 
+  f_communeInput.addEventListener("click", () => {
+    f_dropdown.style.display = "block";
+  });
+
   // Ajouter un événement pour réinitialiser le champ caché et communeInput si le texte est effacé
   communeInput.addEventListener("input", () => {
     if (communeInput.value.trim() === "") {
@@ -260,33 +294,71 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  f_communeInput.addEventListener("input", () => {
+    if (f_communeInput.value.trim() === "") {
+      f_imageContainers.forEach((cont) => cont.classList.remove("selected"));
+        filtreDepartementCode.setAttribute("value", "");
+        filtreCommuneCodePostal.setAttribute("value", "");
+        f_dropdown.style.display = "block";
+    } else {
+        f_dropdown.style.display = "none";
+    }
+  });
+
   window.addEventListener("click", (event) => {
     if (event.target !== communeInput && !dropdown.contains(event.target)) {
       dropdown.style.display = "none";
+    }
+    if (event.target !== f_communeInput && !f_dropdown.contains(event.target)) {
+      f_dropdown.style.display = "none";
     }
   });
 
   imageContainers.forEach((container) => {
     container.addEventListener("click", () => {
-        // Retirer la classe 'selected' de toutes les autres images
-        imageContainers.forEach((cont) => cont.classList.remove("selected"));
+      // Retirer la classe 'selected' de toutes les autres images
+      imageContainers.forEach((cont) => cont.classList.remove("selected"));
+      
+      // Ajouter la classe 'selected' à l'image cliquée
+      container.classList.add("selected");
 
-        // Ajouter la classe 'selected' à l'image cliquée
-        container.classList.add("selected");
+      // Mettre à jour le champ communeInput avec le nom et le code du département
+      const departmentName = container.getAttribute("data-value");
+      const departmentCode = container.getAttribute("data-code");
+      communeInput.value = `${departmentName} (${departmentCode})`;
 
-        // Mettre à jour le champ communeInput avec le nom et le code du département
-        const departmentName = container.getAttribute("data-value");
-        const departmentCode = container.getAttribute("data-code");
-        communeInput.value = `${departmentName} (${departmentCode})`;
+      // Mettre à jour le champ caché avec le code du département
+      filtreDepartementCode.setAttribute("value", departmentName);
 
-        // Mettre à jour le champ caché avec le code du département
-        filtreDepartementCode.setAttribute("value", departmentName);
+      // Réinitialiser le champ filtreCommuneCodePostal
+      filtreCommuneCodePostal.setAttribute("value", "");
 
-        // Réinitialiser le champ filtreCommuneCodePostal
-        filtreCommuneCodePostal.setAttribute("value", "");
+      // Fermer le dropdown
+      dropdown.style.display = "none";
+    });
+  });
 
-        // Fermer le dropdown
-        dropdown.style.display = "none";
+  f_imageContainers.forEach((container) => {
+    container.addEventListener("click", () => {
+      // Retirer la classe 'selected' de toutes les autres images
+      f_imageContainers.forEach((cont) => cont.classList.remove("selected"));
+
+      // Ajouter la classe 'selected' à l'image cliquée
+      container.classList.add("selected");
+
+      // Mettre à jour le champ communeInput avec le nom et le code du département
+      const departmentName = container.getAttribute("data-value");
+      const departmentCode = container.getAttribute("data-code");
+      f_communeInput.value = `${departmentName} (${departmentCode})`;
+
+      // Mettre à jour le champ caché avec le code du département
+      filtreDepartementCode.setAttribute("value", departmentName);
+
+      // Réinitialiser le champ filtreCommuneCodePostal
+      filtreCommuneCodePostal.setAttribute("value", "");
+
+      // Fermer le dropdown
+      f_dropdown.style.display = "none";
     });
   });
 
@@ -304,23 +376,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Filtrage et affichage des suggestions
     communeInput.addEventListener("input", () => {
-        let inputValue = communeInput.value.trim().toLowerCase();
-        let filteredCommunes = communes.filter((commune) =>
-            commune.nom.toLowerCase().startsWith(inputValue)
-        );
+      let inputValue = communeInput.value.trim().toLowerCase();
+      let filteredCommunes = communes.filter((commune) =>
+          commune.nom.toLowerCase().startsWith(inputValue)
+      );
 
-        let suggestions = filteredCommunes.map((commune) => {
-            return `${commune.nom} (${commune.codesPostaux.join(", ")})`;
-        });
+      let suggestions = filteredCommunes.map((commune) => {
+          return `${commune.nom} (${commune.codesPostaux.join(", ")})`;
+      });
 
-        // Affichage des suggestions
-        displaySuggestions(suggestions);
+      // Affichage des suggestions
+      displaySuggestions(suggestions);
+    });
+
+    f_communeInput.addEventListener("input", () => {
+      let inputValue = f_communeInput.value.trim().toLowerCase();
+      let filteredCommunes = communes.filter((commune) =>
+          commune.nom.toLowerCase().startsWith(inputValue)
+      );
+
+      let suggestions = filteredCommunes.map((commune) => {
+          return `${commune.nom} (${commune.codesPostaux.join(", ")})`;
+      });
+
+      // Affichage des suggestions
+      displaySuggestions(suggestions);
     });
 
     // Affichage des suggestions dans l'élément autocomplete-list-commune
     function displaySuggestions(suggestions) {
         let autocompleteList = document.getElementById("autocomplete-list-commune");
+        let f_autocompleteList = document.getElementById("f_autocomplete-list-commune");
         autocompleteList.innerHTML = "";
+        f_autocompleteList.innerHTML = "";
 
         suggestions.forEach((suggestion) => {
             let suggestionItem = document.createElement("div");
@@ -336,9 +424,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     let codePostal = selectedCommune.codesPostaux[0];
                     filtreCommuneCodePostal.setAttribute("value", codePostal);
                     communeInput.value = selectedText;
+                    f_communeInput.value = selectedText;
 
                     // Réinitialiser le champ de sélection de département
                     imageContainers.forEach((cont) => cont.classList.remove("selected"));
+                    f_imageContainers.forEach((cont) => cont.classList.remove("selected"));
                     filtreDepartementCode.setAttribute("value", "");
 
                     // Fermer le dropdown
@@ -346,25 +436,55 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
             autocompleteList.appendChild(suggestionItem);
+            f_autocompleteList.appendChild(suggestionItem);
         });
         // Afficher les suggestions
         autocompleteList.style.display = "block";
+        f_autocompleteList.style.display = "block";
     }
 
     // Masquer les suggestions
     function hideSuggestions() {
       let autocompleteList = document.getElementById("autocomplete-list-commune");
+      let f_autocompleteList = document.getElementById("f_autocomplete-list-commune");
       autocompleteList.style.display = "none";
+      f_autocompleteList.style.display = "none";
     }
 
     // Gestion de la fermeture des suggestions au clic en dehors
     document.addEventListener("click", (e) => {
         let autocompleteList = document.getElementById("autocomplete-list-commune");
+        let f_autocompleteList = document.getElementById("f_autocomplete-list-commune");
         if (!autocompleteList.contains(e.target) && e.target !== communeInput) {
             autocompleteList.innerHTML = "";
         }
+        if (!f_autocompleteList.contains(e.target) && e.target !== f_communeInput) {
+          f_autocompleteList.innerHTML = "";
+        }
     });
   }
+
+  /* Gestion Nb_Personne, Min, Max */
+  const nb_personnes = document.getElementById("nb_personnes");
+  const tarif_min = document.getElementById("tarif_min");
+  const tarif_max = document.getElementById("tarif_max");
+  const f_nb_personnes = document.getElementById("f_nb_personnes");
+  const f_tarif_min = document.getElementById("f_tarif_min");
+  const f_tarif_max = document.getElementById("f_tarif_max");
+
+  // Fonction pour synchroniser deux inputs
+  function syncInputs(input1, input2) {
+    input1.addEventListener("input", function () {
+      input2.value = input1.value;
+    });
+
+    input2.addEventListener("input", function () {
+      input1.value = input2.value;
+    });
+  }
+  syncInputs(nb_personnes, f_nb_personnes);
+  syncInputs(tarif_min, f_tarif_min);
+  syncInputs(tarif_max, f_tarif_max);
 
   /* Gestion buton découvrir plus / Voir moins des logements */
   const btn_decouvrir = document.getElementById("decouvrir_plus");

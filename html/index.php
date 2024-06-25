@@ -78,12 +78,12 @@
                   </div>
                   <div class="tri__element f_tri__element f_proprietaireInput">
                     <label for="f_proprietaireInput">Propriétaires</label>
-                    <div class="input-container">
+                    <div class="f_input-container">
                       <input type="text" id="f_proprietaireInput" placeholder="Qui ?"/>
                       <div id="f_autocomplete-list-proprietaire" class="autocomplete-suggestions"></div>
                     </div>
                   </div>
-                  <div class="f_tri__element">
+                  <div class="f_tri__element f_executer">
                     <input id="executeValider" type="submit" value="Valider"/>
                   </div>
 

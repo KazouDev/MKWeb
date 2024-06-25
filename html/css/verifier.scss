@@ -143,6 +143,7 @@ $lineHeight: 1.5;
 }
 .f_dropdown .f_tri__element {
     margin-bottom: 1rem;
+    display: none;
 }
 .f_dropdown .f_tri__element #f_tarif_range {
     display: flex;
@@ -219,7 +220,7 @@ $lineHeight: 1.5;
     background-color: #fff;
     position: absolute;
     margin-top: 5px;
-    z-index: 1;
+    z-index: 500;
 }
 .autocomplete-suggestion {
     padding: 10px;
@@ -228,7 +229,7 @@ $lineHeight: 1.5;
 }
 .autocomplete-suggestion:hover {
     background-color: #e9e9e9;
-    z-index: 2;
+    z-index: 501;
 }
 .custom-apply-button {
     color: #FFF;
@@ -283,11 +284,16 @@ $lineHeight: 1.5;
     .checkLogement__titre img {
         display: block;
     }
+
+    .f_tri__element.f_proprietaireInput, 
+    .f_tri__element.f_executer {
+        display: flex;
+    }
 }
 
 @media (max-width: 1200.00px) {
     .top [class*=__container] {
-        max-width: none !important;; 
+        max-width: none !important; 
     }
 
     .top {
@@ -299,11 +305,19 @@ $lineHeight: 1.5;
     .tri__element.tarif {
         display: none !important;
     }
+
+    .f_tri__element.f_tarif {
+        display: flex;
+    }
 }
 
 @media (max-width: 970.00px) {
     .tri__element.nb_personnes {
         display: none !important;
+    }
+
+    .f_tri__element.f_nb_personnes {
+        display: flex;
     }
 }
 
@@ -343,6 +357,10 @@ $lineHeight: 1.5;
         display: none !important;
     }
 
+    .f_tri__element.f_daterange {
+        display: flex;
+    }
+
     .tri__element.communeInput,
     .tri__element.communeInput input {
         width: 100%;
@@ -361,6 +379,10 @@ $lineHeight: 1.5;
 
     .tri__element.communeInput {
         display: none !important;
+    }
+
+    .f_tri__element.f_communeInput {
+        display: flex;
     }
     
     .checkLogement__titre img {
