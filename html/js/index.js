@@ -582,6 +582,44 @@ document.addEventListener("DOMContentLoaded", () => {
           }
 
           $('input[name="daterange"]').val(displayText);
+          $('input[name="f_daterange"]').val(displayText);
+          
+          // Mettre à jour les filtres de date
+          document.getElementById("filtre-date-deb").setAttribute("value", start.format("YYYY-MM-DD"));
+          document.getElementById("filtre-date-fin").setAttribute("value", end.format("YYYY-MM-DD"));
+        }
+      );
+
+      $('input[name="f_daterange"]').daterangepicker(
+        {
+          minDate: moment(),
+          autoUpdateInput: false,
+          locale: {
+            format: "DD/MM/YYYY",
+            applyLabel: "Confirmer",
+            cancelLabel: "Annuler",
+            daysOfWeek: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+            monthNames: [
+              "Janvier",   "Février", "Mars",     "Avril",
+              "Mai",       "Juin",    "Juillet",  "Août",
+              "Septembre", "Octobre", "Novembre", "Décembre"
+            ],
+            firstDay: 1,
+          },
+          applyButtonClasses: "custom-apply-button",
+          cancelButtonClasses: "custom-cancel-button",
+        },
+        function (start, end, label) {
+          let displayText;
+          if (start.isSame(end, 'day')) {
+            displayText = start.format("DD/MM/YYYY");
+          } else {
+            displayText = start.format("DD/MM/YYYY") + " - " 
+                        + end.format("DD/MM/YYYY");
+          }
+
+          $('input[name="daterange"]').val(displayText);
+          $('input[name="f_daterange"]').val(displayText);
           
           // Mettre à jour les filtres de date
           document.getElementById("filtre-date-deb").setAttribute("value", start.format("YYYY-MM-DD"));
@@ -598,23 +636,20 @@ document.addEventListener("DOMContentLoaded", () => {
         picker.setStartDate(moment());
         picker.setEndDate(moment());
         picker.updateView();
+        $('input[name="daterange"]').val("");
+        $('input[name="f_daterange"]').val("");
       });
-
-      // Événement pour détecter la modification manuelle de l'input
-      $('input[name="daterange"]').on('input', function() {
-        if (!$(this).val()) {
-          // Vider les filtres de date
-          document.getElementById("filtre-date-deb").setAttribute("value", "");
-          document.getElementById("filtre-date-fin").setAttribute("value", "");
-          // Réinitialiser les dates sur le calendrier à partir de moment()
-          let picker = $(this).data('daterangepicker');
-          picker.setStartDate(moment());
-          picker.setEndDate(moment());
-          picker.updateView();
-        }
+      $('input[name="f_daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+        document.getElementById("filtre-date-deb").setAttribute("value", "");
+        document.getElementById("filtre-date-fin").setAttribute("value", "");
+        // Réinitialiser les dates sur le calendrier à partir de moment()
+        picker.setStartDate(moment());
+        picker.setEndDate(moment());
+        picker.updateView();
+        $('input[name="daterange"]').val("");
+        $('input[name="f_daterange"]').val("");
       });
-
-      
     }
 
     // Initialisation du date range picker
