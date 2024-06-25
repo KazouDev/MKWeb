@@ -33,34 +33,6 @@
                 <h2>Vérifier la disponibilité</h2>
                 <img src="../img/filter-3.webp" alt="Filtres" id="filtre_icon">
                 <div id="filtre__dropdown" class="dropdown f_dropdown">
-
-                  <div class="tri__element f_tri__element f_communeInput">
-                    <label for="f_communeInput">Destination</label>
-                    <div class="f_input-container">
-                      <input type="text" id="f_communeInput" placeholder="Où ?"/>
-                      <div id="f_autocomplete-list-commune" class="autocomplete-suggestions"></div>
-                      <div id="f_dropdown" class="dropdown">
-                        <div class="f_image-grid">
-                          <div class="f_image-container" data-value="Finistère" data-code="29">
-                            <img src="../img/IMG_0052.webp" alt="Finistère" >
-                            <figcaption>Finistère</figcaption>
-                          </div>
-                          <div class="f_image-container" data-value="Côte-d'Armor" data-code="22">
-                            <img src="../img/IMG_0049.webp" alt="Côte-d'Armor">
-                            <figcaption>Côte-d'Armor</figcaption>
-                          </div>
-                          <div class="f_image-container" data-value="Ille-et-Vilaine" data-code="35">
-                            <img src="../img/IMG_51.webp" alt="Ille-et-Vilaine">
-                            <figcaption>Ille-et-Vilaine</figcaption>
-                          </div>
-                          <div class="f_image-container" data-value="Morbihan" data-code="56">
-                            <img src="../img/IMG_52.webp" alt="Morbihan">
-                            <figcaption>Morbihan</figcaption>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <div class="tri__element f_tri__element f_daterange">
                     <label for="f_daterange">Arrivée - Départ</label>
                     <input type="text" id="f_daterange" name="f_daterange" placeholder="Période ?" readonly/>
@@ -86,13 +58,9 @@
                   <div class="f_tri__element f_executer">
                     <input id="executeValider" type="submit" value="Valider"/>
                   </div>
-
                 </div>
               </div>
               <div class="checkLogement__tri">
-                <div class="tri__element filtre__complet">
-                  <input id="filtre_complet" placeholder="Destination" name="filtre__complet" readonly/>
-                </div>
                 <div class="tri__element communeInput">
                   <label for="communeInput">Destination</label>
                   <div class="input-container">

@@ -253,11 +253,8 @@ function php_genererListeLogement() {
 
 document.addEventListener("DOMContentLoaded", () => {
   const communeInput = document.getElementById("communeInput");
-  const f_communeInput = document.getElementById("f_communeInput");
   const dropdown = document.getElementById("dropdown");
-  const f_dropdown = document.getElementById("f_dropdown");
   const imageContainers = document.querySelectorAll(".image-container");
-  const f_imageContainers = document.querySelectorAll(".f_image-container");
   const filtreCommuneCodePostal = document.getElementById("filtre-commune-codePostal");
   const filtreDepartementCode = document.getElementById("filtre-departement-code");
 
@@ -278,10 +275,6 @@ document.addEventListener("DOMContentLoaded", () => {
     dropdown.style.display = "block";
   });
 
-  f_communeInput.addEventListener("click", () => {
-    f_dropdown.style.display = "block";
-  });
-
   // Ajouter un événement pour réinitialiser le champ caché et communeInput si le texte est effacé
   communeInput.addEventListener("input", () => {
     if (communeInput.value.trim() === "") {
@@ -294,23 +287,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  f_communeInput.addEventListener("input", () => {
-    if (f_communeInput.value.trim() === "") {
-      f_imageContainers.forEach((cont) => cont.classList.remove("selected"));
-        filtreDepartementCode.setAttribute("value", "");
-        filtreCommuneCodePostal.setAttribute("value", "");
-        f_dropdown.style.display = "block";
-    } else {
-        f_dropdown.style.display = "none";
-    }
-  });
-
   window.addEventListener("click", (event) => {
     if (event.target !== communeInput && !dropdown.contains(event.target)) {
       dropdown.style.display = "none";
-    }
-    if (event.target !== f_communeInput && !f_dropdown.contains(event.target)) {
-      f_dropdown.style.display = "none";
     }
   });
 
@@ -335,30 +314,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Fermer le dropdown
       dropdown.style.display = "none";
-    });
-  });
-
-  f_imageContainers.forEach((container) => {
-    container.addEventListener("click", () => {
-      // Retirer la classe 'selected' de toutes les autres images
-      f_imageContainers.forEach((cont) => cont.classList.remove("selected"));
-
-      // Ajouter la classe 'selected' à l'image cliquée
-      container.classList.add("selected");
-
-      // Mettre à jour le champ communeInput avec le nom et le code du département
-      const departmentName = container.getAttribute("data-value");
-      const departmentCode = container.getAttribute("data-code");
-      f_communeInput.value = `${departmentName} (${departmentCode})`;
-
-      // Mettre à jour le champ caché avec le code du département
-      filtreDepartementCode.setAttribute("value", departmentName);
-
-      // Réinitialiser le champ filtreCommuneCodePostal
-      filtreCommuneCodePostal.setAttribute("value", "");
-
-      // Fermer le dropdown
-      f_dropdown.style.display = "none";
     });
   });
 
@@ -389,26 +344,10 @@ document.addEventListener("DOMContentLoaded", () => {
       displaySuggestions(suggestions);
     });
 
-    f_communeInput.addEventListener("input", () => {
-      let inputValue = f_communeInput.value.trim().toLowerCase();
-      let filteredCommunes = communes.filter((commune) =>
-          commune.nom.toLowerCase().startsWith(inputValue)
-      );
-
-      let suggestions = filteredCommunes.map((commune) => {
-          return `${commune.nom} (${commune.codesPostaux.join(", ")})`;
-      });
-
-      // Affichage des suggestions
-      displaySuggestions(suggestions);
-    });
-
     // Affichage des suggestions dans l'élément autocomplete-list-commune
     function displaySuggestions(suggestions) {
         let autocompleteList = document.getElementById("autocomplete-list-commune");
-        let f_autocompleteList = document.getElementById("f_autocomplete-list-commune");
         autocompleteList.innerHTML = "";
-        f_autocompleteList.innerHTML = "";
 
         suggestions.forEach((suggestion) => {
             let suggestionItem = document.createElement("div");
@@ -424,11 +363,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     let codePostal = selectedCommune.codesPostaux[0];
                     filtreCommuneCodePostal.setAttribute("value", codePostal);
                     communeInput.value = selectedText;
-                    f_communeInput.value = selectedText;
 
                     // Réinitialiser le champ de sélection de département
                     imageContainers.forEach((cont) => cont.classList.remove("selected"));
-                    f_imageContainers.forEach((cont) => cont.classList.remove("selected"));
                     filtreDepartementCode.setAttribute("value", "");
 
                     // Fermer le dropdown
@@ -436,30 +373,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
             autocompleteList.appendChild(suggestionItem);
-            f_autocompleteList.appendChild(suggestionItem);
         });
         // Afficher les suggestions
         autocompleteList.style.display = "block";
-        f_autocompleteList.style.display = "block";
     }
 
     // Masquer les suggestions
     function hideSuggestions() {
       let autocompleteList = document.getElementById("autocomplete-list-commune");
-      let f_autocompleteList = document.getElementById("f_autocomplete-list-commune");
       autocompleteList.style.display = "none";
-      f_autocompleteList.style.display = "none";
     }
 
     // Gestion de la fermeture des suggestions au clic en dehors
     document.addEventListener("click", (e) => {
         let autocompleteList = document.getElementById("autocomplete-list-commune");
-        let f_autocompleteList = document.getElementById("f_autocomplete-list-commune");
         if (!autocompleteList.contains(e.target) && e.target !== communeInput) {
             autocompleteList.innerHTML = "";
-        }
-        if (!f_autocompleteList.contains(e.target) && e.target !== f_communeInput) {
-          f_autocompleteList.innerHTML = "";
         }
     });
   }
@@ -659,7 +588,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* Gestion Dropdown filtres  */
   const filtreIcon = document.getElementById("filtre_icon");
-  const filtreComplet = document.getElementById("filtre_complet");
   const filtreDropdown = document.getElementById("filtre__dropdown");
   const executeValider = document.getElementById('executeValider');
 
@@ -667,12 +595,8 @@ document.addEventListener("DOMContentLoaded", () => {
     filtreDropdown.style.display = "flex";
   });
 
-  filtreComplet.addEventListener("click", () => {
-    filtreDropdown.style.display = "flex";
-  });
-
   window.addEventListener("click", (event) => {
-    if (event.target !== filtreIcon && !filtreDropdown.contains(event.target) && !filtreComplet.contains(event.target)) {
+    if (event.target !== filtreIcon && !filtreDropdown.contains(event.target)) {
       filtreDropdown.style.display = "none";
     }
   });
