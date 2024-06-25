@@ -194,6 +194,7 @@ $lineHeight: 1.5;
 }
 
 @media (max-width: 570.98px) {
+
     .header__form {
         display: none;
     }
@@ -234,9 +235,13 @@ $lineHeight: 1.5;
     #CmdMenu, #CmdMenuClose {
         height: 20px;
         z-index: 100;
+        //display: initial;
     }
 
     .menu__item{
+        display: none;
+    }
+    .menu__item.hide{
         width: 100%;
         display: inline;
     }

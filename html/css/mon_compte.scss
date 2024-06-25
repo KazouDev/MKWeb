@@ -3,7 +3,7 @@
 // Variables
 $myFont: "Plus Jakarta San", sans-serif;
 $mainViolet: #5669ff;
-$mainJeune: #ffd33c;
+$mainJaune: #ffd33c;
 $mainNoir: #222222;
 $mainGris: #878787;
 $mainBlanc: #ffffff;
@@ -35,6 +35,7 @@ $lineHeight: 1.5;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    padding-top: 2rem;
     
     h2 {
         font-size: $h2Size;
@@ -46,7 +47,7 @@ $lineHeight: 1.5;
         color: $mainViolet;
     }
     
-    #identifiant_client{
+    #identifiant_client {
         color: $mainNoir;
     }
     
@@ -59,14 +60,13 @@ $lineHeight: 1.5;
         padding: 1.875em;
         margin-bottom: 2rem;
     }
-    .photo_conteneur, .mdp_conteneur, .coord_bancaire_conteneur {
+    .photo_conteneur, .mdp_conteneur, .coord_bancaire_conteneur, .identite_conteneur, .paiment_conteneur {
         display: flex;
         border-radius: 0.75em;
         flex-direction: column;
         gap: 1rem;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         padding: 1.875em;
-
     }
 
     .compte__form {
@@ -98,8 +98,6 @@ $lineHeight: 1.5;
             align-items: center;
             gap: 0.8rem;
         }
-
-        
     }
 
     .compte__input {
@@ -156,11 +154,9 @@ $lineHeight: 1.5;
         height: 15rem;
         align-self: center;
         margin: 1rem;
-        object-fit: cover
+        object-fit: cover;
     }
 }
-
-
 
 .main__container {
     width: 100%;
@@ -179,11 +175,11 @@ $lineHeight: 1.5;
     gap: 1rem;
 }
 
-
 .ensemble_flex {
     display: flex;
     flex-direction: row;
     gap: 5rem;
+    align-items: center;
 }
 
 .sous_ensemble_flex {
@@ -192,8 +188,7 @@ $lineHeight: 1.5;
     width: 100%;
 }
 
-
-.photo_conteneur img{
+.photo_conteneur img {
     display: inline;
     align-items: center;
 }
@@ -210,7 +205,7 @@ $lineHeight: 1.5;
     width: 1rem;
 }
 
-.detail_mon_compte__conteneur .photo_conteneur{
+.detail_mon_compte__conteneur .photo_conteneur {
     width: 60%;
     gap: 3rem;
 }
@@ -220,50 +215,125 @@ $lineHeight: 1.5;
     gap: 2rem;
 }
 
-#mdp_client{
-    width: 60%;
-    height: max-content;
+#mdp_client {
+    width: 100%;
+    height: fit-content;
 }
-.sauvegarde{
+
+.sauvegarde {
     background-color: $mainViolet;
     border-radius: 0.75rem;
-    width: 20%;
-    padding: 1rem 0rem;
+    width: 30%;
+    padding: 1rem 0;
     height: fit-content;
     color: $mainBlanc;
     font-size: $h55Size;
     cursor: pointer;
 }
-form{
+
+form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
 }
-#compte__email{
+
+#compte__email {
     width: 38.5%;
 }
-#compte__complement3{
+
+#compte__complement3 {
     width: 60%;
 }
-#compte__mdp{
+
+#compte__mdp {
     width: 46%;
 }
-.changer_photo label{
+
+.changer_photo label {
     font-size: 1.5rem;
     color: #5669ff;
-
 }
-.changer_photo .sauvegarde{
+
+.changer_photo .sauvegarde {
     width: 30%;
-
 }
-.mdp_conteneur .ligne{
+
+.mdp_conteneur .ligne {
     width: 100%;
     justify-content: space-between;
 }
+
 .login_invalid {
     color: $boutonRouge;
     align-self: flex-start;
     font-size: $h55Size;
+}
+
+.champs_verticals {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 3rem;
+}
+
+.input__ligne {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    row-gap: 0.5rem;
+    width: 100%;
+}
+
+.identite_conteneur .input__ligne .connect__input input {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid $mainNoir;
+    background: $mainBlanc;
+}
+
+.identite_conteneur .input__ligne .connect__input {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.identite_conteneur .input__ligne .connect__input input[type=file] {
+    color: rgba(34, 34, 34, 0.5);
+    font-size: 0.7rem;
+    width: 100%;
+}
+
+.identite_conteneur .input__ligne .connect__input label {
+    color: $mainViolet;
+}
+.ensemble_flex-proprio .champs_verticals #photo_client{
+    width: auto;
+    gap: 1rem;
+}
+.paiment_conteneur .connect__input input{
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #222222;
+    background: #ffffff;
+}
+.paiment_conteneur .ligne{
+    display: flex;
+    justify-content: space-between;
+}
+.paiment_conteneur .ligne .connect__input{
+    width: 60%;
+}
+.ident_photo{
+    width: 100%;
+    height: 10rem;
+    align-self: center;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border-radius: 2%;
 }

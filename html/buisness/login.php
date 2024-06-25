@@ -90,5 +90,6 @@
         </main>
         <?php require_once "footer.php" ?>
     </div>
+    <script src="../js/creer_compte.js"></script>
 </body>
 </html>

@@ -21,6 +21,7 @@ CREATE TABLE _utilisateur (
 
 CREATE TABLE _carte_identite (
   id SERIAL PRIMARY KEY,
+  id_propr INT NOT NULL,
   piece_id_recto VARCHAR(255) NOT NULL,
   piece_id_verso VARCHAR(255) NOT NULL,
   valide BOOLEAN NOT NULL
@@ -194,6 +195,8 @@ CREATE TABLE _ical_token_logements (
   logement INT NOT NULL
 );
 
+ALTER TABLE _carte_identite
+  ADD CONSTRAINT _carte_identite_proprietaire FOREIGN KEY (id_propr) REFERENCES _compte_proprietaire (id);
 ALTER TABLE _ical_token_logements
   ADD CONSTRAINT _ical_token_primary_key PRIMARY KEY (token, logement);
 
@@ -529,28 +532,6 @@ INSERT INTO _compte_client (id) VALUES
 INSERT INTO _compte_admin (id) VALUES 
 (21), (22);
 
-INSERT INTO _carte_identite (piece_id_recto, piece_id_verso, valide) VALUES 
-('/piece/1_Dupont_recto.jpg', '/piece/1_Dupont_verso.jpg', true), 
-('/piece/2_Martin_recto.jpg', '/piece/2_Martin_verso.jpg', true), 
-('/piece/3_Lefevre_recto.jpg', '/piece/3_Lefevre_verso.jpg', true), 
-('/piece/4_Bernard_recto.jpg', '/piece/4_Bernard_verso.jpg', true), 
-('/piece/5_Dubois_recto.jpg', '/piece/5_Dubois_verso.jpg', true), 
-('/piece/6_Moreau_recto.jpg', '/piece/6_Moreau_verso.jpg', true), 
-('/piece/7_Petit_recto.jpg', '/piece/7_Petit_verso.jpg', true), 
-('/piece/8_Laurent_recto.jpg', '/piece/8_Laurent_verso.jpg', true), 
-('/piece/9_Simon_recto.jpg', '/piece/9_Simon_verso.jpg', true), 
-('/piece/10_Michel_recto.jpg', '/piece/10_Michel_verso.jpg', true), 
-('/piece/11_Richard_recto.jpg', '/piece/11_Richard_verso.jpg', true), 
-('/piece/12_Robert_recto.jpg', '/piece/12_Robert_verso.jpg', true), 
-('/piece/13_Durand_recto.jpg', '/piece/13_Durand_verso.jpg', true), 
-('/piece/14_Dubreuil_recto.jpg', '/piece/14_Dubreuil_verso.jpg', true), 
-('/piece/15_Legrand_recto.jpg', '/piece/15_Legrand_verso.jpg', true), 
-('/piece/16_Fournier_recto.jpg', '/piece/16_Fournier_verso.jpg', true), 
-('/piece/17_Girard_recto.jpg', '/piece/17_Girard_verso.jpg', true), 
-('/piece/18_Roux_recto.jpg', '/piece/18_Roux_verso.jpg', true), 
-('/piece/19_Pires_recto.jpg', '/piece/19_Pires_verso.jpg', true), 
-('/piece/20_Blanc_recto.jpg', '/piece/20_Blanc_verso.jpg', true);
-
 INSERT INTO _compte_proprietaire (id, IBAN, BIC, Titulaire) VALUES 
 (1, 'FR7612345678901234567890123', 'AGRIFRPPXXX', 'Dupont Jean'),
 (2, 'FR7612345678901234567890124', 'AGRIFRPPXXX', 'Martin Marie'),
@@ -572,6 +553,28 @@ INSERT INTO _compte_proprietaire (id, IBAN, BIC, Titulaire) VALUES
 (18, 'FR7612345678901234567890140', 'AGRIFRPPXXX', 'Roux Alice'),
 (19, 'FR7612345678901234567890141', 'AGRIFRPPXXX', 'Pires Antoine'),
 (20, 'FR7612345678901234567890142', 'AGRIFRPPXXX', 'Blanc Lucie');
+
+INSERT INTO _carte_identite (id_propr,piece_id_recto, piece_id_verso, valide) VALUES 
+(1, '/piece/1_Dupont_recto.jpg', '/piece/1_Dupont_verso.jpg', true), 
+(2, '/piece/2_Martin_recto.jpg', '/piece/2_Martin_verso.jpg', true), 
+(3, '/piece/3_Lefevre_recto.jpg', '/piece/3_Lefevre_verso.jpg', true), 
+(4, '/piece/4_Bernard_recto.jpg', '/piece/4_Bernard_verso.jpg', true), 
+(5, '/piece/5_Dubois_recto.jpg', '/piece/5_Dubois_verso.jpg', true), 
+(6, '/piece/6_Moreau_recto.jpg', '/piece/6_Moreau_verso.jpg', true), 
+(7,'/piece/7_Petit_recto.jpg', '/piece/7_Petit_verso.jpg', true), 
+(8,'/piece/8_Laurent_recto.jpg', '/piece/8_Laurent_verso.jpg', true), 
+(9,'/piece/9_Simon_recto.jpg', '/piece/9_Simon_verso.jpg', true), 
+(10,'/piece/10_Michel_recto.jpg', '/piece/10_Michel_verso.jpg', true), 
+(11,'/piece/11_Richard_recto.jpg', '/piece/11_Richard_verso.jpg', true), 
+(12,'/piece/12_Robert_recto.jpg', '/piece/12_Robert_verso.jpg', true), 
+(13,'/piece/13_Durand_recto.jpg', '/piece/13_Durand_verso.jpg', true), 
+(14,'/piece/14_Dubreuil_recto.jpg', '/piece/14_Dubreuil_verso.jpg', true), 
+(15,'/piece/15_Legrand_recto.jpg', '/piece/15_Legrand_verso.jpg', true), 
+(16,'/piece/16_Fournier_recto.jpg', '/piece/16_Fournier_verso.jpg', true), 
+(17,'/piece/17_Girard_recto.jpg', '/piece/17_Girard_verso.jpg', true), 
+(18,'/piece/18_Roux_recto.jpg', '/piece/18_Roux_verso.jpg', true), 
+(19,'/piece/19_Pires_recto.jpg', '/piece/19_Pires_verso.jpg', true), 
+(20, '/piece/20_Blanc_recto.jpg', '/piece/20_Blanc_verso.jpg', true);
 
 INSERT INTO _langue_proprietaire(id_proprietaire, id_langue) VALUES
 (1, 1), (1, 2), (1, 3), -- Propriétaire 1 (Français, Anglais, Allemand)

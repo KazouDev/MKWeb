@@ -51,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ];
 
     $doc = [
+        "id_propr" => null,
         "piece_id_recto" => null,
         "piece_id_verso" => null,
         "valide" => true
@@ -144,29 +145,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (isset($_FILES["photo_recto"]["tmp_name"]) && $_FILES["photo_recto"]["tmp_name"] !== "" && isset($_FILES["photo_verso"]["tmp_name"]) && $_FILES["photo_verso"]["tmp_name"] !== "") {
                     $extension_recto = pathinfo($_FILES["photo_recto"]['name'], PATHINFO_EXTENSION);
                     $extension_verso = pathinfo($_FILES["photo_verso"]['name'], PATHINFO_EXTENSION);
-                    $photo_path_recto = "../img/piece/$user_id" . "_" . $nom . "_recto" . "." . $extension;
-                    $photo_path_verso = "../img/piece/$user_id" . "_" . $nom . "_verso" . "." . $extension;
+                    $photo_path_recto = "../img/piece/$user_id" . "_" . $nom . "_recto" . "." . $extension_recto;
+                    $photo_path_verso = "../img/piece/$user_id" . "_" . $nom . "_verso" . "." . $extension_verso;
                     move_uploaded_file($_FILES["photo_recto"]["tmp_name"], $photo_path_recto);
                     move_uploaded_file($_FILES["photo_verso"]["tmp_name"], $photo_path_verso);
-                    $photo_path_recto_bdd = "/piece/$user_id" . "_" . $nom . "_recto" . "." . $extension;
-                    $photo_path_verso_bdd = "/piece/$user_id" . "_" . $nom . "_verso" . "." . $extension;
+                    $photo_path_recto_bdd = "/piece/$user_id" . "_" . $nom . "_recto" . "." . $extension_recto;
+                    $photo_path_verso_bdd = "/piece/$user_id" . "_" . $nom . "_verso" . "." . $extension_verso;
                     $doc['piece_id_recto'] = $photo_path_recto_bdd;
                     $doc['piece_id_verso'] = $photo_path_verso_bdd;
+                    $doc['id_propr']=$user_id;
                     $piece_columns = array_keys($doc);
                     $piece_values = array_values($doc);
-                    $piece_id = insert('sae._carte_identite', $piece_columns, $piece_values);
-                    if ($piece_id) {
-                        $proprio_columns = array_keys($proprio);
-                        $proprio_values = array_values($proprio);
-
-                        if (insert('sae._compte_proprietaire', $proprio_columns, $proprio_values, false)) {
-                            $_SESSION["business_id"] = $proprio['id'];
-                            $_SESSION["business_photo"] = $photo_path;
-                            redirect();
-                            exit;
-                        }
-
+                    $proprio_columns = array_keys($proprio);
+                    $proprio_values = array_values($proprio);
+                    if (insert('sae._compte_proprietaire', $proprio_columns, $proprio_values, false)) {
+                        insert('sae._carte_identite', $piece_columns, $piece_values, false);
+                        $_SESSION["business_id"] = $proprio['id'];
+                        $_SESSION["business_photo"] = $photo_path;
+                        redirect();
+                        exit;
                     }
+
                 }
             }
         }
@@ -448,7 +447,7 @@ function validateAccountHolder($holder)
                             <input type="submit" value="Continuer">
                         </form>
                         <p class="p_ligne">Ou</p>
-                        <p style="align-self: center; text-align:center;">Vous possédez déjà un compte ? <a href=""
+                        <p style="align-self: center; text-align:center;">Vous possédez déjà un compte ? <a href="login.php"
                                 style="color: #5669FF;">Se connecter</a></p>
                     </div>
                     <div class="slider">

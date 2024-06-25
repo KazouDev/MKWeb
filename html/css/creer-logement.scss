@@ -311,20 +311,19 @@ select {
   cursor: pointer;
   align-self: stretch;
   border-radius: 0.5rem;
-  width: 10%;
+  padding: 1rem 6rem;
   background-color: $boutonGreen;
   color: $mainBlanc;
   display: flex;
   align-items: center;
   justify-content: center;
   @media screen and (max-width: 600px) {
-    width: 18%;
+    padding: 0.7rem 4rem;
   }
 }
 
 .envoyer {
-  width: 25%;
-  height: 40px;
+  padding: 1rem 6rem;
   background-color: $mainViolet;
 }
 

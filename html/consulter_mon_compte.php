@@ -9,11 +9,12 @@
     $id_utilisateur =  client_connected_or_redirect();
 
     $query_utilisateur = "select nom, prenom, pseudo, commune, pays, region, departement,
-    numero, code_postal, nom_voie, civilite, photo_profile, email, telephone, date_naissance, mot_de_passe, complement_1, complement_2, complement_3
+    numero, code_postal, nom_voie, civilite, photo_profile, email, telephone, date_naissance, mot_de_passe, complement_1, complement_2, complement_3, id_adresse
     from sae._utilisateur
     inner join sae._adresse on sae._adresse.id = sae._utilisateur.id_adresse
     where sae._utilisateur.id = $id_utilisateur;";
     $rep_utilisateur = request($query_utilisateur, true);
+    $id_add=$rep_utilisateur['id_adresse'];
     
     //$id = $rep_utilisateur['id'];
     $prenom = $rep_utilisateur['prenom'];
@@ -68,24 +69,18 @@
                         $mailInvalid = true;
                         $allow=false;
                     }
-                    $query = "SELECT COUNT(*) AS count FROM sae._utilisateur WHERE email = '$email'";
-                    $result = request($query, true);
-                    if ($result && $result["count"] > 0) {
-                        $emailExists = true;
-                        $allow=false;
+                    if ($email!=$rep_utilisateur['email']) {
+                        $query = "SELECT COUNT(*) AS count FROM sae._utilisateur WHERE email = '$email'";
+                        $result = request($query, true);
+                        if ($result && $result["count"] > 0) {
+                            $emailExists = true;
+                            $allow=false;
+                        }
                     }
-                    $util = [
-                        "nom" => $nom,
-                        "prenom" => $prenom,
-                        "pseudo" => $pseudo,
-                        "date_naissance" => $date_naissance,
-                        "civilite" => $civilite,
-                        "telephone" => $telephone,
-                        "email" => $email,
-                    ];
-                    // if ($allow) {
-                    //     request("UPDATE sae._utilisateur SET photo_profile = '$photo_path_bdd' WHERE id = $user_id");
-                    // }
+
+                    if ($allow) {
+                        request("UPDATE sae._utilisateur SET nom = '$nom', prenom = '$prenom', pseudo = '$pseudo', civilite = '$civilite', date_naissance = '$date_naissance', telephone = '$telephone', email = '$email' WHERE id =  $id_utilisateur");
+                    }
 
                     break;
                 
@@ -101,7 +96,8 @@
                     $complement1 = empty($_POST['complement1']) ? $rep_utilisateur['complement_1'] : clean_input($_POST['complement1']);
                     $complement2 = empty($_POST['complement2']) ? $rep_utilisateur['complement_2'] : clean_input($_POST['complement2']);
                     $complement3 = empty($_POST['complement3']) ? $rep_utilisateur['complement_3'] : clean_input($_POST['complement3']);
-
+                    
+                    request("UPDATE sae._adresse SET pays = '$pays', region = '$region', departement = '$departement', commune = '$ville', code_postal = '$code_postal', nom_voie = '$voie', numero = '$numero', complement_1 = '$complement1', complement_2 = '$complement2', complement_3 = '$complement3' WHERE id =  $id_add");
 
                     break;
 
@@ -174,6 +170,9 @@
     <?php     include "./header.php"; ?>
         <main class="main__container">
             <div class="detail_mon_compte__conteneur">
+                <div id="loading-overlay" style="display: none;">
+              <div class="loader"></div>
+            </div>
                 <div class="header_info_compte">
                     <h2>Mon Compte</h2>
                     <div class ="identifiant_client"><h3 id="identifiant_client">Identifiant client : </h3><h3><?= "  " . $id_utilisateur ?></h3></div>

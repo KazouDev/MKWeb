@@ -2,9 +2,9 @@
 session_start();
 require_once "../utils.php";
 
-// if (isset($_SESSION["client_id"])) {
-//     redirect();
-// }
+if (isset($_SESSION["client_id"])) {
+    redirect();
+}
 
 $status = false;
 $passwordMismatch = false;
@@ -96,12 +96,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user_id) {
                 if (isset($_FILES["photo_profil"]["tmp_name"]) && $_FILES["photo_profil"]["tmp_name"] !== "") {
                     $extension = pathinfo($_FILES["photo_profil"]['name'], PATHINFO_EXTENSION);
-                    $photo_path = "img/compte/profile_$pseudo.$extension";
+                    $photo_path = "/compte/profile_$pseudo.$extension";
                     $photo_path_bdd = "/compte/profile_$pseudo.$extension";
                     move_uploaded_file($_FILES["photo_profil"]["tmp_name"], $photo_path);
                 } else {
                     $extension = pathinfo("img/anonymus.webp", PATHINFO_EXTENSION);
-                    $photo_path = "img/compte/profile_anonymous.$extension";
+                    $photo_path = "/compte/profile_anonymous.$extension";
                     $photo_path_bdd = "/compte/profile_anonymous.$extension";
                 }
 
@@ -238,7 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="submit" value="Continuer">
                         </form>
                         <p class="p_ligne">Ou</p>
-                        <p style="align-self: center; text-align:center;">Vous possédez déjà un compte ? <a href=""
+                        <p style="align-self: center; text-align:center;">Vous possédez déjà un compte ? <a href="login.php"
                                 style="color: #5669FF;">Se connecter</a></p>
                     </div>
                     <div class="slider">

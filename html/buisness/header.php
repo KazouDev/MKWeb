@@ -11,10 +11,9 @@
                 </div>
             </div>
             <div class="header__form">
-                <a href=""><i class="fa-regular fa-eye-slash"></i></a>
                 <div class="header__connexion"><a href="login.php">Connexion</a></div>                    
             </div>
-            <img src="../img/menu.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
+            <img src="../img/menuPro.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
             <img src="../img/fermer.webp" alt="Fermer le menu" id="CmdMenuClose">
 
         </div>
@@ -38,7 +37,6 @@
         </div>
     </div>
     <div class="header__form">
-        <a href=""><i class="fa-regular fa-eye-slash"></i></a>
             <div class="user__info" id="header__info">
                 <img src="../img/<?= $photo_profil?>" alt="Photo User" class="user__photo">
                 <p><?= $user_info["pseudo"] ?></p>
@@ -63,11 +61,11 @@
             <a href="logout.php" class="menu__link" style="color: #FF5656;">Se déconnecter</a>
         </li>
     </ul> 
-    <img src="../img/menu.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
+    <img src="../img/menuPro.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
     <img src="../img/fermer.webp" alt="Fermer le menu" id="CmdMenuClose">
 </div>
 </header>
-<script src="../js/header_user.js"></script>
+<script src="../js/header_userPro.js"></script>
 <?php 
     }
 ?>
