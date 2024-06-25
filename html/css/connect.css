@@ -63,7 +63,8 @@
   font-size: 1rem;
 }
 
-.connect__input input, .connect__input select {
+.connect__input input,
+.connect__input select {
   width: 100%;
   padding: 1rem;
   border-radius: 0.75rem;
@@ -82,12 +83,10 @@
   font-size: 1rem;
 }
 
-
 .connect__input input::placeholder,
 .connect__input select,
 .connect__from input[type=date],
 .connect__from input[type=file] {
-
   color: rgba(34, 34, 34, 0.5);
   font-size: 1rem;
 }
@@ -144,7 +143,8 @@
   font-size: 1rem;
 }
 
-.connect__face, .connect__google {
+.connect__face,
+.connect__google {
   display: flex;
   gap: 1rem;
   padding: 0.75rem;
@@ -153,7 +153,8 @@
   align-self: stretch;
 }
 
-.connect__face img, .connect__google img {
+.connect__face img,
+.connect__google img {
   width: 1.75rem;
 }
 
@@ -184,13 +185,12 @@
   width: 100%;
 }
 
-.connect__input__add .connect__input__ligne input, .connect__input__ligne .connect__input {
+.connect__input__add .connect__input__ligne input,
+.connect__input__ligne .connect__input {
   width: 45%;
 }
 
-
 #connect__complement3, #connect__rue {
-
   width: 100%;
 }
 
@@ -229,7 +229,8 @@
   filter: none;
 }
 
-.prev, .next {
+.prev,
+.next {
   cursor: pointer;
   position: absolute;
   top: 50%;
@@ -251,9 +252,9 @@
   border-radius: 3px 0 0 3px;
 }
 
-.prev:hover, .next:hover {
+.prev:hover,
+.next:hover {
   background-color: rgba(86, 105, 255, 0.3);
-
 }
 
 @media (max-width: 900px) {
@@ -324,5 +325,4 @@
   .connect__input__add .connect__input__ligne input, .connect__input__ligne .connect__input {
     width: 100%;
   }
-
 }/*# sourceMappingURL=connect.css.map */

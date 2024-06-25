@@ -136,6 +136,15 @@ const surface = document.getElementById("surface");
 submitButton.addEventListener("click", async (e) => {
   e.preventDefault();
   prixHT.value = prixHT.value.replace(/,/g, ".");
+  if (/^[,.]/.test(prixHT.value)) {
+    prixHT.value = prixHT.value.substring(1);
+  }
+
+  surface.value = surface.value.replace(/,/g, ".");
+  if (/^[,.]/.test(surface.value)) {
+    surface.value = surface.value.substring(1);
+  }
+
   var imgPreviews = Array.from(document.querySelectorAll(".img_preview"));
   if (!logementForm.reportValidity() || isSubmiting) return;
 
@@ -211,7 +220,7 @@ submitButton.addEventListener("click", async (e) => {
       if (data.err == false) {
         isSubmiting = false;
         updateSubmitingButton();
-        //window.location.href = "index.php?id=" + data.id;
+        window.location.href = "index.php?id=" + data.id;
       } else {
         isSubmiting = false;
         updateSubmitingButton();
@@ -222,6 +231,15 @@ submitButton.addEventListener("click", async (e) => {
 previewButton.addEventListener("click", async (e) => {
   e.preventDefault();
   prixHT.value = prixHT.value.replace(/,/g, ".");
+  if (/^[,.]/.test(prixHT.value)) {
+    prixHT.value = prixHT.value.substring(1);
+  }
+
+  surface.value = surface.value.replace(/,/g, ".");
+  if (/^[,.]/.test(surface.value)) {
+    surface.value = surface.value.substring(1);
+  }
+
   var imgPreviews = Array.from(document.querySelectorAll(".img_preview"));
   if (!logementForm.reportValidity() || isSubmiting) return;
 
@@ -285,11 +303,19 @@ previewButton.addEventListener("click", async (e) => {
   await fetch("../ajax/store-form-data.ajax.php", {
     method: "POST",
     body: formData,
-  });
-
-  isSubmiting = false;
-  updateSubmitingButton();
-  logementForm.submit();
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      if (data.err == undefined || data.err == false) {
+        isSubmiting = false;
+        updateSubmitingButton();
+        logementForm.submit();
+      } else {
+        isSubmiting = false;
+        updateSubmitingButton();
+      }
+    });
 });
 
 const resetButton = document.getElementById("reset");
@@ -323,6 +349,11 @@ const verifyValueInt = (event) => {
   if (!/^\d+$/.test(key)) {
     event.preventDefault();
   }
+
+  const inputValue = parseInt(event.target.value);
+  if (inputValue > Number.MAX_SAFE_INTEGER) {
+    event.target.value = Number.MAX_SAFE_INTEGER;
+  }
 };
 
 const verifyValueFloat = (event) => {
@@ -343,8 +374,15 @@ const verifyValueFloat = (event) => {
   }
 
   const inputValue = event.target.value;
-  if (inputValue.includes(",")) {
-    event.target.value = inputValue.replace(",", ".");
+  if (/.*[.,].*/.test(inputValue) && (key == "." || key == ",")) {
+    event.preventDefault();
+  }
+  if (/^[,.]/.test(inputValue)) {
+    event.target.value = inputValue.substring(1);
+  }
+
+  if (inputValue > Number.MAX_SAFE_INTEGER) {
+    event.target.value = Number.MAX_SAFE_INTEGER;
   }
 };
 
