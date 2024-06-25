@@ -5,44 +5,6 @@ require_once "../../utils.php";
 // Vérification de la session et récupération de l'ID du propriétaire connecté
 $id = buisness_connected_or_redirect();
 
-define("VIEW_LOGEMENT", (1 << 0));
-define("VIEW_LOGEMENT_PLANNING", (1 << 1));
-define("INDISPONIBLE", (1 << 2));
-define("ADMIN", (1 << 3));
-
-$permissions = 0;
-
-$permissions |= (1 << 0);
-$permissions |= (1 << 1);
-
-function addApiKeyForProprietor($proprietorId, $permissions) {
-    try {
-        $query = "SELECT sae.add_api_key_for_proprietor($proprietorId, $permissions::BIT(4))";
-        $results = request($query, false);
-
-        return true;
-    } catch (PDOException $e) {
-        echo 'Erreur lors de l\'ajout de la clé API : ' . $e->getMessage();
-        return false;
-    }
-}
-
-$newApiKey = addApiKeyForProprietor($id, $permissions);
-
-$res = bindec(request("SELECT * FROM sae._api_keys WHERE proprietaire = '$id'", true)["permission"]);
-
-print $res;
-print "<>";
-$hasPermissionOfView = ($res & VIEW_LOGEMENT) != 0;
-
-if($hasPermissionOfView){
-    print "vrai";
-} else {
-    print "faux";
-}
-
-
-
 // Requête SQL pour récupérer les réservations du propriétaire
 $query = "SELECT 
     sae._utilisateur.nom, sae._utilisateur.prenom, sae._utilisateur.telephone, 

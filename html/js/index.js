@@ -79,20 +79,32 @@ function php_genererAutocompletProprietaire() {
       if (reponse.reponse) {
         let listeProprietaire = reponse.reponse;
 
-        let f_propri = document.getElementById("filtre-propri-id");
+        let filtre_propri = document.getElementById("filtre-propri-id");
+
         let proprietaireInput = document.getElementById("proprietaireInput");
         let autocompleteList = document.getElementById("autocomplete-list-proprietaire");
+        let f_proprietaireInput = document.getElementById("f_proprietaireInput");
+        let f_autocompleteList = document.getElementById("f_autocomplete-list-proprietaire");
 
         // Fonction pour filtrer les suggestions
         let filterSuggestions = () => {
-          let inputValue = proprietaireInput.value.trim().toLowerCase();
+          let inputValue;
+          if (document.activeElement === proprietaireInput) {
+            inputValue = proprietaireInput.value.trim().toLowerCase();
+          }
+          else if (document.activeElement === f_proprietaireInput) {
+            inputValue = f_proprietaireInput.value.trim().toLowerCase();
+          }
           autocompleteList.innerHTML = "";
-
+          f_autocompleteList.innerHTML = "";
+          
           if (!inputValue) {
-            f_propri.setAttribute("value", "");
+            filtre_propri.setAttribute("value", "");
+            proprietaireInput.value = "";
+            f_proprietaireInput.value = "";
             return;
           }
-
+          
           let filteredProprietaires = listeProprietaire.filter(
             (proprietaire) =>
               proprietaire.nom.toLowerCase().includes(inputValue) ||
@@ -101,22 +113,37 @@ function php_genererAutocompletProprietaire() {
 
           filteredProprietaires.forEach((proprietaire) => {
             let suggestionItem = document.createElement("div");
+            let f_suggestionItem = document.createElement("div");
             suggestionItem.classList.add("autocomplete-suggestion");
+            f_suggestionItem.classList.add("autocomplete-suggestion");
             suggestionItem.textContent = `${proprietaire.nom} ${proprietaire.prenom}`;
+            f_suggestionItem.textContent = `${proprietaire.nom} ${proprietaire.prenom}`;
             suggestionItem.addEventListener("click", () => {
-              f_propri.setAttribute("value", proprietaire.id);
+              filtre_propri.setAttribute("value", proprietaire.id);
               proprietaireInput.value = `${proprietaire.nom} ${proprietaire.prenom}`;
+              f_proprietaireInput.value = `${proprietaire.nom} ${proprietaire.prenom}`;
               autocompleteList.innerHTML = "";
             });
+            f_suggestionItem.addEventListener("click", () => {
+              filtre_propri.setAttribute("value", proprietaire.id);
+              proprietaireInput.value = `${proprietaire.nom} ${proprietaire.prenom}`;
+              f_proprietaireInput.value = `${proprietaire.nom} ${proprietaire.prenom}`;
+              f_autocompleteList.innerHTML = "";
+            });
             autocompleteList.appendChild(suggestionItem);
+            f_autocompleteList.appendChild(f_suggestionItem);
           });
         };
 
         proprietaireInput.addEventListener("input", filterSuggestions);
+        f_proprietaireInput.addEventListener("input", filterSuggestions);
 
         document.addEventListener("click", (e) => {
           if (!autocompleteList.contains(e.target) && e.target !== proprietaireInput) {
             autocompleteList.innerHTML = "";
+          }
+          if (!f_autocompleteList.contains(e.target) && e.target !== f_proprietaireInput) {
+            f_autocompleteList.innerHTML = "";
           }
         });
       }
@@ -268,25 +295,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   imageContainers.forEach((container) => {
     container.addEventListener("click", () => {
-        // Retirer la classe 'selected' de toutes les autres images
-        imageContainers.forEach((cont) => cont.classList.remove("selected"));
+      // Retirer la classe 'selected' de toutes les autres images
+      imageContainers.forEach((cont) => cont.classList.remove("selected"));
+      
+      // Ajouter la classe 'selected' à l'image cliquée
+      container.classList.add("selected");
 
-        // Ajouter la classe 'selected' à l'image cliquée
-        container.classList.add("selected");
+      // Mettre à jour le champ communeInput avec le nom et le code du département
+      const departmentName = container.getAttribute("data-value");
+      const departmentCode = container.getAttribute("data-code");
+      communeInput.value = `${departmentName} (${departmentCode})`;
 
-        // Mettre à jour le champ communeInput avec le nom et le code du département
-        const departmentName = container.getAttribute("data-value");
-        const departmentCode = container.getAttribute("data-code");
-        communeInput.value = `${departmentName} (${departmentCode})`;
+      // Mettre à jour le champ caché avec le code du département
+      filtreDepartementCode.setAttribute("value", departmentName);
 
-        // Mettre à jour le champ caché avec le code du département
-        filtreDepartementCode.setAttribute("value", departmentName);
+      // Réinitialiser le champ filtreCommuneCodePostal
+      filtreCommuneCodePostal.setAttribute("value", "");
 
-        // Réinitialiser le champ filtreCommuneCodePostal
-        filtreCommuneCodePostal.setAttribute("value", "");
-
-        // Fermer le dropdown
-        dropdown.style.display = "none";
+      // Fermer le dropdown
+      dropdown.style.display = "none";
     });
   });
 
@@ -304,17 +331,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Filtrage et affichage des suggestions
     communeInput.addEventListener("input", () => {
-        let inputValue = communeInput.value.trim().toLowerCase();
-        let filteredCommunes = communes.filter((commune) =>
-            commune.nom.toLowerCase().startsWith(inputValue)
-        );
+      let inputValue = communeInput.value.trim().toLowerCase();
+      let filteredCommunes = communes.filter((commune) =>
+          commune.nom.toLowerCase().startsWith(inputValue)
+      );
 
-        let suggestions = filteredCommunes.map((commune) => {
-            return `${commune.nom} (${commune.codesPostaux.join(", ")})`;
-        });
+      let suggestions = filteredCommunes.map((commune) => {
+          return `${commune.nom} (${commune.codesPostaux.join(", ")})`;
+      });
 
-        // Affichage des suggestions
-        displaySuggestions(suggestions);
+      // Affichage des suggestions
+      displaySuggestions(suggestions);
     });
 
     // Affichage des suggestions dans l'élément autocomplete-list-commune
@@ -365,6 +392,28 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
   }
+
+  /* Gestion Nb_Personne, Min, Max */
+  const nb_personnes = document.getElementById("nb_personnes");
+  const tarif_min = document.getElementById("tarif_min");
+  const tarif_max = document.getElementById("tarif_max");
+  const f_nb_personnes = document.getElementById("f_nb_personnes");
+  const f_tarif_min = document.getElementById("f_tarif_min");
+  const f_tarif_max = document.getElementById("f_tarif_max");
+
+  // Fonction pour synchroniser deux inputs
+  function syncInputs(input1, input2) {
+    input1.addEventListener("input", function () {
+      input2.value = input1.value;
+    });
+
+    input2.addEventListener("input", function () {
+      input1.value = input2.value;
+    });
+  }
+  syncInputs(nb_personnes, f_nb_personnes);
+  syncInputs(tarif_min, f_tarif_min);
+  syncInputs(tarif_max, f_tarif_max);
 
   /* Gestion buton découvrir plus / Voir moins des logements */
   const btn_decouvrir = document.getElementById("decouvrir_plus");
@@ -462,6 +511,44 @@ document.addEventListener("DOMContentLoaded", () => {
           }
 
           $('input[name="daterange"]').val(displayText);
+          $('input[name="f_daterange"]').val(displayText);
+          
+          // Mettre à jour les filtres de date
+          document.getElementById("filtre-date-deb").setAttribute("value", start.format("YYYY-MM-DD"));
+          document.getElementById("filtre-date-fin").setAttribute("value", end.format("YYYY-MM-DD"));
+        }
+      );
+
+      $('input[name="f_daterange"]').daterangepicker(
+        {
+          minDate: moment(),
+          autoUpdateInput: false,
+          locale: {
+            format: "DD/MM/YYYY",
+            applyLabel: "Confirmer",
+            cancelLabel: "Annuler",
+            daysOfWeek: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+            monthNames: [
+              "Janvier",   "Février", "Mars",     "Avril",
+              "Mai",       "Juin",    "Juillet",  "Août",
+              "Septembre", "Octobre", "Novembre", "Décembre"
+            ],
+            firstDay: 1,
+          },
+          applyButtonClasses: "custom-apply-button",
+          cancelButtonClasses: "custom-cancel-button",
+        },
+        function (start, end, label) {
+          let displayText;
+          if (start.isSame(end, 'day')) {
+            displayText = start.format("DD/MM/YYYY");
+          } else {
+            displayText = start.format("DD/MM/YYYY") + " - " 
+                        + end.format("DD/MM/YYYY");
+          }
+
+          $('input[name="daterange"]').val(displayText);
+          $('input[name="f_daterange"]').val(displayText);
           
           // Mettre à jour les filtres de date
           document.getElementById("filtre-date-deb").setAttribute("value", start.format("YYYY-MM-DD"));
@@ -478,23 +565,20 @@ document.addEventListener("DOMContentLoaded", () => {
         picker.setStartDate(moment());
         picker.setEndDate(moment());
         picker.updateView();
+        $('input[name="daterange"]').val("");
+        $('input[name="f_daterange"]').val("");
       });
-
-      // Événement pour détecter la modification manuelle de l'input
-      $('input[name="daterange"]').on('input', function() {
-        if (!$(this).val()) {
-          // Vider les filtres de date
-          document.getElementById("filtre-date-deb").setAttribute("value", "");
-          document.getElementById("filtre-date-fin").setAttribute("value", "");
-          // Réinitialiser les dates sur le calendrier à partir de moment()
-          let picker = $(this).data('daterangepicker');
-          picker.setStartDate(moment());
-          picker.setEndDate(moment());
-          picker.updateView();
-        }
+      $('input[name="f_daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+        document.getElementById("filtre-date-deb").setAttribute("value", "");
+        document.getElementById("filtre-date-fin").setAttribute("value", "");
+        // Réinitialiser les dates sur le calendrier à partir de moment()
+        picker.setStartDate(moment());
+        picker.setEndDate(moment());
+        picker.updateView();
+        $('input[name="daterange"]').val("");
+        $('input[name="f_daterange"]').val("");
       });
-
-      
     }
 
     // Initialisation du date range picker
@@ -503,6 +587,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* Gestion Dropdown filtres  */
-  
+  const filtreIcon = document.getElementById("filtre_icon");
+  const filtreDropdown = document.getElementById("filtre__dropdown");
+  const executeValider = document.getElementById('executeValider');
+
+  filtreIcon.addEventListener("click", () => {
+    filtreDropdown.style.display = "flex";
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target !== filtreIcon && !filtreDropdown.contains(event.target)) {
+      filtreDropdown.style.display = "none";
+    }
+  });
+
+  executeValider.addEventListener('click', () => {
+    filtreDropdown.style.display = "none";
+  });
 
 });
