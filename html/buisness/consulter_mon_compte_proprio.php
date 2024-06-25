@@ -276,40 +276,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 break;
 
-            case 'identite':
-                if (isset($_FILES["photo_recto"]["tmp_name"]) && $_FILES["photo_recto"]["tmp_name"] !== "") {
-                    $extension_recto = pathinfo($_FILES["photo_recto"]['name'], PATHINFO_EXTENSION);
-                    $photo_path_recto = "../img/piece/$id" . "_" . $nom . "_recto" . "." . $extension_recto;
-                    $photo_path_recto_bdd = "/piece/$id" . "_" . $nom . "_recto" . "." . $extension_recto;
-
-                    if (move_uploaded_file($_FILES["photo_recto"]["tmp_name"], $photo_path_recto)) {
-                        $sql = "UPDATE sae._carte_identite SET piece_id_recto = '$photo_path_recto_bdd' WHERE id = $id";
-                        request($sql, false);
+                case 'identite':
+                    $photo_recto_uploaded = false;
+                    $photo_verso_uploaded = false;
+                
+                    // Traiter la photo recto
+                    if (isset($_FILES["photo_recto"]["tmp_name"]) && $_FILES["photo_recto"]["tmp_name"] !== "") {
+                        $extension_recto = pathinfo($_FILES["photo_recto"]['name'], PATHINFO_EXTENSION);
+                        $photo_path_recto = "../img/piece/$id" . "_" . $nom . "_recto" . "." . $extension_recto;
+                        $photo_path_recto_bdd = "/piece/$id" . "_" . $nom . "_recto" . "." . $extension_recto;
+                
+                        if (move_uploaded_file($_FILES["photo_recto"]["tmp_name"], $photo_path_recto)) {
+                            $sql = "UPDATE sae._carte_identite SET piece_id_recto = '$photo_path_recto_bdd' WHERE id = $id";
+                            request($sql, false);
+                            $photo_recto_uploaded = true;
+                        }
+                    }
+                
+                    // Traiter la photo verso
+                    if (isset($_FILES["photo_verso"]["tmp_name"]) && $_FILES["photo_verso"]["tmp_name"] !== "") {
+                        $extension_verso = pathinfo($_FILES["photo_verso"]['name'], PATHINFO_EXTENSION);
+                        $photo_path_verso = "../img/piece/$id" . "_" . $nom . "_verso" . "." . $extension_verso;
+                        $photo_path_verso_bdd = "/piece/$id" . "_" . $nom . "_verso" . "." . $extension_verso;
+                
+                        if (move_uploaded_file($_FILES["photo_verso"]["tmp_name"], $photo_path_verso)) {
+                            $sql = "UPDATE sae._carte_identite SET piece_id_verso = '$photo_path_verso_bdd' WHERE id = $id";
+                            request($sql, false);
+                            $photo_verso_uploaded = true;
+                        }
+                    }
+                
+                    // Si l'une des photos a été correctement téléchargée, rediriger l'utilisateur
+                    if ($photo_recto_uploaded || $photo_verso_uploaded) {
                         header('Location: consulter_mon_compte_proprio.php');
                         exit();
-                    } else {
-                        break;
                     }
-                } else {
                     break;
-                }
-                if (isset($_FILES["photo_verso"]["tmp_name"]) && $_FILES["photo_verso"]["tmp_name"] !== "") {
-                    $extension_verso = pathinfo($_FILES["photo_verso"]['name'], PATHINFO_EXTENSION);
-                    $photo_path_verso = "../img/piece/$id" . "_" . $nom . "_verso" . "." . $extension_verso;
-                    $photo_path_verso_bdd = "/piece/$id" . "_" . $nom . "_verso" . "." . $extension_verso;
-
-                    if (move_uploaded_file($_FILES["photo_verso"]["tmp_name"], $photo_path_verso)) {
-                        $sql = "UPDATE sae._carte_identite SET piece_id_verso = '$photo_path_verso_bdd' WHERE id = $id";
-                        request($sql, false);
-                        header('Location: consulter_mon_compte_proprio.php');
-                        exit();
-                    } else {
-                        break;
-                    }
-                } else {
-
-                    break;
-                }
+                
 
             case 'paiment':
                 $iban = empty($_POST['iban']) ? $rep_utilisateur['iban'] : clean_input($_POST['iban']);
