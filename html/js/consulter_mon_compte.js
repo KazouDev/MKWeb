@@ -2,16 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const compte__pays = document.getElementById('compte__pays');
     const suggestions__pays = document.getElementById("autocomplete-list-pays");
-    
     const compte__region = document.getElementById('compte__region');
     const suggestions__region = document.getElementById("autocomplete-list-regions");
-
     const compte__departement = document.getElementById('compte__departement');
     const suggestions__departement = document.getElementById("autocomplete-list-departement");
-
     const compte__ville = document.getElementById('compte__ville');
     const suggestions__ville = document.getElementById("autocomplete-list-ville");
-    
     const compte__code_postal = document.getElementById('compte__code_postal');
 
     autocompletePays();

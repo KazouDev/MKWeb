@@ -189,9 +189,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <label for="connect__pass">Adresse de facturation</label>
                                 <div class="connect__input__ligne">
                                     <input type="text" name="pays" id="connect__pays" placeholder="Pays" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <div id="autocomplete-list-pays" class="autocomplete-suggestions"></div>
                                     <input type="text" name="region" id="connect__region" placeholder="Région" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <div id="autocomplete-list-region" class="autocomplete-suggestions"></div>
                                     <input type="text" name="departement" id="connect__departement" placeholder="Département" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <div id="autocomplete-list-departement" class="autocomplete-suggestions"></div>
                                     <input type="text" name="commune" id="connect__ville" placeholder="Ville" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <div id="autocomplete-list-ville" class="autocomplete-suggestions"></div>
                                     <input type="text" name="code" id="connect__code" placeholder="Code postal" required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                     <input type="number" name="numero" id="connect__numero" placeholder="Numéro de rue" required>
                                     <input type="text" name="rue" id="connect__rue" placeholder="Nom de la rue" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
