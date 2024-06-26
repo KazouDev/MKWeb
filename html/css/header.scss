@@ -20,6 +20,7 @@ $h2Size: 2.25rem;
 $h3Size: 2rem;
 $h4Size: 1.5rem;
 $h5Size: 1.25rem;
+$h55Size: 1rem;
 $h6Size: 0.75rem;
 
 $lightWeight: 300;
@@ -143,6 +144,18 @@ $lineHeight: 1.5;
 .header__form  i {
     font-size: 1.5rem !important;
     color: $mainNoir;
+}
+@media (max-width: 900.98px) {
+    .menu__item .menu__link,
+    .header__connexion a, .user__info p {
+        font-size: $h55Size;
+    }
+    .menu__list {
+        column-gap: 20px;
+    }
+    .header__name{
+        width: min-content;
+    }
 }
 @media (max-width: 767.98px) {
     .menu__item .menu__link,

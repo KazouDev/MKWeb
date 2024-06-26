@@ -26,7 +26,16 @@
                             <a href="buisness/index.php" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
                         </li>
                         <li class="menu__item hide">
-                            <a href="login.php" class="menu__link" style="color: #5669FF;">Connexion</a>
+                            <a href="login.php" class="menu__link" >À propos</a>
+                        </li>
+                        <li class="menu__item hide">
+                            <a href="login.php" class="menu__link">Contact</a>
+                        </li>
+                        <li class="menu__item hide">
+                            <a href="login.php" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
+                        </li>
+                        <li class="menu__item hide">
+                            <a href="login.php" class="menu__link">Connexion</a>
                         </li>
                     </ul>
                 </nav>

@@ -303,4 +303,70 @@ form {
   -o-object-fit: cover;
   object-fit: cover;
   border-radius: 2%;
+}
+
+@media (max-width: 900.98px) {
+  .detail_mon_compte__conteneur h2 {
+    font-size: 2rem;
+  }
+  .detail_mon_compte__conteneur h3 {
+    font-size: 1.5rem;
+  }
+  .detail_mon_compte__conteneur .info_perso_conteneur, .detail_mon_compte__conteneur .adresse_conteneur {
+    gap: 0.8rem;
+    padding: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .detail_mon_compte__conteneur .photo_conteneur, .detail_mon_compte__conteneur .mdp_conteneur, .detail_mon_compte__conteneur .coord_bancaire_conteneur, .detail_mon_compte__conteneur .identite_conteneur, .detail_mon_compte__conteneur .paiment_conteneur {
+    padding: 1.3rem;
+  }
+  .detail_mon_compte__conteneur .compte__input input {
+    padding: 0.7rem;
+  }
+  .sauvegarde {
+    padding: 0.7rem 0;
+  }
+  #photo_client {
+    width: 45%;
+    gap: 1rem;
+  }
+  .changer_photo .ligne {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .changer_photo .ligne .sauvegarde {
+    width: 70%;
+    align-self: center;
+  }
+  .detail_mon_compte__conteneur .photo_conteneur img {
+    margin: 0;
+    width: 10rem;
+    height: 10rem;
+  }
+  .ensemble_flex {
+    gap: 2rem;
+  }
+  .detail_mon_compte__conteneur {
+    padding-top: 1rem;
+  }
+  #compte__mdp {
+    width: 100%;
+  }
+  .mdp_conteneur .ligne {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .mdp_conteneur .changer__mdp .ligne .compte__input, .mdp_conteneur .compte__input, #mdp_client {
+    gap: 0.8rem;
+  }
+  .ensemble_flex {
+    align-items: initial;
+  }
+  .mdp_conteneur .sauvegarde {
+    width: 70% !important;
+    align-self: center;
+  }
 }/*# sourceMappingURL=mon_compte.css.map */
