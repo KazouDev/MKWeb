@@ -276,7 +276,6 @@ select {
 }
 
 .envoyer {
-  padding: 1rem 6rem;
   background-color: #5669ff;
 }
 
@@ -317,7 +316,6 @@ select {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
 }
 
 #form__preview {
