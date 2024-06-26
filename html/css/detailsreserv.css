@@ -416,11 +416,6 @@ i.jaune {
   justify-content: space-between;
   align-items: center;
 }
-.telecharger img {
-  width: 2.5rem;
-  height: 2.5rem;
-}
-
 .telecharger a img {
   width: 2.5rem;
   height: 2.5rem;

@@ -202,8 +202,16 @@ section#section__image {
 section#section__image input[type=button] {
   background-color: #79da7d;
   color: #ffffff;
-  width: 30%;
+  width: -moz-fit-content;
+  width: fit-content;
+  border-radius: 0.5rem;
+  padding: 1rem 3rem;
   border: none;
+}
+@media screen and (max-width: 600px) {
+  section#section__image input[type=button] {
+    padding: 0.7rem 2rem;
+  }
 }
 
 input:not([type=checkbox]),
@@ -263,7 +271,7 @@ select {
 @media screen and (max-width: 600px) {
   .ajouter,
   .envoyer {
-    padding: 0.7rem 4rem;
+    padding: 0.7rem 2rem;
   }
 }
 

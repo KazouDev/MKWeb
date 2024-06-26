@@ -163,6 +163,7 @@ submitButton.addEventListener("click", async (e) => {
     imageInput.name = "images[]";
   } else {
     imageInput.focus();
+    showToast("Image obligatoire", true);
     isSubmiting = false;
     updateSubmitingButton();
     return;
@@ -196,6 +197,7 @@ submitButton.addEventListener("click", async (e) => {
   } else {
     console.error("Adresse invalide.");
     document.getElementById("voie").focus();
+    showToast("Adresse invalide", true);
     isSubmiting = false;
     updateSubmitingButton();
     return;
@@ -258,6 +260,7 @@ previewButton.addEventListener("click", async (e) => {
     imageInput.name = "images[]";
   } else {
     imageInput.focus();
+    showToast("Image obligatoire", true);
     isSubmiting = false;
     updateSubmitingButton();
     return;
@@ -290,6 +293,7 @@ previewButton.addEventListener("click", async (e) => {
   } else {
     console.error("Adresse invalide.");
     document.getElementById("voie").focus();
+    showToast("Adresse invalide", true);
     isSubmiting = false;
     updateSubmitingButton();
     return;
