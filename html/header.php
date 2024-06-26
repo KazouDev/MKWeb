@@ -26,13 +26,21 @@
                             <a href="buisness/index.php" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
                         </li>
                         <li class="menu__item hide">
-                            <a href="login.php" class="menu__link" style="color: #5669FF;">Connexion</a>
+                            <a href="login.php" class="menu__link" >À propos</a>
+                        </li>
+                        <li class="menu__item hide">
+                            <a href="login.php" class="menu__link">Contact</a>
+                        </li>
+                        <li class="menu__item hide">
+                            <a href="login.php" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
+                        </li>
+                        <li class="menu__item hide">
+                            <a href="login.php" class="menu__link">Connexion</a>
                         </li>
                     </ul>
                 </nav>
             </div>
             <div class="header__form">
-                <a href=""><i class="fa-regular fa-eye-slash" style="color: #222222;"></i></a>
                 <div class="header__connexion"><a href="login.php">Connexion</a></div>                    
             </div>
             <img src="../img/menu.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
@@ -91,7 +99,6 @@
         </nav>
     </div>
     <div class="header__form">
-        <a href=""><i class="fa-regular fa-eye-slash" style="color: #222222;"></i></a>
             <div class="user__info" id="header__info">
                 <img src="../img<?=$photo_user?>" alt="Photo User" class="user__photo">
                 <p><?= $user_info["pseudo"] ?></p>

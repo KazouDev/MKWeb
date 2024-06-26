@@ -3,6 +3,7 @@
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
+  padding-top: 3rem;
 }
 
 .connect__photo {
@@ -255,4 +256,74 @@
 .prev:hover,
 .next:hover {
   background-color: rgba(86, 105, 255, 0.3);
+}
+
+@media (max-width: 900px) {
+  .connect-container {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 1rem;
+  }
+  .connect__from {
+    padding: 0rem;
+  }
+  .connect__from input[type=file] {
+    font-size: 1rem;
+  }
+  .slider {
+    width: 80%;
+    height: 30vh;
+    margin-left: 0px;
+    position: static;
+  }
+  .slide, .slider img {
+    height: 30vh;
+  }
+  .prev, .next {
+    display: none;
+  }
+}
+@media (max-width: 500px) {
+  .slider {
+    height: 20vh;
+  }
+  .slide, .slider img {
+    height: 20vh;
+  }
+  .connect__from p {
+    font-size: 1rem;
+  }
+  .connect__from h1 {
+    font-size: 1.2rem;
+  }
+  .connect__from h1 img {
+    width: 30px;
+  }
+  .connect__from {
+    gap: 5px;
+  }
+  .connect__input {
+    gap: 0.25rem;
+  }
+  .connect__from form {
+    gap: 0.5rem;
+  }
+  .connect__input input, .connect__input select {
+    padding: 0.5rem;
+  }
+  .connect__input input::-moz-placeholder {
+    font-size: 0.8rem;
+  }
+  .connect__input input::placeholder, .connect__input select, .connect__from input[type=date], .connect__from input[type=file] {
+    font-size: 0.8rem;
+  }
+  .connect__from input[type=submit] {
+    padding: 0.7rem;
+    font-size: 1rem;
+  }
+}
+@media (max-width: 350px) {
+  .connect__input__add .connect__input__ligne input, .connect__input__ligne .connect__input {
+    width: 100%;
+  }
 }/*# sourceMappingURL=connect.css.map */

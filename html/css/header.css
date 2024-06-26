@@ -115,6 +115,20 @@
   color: #222222;
 }
 
+@media (max-width: 900.98px) {
+  .menu__item .menu__link,
+  .header__connexion a, .user__info p {
+    font-size: 1rem;
+  }
+  .menu__list {
+    -moz-column-gap: 20px;
+         column-gap: 20px;
+  }
+  .header__name {
+    width: -moz-min-content;
+    width: min-content;
+  }
+}
 @media (max-width: 767.98px) {
   .menu__item .menu__link,
   .header__connexion a, .user__info p {
@@ -194,6 +208,9 @@
     z-index: 100;
   }
   .menu__item {
+    display: none;
+  }
+  .menu__item.hide {
     width: 100%;
     display: inline;
   }
@@ -291,4 +308,8 @@ header.buisness .header__connexion {
 }
 header.buisness .header__form a i {
   color: #FFFFFF;
+}
+
+.header {
+  margin-bottom: 0px;
 }/*# sourceMappingURL=header.css.map */

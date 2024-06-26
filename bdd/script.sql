@@ -10,7 +10,7 @@ CREATE TABLE _utilisateur (
   nom VARCHAR(255) NOT NULL,
   prenom VARCHAR(255) NOT NULL,
   date_naissance DATE NOT NULL,
-  civilite VARCHAR(4) NOT NULL,
+  civilite VARCHAR(4),
   pseudo VARCHAR(255) NOT NULL,
   mot_de_passe VARCHAR(255) NOT NULL,
   photo_profile VARCHAR(255) NOT NULL,
@@ -21,6 +21,7 @@ CREATE TABLE _utilisateur (
 
 CREATE TABLE _carte_identite (
   id SERIAL PRIMARY KEY,
+  id_propr INT NOT NULL,
   piece_id_recto VARCHAR(255) NOT NULL,
   piece_id_verso VARCHAR(255) NOT NULL,
   valide BOOLEAN NOT NULL
@@ -28,7 +29,6 @@ CREATE TABLE _carte_identite (
 
 CREATE TABLE _compte_proprietaire (
   id SERIAL PRIMARY KEY,
-  id_identite INT NOT NULL,
   IBAN VARCHAR(255) NOT NULL,
   BIC VARCHAR(255) NOT NULL,
   Titulaire VARCHAR(255) NOT NULL
@@ -195,6 +195,8 @@ CREATE TABLE _ical_token_logements (
   logement INT NOT NULL
 );
 
+ALTER TABLE _carte_identite
+  ADD CONSTRAINT _carte_identite_proprietaire FOREIGN KEY (id_propr) REFERENCES _compte_proprietaire (id);
 ALTER TABLE _ical_token_logements
   ADD CONSTRAINT _ical_token_primary_key PRIMARY KEY (token, logement);
 
@@ -277,10 +279,6 @@ ALTER TABLE _image
   ADD CONSTRAINT _image_logementid FOREIGN KEY (id_logement)
     REFERENCES _logement (id);
 
-ALTER TABLE _compte_proprietaire
-  ADD CONSTRAINT _compte_proprietaire_identite FOREIGN KEY (id_identite)
-    REFERENCES _carte_identite (id);
-
 -- TRIGGER
 
 CREATE OR REPLACE FUNCTION insert_cal_trigger()
@@ -296,6 +294,80 @@ CREATE TRIGGER insert_cal_trigger
 BEFORE INSERT ON _calendrier
 FOR EACH ROW
 EXECUTE PROCEDURE insert_cal_trigger();
+
+-- Fonction pour générer une clé API hexadécimale
+CREATE OR REPLACE FUNCTION generate_hex_key(length INTEGER) RETURNS TEXT AS $$
+DECLARE
+  result TEXT := '';
+  chars TEXT := '0123456789abcdef';
+  i INTEGER;
+BEGIN
+  FOR i IN 1..length LOOP
+    result := result || substr(chars, (random() * 15)::integer + 1, 1);
+  END LOOP;
+  RETURN result;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Fonction pour créer une clé API pour un propriétaire
+CREATE OR REPLACE FUNCTION add_api_key_for_proprietor(proprietaire_id INT, permissions BIT DEFAULT B'0111') RETURNS TEXT AS $$
+DECLARE
+  new_key TEXT;
+BEGIN
+  LOOP
+    new_key := sae.generate_hex_key(64);
+    BEGIN
+      INSERT INTO sae._api_keys (key, proprietaire, permission) VALUES (new_key, proprietaire_id, permissions);
+      EXIT;
+    EXCEPTION WHEN unique_violation THEN
+      -- Si déjà dans la table: on génére une nouvelle clé
+      CONTINUE;
+    END;
+  END LOOP;
+  RETURN new_key;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger qui appelle la fonction add_api_key_for_proprietor après insertion dans _compte_proprietaire
+CREATE OR REPLACE FUNCTION create_api_key_trigger() RETURNS TRIGGER AS $$
+BEGIN
+  PERFORM sae.add_api_key_for_proprietor(NEW.id);
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER after_compte_proprietaire_insert
+AFTER INSERT ON _compte_proprietaire
+FOR EACH ROW
+EXECUTE FUNCTION sae.create_api_key_trigger();
+
+
+-- creation token
+CREATE OR REPLACE FUNCTION generate_ical_token_for_user(
+  proprietaire_id INT,
+  date_debut DATE,
+  date_fin DATE
+) RETURNS TEXT AS $$
+DECLARE
+  new_token TEXT;
+BEGIN
+  LOOP
+    -- Générer un token hexadécimal de 64 caractères
+    new_token := sae.generate_hex_key(64);
+    BEGIN
+      -- Essayer d'insérer le token dans la table
+      INSERT INTO sae._ical_token (token, proprietaire, date_debut, date_fin) 
+      VALUES (new_token, proprietaire_id, date_debut, date_fin);
+      EXIT;
+    EXCEPTION
+      WHEN SQLSTATE '23505' THEN
+        -- Si le token est déjà dans la table, en générer un nouveau
+        CONTINUE;
+    END;
+  END LOOP;
+  RETURN new_token;
+END;
+$$ LANGUAGE plpgsql;
 
 -- PEUPLEMENT 
 INSERT INTO _categorie_logement (id, categorie) VALUES
@@ -487,49 +559,49 @@ INSERT INTO _compte_client (id) VALUES
 INSERT INTO _compte_admin (id) VALUES 
 (21), (22);
 
-INSERT INTO _carte_identite (piece_id_recto, piece_id_verso, valide) VALUES 
-('/piece/1_Dupont_recto.jpg', '/piece/1_Dupont_verso.jpg', true), 
-('/piece/2_Martin_recto.jpg', '/piece/2_Martin_verso.jpg', true), 
-('/piece/3_Lefevre_recto.jpg', '/piece/3_Lefevre_verso.jpg', true), 
-('/piece/4_Bernard_recto.jpg', '/piece/4_Bernard_verso.jpg', true), 
-('/piece/5_Dubois_recto.jpg', '/piece/5_Dubois_verso.jpg', true), 
-('/piece/6_Moreau_recto.jpg', '/piece/6_Moreau_verso.jpg', true), 
-('/piece/7_Petit_recto.jpg', '/piece/7_Petit_verso.jpg', true), 
-('/piece/8_Laurent_recto.jpg', '/piece/8_Laurent_verso.jpg', true), 
-('/piece/9_Simon_recto.jpg', '/piece/9_Simon_verso.jpg', true), 
-('/piece/10_Michel_recto.jpg', '/piece/10_Michel_verso.jpg', true), 
-('/piece/11_Richard_recto.jpg', '/piece/11_Richard_verso.jpg', true), 
-('/piece/12_Robert_recto.jpg', '/piece/12_Robert_verso.jpg', true), 
-('/piece/13_Durand_recto.jpg', '/piece/13_Durand_verso.jpg', true), 
-('/piece/14_Dubreuil_recto.jpg', '/piece/14_Dubreuil_verso.jpg', true), 
-('/piece/15_Legrand_recto.jpg', '/piece/15_Legrand_verso.jpg', true), 
-('/piece/16_Fournier_recto.jpg', '/piece/16_Fournier_verso.jpg', true), 
-('/piece/17_Girard_recto.jpg', '/piece/17_Girard_verso.jpg', true), 
-('/piece/18_Roux_recto.jpg', '/piece/18_Roux_verso.jpg', true), 
-('/piece/19_Pires_recto.jpg', '/piece/19_Pires_verso.jpg', true), 
-('/piece/20_Blanc_recto.jpg', '/piece/20_Blanc_verso.jpg', true);
+INSERT INTO _compte_proprietaire (id, IBAN, BIC, Titulaire) VALUES 
+(1, 'FR7612345678901234567890123', 'AGRIFRPPXXX', 'Dupont Jean'),
+(2, 'FR7612345678901234567890124', 'AGRIFRPPXXX', 'Martin Marie'),
+(3, 'FR7612345678901234567890125', 'AGRIFRPPXXX', 'Lefevre Pierre'),
+(4, 'FR7612345678901234567890126', 'AGRIFRPPXXX', 'Bernard Sophie'),
+(5, 'FR7612345678901234567890127', 'AGRIFRPPXXX', 'Dubois Jacques'),
+(6, 'FR7612345678901234567890128', 'AGRIFRPPXXX', 'Moreau Camille'),
+(7, 'FR7612345678901234567890129', 'AGRIFRPPXXX', 'Petit Louis'),
+(8, 'FR7612345678901234567890130', 'AGRIFRPPXXX', 'Laurent Emma'),
+(9, 'FR7612345678901234567890131', 'AGRIFRPPXXX', 'Simon Paul'),
+(10, 'FR7612345678901234567890132', 'AGRIFRPPXXX', 'Michel Julie'),
+(11, 'FR7612345678901234567890133', 'AGRIFRPPXXX', 'Richard Henri'),
+(12, 'FR7612345678901234567890134', 'AGRIFRPPXXX', 'Robert Claire'),
+(13, 'FR7612345678901234567890135', 'AGRIFRPPXXX', 'Durand Marc'),
+(14, 'FR7612345678901234567890136', 'AGRIFRPPXXX', 'Dubreuil Isabelle'),
+(15, 'FR7612345678901234567890137', 'AGRIFRPPXXX', 'Legrand Philippe'),
+(16, 'FR7612345678901234567890138', 'AGRIFRPPXXX', 'Fournier Elise'),
+(17, 'FR7612345678901234567890139', 'AGRIFRPPXXX', 'Girard Nicolas'),
+(18, 'FR7612345678901234567890140', 'AGRIFRPPXXX', 'Roux Alice'),
+(19, 'FR7612345678901234567890141', 'AGRIFRPPXXX', 'Pires Antoine'),
+(20, 'FR7612345678901234567890142', 'AGRIFRPPXXX', 'Blanc Lucie');
 
-INSERT INTO _compte_proprietaire (id, id_identite, IBAN, BIC, Titulaire) VALUES 
-(1, 1, 'FR7612345678901234567890123', 'AGRIFRPPXXX', 'Dupont Jean'),
-(2, 2, 'FR7612345678901234567890124', 'AGRIFRPPXXX', 'Martin Marie'),
-(3, 3, 'FR7612345678901234567890125', 'AGRIFRPPXXX', 'Lefevre Pierre'),
-(4, 4, 'FR7612345678901234567890126', 'AGRIFRPPXXX', 'Bernard Sophie'),
-(5, 4, 'FR7612345678901234567890127', 'AGRIFRPPXXX', 'Dubois Jacques'),
-(6, 6, 'FR7612345678901234567890128', 'AGRIFRPPXXX', 'Moreau Camille'),
-(7, 7, 'FR7612345678901234567890129', 'AGRIFRPPXXX', 'Petit Louis'),
-(8, 8, 'FR7612345678901234567890130', 'AGRIFRPPXXX', 'Laurent Emma'),
-(9, 9, 'FR7612345678901234567890131', 'AGRIFRPPXXX', 'Simon Paul'),
-(10, 10, 'FR7612345678901234567890132', 'AGRIFRPPXXX', 'Michel Julie'),
-(11, 11, 'FR7612345678901234567890133', 'AGRIFRPPXXX', 'Richard Henri'),
-(12, 12, 'FR7612345678901234567890134', 'AGRIFRPPXXX', 'Robert Claire'),
-(13, 13, 'FR7612345678901234567890135', 'AGRIFRPPXXX', 'Durand Marc'),
-(14, 14, 'FR7612345678901234567890136', 'AGRIFRPPXXX', 'Dubreuil Isabelle'),
-(15, 15, 'FR7612345678901234567890137', 'AGRIFRPPXXX', 'Legrand Philippe'),
-(16, 16, 'FR7612345678901234567890138', 'AGRIFRPPXXX', 'Fournier Elise'),
-(17, 17, 'FR7612345678901234567890139', 'AGRIFRPPXXX', 'Girard Nicolas'),
-(18, 18, 'FR7612345678901234567890140', 'AGRIFRPPXXX', 'Roux Alice'),
-(19, 19, 'FR7612345678901234567890141', 'AGRIFRPPXXX', 'Pires Antoine'),
-(20, 20, 'FR7612345678901234567890142', 'AGRIFRPPXXX', 'Blanc Lucie');
+INSERT INTO _carte_identite (id_propr,piece_id_recto, piece_id_verso, valide) VALUES 
+(1, '/piece/1_Dupont_recto.jpg', '/piece/1_Dupont_verso.jpg', true), 
+(2, '/piece/2_Martin_recto.jpg', '/piece/2_Martin_verso.jpg', true), 
+(3, '/piece/3_Lefevre_recto.jpg', '/piece/3_Lefevre_verso.jpg', true), 
+(4, '/piece/4_Bernard_recto.jpg', '/piece/4_Bernard_verso.jpg', true), 
+(5, '/piece/5_Dubois_recto.jpg', '/piece/5_Dubois_verso.jpg', true), 
+(6, '/piece/6_Moreau_recto.jpg', '/piece/6_Moreau_verso.jpg', true), 
+(7,'/piece/7_Petit_recto.jpg', '/piece/7_Petit_verso.jpg', true), 
+(8,'/piece/8_Laurent_recto.jpg', '/piece/8_Laurent_verso.jpg', true), 
+(9,'/piece/9_Simon_recto.jpg', '/piece/9_Simon_verso.jpg', true), 
+(10,'/piece/10_Michel_recto.jpg', '/piece/10_Michel_verso.jpg', true), 
+(11,'/piece/11_Richard_recto.jpg', '/piece/11_Richard_verso.jpg', true), 
+(12,'/piece/12_Robert_recto.jpg', '/piece/12_Robert_verso.jpg', true), 
+(13,'/piece/13_Durand_recto.jpg', '/piece/13_Durand_verso.jpg', true), 
+(14,'/piece/14_Dubreuil_recto.jpg', '/piece/14_Dubreuil_verso.jpg', true), 
+(15,'/piece/15_Legrand_recto.jpg', '/piece/15_Legrand_verso.jpg', true), 
+(16,'/piece/16_Fournier_recto.jpg', '/piece/16_Fournier_verso.jpg', true), 
+(17,'/piece/17_Girard_recto.jpg', '/piece/17_Girard_verso.jpg', true), 
+(18,'/piece/18_Roux_recto.jpg', '/piece/18_Roux_verso.jpg', true), 
+(19,'/piece/19_Pires_recto.jpg', '/piece/19_Pires_verso.jpg', true), 
+(20, '/piece/20_Blanc_recto.jpg', '/piece/20_Blanc_verso.jpg', true);
 
 INSERT INTO _langue_proprietaire(id_proprietaire, id_langue) VALUES
 (1, 1), (1, 2), (1, 3), -- Propriétaire 1 (Français, Anglais, Allemand)
@@ -554,14 +626,14 @@ INSERT INTO _langue_proprietaire(id_proprietaire, id_langue) VALUES
 (20, 1); -- Propriétaire 20 (Français)
 
 INSERT INTO _logement(titre, description, accroche, base_tarif, surface, nb_max_personne, nb_chambre, nb_lit_double, nb_lit_simple, duree_min_res, delai_avant_res, periode_preavis, en_ligne, id_proprietaire, id_adresse, id_categorie, id_type) VALUES
-('Appartement cosy en centre-ville', 'Un appartement confortable et bien situé au centre-ville, parfait pour une ou deux personnes. Ce logement offre un espace de vie moderne avec une cuisine entièrement équipée, une salle de bain rénovée et une chambre lumineuse avec un grand lit. Idéal pour les voyageurs souhaitant découvrir la ville à pied, tout en profitant du confort d’un intérieur douillet.', 'Réservez votre séjour en centre-ville.', 75, 25, 2, 1, 0, 2, 3, 2, 3, true, 1, 42, 1, 2),
+('Appartement cosy en centre-ville', 'Un appartement confortable et bien situé au centre-ville, parfait pour une ou deux personnes. Ce logement offre un espace de vie moderne avec une cuisine entièrement équipée, une salle de bain rénovée et une chambre lumineuse avec un grand lit. Idéal pour les voyageurs souhaitant découvrir la ville à pied, tout en profitant du confort d''un intérieur douillet.', 'Réservez votre séjour en centre-ville.', 75, 25, 2, 1, 0, 2, 3, 2, 3, true, 1, 42, 1, 2),
 ('Maison spacieuse à la campagne', 'Une grande maison avec jardin à la campagne, idéale pour des vacances en famille. Cette maison comprend plusieurs chambres spacieuses, une cuisine moderne, une salle à manger conviviale et un salon confortable avec cheminée. Le jardin privé est parfait pour les barbecues et les jeux en plein air. À proximité, vous trouverez des sentiers de randonnée et des attractions locales pour toute la famille.', 'Vivez la campagne en grand.', 135, 120, 6, 3, 2, 2, 1, 1, 3, true, 2, 43, 2, 4),
-('Villa d''exception avec vue sur mer', 'Une magnifique villa avec vue panoramique sur la mer, offrant luxe et confort. La villa dispose de grandes baies vitrées pour profiter de la vue, une piscine à débordement, et plusieurs terrasses pour se détendre. À l’intérieur, vous trouverez des équipements haut de gamme, des chambres élégantes, et une cuisine gastronomique. Idéale pour des vacances de luxe en bord de mer, avec un accès facile aux plages et aux restaurants.', 'Luxe et vue sur mer.', 300, 150, 8, 4, 2, 6, 1, 1, 5, true, 3, 44, 3, 1),
+('Villa d''exception avec vue sur mer', 'Une magnifique villa avec vue panoramique sur la mer, offrant luxe et confort. La villa dispose de grandes baies vitrées pour profiter de la vue, une piscine à débordement, et plusieurs terrasses pour se détendre. À l''intérieur, vous trouverez des équipements haut de gamme, des chambres élégantes, et une cuisine gastronomique. Idéale pour des vacances de luxe en bord de mer, avec un accès facile aux plages et aux restaurants.', 'Luxe et vue sur mer.', 300, 150, 8, 4, 2, 6, 1, 1, 5, true, 3, 44, 3, 1),
 ('Chalet de montagne authentique', 'Un chalet traditionnel en bois, situé dans une station de ski populaire. Le chalet combine charme rustique et commodités modernes, avec une grande cheminée, un espace spa avec sauna, et une cuisine équipée. Les chambres sont confortables avec des lits douillets, et le salon offre une vue imprenable sur les montagnes. Parfait pour les amateurs de ski et de nature, avec des pistes accessibles directement depuis le chalet.', 'Profitez de l''authenticité de la montagne.', 320, 110, 10, 5, 2, 8, 1, 1, 5, true, 4, 45, 4, 6),
-('Bateau de charme', 'Un bateau confortable amarré, idéal pour un séjour romantique. Ce bateau offre une expérience unique avec une vue sur la ville depuis l’eau. Les aménagements incluent une chambre cosy, un salon avec grandes fenêtres, et une petite cuisine équipée. Profitez des soirées sur le pont, en admirant les lumières de la ville et en vous détendant au son de l’eau.', 'Séjour romantique.', 200, 30, 4, 2, 1, 2, 1, 1, 5, true, 5, 46, 5, 3),
+('Bateau de charme', 'Un bateau confortable amarré, idéal pour un séjour romantique. Ce bateau offre une expérience unique avec une vue sur la ville depuis l''eau. Les aménagements incluent une chambre cosy, un salon avec grandes fenêtres, et une petite cuisine équipée. Profitez des soirées sur le pont, en admirant les lumières de la ville et en vous détendant au son de l''eau.', 'Séjour romantique.', 200, 30, 4, 2, 1, 2, 1, 1, 5, true, 5, 46, 5, 3),
 ('Logement insolite dans une cabane', 'Une cabane unique en pleine nature, parfaite pour un séjour dépaysant. Construite en bois avec des matériaux écologiques, cette cabane offre un espace de vie confortable avec une petite cuisine, une salle de bain moderne, et une chambre avec vue sur la forêt. Idéale pour ceux qui cherchent à se reconnecter avec la nature, avec des sentiers de randonnée et un environnement paisible.', 'Séjournez dans une cabane insolite.', 150, 20, 2, 1, 1, 1, 1, 1, 3, true, 6, 47, 6, 7),
-('Appartement moderne avec balcon', 'Un appartement moderne avec un grand balcon et une vue sur la ville. L’intérieur est décoré avec goût et offre tout le confort nécessaire, incluant une cuisine équipée, un salon lumineux, et une chambre avec un lit king-size. Le balcon est parfait pour prendre un café le matin ou un verre le soir en admirant le coucher de soleil. Situé proche des commerces et des transports en commun, cet appartement est idéal pour les voyageurs urbains.', 'Vue imprenable sur la ville.', 90, 28, 4, 1, 2, 2, 1, 1, 3, true, 7, 48, 1, 5),
-('Maison familiale avec piscine', 'Maison spacieuse avec piscine privée, idéale pour des vacances en famille. La maison dispose de plusieurs chambres, d’une cuisine moderne et équipée, d’un salon confortable, et d’une grande salle à manger. Le jardin est équipé d’un barbecue et d’une aire de jeux pour enfants. La piscine est chauffée et sécurisée, parfaite pour se rafraîchir durant les journées chaudes. Située dans un quartier calme, mais proche des attractions locales.', 'Profitez de la piscine privée.', 160, 100, 8, 4, 3, 4, 1, 1, 3, true, 8, 49, 2, 7),
+('Appartement moderne avec balcon', 'Un appartement moderne avec un grand balcon et une vue sur la ville. L''intérieur est décoré avec goût et offre tout le confort nécessaire, incluant une cuisine équipée, un salon lumineux, et une chambre avec un lit king-size. Le balcon est parfait pour prendre un café le matin ou un verre le soir en admirant le coucher de soleil. Situé proche des commerces et des transports en commun, cet appartement est idéal pour les voyageurs urbains.', 'Vue imprenable sur la ville.', 90, 28, 4, 1, 2, 2, 1, 1, 3, true, 7, 48, 1, 5),
+('Maison familiale avec piscine', 'Maison spacieuse avec piscine privée, idéale pour des vacances en famille. La maison dispose de plusieurs chambres, d''une cuisine moderne et équipée, d''un salon confortable, et d''une grande salle à manger. Le jardin est équipé d''un barbecue et d''une aire de jeux pour enfants. La piscine est chauffée et sécurisée, parfaite pour se rafraîchir durant les journées chaudes. Située dans un quartier calme, mais proche des attractions locales.', 'Profitez de la piscine privée.', 160, 100, 8, 4, 3, 4, 1, 1, 3, true, 8, 49, 2, 7),
 ('Villa d''exception avec jardin tropical', 'Une villa luxueuse entourée d''un jardin tropical, parfaite pour un séjour relaxant. La villa offre des espaces de vie spacieux, avec des baies vitrées donnant sur le jardin. Profitez de la piscine privée, du jacuzzi, et des multiples terrasses. Les chambres sont élégantes, chacune avec sa propre salle de bain. Le jardin est un véritable paradis, avec des plantes exotiques et des coins détente. Idéale pour des vacances de rêve loin de l''agitation.', 'Luxe et nature tropicale.', 420, 160, 10, 5, 3, 7, 1, 1, 7, true, 9, 50, 3, 2),
 ('Chalet familial en montagne', 'Chalet familial avec accès direct aux pistes de ski. Ce chalet offre tout le confort nécessaire pour un séjour en famille, avec plusieurs chambres, un grand salon avec cheminée, et une cuisine entièrement équipée. Après une journée de ski, détendez-vous dans le sauna ou profitez d''une soirée cinéma dans le salon. Les enfants apprécieront l''espace de jeux extérieur et les adultes pourront se relaxer sur la terrasse en admirant la vue.', 'Accès direct aux pistes.', 370, 120, 12, 6, 3, 9, 1, 1, 7, false, 10, 51, 4, 9),
 ('Bateau luxueux', 'Un bateau de luxe offrant une expérience unique. Ce bateau est équipé de cabines confortables, d''une cuisine moderne, et d''un salon spacieux avec vue sur la mer. Passez vos journées à explorer la côte, à nager dans la mer, ou à bronzer sur le pont. Le soir, profitez d''un dîner sur le pont en admirant le coucher du soleil. Parfait pour une escapade romantique ou une aventure entre amis.', 'Luxueuse expérience.', 350, 35, 4, 2, 1, 2, 1, 1, 6, true, 11, 52, 5, 5),
@@ -602,13 +674,24 @@ INSERT INTO _logement(titre, description, accroche, base_tarif, surface, nb_max_
 
 INSERT INTO _image (src, principale, alt, id_logement)
 SELECT 
-    CONCAT('/logement/', l.id, '/', n.num, '.jpg') AS src,
+    CONCAT('/logement/', l.id, '/', n.num, '.webp') AS src,
     CASE WHEN n.num = 1 THEN true ELSE false END AS principale,
     l.titre AS alt,
     l.id AS id_logement
 FROM _logement l
 CROSS JOIN (SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5) n
-WHERE l.id BETWEEN 1 AND 45;
+WHERE l.id BETWEEN 1 AND 5;
+
+INSERT INTO _image (src, principale, alt, id_logement)
+SELECT 
+    CONCAT('/logement/', l.id, '/', n.num, '.webp') AS src,
+    CASE WHEN n.num = 1 THEN true ELSE false END AS principale,
+    l.titre AS alt,
+    l.id AS id_logement
+FROM _logement l
+CROSS JOIN (SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5) n
+WHERE l.id BETWEEN 6 AND 45
+AND n.num = 1;
 
 INSERT INTO _activite_logement(id_logement, activite, id_distance) VALUES 
 (1, 'Baignade', 1),

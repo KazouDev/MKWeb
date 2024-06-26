@@ -2,9 +2,9 @@
 session_start();
 require_once "../utils.php";
 
-// if (isset($_SESSION["client_id"])) {
-//     redirect();
-// }
+if (isset($_SESSION["client_id"])) {
+    redirect();
+}
 
 $status = false;
 $passwordMismatch = false;
@@ -39,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "mot_de_passe" => $_POST["mot_de_passe"],
         "photo_profile" => "img/anonymus.webp"
     ];
+    $pseudo=$util['pseudo'];
 
     $mot_de_passe2 = $_POST['mot_de_passe2'];
 
@@ -47,8 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         empty($util["nom"]) || empty($util["prenom"]) || empty($util["pseudo"]) || empty($util["date_naissance"]) ||
         empty($util["telephone"]) || empty($util["email"]) || empty($util["mot_de_passe"]) ||
         empty($mot_de_passe2) || empty($adresse["pays"]) || empty($adresse["region"]) ||
-        empty($adresse["departement"]) || empty($adresse["ville"]) || empty($adresse["code_postal"]) ||
-        empty($adresse["rue"])
+        empty($adresse["departement"]) || empty($adresse["commune"]) || empty($adresse["code_postal"]) ||
+        empty($adresse["nom_voie"])
     ) {
         $status = true;
     }
@@ -95,14 +96,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user_id) {
                 if (isset($_FILES["photo_profil"]["tmp_name"]) && $_FILES["photo_profil"]["tmp_name"] !== "") {
                     $extension = pathinfo($_FILES["photo_profil"]['name'], PATHINFO_EXTENSION);
-                    $photo_path = "/compte/profile_$user_id.$extension";
+                    $photo_path = "/compte/profile_$pseudo.$extension";
+                    $photo_path_bdd = "/compte/profile_$pseudo.$extension";
                     move_uploaded_file($_FILES["photo_profil"]["tmp_name"], $photo_path);
                 } else {
                     $extension = pathinfo("img/anonymus.webp", PATHINFO_EXTENSION);
                     $photo_path = "/compte/profile_anonymous.$extension";
+                    $photo_path_bdd = "/compte/profile_anonymous.$extension";
                 }
 
-                request("UPDATE sae._utilisateur SET photo_profile = '$photo_path' WHERE id = $user_id");
+                request("UPDATE sae._utilisateur SET photo_profile = '$photo_path_bdd' WHERE id = $user_id");
+
 
                 insert('sae._compte_client', ["id"], [$user_id]);
                 echo "Utilisateur créé avec succès.";
@@ -143,12 +147,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="connect__input__ligne">
                                 <div class="connect__input">
                                     <label for="connect__name">Nom</label>
-                                    <input type="text" name="nom" id="connect__name" placeholder="Votre nom" required>
+                                    <input type="text" name="nom" id="connect__name" placeholder="Votre nom" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
                                 </div>
                                 <div class="connect__input">
                                     <label for="connect__surname">Prénom</label>
                                     <input type="text" name="prenom" id="connect__surname" placeholder="Votre prénom"
-                                        required>
+                                        required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
                                 </div>
                             </div>
                             <div class="connect__input__ligne">
@@ -166,7 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="connect__input">
                                     <label for="connect__phone">Téléphone portable</label>
                                     <input type="tel" name="telephone" id="connect__phone" placeholder="Votre numéro"
-                                        required>
+                                        required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                 </div>
                                 <div class="connect__input">
                                     <label for="connect__gender">Civilité</label>
@@ -178,19 +182,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             <div class="connect__input">
                                 <label for="connect__profile">Photo de profil</label>
-                                <input type="file" name="photo_profil" id="connect__profile">
+                                <input type="file" name="photo_profil" id="connect__profile" accept="image/*">
                             </div>
 
                             <div class="connect__input connect__input__add">
                                 <label for="connect__pass">Adresse de facturation</label>
                                 <div class="connect__input__ligne">
-                                    <input type="text" name="pays" id="connect__pays" placeholder="Pays" required>
-                                    <input type="text" name="region" id="connect__region" placeholder="Région" required>
-                                    <input type="text" name="departement" id="connect__departement" placeholder="Département" required>
-                                    <input type="text" name="commune" id="connect__ville" placeholder="Ville" required>
-                                    <input type="text" name="code" id="connect__code" placeholder="Code postal" required>
+                                    <input type="text" name="pays" id="connect__pays" placeholder="Pays" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="region" id="connect__region" placeholder="Région" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="departement" id="connect__departement" placeholder="Département" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="commune" id="connect__ville" placeholder="Ville" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="code" id="connect__code" placeholder="Code postal" required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                     <input type="number" name="numero" id="connect__numero" placeholder="Numéro de rue" required>
-                                    <input type="text" name="rue" id="connect__rue" placeholder="Nom de la rue" required>
+                                    <input type="text" name="rue" id="connect__rue" placeholder="Nom de la rue" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
                                 </div>
                                 <div class="connect__input__ligne">
                                     <input type="text" name="complement1" id="connect__complement1"
@@ -209,7 +213,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="connect__input">
                                 <label for="connect__pass">Mot de passe</label>
                                 <input type="password" name="mot_de_passe" id="connect__pass"
-                                    placeholder="Au moins avoir 8 caractères" required>
+                                    placeholder="Au moins 8 caractères" required>
                             </div>
                             <div class="connect__input">
                                 <label for="connect__pass2">Entrez le mot de passe à nouveau</label>
@@ -234,7 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="submit" value="Continuer">
                         </form>
                         <p class="p_ligne">Ou</p>
-                        <p style="align-self: center; text-align:center;">Vous possédez déjà un compte ? <a href=""
+                        <p style="align-self: center; text-align:center;">Vous possédez déjà un compte ? <a href="login.php"
                                 style="color: #5669FF;">Se connecter</a></p>
                     </div>
                     <div class="slider">

@@ -81,7 +81,7 @@
   border-radius: 0.75em;
   flex-direction: column;
   gap: 1.875em;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
   padding: 1.875em;
 }
 .detail-reservation__contenu > div.detail-reservation__section1 {
@@ -125,7 +125,7 @@
   align-items: center;
   border-radius: 12px;
   border: 1px solid #cccccc;
-  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
   gap: 1.25em;
 }
 .detail-reservation__contenu > div.detail-reservation__section2 > div.section2__article1 > img {
@@ -189,7 +189,7 @@
   gap: 2.25em;
   border-radius: 12px;
   border: 1px solid #cccccc;
-  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
 }
 .detail-reservation__contenu > div.detail-reservation__section3 > div.section3__informationoccupation > div.informationoccupation__prix {
   font-size: 3em;
@@ -255,8 +255,7 @@ i.jaune {
 }
 .hote .hote__info {
   border-radius: 0.75rem;
-  border: 1px solid #909090;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
   padding: 1.5rem;
   display: flex;
   align-items: center;

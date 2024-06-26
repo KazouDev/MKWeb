@@ -15,6 +15,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-direction: row;
 }
 .main__container > .top > div {
@@ -25,6 +26,9 @@
 .main__container > .top > div img {
   max-width: 2.5em;
   margin-left: 1.1em;
+}
+.main__container > .top > i {
+  font-size: 1.875rem;
 }
 .main__container h1 {
   text-align: left;
@@ -249,7 +253,7 @@ select {
   cursor: pointer;
   align-self: stretch;
   border-radius: 0.5rem;
-  width: 10%;
+  padding: 1rem 6rem;
   background-color: #79da7d;
   color: #ffffff;
   display: flex;
@@ -259,13 +263,12 @@ select {
 @media screen and (max-width: 600px) {
   .ajouter,
   .envoyer {
-    width: 18%;
+    padding: 0.7rem 4rem;
   }
 }
 
 .envoyer {
-  width: 25%;
-  height: 40px;
+  padding: 1rem 6rem;
   background-color: #5669ff;
 }
 

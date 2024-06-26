@@ -23,7 +23,7 @@
                 <div>
                     <h1 class="entete__titre">Ajouter un logement</h1>
                 </div>
-                <h2 id="reset" class="entete__titre">RESET</h2>
+                <i id="reset" class="fa-solid fa-rotate"></i>
 
             </div>
             
@@ -57,7 +57,7 @@
                         </div>
                         <div class="info_gen__input">
                             <label for="surface">Surface</label>
-                            <input type="number" id="surface" name="surface" placeholder="Surface en m²" required value="<?=$_SESSION["form_data"]["surface"] ?? "";?>">
+                            <input type="text" id="surface" name="surface" placeholder="Surface en m²" required value="<?=$_SESSION["form_data"]["surface"] ?? "";?>">
                         </div>
                         
                         <div class="info_gen__input">
@@ -168,7 +168,7 @@
                         
                         <div class="info_gen__input">
                             <label for="prixht">Prix HT</label>
-                            <input type="number" id="prixht" name="prixht" placeholder="123.5" required value="<?=$_SESSION["form_data"]["prixht"] ?? "";?>">
+                            <input type="text" id="prixht" name="prixht" placeholder="123.5" required value="<?=$_SESSION["form_data"]["prixht"] ?? "";?>">
                         </div>
 
                         <div class="info_gen__input">

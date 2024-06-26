@@ -108,16 +108,12 @@ EOT;
     inner join sae._logement on sae._activite_logement.id_logement = sae._logement.id  
     inner join sae._distance on sae._activite_logement.id_distance = sae._distance.id
     where sae._logement.id = $id_logement;";
-    
     $rep_amenagement = request($query_amenagement);
     $rep_hote = request($query_hote)[0];
     $rep_langue = request($query_langue);
     $rep_activite = request($query_activite);
     $rep_photo = request($query_photo);
-
     $titre_logement =  $rep_logement['titre'] ;
-    
-
     $ville = $rep_logement['commune'];
     $departement = $rep_logement['departement'];
     $accroche = $rep_logement['accroche'];
@@ -152,7 +148,6 @@ EOT;
     foreach($rep_activite as $cle => $activite){
         $liste_activite[$activite['activite']] = $activite['perimetre'] ;
     }
-
     print <<<EOT
     <script>
         const JOUR_MIN = {$min_jour};
@@ -171,7 +166,7 @@ EOT;
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/logement.css">
-    <title><?= $titre_logement?></title>
+    <title><?=$titre_logement?></title>
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -227,9 +222,8 @@ EOT;
                                 <?php } else if ((!empty($nb_lit_double)) && ($nb_lit_double == 1)) { ?>
                                     <div class="feature">1 lit double</div>
                                 <?php } ?>
-                                
-                                
                             </div>
+
                             <h3>Ce logement vous propose</h3>
                             <div class="logement__proposNote">
                                 <?php if (empty($liste_amenagement)) { ?> 
