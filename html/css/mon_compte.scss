@@ -337,3 +337,27 @@ form {
     object-fit: cover;
     border-radius: 2%;
 }
+
+#compte__code_postal {
+    background-color: #d6d6d679;
+}
+
+/* Styles de base pour l'autocomplétion */
+.autocomplete-suggestions {
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: #fff;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+    position: absolute;
+    margin-top: 95px;
+    z-index: 500;
+}
+.autocomplete-suggestion {
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+}
+.autocomplete-suggestion:hover {
+    background-color: #9aa5ff;
+    z-index: 501;
+}

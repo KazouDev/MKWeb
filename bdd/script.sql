@@ -339,7 +339,7 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER after_compte_proprietaire_insert
 AFTER INSERT ON _compte_proprietaire
 FOR EACH ROW
-EXECUTE FUNCTION sae.create_api_key_trigger();
+EXECUTE PROCEDURE sae.create_api_key_trigger();
 
 
 -- PEUPLEMENT 
@@ -400,26 +400,26 @@ INSERT INTO _amenagement (amenagement) VALUES
 ('Sèche-Linge');
 
 INSERT INTO _adresse (pays, region, departement, commune, code_postal, numero, nom_voie, longitude, latitude) VALUES
-('France', 'Bretagne', 'Côte d''Armor', 'Aucaleuc', '22100', '3', 'Le Vieux Bourg', '-2.131387', '48.456655'),
-('France', 'Bretagne', 'Côte d''Armor', 'Bégard', '22140', '9', 'Rue Ker Avel', '-3.293041', '48.6266'),
-('France', 'Bretagne', 'Côte d''Armor', 'Bégard', '22140', '14', 'Kozh Ti', '-3.308896', '48.616321'),
-('France', 'Bretagne', 'Côte d''Armor', 'Yvias', '22930', '16', 'Lotissement Saint Judoce', '-3.052112', '48.713311'),
-('France', 'Bretagne', 'Côte d''Armor', 'Vildé-Guingalan', '22980', '12', 'Vaucouleurs', '-2.130424', '48.43735'),
-('France', 'Bretagne', 'Côte d''Armor', 'Yffiniac', '22120', '6', 'Rue de la Ville Blanche', '-2.656187', '48.477747'),
-('France', 'Bretagne', 'Côte d''Armor', 'Yffiniac', '22120', '2', 'Rue des Fleurs', '-2.715415', '48.466077'),
-('France', 'Bretagne', 'Côte d''Armor', 'Le Vieux-Marché', '22420', '3', 'Lanneg Roz ar C''hlan', '-3.46021', '48.606877'),
-('France', 'Bretagne', 'Côte d''Armor', 'Uzel', '22460', '3', 'Rue Abbe Lesage', '-2.836502', '48.284536'),
-('France', 'Bretagne', 'Côte d''Armor', 'Trévron', '22100', '4', 'Le Creux', '-2.093221', '48.376611'),
-('France', 'Bretagne', 'Côte d''Armor', 'Trévou-Tréguignec', '22660', '6', 'Rue de Kermorgan', '-3.343852', '48.821108'),
-('France', 'Bretagne', 'Côte d''Armor', 'Tréveneuc', '22410', '34', 'Rue de Kercadoret', '-2.86298', '48.666777'),
-('France', 'Bretagne', 'Côte d''Armor', 'Tréogan', '22340', '1', 'Kervern', '-3.540269', '48.184345'),
-('France', 'Bretagne', 'Côte d''Armor', 'Trémuson', '22440', '13', 'La Grande Roche', '-2.834813', '48.528448'),
-('France', 'Bretagne', 'Côte d''Armor', 'Trémeur', '22250', '7', 'Lotissement Puits Gaulois', '-2.26419', '48.35011'),
-('France', 'Bretagne', 'Côte d''Armor', 'Trélivan', '22100', '1', 'Lieu Dit Bougault', '-2.098974', '48.42968'),
-('France', 'Bretagne', 'Côte d''Armor', 'Trélivan', '22100', '9', 'Rue des Lilas', '-2.113693', '48.435214'),
-('France', 'Bretagne', 'Côte d''Armor', 'Tréguier', '22220', '8', 'Rue des Isles', '-3.236457', '48.780879'),
-('France', 'Bretagne', 'Côte d''Armor', 'Tréguier', '22220', '5', 'Rue de Crublen', '-3.239756', '48.781099'),
-('France', 'Bretagne', 'Côte d''Armor', 'Trégueux', '22950', '8', 'La Cloture', '-2.734797', '48.477424'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Aucaleuc', '22100', '3', 'Le Vieux Bourg', '-2.131387', '48.456655'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Bégard', '22140', '9', 'Rue Ker Avel', '-3.293041', '48.6266'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Bégard', '22140', '14', 'Kozh Ti', '-3.308896', '48.616321'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Yvias', '22930', '16', 'Lotissement Saint Judoce', '-3.052112', '48.713311'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Vildé-Guingalan', '22980', '12', 'Vaucouleurs', '-2.130424', '48.43735'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Yffiniac', '22120', '6', 'Rue de la Ville Blanche', '-2.656187', '48.477747'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Yffiniac', '22120', '2', 'Rue des Fleurs', '-2.715415', '48.466077'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Le Vieux-Marché', '22420', '3', 'Lanneg Roz ar C''hlan', '-3.46021', '48.606877'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Uzel', '22460', '3', 'Rue Abbe Lesage', '-2.836502', '48.284536'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Trévron', '22100', '4', 'Le Creux', '-2.093221', '48.376611'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Trévou-Tréguignec', '22660', '6', 'Rue de Kermorgan', '-3.343852', '48.821108'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Tréveneuc', '22410', '34', 'Rue de Kercadoret', '-2.86298', '48.666777'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Tréogan', '22340', '1', 'Kervern', '-3.540269', '48.184345'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Trémuson', '22440', '13', 'La Grande Roche', '-2.834813', '48.528448'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Trémeur', '22250', '7', 'Lotissement Puits Gaulois', '-2.26419', '48.35011'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Trélivan', '22100', '1', 'Lieu Dit Bougault', '-2.098974', '48.42968'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Trélivan', '22100', '9', 'Rue des Lilas', '-2.113693', '48.435214'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Tréguier', '22220', '8', 'Rue des Isles', '-3.236457', '48.780879'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Tréguier', '22220', '5', 'Rue de Crublen', '-3.239756', '48.781099'),
+('France', 'Bretagne', 'Côtes-d''Armor', 'Trégueux', '22950', '8', 'La Cloture', '-2.734797', '48.477424'),
 ('France', 'Bretagne', 'Finistère', 'Arzano', '29300', '28', 'Rue de Keravel', '-3.436063', '47.902366'),
 ('France', 'Bretagne', 'Finistère', 'Audierne', '29770', '13', 'Rue Parc Allec', '-4.563974', '48.030713'),
 ('France', 'Bretagne', 'Finistère', 'Audierne', '29770', '4', 'Rue René Autret', '-4.549174', '48.025775'),

@@ -449,36 +449,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="hidden" name="form_type" value="adresse">
                             <div class="ligne">
                                 <div class="compte__input">
-                                    <label for="compte__prenom">Pays</label>
-                                    <input type="text" name="pays" id="compte__pays" value="<?= $pays ?>"
-                                        placeholder="Votre pays"
-                                        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <label for="compte__pays">Pays</label>
+                                    <input type="text" name="pays" id="compte__pays" value="<?= $pays ?>" placeholder="Votre pays" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <div id="autocomplete-list-pays" class="autocomplete-suggestions"></div>
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__region">Région</label>
-                                    <input type="text" name="region" id="compte__region" value="<?= $region ?>"
-                                        placeholder="Votre région"
-                                        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="region" id="compte__region" value="<?= $region ?>" placeholder="Votre région" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <div id="autocomplete-list-regions" class="autocomplete-suggestions"></div>
                                 </div>
                             </div>
                             <div class="ligne">
                                 <div class="compte__input">
                                     <label for="compte__departement">Département</label>
-                                    <input type="text" name="departement" id="compte__departement"
-                                        value="<?= $departement ?>" placeholder="Votre département"
-                                        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="departement" id="compte__departement" value="<?= $departement ?>" placeholder="Votre département" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <div id="autocomplete-list-departement" class="autocomplete-suggestions"></div>
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__ville">Ville</label>
-                                    <input type="text" name="commune" id="compte__ville" value="<?= $ville ?>"
-                                        placeholder="Votre ville"
-                                        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="commune" id="compte__ville" value="<?= $ville ?>" placeholder="Votre ville" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <div id="autocomplete-list-ville" class="autocomplete-suggestions"></div>
                                 </div>
                                 <div class="compte__input">
-                                    <label for="compte__ville">Code postal</label>
-                                    <input type="text" name="code_postal" id="compte__code_postal"
-                                        value="<?= $code_postal ?>" placeholder="Votre code postal"
-                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                    <label for="code_postal">Code postal</label>
+                                    <input type="text" name="code_postal" id="compte__code_postal" value="<?= $code_postal ?>" placeholder="Votre code postal" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                 </div>
                             </div>
                             <div class="ligne">
@@ -632,6 +626,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </main>
         <?php include "./footer.php"; ?>
     </div>
+    <script src="../js/consulter_mon_compte.js"></script>
 </body>
-
 </html>
