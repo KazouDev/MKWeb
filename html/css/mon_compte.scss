@@ -50,9 +50,10 @@ $lineHeight: 1.5;
         color: $mainNoir;
     }
     
-    .info_perso_conteneur, .adresse_conteneur, .photo_conteneur, .mdp_conteneur, .coord_bancaire_conteneur, .token_conteneur {
+    .info_perso_conteneur, .adresse_conteneur, .photo_conteneur, .mdp_conteneur, .coord_bancaire_conteneur,#api,#tokens {
         display: flex;
         border-radius: 0.75em;
+    
         flex-direction: column;
         gap: 1rem;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -223,6 +224,7 @@ $lineHeight: 1.5;
     border-radius: 0.75rem;
     border: 1px solid black;
     margin-bottom: 1rem;
+    
     padding-right: 1rem;
     .action{
         
@@ -272,8 +274,8 @@ $lineHeight: 1.5;
 
 
 /* CSS */
-#generer_token {
-  background-color: #fbeee0;
+#generer_token, #generer_api {
+  background-color: $mainBlanc;
   border: 2px solid $mainNoir;
   border-radius: 30px;
   box-shadow: $mainNoir 4px 4px 0 0;
@@ -291,7 +293,7 @@ $lineHeight: 1.5;
   touch-action: manipulation;
 }
 
-#generer_token:hover {
+#generer_token:hover, #generer_api:hover {
   background-color: #fff;
 }
 
@@ -558,7 +560,17 @@ $lineHeight: 1.5;
         margin: 0 auto;
         margin-top: 2%;
     }
-    
+    .droits-container{
+        border: 1px solid black;
+        border-radius: 0.75rem;
+        overflow-y: scroll;
+        height: 300px;
+        width: 80%;
+        overflow-x: hidden;
+        margin: 0 auto;
+        margin-top: 2%;
+
+    }
     .buttons {
         display: flex;
         flex-direction: row;
@@ -605,4 +617,22 @@ $lineHeight: 1.5;
         overflow: hidden;
     }
     
+}
+
+#api-token{
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    width:100%;
+    gap:2em;
+    justify-content: space-evenly;
+    
+    #tokens{
+        flex:1;
+    }
+    #api{
+        flex:1;
+        
+    }
+
 }

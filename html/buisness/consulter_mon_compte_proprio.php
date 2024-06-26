@@ -3,6 +3,7 @@ session_start();
 require_once "../../utils.php";
 
 
+
 if (isset($_POST['valider']) && $_POST['action'] == 'update') {
 
     $date_fin = (new DateTime($_POST['date_fin']))->format('Y-m-d');
@@ -55,6 +56,59 @@ if (isset($_POST['valider']) && $_POST['action'] == 'create') {
     }
 }
 
+if (isset($_POST['valider-api']) && $_POST['action'] == 'update'){
+    $data = array();
+    $api = $_POST['api'];
+    $bin = '0000';
+    
+    foreach($_POST['check_logement'] as $val){
+        $data[] = explode('/',$val)[1];
+        
+    }
+    
+    if(in_array('admin',$data))$bin[0]='1';
+    if(in_array('indispo',$data))$bin[1]='1';
+    if(in_array('planning',$data))$bin[2]='1';
+    if(in_array('lister',$data))$bin[3]='1';
+    
+    $sql = ' UPDATE sae._api_keys SET permission = ' . bindec($bin). '::BIT(4)';
+    $sql .= ' WHERE key = \'' . $api . '\'';  
+    request($sql);
+    //print $sql;
+
+    //print '<pre>';
+    //print_r($data);
+    //print '</pre>';
+ 
+    
+}
+
+if (isset($_POST['valider-api']) && $_POST['action'] == 'create'){
+
+    //$api_key = 
+    //add_api_key_for_proprietor
+    $user_id = (int) $_SESSION['business_id'];
+    $data = array();
+    $api = $_POST['api'];
+    $bin = '0000';
+    foreach($_POST['check_logement'] as $val){
+        $data[] = explode('/',$val)[1];
+        
+
+    }
+    if(in_array('admin',$data))$bin[0]='1';
+    if(in_array('indispo',$data))$bin[1]='1';
+    if(in_array('planning',$data))$bin[2]='1';
+    if(in_array('lister',$data))$bin[3]='1';
+    
+    $sql = 'SELECT sae.add_api_key_for_proprietor(' . $user_id;
+    $sql .= ', \'' . $bin . '\') as api;';
+   
+    $res = request($sql, 0);
+    //$api = $res[0]['api'];
+    
+    
+}
 $id_utilisateur =  buisness_connected_or_redirect();
 
 $query_utilisateur = "select nom, prenom, pseudo, commune, pays, region, departement,
@@ -249,7 +303,14 @@ $src_photo = $rep_utilisateur['photo_profile'];
                                 </form>
                             </div>
 
-                            <input type="hidden" name="action" value="delete">
+                            
+
+                        </div>
+                    </div>
+                </div>
+                <div id="api-token">
+                    <div id="tokens">
+                    <input type="hidden" name="action" value="delete">
                             <div class="token_conteneur">
                                 <div class="modal_sup">
                                     <div class="modal" id="modal">
@@ -302,7 +363,7 @@ $src_photo = $rep_utilisateur['photo_profile'];
                             <h3>Token Icalendar</h3>
                             <form action="" method="post">
                                 <?php
-                                $sql = 'SELECT token FROM sae._ical_token';
+                                $sql = 'SELECT token FROM sae._ical_token where proprietaire =' . $_SESSION["business_id"];
                                 $res = request($sql);
                                 foreach ($res as $token) :
 
@@ -321,344 +382,85 @@ $src_photo = $rep_utilisateur['photo_profile'];
                                 <?php endforeach ?>
                                 <button type="button" id="generer_token" value="Générer Token">Générer Token</button>
                             </form>
-
-                        </div>
                     </div>
+                    
+                    
                 </div>
+                <div id="api">
+                    <input type="hidden" name="action" value="delete">
+                    <div class="token_conteneur">
+                    
+                    
+                                <form action="" method="POST">
+                                    <div class="modal_enreg" id="modal_enreg-api">
+                                        
+                                        <input type="hidden" name="api" id="api-key">
+                                        <input type="hidden" name="action" id="action-api" value="">
+                                        <div class="modal-content">
+                                            <span class="close" id="closeModalBtn-api">&times;</span>
+                                            <h3>Modifier API</h3>
+                                            
+                                            <div>
+                                                <label>
+                                                    <input type="checkbox" id="selectAllCheckbox-api"> Sélectionner tous les droits
+                                                </label>
+                                            </div>
+                                            <div class="droits-container" id="droitsContainer"></div>
+
+                                            <div class="buttons">
+                                                <button type="button" class="open-modal-btn" id="closeBtn-api" style="background-color: #dc3545;">Annuler</button>
+                                                <button type="submit" name="valider-api" class="open-modal-btn">Valider</button>
+                                            </div>
+
+                                        </div>
+                                </form>
+                                </div>
+
+
+                            </div>
+                            <h3>Clé API</h3>
+                            <form action="" method="post">
+                                <?php
+                                $sql = 'SELECT key FROM sae._api_keys where proprietaire =' . $_SESSION["business_id"];
+                                $res = request($sql);
+                                foreach ($res as $token) :
+
+                                ?>
+                                    <div class="token ">
+                                        <div>
+                                            <input class="api_id" type="password" value="<?= $token['key'] ?>" readonly="readonly">
+                                        </div>
+                                        <div class="action">
+                                            <div class="cross-api"><i class="fas fa-times"></i></div>
+                                            <div class="copier-api"><i class="fas fa-copy"></i></div>
+                                            <div class="modifier-api"><i class="fas fa-pencil-alt"></i></div>
+                                            <div class="eyes-api"><i class="fas fa-eye"></i></div>
+                                        </div>
+                                    </div>
+                                <?php endforeach ?>
+                                <button type="button" id="generer_api" value="Générer clé API">Générer clé API</button>
+                            </form>
+                    </div>
             </div>
     </div>
     </main>
     <?php include "./footer.php";
     ?>
     <?php
-    $serverName = $_SERVER['SERVER_NAME']  . ':' . $_SERVER['SERVER_PORT'] . '/ical/ical.php?token='; ?>
+    $serverName = $_SERVER['SERVER_NAME']  . ':' . $_SERVER['SERVER_PORT'] . '/ical/ical.php?token=';
+    $business_id = $_SESSION['business_id'];
+    print <<<EOT
+        <script>
+            const BUSINESS_ID = '{$business_id}';
+            const SERVER_NAME = '{$serverName}';
+        </script>
+EOT;
+     ?>
+    
 
     </div>
-    <script>
-        function togglePasswordVisibility() {
-            var passwordInput = document.getElementById("compte__mdp");
-            var checkbox = document.getElementById("showPassword");
-
-            if (checkbox.checked) {
-                passwordInput.type = "text";
-            } else {
-                passwordInput.type = "password";
-            }
-        }
-
-        var gen_token = document.getElementById('generer_token');
-
-
-        var token = document.querySelectorAll('.token_id');
-        var text_content = document.getElementById('text-content');
-        var cross = document.querySelectorAll('.cross');
-        var copier = document.querySelectorAll('.copier');
-        var eyes = document.querySelectorAll('.eyes');
-        var modifiers = document.querySelectorAll('.modifier');
-        var logementCheckboxes = document.querySelectorAll(".logementCheckbox")
-        var modalEnreg = document.getElementById("modal_enreg");
-        var annulerBtn = document.getElementById("closeBtn");
-        var closeModalBtn = document.getElementById("closeModalBtn");
-
-        var alreadyIn = document.getElementById("alreadyIn");
-
-        var date_fin = document.getElementById("date_fin");
-        var date_debut = document.getElementById("date_debut");
-        var action = document.getElementById('action');
-
-        date_fin.addEventListener('change',function(e){
-            if (new Date(date_fin.value ) < new Date(date_debut.value )){
-                alert("La date de fin doit être supérieur à celle du début.");
-                date_fin.value='';
-            }
-        });
+    <script src='../js/mon_compte.js'>
         
-        date_debut.addEventListener('change',function(e){
-            if (new Date(date_fin.value ) < new Date(date_debut.value )){
-                alert("La date de fin doit être supérieur à celle du début.");
-                date_debut.value='';   
-            }
-        });
-        
-        gen_token.addEventListener('click', () => {
-            document.body.style.overflow = 'hidden';
-            action.value = "create";
-            modalEnreg.style.display = "block";
-            var xhr = new XMLHttpRequest();
-            const params = new URLSearchParams();
-            params.append("action", "create");
-            params.append('id', "<?= $_SESSION["business_id"] ?>");
-
-            xhr.open("GET", "../ajax/ical.ajax.php?" + params, true);
-            //xhr.open("GET", "http://localhost/MKWEB/MKWeb/html/ajax/calendrier.ajax.php?" + params, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-
-                    var data = JSON.parse(xhr.responseText);
-                    for (logement of data['logement']) {
-
-                        //console.log(logement);
-                        //console.log(logement['titre']);
-                        const logementDiv = document.createElement('div');
-                        logementDiv.classList.add('logement');
-
-                        const checkboxDiv = document.createElement('div');
-                        checkboxDiv.classList.add('checkbox');
-                        const checkbox = document.createElement('input');
-                        checkbox.type = 'checkbox';
-                        checkbox.value = logement['id_logement'];
-                        checkbox.name = 'check_logement[]';
-
-                        checkbox.classList.add('logementCheckbox');
-                        checkboxDiv.appendChild(checkbox);
-
-                        const descriptionDiv = document.createElement('div');
-                        descriptionDiv.classList.add('description');
-                        const img = document.createElement('img');
-                        img.src = '../img' + logement['img'];
-                        img.alt = logement['titre'];
-                        const p = document.createElement('p');
-                        p.textContent = logement['titre'];
-                        descriptionDiv.appendChild(img);
-                        descriptionDiv.appendChild(p);
-                        logementDiv.appendChild(checkboxDiv);
-                        logementDiv.appendChild(descriptionDiv);
-
-                        logementsContainer.appendChild(logementDiv);
-
-                    }
-
-
-
-                }
-            };
-            xhr.send();
-
-
-        });
-        closeModalBtn.onclick = function() {
-            modalEnreg.style.display = "none";
-            document.body.classList.remove("no-scroll");
-            logementsContainer.innerHTML = ''
-            document.getElementById('token').value = "";
-            alreadyIn.value = "";
-            document.body.style.overflow = 'visible';
-        }
-        annulerBtn.onclick = function() {
-            modalEnreg.style.display = "none";
-            document.body.classList.remove("no-scroll");
-            logementsContainer.innerHTML = ''
-            document.getElementById('token').value = "";
-            alreadyIn.value = "";
-            document.body.style.overflow = 'visible';
-        }
-
-        modifiers.forEach((modifier, k) => {
-            modifier.addEventListener('click', () => {
-                action.value = "update";
-                document.body.style.overflow = 'hidden';
-
-                modalEnreg.style.display = "block";
-                document.body.classList.add("no-scroll");
-                // Requête AJAX
-
-                var xhr = new XMLHttpRequest();
-                const params = new URLSearchParams();
-                params.append("action", "update");
-                document.getElementById('token').value = token[k].value;
-
-                params.append("token", token[k].value);
-                //console.log(token[k].value);
-
-
-                xhr.open("GET", "../ajax/ical.ajax.php?" + params, true);
-                //xhr.open("GET", "http://localhost/MKWEB/MKWeb/html/ajax/calendrier.ajax.php?" + params, true);
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        //console.log(xhr.responseText);
-                        var data = JSON.parse(xhr.responseText);
-                        date_fin.value = data.date_fin;
-                        date_debut.value = data.date_debut;
-
-                        const logementsContainer = document.getElementById('logementsContainer');
-                        //console.log(data['logement']);
-                        for (logement of data['logement']) {
-
-                            //console.log(logement['titre']);
-                            const logementDiv = document.createElement('div');
-                            logementDiv.classList.add('logement');
-
-                            const checkboxDiv = document.createElement('div');
-                            checkboxDiv.classList.add('checkbox');
-                            const checkbox = document.createElement('input');
-                            checkbox.type = 'checkbox';
-                            checkbox.value = logement['id_logement'];
-                            alreadyIn.value = alreadyIn.value == "" ? logement['id_logement'] : alreadyIn.value + '/' + logement['id_logement'];
-                            checkbox.name = 'check_logement[]';
-                            checkbox.checked = 'checked';
-                            checkbox.classList.add('logementCheckbox');
-                            checkboxDiv.appendChild(checkbox);
-
-                            const descriptionDiv = document.createElement('div');
-                            descriptionDiv.classList.add('description');
-                            const img = document.createElement('img');
-                            img.src = '../img' + logement['img'];
-                            img.alt = logement['titre'];
-                            const p = document.createElement('p');
-                            p.textContent = logement['titre'];
-                            descriptionDiv.appendChild(img);
-                            descriptionDiv.appendChild(p);
-                            logementDiv.appendChild(checkboxDiv);
-                            logementDiv.appendChild(descriptionDiv);
-
-                            logementsContainer.appendChild(logementDiv);
-                        }
-                        val_already = alreadyIn.value.split('/');
-                        for (logement of data['all_logement']) {
-
-                            if (!val_already.includes(logement['id_logement'].toString())) {
-                                //console.log(logement['titre']);
-                                const logementDiv = document.createElement('div');
-                                logementDiv.classList.add('logement');
-
-                                const checkboxDiv = document.createElement('div');
-                                checkboxDiv.classList.add('checkbox');
-                                const checkbox = document.createElement('input');
-                                checkbox.type = 'checkbox';
-                                checkbox.value = logement['id_logement'];
-                                checkbox.name = 'check_logement[]';
-
-                                checkbox.classList.add('logementCheckbox');
-                                checkboxDiv.appendChild(checkbox);
-
-                                const descriptionDiv = document.createElement('div');
-                                descriptionDiv.classList.add('description');
-                                const img = document.createElement('img');
-                                img.src = '../img' + logement['img'];
-                                img.alt = logement['titre'];
-                                const p = document.createElement('p');
-                                p.textContent = logement['titre'];
-                                descriptionDiv.appendChild(img);
-                                descriptionDiv.appendChild(p);
-                                logementDiv.appendChild(checkboxDiv);
-                                logementDiv.appendChild(descriptionDiv);
-
-                                logementsContainer.appendChild(logementDiv);
-
-                            }
-
-                        }
-
-
-                    }
-                };
-                xhr.send();
-
-
-            });
-        });
-
-
-        eyes.forEach((v, k) => {
-            v.addEventListener('click', () => {
-                if (token[k].type === "password") {
-                    token[k].type = "text";
-                    v.firstElementChild.classList = '';
-                    v.firstElementChild.classList.add('fas', 'fa-eye-slash', 'eye-icon');
-
-                } else {
-                    token[k].type = "password";
-                    v.firstElementChild.classList = '';
-                    v.firstElementChild.classList.add('fas', 'fa-eye');
-
-
-                }
-
-            });
-
-        });
-        copier.forEach((v, k) => {
-            v.addEventListener('click', () => {
-                let url = '<?php print $serverName ?>' + token[k].value;
-                navigator.clipboard.writeText(url);
-
-
-                v.firstElementChild.classList = '';
-                v.firstElementChild.classList.add('fas', 'fa-check-double', 'copied-icon');
-                setTimeout(() => {
-                    v.firstElementChild.classList.add('fas', 'fa-copy');
-
-
-                }, 2000);
-
-
-
-            });
-
-        });
-
-        cross.forEach((v, k) => {
-            v.addEventListener('click', () => {
-                tokenToDelete = token[k].value
-                showModal();
-                text_content.innerHTML = `Êtes vous sur de vouloir supprimer le token ${token[k].value} ?
-                                          En cas de suppression les calendriers utilisant ce token ne fonctionnerons plus.`;
-
-
-            });
-
-        });
-        // Attacher un gestionnaire d'événements unique au bouton 'confirmBtn'
-        confirmBtn.addEventListener('click', () => {
-            if (tokenToDelete !== '') {
-                const xhr = new XMLHttpRequest();
-                const params = new URLSearchParams();
-                params.append("action", "delete");
-                params.append("token", tokenToDelete);
-
-                xhr.open("GET", "../ajax/ical.ajax.php?" + params, true);
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        //console.log(xhr.responseText);
-
-                        hideModal(); // Cacher la modal après la suppression
-                        tokenToDelete = ''; // Réinitialiser le token à supprimer
-                        location.reload();
-                    }
-                };
-                xhr.send();
-
-            }
-        });
-        selectAllCheckbox.onclick = function() {
-
-            document.querySelectorAll(".logementCheckbox").forEach((checkbox) => {
-                checkbox.checked = selectAllCheckbox.checked;
-
-            });
-        }
-
-        const showModal = () => {
-            document.getElementById('modal').classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-
-
-        const hideModal = () => {
-            document.getElementById('modal').classList.remove('show');
-            document.body.style.overflow = 'visible';
-        }
-
-
-        document.getElementById('confirmBtn').addEventListener('click', function() {
-
-            hideModal();
-        });
-
-        document.getElementById('cancelBtn').addEventListener('click', function() {
-            hideModal();
-        });
-
 
         //
     </script>

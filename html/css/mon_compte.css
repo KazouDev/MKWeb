@@ -16,7 +16,7 @@
 .detail_mon_compte__conteneur #identifiant_client {
   color: #222222;
 }
-.detail_mon_compte__conteneur .info_perso_conteneur, .detail_mon_compte__conteneur .adresse_conteneur, .detail_mon_compte__conteneur .photo_conteneur, .detail_mon_compte__conteneur .mdp_conteneur, .detail_mon_compte__conteneur .coord_bancaire_conteneur, .detail_mon_compte__conteneur .token_conteneur {
+.detail_mon_compte__conteneur .info_perso_conteneur, .detail_mon_compte__conteneur .adresse_conteneur, .detail_mon_compte__conteneur .photo_conteneur, .detail_mon_compte__conteneur .mdp_conteneur, .detail_mon_compte__conteneur .coord_bancaire_conteneur, .detail_mon_compte__conteneur #api, .detail_mon_compte__conteneur #tokens {
   display: flex;
   border-radius: 0.75em;
   flex-direction: column;
@@ -215,8 +215,8 @@
 }
 
 /* CSS */
-#generer_token {
-  background-color: #fbeee0;
+#generer_token, #generer_api {
+  background-color: #ffffff;
   border: 2px solid #222222;
   border-radius: 30px;
   box-shadow: #222222 4px 4px 0 0;
@@ -235,7 +235,7 @@
   touch-action: manipulation;
 }
 
-#generer_token:hover {
+#generer_token:hover, #generer_api:hover {
   background-color: #fff;
 }
 
@@ -460,6 +460,16 @@
   margin: 0 auto;
   margin-top: 2%;
 }
+.modal_enreg .droits-container {
+  border: 1px solid black;
+  border-radius: 0.75rem;
+  overflow-y: scroll;
+  height: 300px;
+  width: 80%;
+  overflow-x: hidden;
+  margin: 0 auto;
+  margin-top: 2%;
+}
 .modal_enreg .buttons {
   display: flex;
   flex-direction: row;
@@ -498,4 +508,19 @@
 }
 .modal_enreg .no-scroll {
   overflow: hidden;
+}
+
+#api-token {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 2em;
+  justify-content: space-evenly;
+}
+#api-token #tokens {
+  flex: 1;
+}
+#api-token #api {
+  flex: 1;
 }/*# sourceMappingURL=mon_compte.css.map */

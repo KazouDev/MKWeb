@@ -13,7 +13,7 @@ define("ADMIN", (1 << 3));
 $permissions = 0;
 
 $permissions |= (1 << 0);
-$permissions |= (1 << 1);
+
 
 function addApiKeyForProprietor($proprietorId, $permissions) {
     try {
