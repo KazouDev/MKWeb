@@ -206,11 +206,13 @@ else {
                     <div class="separation">
                     </div>
                     <div class="hote">
-                            <div class="hote__info">
-                                <img src=<?="img/".$reservation["photo_profile"]?> alt="Hôte" id="hote__photo">
-                                <div class="hote__main">
-                                    <div class="hote__nom">
-                                        <h3>Hôte: <span id="hote__nm"><?=$proprio['prenom']?></span></h3>
+                        <div class="hote__info">
+                            <img src=<?= "img/" . $reservation["photo_profile"] ?> alt="Hôte" id="hote__photo">
+                            <div class="hote__main">
+                                <div class="hote__nom">
+                                    <h3>Hôte: <span id="hote__nm"><?= $proprio['prenom'] ?></span></h3>
+                                    <div class="hote_rate" id="hote__rate">
+                                        <i class="fas fa-star fa-xs"></i>
                                     </div>
                                     <h6 id="hote__valuernote">5</h6>
                                 </div>
