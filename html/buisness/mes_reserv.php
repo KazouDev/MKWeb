@@ -121,12 +121,9 @@ function formatDateWithShortMonth($date)
         <main class="main">
             <div class="main__container reserv">
                 <div class="mes__reserv__titre">
-                    <div class="test__TEST">
+                    <div class="page__tilte">
                         <h1>Les réservations</h1>
-                        <!-- <img src="../img/filter-3.webp" alt="">
-                        <img src="../img/arrows.webp" alt="">-->
                     </div>
-                    <!--<a href="#" id="export-reservation-btn"><i class="fa-solid fa-download"></i></a> -->
                     <div class="container">
                         <div class="tabs">
                             <input type="radio" id="radio-1" name="tabs" checked />
