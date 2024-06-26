@@ -111,7 +111,7 @@ function formatDateWithShortMonth($date)
         <main class="main">
             <div class="main__container reserv">
                 <div class="mes__reserv__titre">
-                    <div class="test__TEST">
+                    <div class="page__tilte">
                         <h1>Mes réservations</h1>
                     </div>
                     <div class="container">

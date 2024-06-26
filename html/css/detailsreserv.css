@@ -417,6 +417,11 @@ i.jaune {
   justify-content: space-between;
   align-items: center;
 }
+.telecharger img {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
 .telecharger a img {
   width: 2.5rem;
   height: 2.5rem;
@@ -570,4 +575,37 @@ i.jaune {
   .asavoir {
     order: inherit;
   }
+}
+.button_accept_devis {
+  display: flex;
+  margin-bottom: 3.125rem;
+  justify-content: center;
+  gap: 10rem;
+}
+.button_accept_devis input[type=button],
+.button_accept_devis input[type=submit] {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+.button_accept_devis input[type=button]:hover,
+.button_accept_devis input[type=submit]:hover {
+  transform: scale(1.05);
+}
+.button_accept_devis input[type=button]#declineButton {
+  background-color: #f44336;
+  color: white;
+}
+.button_accept_devis input[type=button]#declineButton:hover {
+  background-color: #e53935;
+}
+.button_accept_devis input[type=submit]#acceptButton {
+  background-color: #4caf50;
+  color: white;
+}
+.button_accept_devis input[type=submit]#acceptButton:hover {
+  background-color: #43a047;
 }/*# sourceMappingURL=detailsreserv.css.map */

@@ -658,3 +658,42 @@ i.jaune {
     order: inherit;
   }
 }
+.button_accept_devis {
+  display: flex;
+  margin-bottom: 3.125rem;
+  justify-content: center;
+  gap: 10rem;
+
+  input[type="button"],
+  input[type="submit"] {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s, transform 0.2s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  input[type="button"]#declineButton {
+    background-color: #f44336;
+    color: white;
+
+    &:hover {
+      background-color: #e53935;
+    }
+  }
+
+  input[type="submit"]#acceptButton {
+    background-color: #4caf50;
+    color: white;
+
+    &:hover {
+      background-color: #43a047;
+    }
+  }
+}
+
