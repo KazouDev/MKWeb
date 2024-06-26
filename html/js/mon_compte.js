@@ -52,22 +52,23 @@ var action = document.getElementById("action");
 var actionApi = document.getElementById("action-api");
 
 closeModalApi.onclick = function () {
-  modalEnregApi.style.display = "none";
-  document.body.classList.remove("no-scroll");
-  //logementsContainer.innerHTML = ''
-  document.getElementById("api-token").value = "";
-  //alreadyIn.value = "";
-  document.body.style.overflow = "visible";
-  droitsContainer.innerHTML = "";
+    modalEnregApi.style.display = "none";
+    document.body.classList.remove("no-scroll");
+    //logementsContainer.innerHTML = ''
+    document.getElementById("api-key").value = "";
+    //alreadyIn.value = "";
+    document.body.style.overflow = "visible";
+    document.getElementById("droitsContainer").innerHTML = "";
+
 };
 annulerBtnApi.onclick = function () {
   modalEnregApi.style.display = "none";
   document.body.classList.remove("no-scroll");
   //logementsContainer.innerHTML = ''
-  document.getElementById("api_token").value = "";
+  document.getElementById("api-key").value = "";
   //alreadyIn.value = "";
   document.body.style.overflow = "visible";
-  droitsContainer.innerHTML = "";
+  document.getElementById("droitsContainer").innerHTML = "";
 };
 
 eyes_api.forEach((v, k) => {
@@ -151,9 +152,14 @@ modifiers_api.forEach((modifier, k) => {
         permissions = JSON.parse(xhr.responseText);
         const droitsContainer = document.getElementById("droitsContainer");
         //console.log(data);
-
+        
         for (const key in permissions) {
+        let name = '';
           if (key !== "admin") {
+            if(key === 'indispo')name = "Modifier la disponibilitée du logement";
+            if(key === 'planning')name="Voir disponibilitée du logement";
+            if(key==='lister')name= "Voir la liste de mes logements";
+            
             const logementDiv = document.createElement("div");
             logementDiv.classList.add("logement");
 
@@ -166,7 +172,7 @@ modifiers_api.forEach((modifier, k) => {
             checkbox.name = "check_logement[]";
             checkbox.checked = permissions[key] == 1 ? "checked" : "";
             const p = document.createElement("p");
-            p.textContent = key;
+            p.textContent = name;
             const descriptionDiv = document.createElement("div");
             descriptionDiv.appendChild(p);
             checkbox.classList.add("logementCheckbox-api");
