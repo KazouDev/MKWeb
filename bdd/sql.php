@@ -1,3 +1,6 @@
+<?php
+$sql = "
+
 
 -- Table
 DROP SCHEMA IF EXISTS sae CASCADE;
@@ -10,7 +13,7 @@ CREATE TABLE _utilisateur (
   nom VARCHAR(255) NOT NULL,
   prenom VARCHAR(255) NOT NULL,
   date_naissance DATE NOT NULL,
-  civilite VARCHAR(4),
+  civilite VARCHAR(4) NOT NULL,
   pseudo VARCHAR(255) NOT NULL,
   mot_de_passe VARCHAR(255) NOT NULL,
   photo_profile VARCHAR(255) NOT NULL,
@@ -21,7 +24,6 @@ CREATE TABLE _utilisateur (
 
 CREATE TABLE _carte_identite (
   id SERIAL PRIMARY KEY,
-  id_propr INT NOT NULL,
   piece_id_recto VARCHAR(255) NOT NULL,
   piece_id_verso VARCHAR(255) NOT NULL,
   valide BOOLEAN NOT NULL
@@ -29,6 +31,7 @@ CREATE TABLE _carte_identite (
 
 CREATE TABLE _compte_proprietaire (
   id SERIAL PRIMARY KEY,
+  id_identite INT NOT NULL,
   IBAN VARCHAR(255) NOT NULL,
   BIC VARCHAR(255) NOT NULL,
   Titulaire VARCHAR(255) NOT NULL
@@ -195,8 +198,6 @@ CREATE TABLE _ical_token_logements (
   logement INT NOT NULL
 );
 
-ALTER TABLE _carte_identite
-  ADD CONSTRAINT _carte_identite_proprietaire FOREIGN KEY (id_propr) REFERENCES _compte_proprietaire (id);
 ALTER TABLE _ical_token_logements
   ADD CONSTRAINT _ical_token_primary_key PRIMARY KEY (token, logement);
 
@@ -279,95 +280,11 @@ ALTER TABLE _image
   ADD CONSTRAINT _image_logementid FOREIGN KEY (id_logement)
     REFERENCES _logement (id);
 
--- TRIGGER
-
-CREATE OR REPLACE FUNCTION insert_cal_trigger()
-RETURNS TRIGGER AS $$
-BEGIN
-    DELETE FROM _calendrier
-    WHERE id_logement = NEW.id_logement AND date = NEW.date;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER insert_cal_trigger
-BEFORE INSERT ON _calendrier
-FOR EACH ROW
-EXECUTE PROCEDURE insert_cal_trigger();
-
--- Fonction pour générer une clé API hexadécimale
-CREATE OR REPLACE FUNCTION generate_hex_key(length INTEGER) RETURNS TEXT AS $$
-DECLARE
-  result TEXT := '';
-  chars TEXT := '0123456789abcdef';
-  i INTEGER;
-BEGIN
-  FOR i IN 1..length LOOP
-    result := result || substr(chars, (random() * 15)::integer + 1, 1);
-  END LOOP;
-  RETURN result;
-END;
-$$ LANGUAGE plpgsql;
-
--- Fonction pour créer une clé API pour un propriétaire
-CREATE OR REPLACE FUNCTION add_api_key_for_proprietor(proprietaire_id INT, permissions BIT DEFAULT B'0111') RETURNS TEXT AS $$
-DECLARE
-  new_key TEXT;
-BEGIN
-  LOOP
-    new_key := sae.generate_hex_key(64);
-    BEGIN
-      INSERT INTO sae._api_keys (key, proprietaire, permission) VALUES (new_key, proprietaire_id, permissions);
-      EXIT;
-    EXCEPTION WHEN unique_violation THEN
-      -- Si déjà dans la table: on génére une nouvelle clé
-      CONTINUE;
-    END;
-  END LOOP;
-  RETURN new_key;
-END;
-$$ LANGUAGE plpgsql;
-
--- Trigger qui appelle la fonction add_api_key_for_proprietor après insertion dans _compte_proprietaire
-CREATE OR REPLACE FUNCTION create_api_key_trigger() RETURNS TRIGGER AS $$
-BEGIN
-  PERFORM sae.add_api_key_for_proprietor(NEW.id);
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER after_compte_proprietaire_insert
-AFTER INSERT ON _compte_proprietaire
-FOR EACH ROW
-EXECUTE FUNCTION sae.create_api_key_trigger();
+ALTER TABLE _compte_proprietaire
+  ADD CONSTRAINT _compte_proprietaire_identite FOREIGN KEY (id_identite)
+    REFERENCES _carte_identite (id);
 
 
--- creation token
-CREATE OR REPLACE FUNCTION generate_ical_token_for_user(
-  proprietaire_id INT,
-  date_debut DATE,
-  date_fin DATE
-) RETURNS TEXT AS $$
-DECLARE
-  new_token TEXT;
-BEGIN
-  LOOP
-    -- Générer un token hexadécimal de 64 caractères
-    new_token := sae.generate_hex_key(64);
-    BEGIN
-      -- Essayer d'insérer le token dans la table
-      INSERT INTO sae._ical_token (token, proprietaire, date_debut, date_fin) 
-      VALUES (new_token, proprietaire_id, date_debut, date_fin);
-      EXIT;
-    EXCEPTION
-      WHEN SQLSTATE '23505' THEN
-        -- Si le token est déjà dans la table, en générer un nouveau
-        CONTINUE;
-    END;
-  END LOOP;
-  RETURN new_token;
-END;
-$$ LANGUAGE plpgsql;
 
 -- PEUPLEMENT 
 INSERT INTO _categorie_logement (id, categorie) VALUES
@@ -509,47 +426,47 @@ INSERT INTO _adresse (pays, region, departement, commune, code_postal, numero, n
 ('France', 'Bretagne', 'Morbihan', 'Vannes', '56000', '9', 'Rue Louis Pasteur', '-2.763011', '47.655071');
 
 INSERT INTO _utilisateur (nom, prenom, date_naissance, civilite, pseudo, mot_de_passe, photo_profile, email, telephone, id_adresse) VALUES
-('Dupont', 'Jean', '1944-03-15', 'Mr', 'JeanD', '$2y$10$BDX6AiuIWhjCXxTO3rXhMObumJjQsn6waQVEJPGcX3hZXolu4J9M.', '/compte/profile_jeand.jpg', 'jean.dupont@gmail.com', '06 12 34 56 78', 1),
-('Martin', 'Marie', '1947-05-23', 'Mme', 'MarieM', '$2y$10$lVCsVLWcTTKb4qHytuN6C.iHPHcLwjuxWBmDJ99GP.z3EYWYY80SG', '/compte/profile_mariem.jpg', 'marie.martin@yahoo.com', '06 23 45 67 89', 2),
-('Lefevre', 'Pierre', '1950-08-19', 'Mr', 'PierreL', '$2y$10$tACfPV0DiKt1PQJDGaiUUOUdlbK7vUjfs/3fpQF4zfY5NCWe6/hWG', '/compte/profile_pierrel.jpg', 'pierre.lefevre@icloud.com', '06 34 56 78 90', 3),
-('Bernard', 'Sophie', '1953-11-05', 'Mme', 'SophieB', '$2y$10$X/3LCBxqfR9r5e.9g7x5QOCh05UOqTzH8vibS3ej7Q9RqjyGNHFcG', '/compte/profile_sophieb.jpg', 'sophie.bernard@free.com', '06 45 67 89 01', 4),
-('Dubois', 'Jacques', '1956-01-29', 'Mr', 'JacquesD', '$2y$10$G8a1JQ0zbcJ9kvcnK7PEmeDuoyXfXpyhBJaxHfaR0BKoxo9hHNsnG', '/compte/profile_jacquesd.jpg', 'jacques.dubois@orange.com', '06 56 78 90 12', 5),
-('Moreau', 'Camille', '1959-04-17', 'Mme', 'CamilleM', '$2y$10$ZoN3zC0CCtjt6F.7e6xTiOdyzL24G.tGDKqyqf8tB2wjZGNv.0e7G', '/compte/profile_camillem.jpg', 'camille.moreau@gmail.com', '06 67 89 01 23', 6),
-('Petit', 'Louis', '1962-07-08', 'Mr', 'LouisP', '$2y$10$h8Z1E0u8pz8fmluTIMmVCeCatHuYZDDrBG72PtoCYq3pIoeVhju.y', '/compte/profile_louisp.jpg', 'louis.petit@yahoo.com', '06 78 90 12 34', 7),
-('Laurent', 'Emma', '1965-09-13', 'Mme', 'EmmaL', '$2y$10$jUIyKS8XNs6P1r1.SNVqJOf2YHbKCTaXld/pvaUY9In2hYO96JsBm', '/compte/profile_emmal.jpg', 'emma.laurent@icloud.com', '06 89 01 23 45', 8),
-('Simon', 'Paul', '1968-12-21', 'Mr', 'PaulS', '$2y$10$ynUvK9JU6ntfpzQiXuuYh.Lxsrx2pyPmWkuF/jprSQjq8UJgNhFRa', '/compte/profile_pauls.jpg', 'paul.simon@free.com', '06 90 12 34 56', 9),
-('Michel', 'Julie', '1971-02-06', 'Mme', 'JulieM', '$2y$10$nbfO7fVz.cLWQb./iQ0if.OMq/28XP7242eu5t4TT6/YuixKSX4W2', '/compte/profile_juliem.jpg', 'julie.michel@orange.com', '06 01 23 45 67', 10),
+('Dupont', 'Jean', '1944-03-15', 'Mr', 'JeanD', '$2y$10\$BDX6AiuIWhjCXxTO3rXhMObumJjQsn6waQVEJPGcX3hZXolu4J9M.', '/compte/profile_jeand.jpg', 'jean.dupont@gmail.com', '06 12 34 56 78', 1),
+('Martin', 'Marie', '1947-05-23', 'Mme', 'MarieM', '$2y$10\$lVCsVLWcTTKb4qHytuN6C.iHPHcLwjuxWBmDJ99GP.z3EYWYY80SG', '/compte/profile_mariem.jpg', 'marie.martin@yahoo.com', '06 23 45 67 89', 2),
+('Lefevre', 'Pierre', '1950-08-19', 'Mr', 'PierreL', '$2y$10\$tACfPV0DiKt1PQJDGaiUUOUdlbK7vUjfs/3fpQF4zfY5NCWe6/hWG', '/compte/profile_pierrel.jpg', 'pierre.lefevre@icloud.com', '06 34 56 78 90', 3),
+('Bernard', 'Sophie', '1953-11-05', 'Mme', 'SophieB', '$2y$10\$X/3LCBxqfR9r5e.9g7x5QOCh05UOqTzH8vibS3ej7Q9RqjyGNHFcG', '/compte/profile_sophieb.jpg', 'sophie.bernard@free.com', '06 45 67 89 01', 4),
+('Dubois', 'Jacques', '1956-01-29', 'Mr', 'JacquesD', '$2y$10\$G8a1JQ0zbcJ9kvcnK7PEmeDuoyXfXpyhBJaxHfaR0BKoxo9hHNsnG', '/compte/profile_jacquesd.jpg', 'jacques.dubois@orange.com', '06 56 78 90 12', 5),
+('Moreau', 'Camille', '1959-04-17', 'Mme', 'CamilleM', '$2y$10\$ZoN3zC0CCtjt6F.7e6xTiOdyzL24G.tGDKqyqf8tB2wjZGNv.0e7G', '/compte/profile_camillem.jpg', 'camille.moreau@gmail.com', '06 67 89 01 23', 6),
+('Petit', 'Louis', '1962-07-08', 'Mr', 'LouisP', '$2y$10\$h8Z1E0u8pz8fmluTIMmVCeCatHuYZDDrBG72PtoCYq3pIoeVhju.y', '/compte/profile_louisp.jpg', 'louis.petit@yahoo.com', '06 78 90 12 34', 7),
+('Laurent', 'Emma', '1965-09-13', 'Mme', 'EmmaL', '$2y$10\$jUIyKS8XNs6P1r1.SNVqJOf2YHbKCTaXld/pvaUY9In2hYO96JsBm', '/compte/profile_emmal.jpg', 'emma.laurent@icloud.com', '06 89 01 23 45', 8),
+('Simon', 'Paul', '1968-12-21', 'Mr', 'PaulS', '$2y$10\$ynUvK9JU6ntfpzQiXuuYh.Lxsrx2pyPmWkuF/jprSQjq8UJgNhFRa', '/compte/profile_pauls.jpg', 'paul.simon@free.com', '06 90 12 34 56', 9),
+('Michel', 'Julie', '1971-02-06', 'Mme', 'JulieM', '$2y$10\$nbfO7fVz.cLWQb./iQ0if.OMq/28XP7242eu5t4TT6/YuixKSX4W2', '/compte/profile_juliem.jpg', 'julie.michel@orange.com', '06 01 23 45 67', 10),
 ('Richard', 'Henri', '1974-03-25', 'Mr', 'HenriR', '$2y$10$5r9Rh515omuBc2X7JZ1rF.oDyBYw9kjs4iCQteSU1iqjxN1e/tFLq', '/compte/profile_henrir.jpg', 'henri.richard@gmail.com', '06 12 34 56 78', 11),
-('Robert', 'Claire', '1977-06-30', 'Mme', 'ClaireR', '$2y$10$wmBNUc9n57Rj8qPY.6dR0.ycS2koW5WA9S7oH7ew9uouWyBwv4XnS', '/compte/profile_clairer.jpg', 'claire.robert@yahoo.com', '06 23 45 67 89', 12),
-('Durand', 'Marc', '1980-08-14', 'Mr', 'MarcD', '$2y$10$ATRehU5G2xlt4kzNSoXfAenFnTf.ZkXtg6kGu7NWFOo0/9lFyUBWm', '/compte/profile_marcd.jpg', 'marc.durand@icloud.com', '06 34 56 78 90', 13),
+('Robert', 'Claire', '1977-06-30', 'Mme', 'ClaireR', '$2y$10\$wmBNUc9n57Rj8qPY.6dR0.ycS2koW5WA9S7oH7ew9uouWyBwv4XnS', '/compte/profile_clairer.jpg', 'claire.robert@yahoo.com', '06 23 45 67 89', 12),
+('Durand', 'Marc', '1980-08-14', 'Mr', 'MarcD', '$2y$10\$ATRehU5G2xlt4kzNSoXfAenFnTf.ZkXtg6kGu7NWFOo0/9lFyUBWm', '/compte/profile_marcd.jpg', 'marc.durand@icloud.com', '06 34 56 78 90', 13),
 ('Dubreuil', 'Isabelle', '1983-11-28', 'Mme', 'IsabelleD', '$2y$10$7MEsMb0Kce.zo/3VkABdVuYWJhc9A0reB5uqVDJ2evEbeEcJTEPqe', '/compte/profile_isabelled.jpg', 'isabelle.dubreuil@free.com', '06 45 67 89 01', 14),
-('Legrand', 'Philippe', '1986-01-19', 'Mr', 'PhilippeL', '$2y$10$mffJbcbkiuh9bvjTIEkTlOXL8506lxc6yTXKmmruC2Je7Bn386CH6', '/compte/profile_philippel.jpg', 'philippe.legrand@orange.com', '06 56 78 90 12', 15),
-('Fournier', 'Elise', '1989-04-07', 'Mme', 'EliseF', '$2y$10$zPr.R6f6rN7sReKUSVfA7upOE5a2SXkvMHitg1PdrPZAYL7BMmNT6', '/compte/profile_elisef.jpg', 'elise.fournier@gmail.com', '06 67 89 01 23', 16),
-('Girard', 'Nicolas', '1992-07-16', 'Mr', 'NicolasG', '$2y$10$FNMyu/szqISCBtADaiaQHe6idYKPl91KLxbej4xLenyR4HZOc/A9e', '/compte/profile_nicolasg.jpg', 'nicolas.girard@yahoo.com', '06 78 90 12 34', 17),
-('Roux', 'Alice', '1995-09-09', 'Mme', 'AliceR', '$2y$10$wublmNYifKiVWpHWTonkhuMRfvstvuUqMnHpJIpuNanKQ5eYESpvy', '/compte/profile_alicer.jpg', 'alice.roux@icloud.com', '06 89 01 23 45', 18),
+('Legrand', 'Philippe', '1986-01-19', 'Mr', 'PhilippeL', '$2y$10\$mffJbcbkiuh9bvjTIEkTlOXL8506lxc6yTXKmmruC2Je7Bn386CH6', '/compte/profile_philippel.jpg', 'philippe.legrand@orange.com', '06 56 78 90 12', 15),
+('Fournier', 'Elise', '1989-04-07', 'Mme', 'EliseF', '$2y$10\$zPr.R6f6rN7sReKUSVfA7upOE5a2SXkvMHitg1PdrPZAYL7BMmNT6', '/compte/profile_elisef.jpg', 'elise.fournier@gmail.com', '06 67 89 01 23', 16),
+('Girard', 'Nicolas', '1992-07-16', 'Mr', 'NicolasG', '$2y$10\$FNMyu/szqISCBtADaiaQHe6idYKPl91KLxbej4xLenyR4HZOc/A9e', '/compte/profile_nicolasg.jpg', 'nicolas.girard@yahoo.com', '06 78 90 12 34', 17),
+('Roux', 'Alice', '1995-09-09', 'Mme', 'AliceR', '$2y$10\$wublmNYifKiVWpHWTonkhuMRfvstvuUqMnHpJIpuNanKQ5eYESpvy', '/compte/profile_alicer.jpg', 'alice.roux@icloud.com', '06 89 01 23 45', 18),
 ('Pires', 'Antoine', '1998-12-31', 'Mr', 'AntoineP', '$2y$10$/Y5/.pkxdBOWuBPQfjO4Yu.czeE8UJmiIgDEAZXB9rtry8a06moby', '/compte/profile_antoinep.jpg', 'antoine.pires@free.com', '06 90 12 34 56', 19),
-('Blanc', 'Lucie', '2001-02-11', 'Mme', 'LucieB', '$2y$10$uRb1xxvQ.JRjeTSYtoB3V..3uhSvMe8qHQLhwx25rR64bAeVNuQEm', '/compte/profile_lucieb.jpg', 'lucie.blanc@orange.com', '06 01 23 45 67', 20),
-('Bertrand', 'Victor', '2004-04-24', 'Mr', 'VictorB', '$2y$10$vk/6FJbgFo//bdWrcF40Lea3tY58oJRTL701kSxT0Xbgy4wlgt6I.', '/compte/profile_victorb.jpg', 'victor.bertrand@gmail.com', '06 12 34 56 78', 21),
-('Clement', 'Eva', '2006-06-20', 'Mme', 'EvaC', '$2y$10$harSdmibF87VRIg/.o9Uau6m6SlbSmPfr69gp3OgBrSoyJSu.gWBm', '/compte/profile_evac.jpg', 'eva.clement@yahoo.com', '06 23 45 67 89', 22),
+('Blanc', 'Lucie', '2001-02-11', 'Mme', 'LucieB', '$2y$10\$uRb1xxvQ.JRjeTSYtoB3V..3uhSvMe8qHQLhwx25rR64bAeVNuQEm', '/compte/profile_lucieb.jpg', 'lucie.blanc@orange.com', '06 01 23 45 67', 20),
+('Bertrand', 'Victor', '2004-04-24', 'Mr', 'VictorB', '$2y$10\$vk/6FJbgFo//bdWrcF40Lea3tY58oJRTL701kSxT0Xbgy4wlgt6I.', '/compte/profile_victorb.jpg', 'victor.bertrand@gmail.com', '06 12 34 56 78', 21),
+('Clement', 'Eva', '2006-06-20', 'Mme', 'EvaC', '$2y$10\$harSdmibF87VRIg/.o9Uau6m6SlbSmPfr69gp3OgBrSoyJSu.gWBm', '/compte/profile_evac.jpg', 'eva.clement@yahoo.com', '06 23 45 67 89', 22),
 ('Noel', 'Gabriel', '2007-08-04', 'Mr', 'GabrielN', '$2y$10$4khDZMHfM6h3C.BDcOCpbeQiBeQV8uiAx/3UlOvjRGkNe4Vmm9uDm', '/compte/profile_gabrieln.jpg', 'gabriel.noel@icloud.com', '06 34 56 78 90', 23),
-('Roussel', 'Mathilde', '2008-10-19', 'Mme', 'MathildeR', '$2y$10$fi5YRye9iZYF3.JhN0zhpeBCjWEgaG2R501q2HuoMMnwnM0MiuWJu', '/compte/profile_mathilder.jpg', 'mathilde.roussel@free.com', '06 45 67 89 01', 24),
-('Chevalier', 'Alexandre', '2009-12-03', 'Mr', 'AlexandreC', '$2y$10$KCbBdnpool6zDpfsqPEHEeB933OKKdXPnYGs9USanrtiskkzBfVK2', '/compte/profile_alexandrec.jpg', 'alexandre.chevalier@orange.com', '06 56 78 90 12', 25),
-('Lucas', 'Laura', '2011-01-25', 'Mme', 'LauraL', '$2y$10$MZXPiQ0rC1DWl/rahOLgkuiTbtHa7UT3bcuv1wA2O1pGtU5kpPyd6', '/compte/profile_laural.jpg', 'laura.lucas@gmail.com', '06 67 89 01 23', 26),
-('Lemoine', 'Théo', '2012-04-09', 'Mr', 'ThéoL', '$2y$10$sUO7avnSSQg9Pi5cwshUKuKUksszDv2x6hnrtspDtkrt8kg2iXW.O', '/compte/profile_theol.jpg', 'theo.lemoine@yahoo.com', '06 78 90 12 34', 27),
-('Garcia', 'Juliette', '2013-06-25', 'Mme', 'JulietteG', '$2y$10$LiSaWQLQX5Wq/Mkv3cKNyuhmT7ooBZrYfGJHjaV4382Was1gW5wMq', '/compte/profile_julietteg.jpg', 'juliette.garcia@icloud.com', '06 89 01 23 45', 28),
-('Michon', 'Maxime', '2014-09-08', 'Mr', 'MaximeM', '$2y$10$kqtg21wp1EZ5oJiXiZeIBul160wh6djwJX4kg.fX5rtii6NSWEGcq', '/compte/profile_maximem.jpg', 'maxime.michon@free.com', '06 90 12 34 56', 29),
-('Barbier', 'Emma', '2015-11-23', 'Mme', 'EmmaB', '$2y$10$o4cNE8Zn0m3t/TVOCmO.PuWHBYkwcBe/dEFqXlX2Atqqz.549OR2K', '/compte/profile_emmab.jpg', 'emma.barbier@orange.com', '06 01 23 45 67', 30),
-('Carpentier', 'Hugo', '2017-01-06', 'Mr', 'HugoC', '$2y$10$muRNmnbX8Y6nPrgavczPbeg5E9ZGiOdKfPqTKoDUlGipImoVYpKxi', '/compte/profile_hugoc.jpg', 'hugo.carpentier@gmail.com', '06 12 34 56 78', 31),
+('Roussel', 'Mathilde', '2008-10-19', 'Mme', 'MathildeR', '$2y$10\fi5YRye9iZYF3.JhN0zhpeBCjWEgaG2R501q2HuoMMnwnM0MiuWJu', '/compte/profile_mathilder.jpg', 'mathilde.roussel@free.com', '06 45 67 89 01', 24),
+('Chevalier', 'Alexandre', '2009-12-03', 'Mr', 'AlexandreC', '$2y$10\$KCbBdnpool6zDpfsqPEHEeB933OKKdXPnYGs9USanrtiskkzBfVK2', '/compte/profile_alexandrec.jpg', 'alexandre.chevalier@orange.com', '06 56 78 90 12', 25),
+('Lucas', 'Laura', '2011-01-25', 'Mme', 'LauraL', '$2y$10\$MZXPiQ0rC1DWl/rahOLgkuiTbtHa7UT3bcuv1wA2O1pGtU5kpPyd6', '/compte/profile_laural.jpg', 'laura.lucas@gmail.com', '06 67 89 01 23', 26),
+('Lemoine', 'Théo', '2012-04-09', 'Mr', 'ThéoL', '$2y$10\$sUO7avnSSQg9Pi5cwshUKuKUksszDv2x6hnrtspDtkrt8kg2iXW.O', '/compte/profile_theol.jpg', 'theo.lemoine@yahoo.com', '06 78 90 12 34', 27),
+('Garcia', 'Juliette', '2013-06-25', 'Mme', 'JulietteG', '$2y$10\$LiSaWQLQX5Wq/Mkv3cKNyuhmT7ooBZrYfGJHjaV4382Was1gW5wMq', '/compte/profile_julietteg.jpg', 'juliette.garcia@icloud.com', '06 89 01 23 45', 28),
+('Michon', 'Maxime', '2014-09-08', 'Mr', 'MaximeM', '$2y$10\$kqtg21wp1EZ5oJiXiZeIBul160wh6djwJX4kg.fX5rtii6NSWEGcq', '/compte/profile_maximem.jpg', 'maxime.michon@free.com', '06 90 12 34 56', 29),
+('Barbier', 'Emma', '2015-11-23', 'Mme', 'EmmaB', '$2y$10\$o4cNE8Zn0m3t/TVOCmO.PuWHBYkwcBe/dEFqXlX2Atqqz.549OR2K', '/compte/profile_emmab.jpg', 'emma.barbier@orange.com', '06 01 23 45 67', 30),
+('Carpentier', 'Hugo', '2017-01-06', 'Mr', 'HugoC', '$2y$10\$muRNmnbX8Y6nPrgavczPbeg5E9ZGiOdKfPqTKoDUlGipImoVYpKxi', '/compte/profile_hugoc.jpg', 'hugo.carpentier@gmail.com', '06 12 34 56 78', 31),
 ('Renard', 'Chloé', '2018-03-22', 'Mme', 'ChloéR', '$2y$10$0MoaDKJx95O8kV8uGmXfyOp4w1xQeAwe1sWdUO30lKPU/7iSY748C', '/compte/profile_chloer.jpg', 'chloe.renard@yahoo.com', '06 23 45 67 89', 32),
-('Meyer', 'Nathan', '2019-06-05', 'Mr', 'NathanM', '$2y$10$JBIC.ZcbvH4S5U6FJ2FM1Oui3saNpBxJF5GZNInqZHAXLqAlcGyfS', '/compte/profile_nathanm.jpg', 'nathan.meyer@icloud.com', '06 34 56 78 90', 33),
-('Leclerc', 'Inès', '2020-08-20', 'Mme', 'InèsL', '$2y$10$DNjTfBwTdmAEYOru2ynyN.9keYPq93zClg8qOMR.Jw1rM2RSwNoLS', '/compte/profile_inesl.jpg', 'ines.leclerc@free.com', '06 45 67 89 01', 34),
-('Riviere', 'Matheo', '2021-11-04', 'Mr', 'MatheoR', '$2y$10$cIuajMmZ5CT9PTALvEfpleWTW/QNtkvPnjzOaWpZaAL0qDY1DTXCi', '/compte/profile_matheor.jpg', 'matheo.riviere@orange.com', '06 56 78 90 12', 35),
-('Henry', 'Clara', '2023-01-18', 'Mme', 'ClaraH', '$2y$10$mOLqmq/kIZ7cQx9csIFWsOnuXgeUUbOS8TaotjuUNe0VnJOtzm0WG', '/compte/profile_clarah.jpg', 'clara.henry@gmail.com', '06 67 89 01 23', 36),
-('Pascal', 'Lucas', '2024-04-03', 'Mr', 'LucasP', '$2y$10$pkSXLVagQy/Osmr4X0i/N.3TYWKMSysfUqzQ5bmO.zF1nqmLqzZmW', '/compte/profile_lucasp.jpg', 'lucas.pascal@yahoo.com', '06 78 90 12 34', 37),
-('Brun', 'Manon', '2025-06-18', 'Mme', 'ManonB', '$2y$10$bt1MMRH5A70/Y4TDy03Kzu1OUTkwgYcLck3u5Rw2ukA5ECJTzCHKO', '/compte/profile_manonb.jpg', 'manon.brun@icloud.com', '06 89 01 23 45', 38),
-('Gautier', 'Romain', '2026-09-01', 'Mr', 'RomainG', '$2y$10$BdfH50pyR6zslSytNRhsb.Xx1dTpy6y9DdVtL3sMUNe55QP0RhEzC', '/compte/profile_romaing.jpg', 'romain.gautier@free.com', '06 90 12 34 56', 39),
-('Hubert', 'Léa', '2027-11-16', 'Mme', 'LéaH', '$2y$10$fnqA585WvE0G0cidyuEv2O.lrINHQrJX6rJhmFRZyvK7X89BshSyq', '/compte/profile_leah.jpg', 'lea.hubert@orange.com', '06 01 23 45 67', 40),
-('Louis', 'Maxence', '2029-02-01', 'Mr', 'MaxenceL', '$2y$10$HseoLyO4A/CPy6X1KvhEBeZRqvLePWFx2qjaxIoXHtIKfkBP3cZAG', '/compte/profile_maxencel.jpg', 'maxence.louis@gmail.com', '06 12 34 56 78', 41),
+('Meyer', 'Nathan', '2019-06-05', 'Mr', 'NathanM', '$2y$10\$JBIC.ZcbvH4S5U6FJ2FM1Oui3saNpBxJF5GZNInqZHAXLqAlcGyfS', '/compte/profile_nathanm.jpg', 'nathan.meyer@icloud.com', '06 34 56 78 90', 33),
+('Leclerc', 'Inès', '2020-08-20', 'Mme', 'InèsL', '$2y$10\$DNjTfBwTdmAEYOru2ynyN.9keYPq93zClg8qOMR.Jw1rM2RSwNoLS', '/compte/profile_inesl.jpg', 'ines.leclerc@free.com', '06 45 67 89 01', 34),
+('Riviere', 'Matheo', '2021-11-04', 'Mr', 'MatheoR', '$2y$10\$cIuajMmZ5CT9PTALvEfpleWTW/QNtkvPnjzOaWpZaAL0qDY1DTXCi', '/compte/profile_matheor.jpg', 'matheo.riviere@orange.com', '06 56 78 90 12', 35),
+('Henry', 'Clara', '2023-01-18', 'Mme', 'ClaraH', '$2y$10\$mOLqmq/kIZ7cQx9csIFWsOnuXgeUUbOS8TaotjuUNe0VnJOtzm0WG', '/compte/profile_clarah.jpg', 'clara.henry@gmail.com', '06 67 89 01 23', 36),
+('Pascal', 'Lucas', '2024-04-03', 'Mr', 'LucasP', '$2y$10\$pkSXLVagQy/Osmr4X0i/N.3TYWKMSysfUqzQ5bmO.zF1nqmLqzZmW', '/compte/profile_lucasp.jpg', 'lucas.pascal@yahoo.com', '06 78 90 12 34', 37),
+('Brun', 'Manon', '2025-06-18', 'Mme', 'ManonB', '$2y$10\$bt1MMRH5A70/Y4TDy03Kzu1OUTkwgYcLck3u5Rw2ukA5ECJTzCHKO', '/compte/profile_manonb.jpg', 'manon.brun@icloud.com', '06 89 01 23 45', 38),
+('Gautier', 'Romain', '2026-09-01', 'Mr', 'RomainG', '$2y$10\$BdfH50pyR6zslSytNRhsb.Xx1dTpy6y9DdVtL3sMUNe55QP0RhEzC', '/compte/profile_romaing.jpg', 'romain.gautier@free.com', '06 90 12 34 56', 39),
+('Hubert', 'Léa', '2027-11-16', 'Mme', 'LéaH', '$2y$10\$fnqA585WvE0G0cidyuEv2O.lrINHQrJX6rJhmFRZyvK7X89BshSyq', '/compte/profile_leah.jpg', 'lea.hubert@orange.com', '06 01 23 45 67', 40),
+('Louis', 'Maxence', '2029-02-01', 'Mr', 'MaxenceL', '$2y$10\$HseoLyO4A/CPy6X1KvhEBeZRqvLePWFx2qjaxIoXHtIKfkBP3cZAG', '/compte/profile_maxencel.jpg', 'maxence.louis@gmail.com', '06 12 34 56 78', 41),
 ('Renault', 'Louise', '2030-04-18', 'Mme', 'LouiseR', '$2y$10$0GY/mAe8X41Cq2p4QeW9sukyWlGmdOFrfj.67Wla9PbiMYtDbxQQq', '/compte/profile_louiser.jpg', 'louise.renault@yahoo.com', '06 23 45 67 89', 42);
 
 INSERT INTO _compte_client (id) VALUES 
@@ -559,49 +476,49 @@ INSERT INTO _compte_client (id) VALUES
 INSERT INTO _compte_admin (id) VALUES 
 (21), (22);
 
-INSERT INTO _compte_proprietaire (id, IBAN, BIC, Titulaire) VALUES 
-(1, 'FR7612345678901234567890123', 'AGRIFRPPXXX', 'Dupont Jean'),
-(2, 'FR7612345678901234567890124', 'AGRIFRPPXXX', 'Martin Marie'),
-(3, 'FR7612345678901234567890125', 'AGRIFRPPXXX', 'Lefevre Pierre'),
-(4, 'FR7612345678901234567890126', 'AGRIFRPPXXX', 'Bernard Sophie'),
-(5, 'FR7612345678901234567890127', 'AGRIFRPPXXX', 'Dubois Jacques'),
-(6, 'FR7612345678901234567890128', 'AGRIFRPPXXX', 'Moreau Camille'),
-(7, 'FR7612345678901234567890129', 'AGRIFRPPXXX', 'Petit Louis'),
-(8, 'FR7612345678901234567890130', 'AGRIFRPPXXX', 'Laurent Emma'),
-(9, 'FR7612345678901234567890131', 'AGRIFRPPXXX', 'Simon Paul'),
-(10, 'FR7612345678901234567890132', 'AGRIFRPPXXX', 'Michel Julie'),
-(11, 'FR7612345678901234567890133', 'AGRIFRPPXXX', 'Richard Henri'),
-(12, 'FR7612345678901234567890134', 'AGRIFRPPXXX', 'Robert Claire'),
-(13, 'FR7612345678901234567890135', 'AGRIFRPPXXX', 'Durand Marc'),
-(14, 'FR7612345678901234567890136', 'AGRIFRPPXXX', 'Dubreuil Isabelle'),
-(15, 'FR7612345678901234567890137', 'AGRIFRPPXXX', 'Legrand Philippe'),
-(16, 'FR7612345678901234567890138', 'AGRIFRPPXXX', 'Fournier Elise'),
-(17, 'FR7612345678901234567890139', 'AGRIFRPPXXX', 'Girard Nicolas'),
-(18, 'FR7612345678901234567890140', 'AGRIFRPPXXX', 'Roux Alice'),
-(19, 'FR7612345678901234567890141', 'AGRIFRPPXXX', 'Pires Antoine'),
-(20, 'FR7612345678901234567890142', 'AGRIFRPPXXX', 'Blanc Lucie');
+INSERT INTO _carte_identite (piece_id_recto, piece_id_verso, valide) VALUES 
+('/piece/1_Dupont_recto.jpg', '/piece/1_Dupont_verso.jpg', true), 
+('/piece/2_Martin_recto.jpg', '/piece/2_Martin_verso.jpg', true), 
+('/piece/3_Lefevre_recto.jpg', '/piece/3_Lefevre_verso.jpg', true), 
+('/piece/4_Bernard_recto.jpg', '/piece/4_Bernard_verso.jpg', true), 
+('/piece/5_Dubois_recto.jpg', '/piece/5_Dubois_verso.jpg', true), 
+('/piece/6_Moreau_recto.jpg', '/piece/6_Moreau_verso.jpg', true), 
+('/piece/7_Petit_recto.jpg', '/piece/7_Petit_verso.jpg', true), 
+('/piece/8_Laurent_recto.jpg', '/piece/8_Laurent_verso.jpg', true), 
+('/piece/9_Simon_recto.jpg', '/piece/9_Simon_verso.jpg', true), 
+('/piece/10_Michel_recto.jpg', '/piece/10_Michel_verso.jpg', true), 
+('/piece/11_Richard_recto.jpg', '/piece/11_Richard_verso.jpg', true), 
+('/piece/12_Robert_recto.jpg', '/piece/12_Robert_verso.jpg', true), 
+('/piece/13_Durand_recto.jpg', '/piece/13_Durand_verso.jpg', true), 
+('/piece/14_Dubreuil_recto.jpg', '/piece/14_Dubreuil_verso.jpg', true), 
+('/piece/15_Legrand_recto.jpg', '/piece/15_Legrand_verso.jpg', true), 
+('/piece/16_Fournier_recto.jpg', '/piece/16_Fournier_verso.jpg', true), 
+('/piece/17_Girard_recto.jpg', '/piece/17_Girard_verso.jpg', true), 
+('/piece/18_Roux_recto.jpg', '/piece/18_Roux_verso.jpg', true), 
+('/piece/19_Pires_recto.jpg', '/piece/19_Pires_verso.jpg', true), 
+('/piece/20_Blanc_recto.jpg', '/piece/20_Blanc_verso.jpg', true);
 
-INSERT INTO _carte_identite (id_propr,piece_id_recto, piece_id_verso, valide) VALUES 
-(1, '/piece/1_Dupont_recto.jpg', '/piece/1_Dupont_verso.jpg', true), 
-(2, '/piece/2_Martin_recto.jpg', '/piece/2_Martin_verso.jpg', true), 
-(3, '/piece/3_Lefevre_recto.jpg', '/piece/3_Lefevre_verso.jpg', true), 
-(4, '/piece/4_Bernard_recto.jpg', '/piece/4_Bernard_verso.jpg', true), 
-(5, '/piece/5_Dubois_recto.jpg', '/piece/5_Dubois_verso.jpg', true), 
-(6, '/piece/6_Moreau_recto.jpg', '/piece/6_Moreau_verso.jpg', true), 
-(7,'/piece/7_Petit_recto.jpg', '/piece/7_Petit_verso.jpg', true), 
-(8,'/piece/8_Laurent_recto.jpg', '/piece/8_Laurent_verso.jpg', true), 
-(9,'/piece/9_Simon_recto.jpg', '/piece/9_Simon_verso.jpg', true), 
-(10,'/piece/10_Michel_recto.jpg', '/piece/10_Michel_verso.jpg', true), 
-(11,'/piece/11_Richard_recto.jpg', '/piece/11_Richard_verso.jpg', true), 
-(12,'/piece/12_Robert_recto.jpg', '/piece/12_Robert_verso.jpg', true), 
-(13,'/piece/13_Durand_recto.jpg', '/piece/13_Durand_verso.jpg', true), 
-(14,'/piece/14_Dubreuil_recto.jpg', '/piece/14_Dubreuil_verso.jpg', true), 
-(15,'/piece/15_Legrand_recto.jpg', '/piece/15_Legrand_verso.jpg', true), 
-(16,'/piece/16_Fournier_recto.jpg', '/piece/16_Fournier_verso.jpg', true), 
-(17,'/piece/17_Girard_recto.jpg', '/piece/17_Girard_verso.jpg', true), 
-(18,'/piece/18_Roux_recto.jpg', '/piece/18_Roux_verso.jpg', true), 
-(19,'/piece/19_Pires_recto.jpg', '/piece/19_Pires_verso.jpg', true), 
-(20, '/piece/20_Blanc_recto.jpg', '/piece/20_Blanc_verso.jpg', true);
+INSERT INTO _compte_proprietaire (id, id_identite, IBAN, BIC, Titulaire) VALUES 
+(1, 1, 'FR7612345678901234567890123', 'AGRIFRPPXXX', 'Dupont Jean'),
+(2, 2, 'FR7612345678901234567890124', 'AGRIFRPPXXX', 'Martin Marie'),
+(3, 3, 'FR7612345678901234567890125', 'AGRIFRPPXXX', 'Lefevre Pierre'),
+(4, 4, 'FR7612345678901234567890126', 'AGRIFRPPXXX', 'Bernard Sophie'),
+(5, 4, 'FR7612345678901234567890127', 'AGRIFRPPXXX', 'Dubois Jacques'),
+(6, 6, 'FR7612345678901234567890128', 'AGRIFRPPXXX', 'Moreau Camille'),
+(7, 7, 'FR7612345678901234567890129', 'AGRIFRPPXXX', 'Petit Louis'),
+(8, 8, 'FR7612345678901234567890130', 'AGRIFRPPXXX', 'Laurent Emma'),
+(9, 9, 'FR7612345678901234567890131', 'AGRIFRPPXXX', 'Simon Paul'),
+(10, 10, 'FR7612345678901234567890132', 'AGRIFRPPXXX', 'Michel Julie'),
+(11, 11, 'FR7612345678901234567890133', 'AGRIFRPPXXX', 'Richard Henri'),
+(12, 12, 'FR7612345678901234567890134', 'AGRIFRPPXXX', 'Robert Claire'),
+(13, 13, 'FR7612345678901234567890135', 'AGRIFRPPXXX', 'Durand Marc'),
+(14, 14, 'FR7612345678901234567890136', 'AGRIFRPPXXX', 'Dubreuil Isabelle'),
+(15, 15, 'FR7612345678901234567890137', 'AGRIFRPPXXX', 'Legrand Philippe'),
+(16, 16, 'FR7612345678901234567890138', 'AGRIFRPPXXX', 'Fournier Elise'),
+(17, 17, 'FR7612345678901234567890139', 'AGRIFRPPXXX', 'Girard Nicolas'),
+(18, 18, 'FR7612345678901234567890140', 'AGRIFRPPXXX', 'Roux Alice'),
+(19, 19, 'FR7612345678901234567890141', 'AGRIFRPPXXX', 'Pires Antoine'),
+(20, 20, 'FR7612345678901234567890142', 'AGRIFRPPXXX', 'Blanc Lucie');
 
 INSERT INTO _langue_proprietaire(id_proprietaire, id_langue) VALUES
 (1, 1), (1, 2), (1, 3), -- Propriétaire 1 (Français, Anglais, Allemand)
@@ -626,14 +543,14 @@ INSERT INTO _langue_proprietaire(id_proprietaire, id_langue) VALUES
 (20, 1); -- Propriétaire 20 (Français)
 
 INSERT INTO _logement(titre, description, accroche, base_tarif, surface, nb_max_personne, nb_chambre, nb_lit_double, nb_lit_simple, duree_min_res, delai_avant_res, periode_preavis, en_ligne, id_proprietaire, id_adresse, id_categorie, id_type) VALUES
-('Appartement cosy en centre-ville', 'Un appartement confortable et bien situé au centre-ville, parfait pour une ou deux personnes. Ce logement offre un espace de vie moderne avec une cuisine entièrement équipée, une salle de bain rénovée et une chambre lumineuse avec un grand lit. Idéal pour les voyageurs souhaitant découvrir la ville à pied, tout en profitant du confort d''un intérieur douillet.', 'Réservez votre séjour en centre-ville.', 75, 25, 2, 1, 0, 2, 3, 2, 3, true, 1, 42, 1, 2),
+('Appartement cosy en centre-ville', 'Un appartement confortable et bien situé au centre-ville, parfait pour une ou deux personnes. Ce logement offre un espace de vie moderne avec une cuisine entièrement équipée, une salle de bain rénovée et une chambre lumineuse avec un grand lit. Idéal pour les voyageurs souhaitant découvrir la ville à pied, tout en profitant du confort d’un intérieur douillet.', 'Réservez votre séjour en centre-ville.', 75, 25, 2, 1, 0, 2, 3, 2, 3, true, 1, 42, 1, 2),
 ('Maison spacieuse à la campagne', 'Une grande maison avec jardin à la campagne, idéale pour des vacances en famille. Cette maison comprend plusieurs chambres spacieuses, une cuisine moderne, une salle à manger conviviale et un salon confortable avec cheminée. Le jardin privé est parfait pour les barbecues et les jeux en plein air. À proximité, vous trouverez des sentiers de randonnée et des attractions locales pour toute la famille.', 'Vivez la campagne en grand.', 135, 120, 6, 3, 2, 2, 1, 1, 3, true, 2, 43, 2, 4),
-('Villa d''exception avec vue sur mer', 'Une magnifique villa avec vue panoramique sur la mer, offrant luxe et confort. La villa dispose de grandes baies vitrées pour profiter de la vue, une piscine à débordement, et plusieurs terrasses pour se détendre. À l''intérieur, vous trouverez des équipements haut de gamme, des chambres élégantes, et une cuisine gastronomique. Idéale pour des vacances de luxe en bord de mer, avec un accès facile aux plages et aux restaurants.', 'Luxe et vue sur mer.', 300, 150, 8, 4, 2, 6, 1, 1, 5, true, 3, 44, 3, 1),
+('Villa d''exception avec vue sur mer', 'Une magnifique villa avec vue panoramique sur la mer, offrant luxe et confort. La villa dispose de grandes baies vitrées pour profiter de la vue, une piscine à débordement, et plusieurs terrasses pour se détendre. À l’intérieur, vous trouverez des équipements haut de gamme, des chambres élégantes, et une cuisine gastronomique. Idéale pour des vacances de luxe en bord de mer, avec un accès facile aux plages et aux restaurants.', 'Luxe et vue sur mer.', 300, 150, 8, 4, 2, 6, 1, 1, 5, true, 3, 44, 3, 1),
 ('Chalet de montagne authentique', 'Un chalet traditionnel en bois, situé dans une station de ski populaire. Le chalet combine charme rustique et commodités modernes, avec une grande cheminée, un espace spa avec sauna, et une cuisine équipée. Les chambres sont confortables avec des lits douillets, et le salon offre une vue imprenable sur les montagnes. Parfait pour les amateurs de ski et de nature, avec des pistes accessibles directement depuis le chalet.', 'Profitez de l''authenticité de la montagne.', 320, 110, 10, 5, 2, 8, 1, 1, 5, true, 4, 45, 4, 6),
-('Bateau de charme', 'Un bateau confortable amarré, idéal pour un séjour romantique. Ce bateau offre une expérience unique avec une vue sur la ville depuis l''eau. Les aménagements incluent une chambre cosy, un salon avec grandes fenêtres, et une petite cuisine équipée. Profitez des soirées sur le pont, en admirant les lumières de la ville et en vous détendant au son de l''eau.', 'Séjour romantique.', 200, 30, 4, 2, 1, 2, 1, 1, 5, true, 5, 46, 5, 3),
+('Bateau de charme', 'Un bateau confortable amarré, idéal pour un séjour romantique. Ce bateau offre une expérience unique avec une vue sur la ville depuis l’eau. Les aménagements incluent une chambre cosy, un salon avec grandes fenêtres, et une petite cuisine équipée. Profitez des soirées sur le pont, en admirant les lumières de la ville et en vous détendant au son de l’eau.', 'Séjour romantique.', 200, 30, 4, 2, 1, 2, 1, 1, 5, true, 5, 46, 5, 3),
 ('Logement insolite dans une cabane', 'Une cabane unique en pleine nature, parfaite pour un séjour dépaysant. Construite en bois avec des matériaux écologiques, cette cabane offre un espace de vie confortable avec une petite cuisine, une salle de bain moderne, et une chambre avec vue sur la forêt. Idéale pour ceux qui cherchent à se reconnecter avec la nature, avec des sentiers de randonnée et un environnement paisible.', 'Séjournez dans une cabane insolite.', 150, 20, 2, 1, 1, 1, 1, 1, 3, true, 6, 47, 6, 7),
-('Appartement moderne avec balcon', 'Un appartement moderne avec un grand balcon et une vue sur la ville. L''intérieur est décoré avec goût et offre tout le confort nécessaire, incluant une cuisine équipée, un salon lumineux, et une chambre avec un lit king-size. Le balcon est parfait pour prendre un café le matin ou un verre le soir en admirant le coucher de soleil. Situé proche des commerces et des transports en commun, cet appartement est idéal pour les voyageurs urbains.', 'Vue imprenable sur la ville.', 90, 28, 4, 1, 2, 2, 1, 1, 3, true, 7, 48, 1, 5),
-('Maison familiale avec piscine', 'Maison spacieuse avec piscine privée, idéale pour des vacances en famille. La maison dispose de plusieurs chambres, d''une cuisine moderne et équipée, d''un salon confortable, et d''une grande salle à manger. Le jardin est équipé d''un barbecue et d''une aire de jeux pour enfants. La piscine est chauffée et sécurisée, parfaite pour se rafraîchir durant les journées chaudes. Située dans un quartier calme, mais proche des attractions locales.', 'Profitez de la piscine privée.', 160, 100, 8, 4, 3, 4, 1, 1, 3, true, 8, 49, 2, 7),
+('Appartement moderne avec balcon', 'Un appartement moderne avec un grand balcon et une vue sur la ville. L’intérieur est décoré avec goût et offre tout le confort nécessaire, incluant une cuisine équipée, un salon lumineux, et une chambre avec un lit king-size. Le balcon est parfait pour prendre un café le matin ou un verre le soir en admirant le coucher de soleil. Situé proche des commerces et des transports en commun, cet appartement est idéal pour les voyageurs urbains.', 'Vue imprenable sur la ville.', 90, 28, 4, 1, 2, 2, 1, 1, 3, true, 7, 48, 1, 5),
+('Maison familiale avec piscine', 'Maison spacieuse avec piscine privée, idéale pour des vacances en famille. La maison dispose de plusieurs chambres, d’une cuisine moderne et équipée, d’un salon confortable, et d’une grande salle à manger. Le jardin est équipé d’un barbecue et d’une aire de jeux pour enfants. La piscine est chauffée et sécurisée, parfaite pour se rafraîchir durant les journées chaudes. Située dans un quartier calme, mais proche des attractions locales.', 'Profitez de la piscine privée.', 160, 100, 8, 4, 3, 4, 1, 1, 3, true, 8, 49, 2, 7),
 ('Villa d''exception avec jardin tropical', 'Une villa luxueuse entourée d''un jardin tropical, parfaite pour un séjour relaxant. La villa offre des espaces de vie spacieux, avec des baies vitrées donnant sur le jardin. Profitez de la piscine privée, du jacuzzi, et des multiples terrasses. Les chambres sont élégantes, chacune avec sa propre salle de bain. Le jardin est un véritable paradis, avec des plantes exotiques et des coins détente. Idéale pour des vacances de rêve loin de l''agitation.', 'Luxe et nature tropicale.', 420, 160, 10, 5, 3, 7, 1, 1, 7, true, 9, 50, 3, 2),
 ('Chalet familial en montagne', 'Chalet familial avec accès direct aux pistes de ski. Ce chalet offre tout le confort nécessaire pour un séjour en famille, avec plusieurs chambres, un grand salon avec cheminée, et une cuisine entièrement équipée. Après une journée de ski, détendez-vous dans le sauna ou profitez d''une soirée cinéma dans le salon. Les enfants apprécieront l''espace de jeux extérieur et les adultes pourront se relaxer sur la terrasse en admirant la vue.', 'Accès direct aux pistes.', 370, 120, 12, 6, 3, 9, 1, 1, 7, false, 10, 51, 4, 9),
 ('Bateau luxueux', 'Un bateau de luxe offrant une expérience unique. Ce bateau est équipé de cabines confortables, d''une cuisine moderne, et d''un salon spacieux avec vue sur la mer. Passez vos journées à explorer la côte, à nager dans la mer, ou à bronzer sur le pont. Le soir, profitez d''un dîner sur le pont en admirant le coucher du soleil. Parfait pour une escapade romantique ou une aventure entre amis.', 'Luxueuse expérience.', 350, 35, 4, 2, 1, 2, 1, 1, 6, true, 11, 52, 5, 5),
@@ -674,24 +591,13 @@ INSERT INTO _logement(titre, description, accroche, base_tarif, surface, nb_max_
 
 INSERT INTO _image (src, principale, alt, id_logement)
 SELECT 
-    CONCAT('/logement/', l.id, '/', n.num, '.webp') AS src,
+    CONCAT('/logement/', l.id, '/', n.num, '.jpg') AS src,
     CASE WHEN n.num = 1 THEN true ELSE false END AS principale,
     l.titre AS alt,
     l.id AS id_logement
 FROM _logement l
 CROSS JOIN (SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5) n
-WHERE l.id BETWEEN 1 AND 5;
-
-INSERT INTO _image (src, principale, alt, id_logement)
-SELECT 
-    CONCAT('/logement/', l.id, '/', n.num, '.webp') AS src,
-    CASE WHEN n.num = 1 THEN true ELSE false END AS principale,
-    l.titre AS alt,
-    l.id AS id_logement
-FROM _logement l
-CROSS JOIN (SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5) n
-WHERE l.id BETWEEN 6 AND 45
-AND n.num = 1;
+WHERE l.id BETWEEN 1 AND 45;
 
 INSERT INTO _activite_logement(id_logement, activite, id_distance) VALUES 
 (1, 'Baignade', 1),
@@ -951,20 +857,6 @@ FROM
 JOIN
     _logement ON _reservation.id_logement = _logement.id;
 
-INSERT INTO _calendrier(date, id_logement, prix, statut)
-SELECT
-    _reservation.date_debut + n * INTERVAL '1 DAY' AS date,
-    _reservation.id_logement AS id_logement,
-    _logement.base_tarif AS prix,
-    'R' AS statut
-FROM
-    _reservation
-JOIN
-    _logement ON _reservation.id_logement = _logement.id
-JOIN
-    generate_series(0, CAST(EXTRACT(DAY FROM AGE(_reservation.date_fin, _reservation.date_debut)) AS INTEGER)) AS n
-ON
-    (_reservation.date_debut + n * INTERVAL '1 DAY') <= _reservation.date_fin;
 
 INSERT INTO _api_keys(key, proprietaire) VALUES ('api_key_test', 1);
 
@@ -972,3 +864,38 @@ INSERT INTO _api_keys(key, proprietaire) VALUES ('api_key_test', 1);
 INSERT INTO _ical_token(token, proprietaire, date_debut, date_fin) VALUES ('token_test', 1, '2024-07-10', '2024-07-30');
 
 INSERT INTO _ical_token_logements VALUES ('token_test', 1);
+
+INSERT INTO _ical_token(token, proprietaire, date_debut, date_fin) VALUES ('token_test2', 1, '2024-07-10', '2024-07-30');
+
+INSERT INTO _ical_token_logements VALUES ('token_test2', 2);
+
+
+INSERT INTO _ical_token_logements VALUES ('token_test2', 4);
+
+INSERT INTO _ical_token_logements VALUES ('token_test2', 3);
+
+";
+require "../connect_db/connect_param.php";
+require "../connect_db/connect_param.php";
+
+try {
+ $connexion = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+ $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+ // Split SQL script into individual statements
+ $sqlStatements = explode(';', $sql);
+
+ // Execute each SQL statement
+ foreach ($sqlStatements as $sqlStatement) {
+ if (!empty(trim($sqlStatement))) {
+ $connexion->exec($sqlStatement);
+ }
+ }
+
+ print_r($connexion->query("SELECT * FROM sae._utilisateur")->fetch());
+
+
+} catch(PDOException $e) {
+ print "erreur" . $e->getMessage();
+ 
+}

@@ -15,3 +15,4 @@ function handleResize() {
 }
 window.addEventListener('resize', handleResize);
 window.addEventListener('load', handleResize);
+
