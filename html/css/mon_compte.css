@@ -101,8 +101,8 @@
   font-size: 1rem;
   font-weight: 300;
   -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   background-image: url("../img/down.webp");
   background-repeat: no-repeat;
   background-position: right 0.7rem top 50%;
@@ -126,7 +126,7 @@
   align-self: center;
   margin: 1rem;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 
 .main__container {
@@ -164,7 +164,7 @@
   align-items: center;
 }
 
-.mdp_conteneur label[for="showPassword"] {
+.mdp_conteneur label[for=showPassword] {
   display: flex;
   width: 100%;
   justify-content: flex-start;
@@ -275,7 +275,7 @@ form {
   gap: 0.5rem;
 }
 
-.identite_conteneur .input__ligne .connect__input input[type="file"] {
+.identite_conteneur .input__ligne .connect__input input[type=file] {
   color: rgba(34, 34, 34, 0.5);
   font-size: 0.7rem;
   width: 100%;
@@ -387,10 +387,7 @@ form {
     width: 70% !important;
     align-self: center;
   }
-  height: -moz-max-content;
-  height: max-content;
 }
-
 .token {
   display: flex;
   flex-direction: row;
@@ -449,7 +446,7 @@ form {
   text-align: center;
   text-decoration: none;
   -moz-user-select: none;
-  user-select: none;
+       user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
 }
@@ -534,12 +531,7 @@ form {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.5
-  ); /* Fond semi-transparent pour l'arrière-plan */
+  background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour l'arrière-plan */
   z-index: 1000; /* Assure que la modal soit au premier plan */
 }
 .modal_enreg .modal {
@@ -574,7 +566,7 @@ form {
   display: block;
   margin-bottom: 5px;
 }
-.modal_enreg input[type="checkbox"] {
+.modal_enreg input[type=checkbox] {
   margin-right: 5px;
 }
 .modal_enreg .description {
@@ -663,8 +655,7 @@ form {
   font-size: 28px;
   font-weight: bold;
 }
-.modal_enreg .close:hover,
-.modal_enreg .close:focus {
+.modal_enreg .close:hover, .modal_enreg .close:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
@@ -751,4 +742,4 @@ form {
 }
 #api-token #api {
   flex: 1;
-} /*# sourceMappingURL=mon_compte.css.map */
+}/*# sourceMappingURL=mon_compte.css.map */
