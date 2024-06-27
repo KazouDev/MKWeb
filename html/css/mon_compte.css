@@ -513,6 +513,17 @@ form {
     width: 100% !important;
   }
 }
+@media (max-width: 400.98px) {
+  .detail_mon_compte__conteneur .ligne {
+    flex-wrap: wrap;
+  }
+  #compte__email, #compte__complement3 {
+    width: 100%;
+  }
+  .sauvegarde, .changer_photo .ligne .sauvegarde, .mdp_conteneur .sauvegarde {
+    width: 100% !important;
+  }
+}
 #generer_token, #generer_api {
   width: 50%;
   height: 3em;
@@ -562,6 +573,33 @@ form {
 .action div {
   display: flex;
   align-items: center;
+}
+
+/* CSS */
+#generer_token,
+#generer_api {
+  background-color: #ffffff;
+  border: 2px solid #222222;
+  border-radius: 30px;
+  box-shadow: #222222 4px 4px 0 0;
+  color: #222222;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+#generer_token:hover,
+#generer_api:hover {
+  cursor: pointer;
+  background-color: #fff;
+  box-shadow: none;
+  transform: translateY(2px);
 }
 
 @media (min-width: 768px) {
