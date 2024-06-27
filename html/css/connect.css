@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("setup.css");
 .connect-container {
   display: flex;
@@ -326,4 +327,29 @@
   .connect__input__add .connect__input__ligne input, .connect__input__ligne .connect__input {
     width: 100%;
   }
+}
+#connect__code {
+  background-color: rgba(214, 214, 214, 0.4745098039);
+}
+
+/* Styles de base pour l'autocomplétion */
+.autocomplete-suggestions {
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: #fff;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+  position: absolute;
+  margin-top: 10px;
+  z-index: 500;
+}
+
+.autocomplete-suggestion {
+  padding: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.autocomplete-suggestion:hover {
+  background-color: #9aa5ff;
+  z-index: 501;
 }/*# sourceMappingURL=connect.css.map */
