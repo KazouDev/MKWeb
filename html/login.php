@@ -71,7 +71,7 @@
 
                             <?php if ($status): ?> <p class="login_invalid">Identifiant invalide !</p> <?php endif; ?>
 
-                            <input type="submit" value="Se connecter">
+                            <input type="submit" class="hover" value="Se connecter">
                         </form>
                         <p class="p_ligne">Ou</p>
                         <p style="align-self: center; text-align:center;">Vous n'avez pas de compte ?  <a href="creer_compte.php" style="color: #5669FF;">S'inscrire</a></p>

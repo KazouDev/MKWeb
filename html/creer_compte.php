@@ -247,7 +247,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php if ($passwordLengthInvalid): ?>
                                 <p class="login_invalid">Le mot de passe doit contenir au moins 8 caractères.</p>
                             <?php endif; ?>
-                            <input type="submit" value="Continuer">
+                            <input type="submit" class="hover" value="Continuer">
                         </form>
                         <p class="p_ligne">Ou</p>
                         <p style="align-self: center; text-align:center;">Vous possédez déjà un compte ? <a href="login.php"

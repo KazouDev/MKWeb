@@ -92,7 +92,7 @@
 
 .loader {
   border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #273EFC; /* Blue */
+  border-top: 16px solid #273efc; /* Blue */
   border-radius: 50%;
   width: 120px;
   height: 120px;
@@ -193,7 +193,7 @@
   border: 2px solid #5669ff;
   width: 30px;
   height: 30px;
-  background-color: #E1EBF4;
+  background-color: #e1ebf4;
   text-align: center;
   line-height: 30px;
   font-weight: bold;
@@ -230,7 +230,8 @@
   height: auto;
 }
 
-.tri__up-dark, .tri__down-dark {
+.tri__up-dark,
+.tri__down-dark {
   display: none;
 }
 
@@ -251,4 +252,13 @@
   .card__cont img {
     height: 150px;
   }
+}
+.hover {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.hover:hover {
+  cursor: pointer;
+  background-color: #9aa5ff !important;
 }/*# sourceMappingURL=index.css.map */

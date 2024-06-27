@@ -139,8 +139,8 @@
               <div class="loader"></div>
             </div>
             <div class="les__logements" id="les__logements"></div>
-            <button class="logement__plus" id="decouvrir_plus">Découvrir plus</button>
-            <button class="logement__plus" id="decouvrir_moins" style="display: none">Voir moins</button>
+            <button class="logement__plus hover" id="decouvrir_plus">Découvrir plus</button>
+            <button class="logement__plus hover" id="decouvrir_moins" style="display: none">Voir moins</button>
           </div>
         </div>
       </main>
