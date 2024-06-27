@@ -76,6 +76,7 @@ imageInput.addEventListener("change", (e) => {
   Array.from(files).forEach((file) => {
     if (!imgPreviews.includes(file.name)) {
       if (imageList.length > 6) {
+        showToast("Maximum 5 images", true);
         return;
       }
       imageList.push(file);
