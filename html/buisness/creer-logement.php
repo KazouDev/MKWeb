@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/creer-logement.css">
+    <link rel="stylesheet" href="../css/toast.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <title>Nouveau Logement</title>
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
@@ -287,5 +288,6 @@
         </div>
         <?php require_once "footer.php"; ?>
     </div>
+    <script src="../js/toast.js"></script>
     <script src="../js/creer-logement.js"></script>
 </body>

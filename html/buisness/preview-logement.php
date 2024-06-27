@@ -2,7 +2,6 @@
     session_start();
     require_once "../../utils.php";
 
-    print_r($_SESSION);
     $id_proprio = buisness_connected_or_redirect();
     $base_tarif = $_POST['prixht'];
     $min_jour = $_POST['dureeloc'];
@@ -229,7 +228,7 @@
         <?php include_once 'footer.php'; ?>
     </div>
     
-    
+    <script src="../js/toast.js"></script>
     <script src="../js/preview-logement.js"></script>
 </body>
 </html>

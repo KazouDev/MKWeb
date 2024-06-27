@@ -130,6 +130,9 @@
   }
 }
 @media (max-width: 767.98px) {
+  #LeMenu {
+    display: none;
+  }
   .menu__item .menu__link,
   .header__connexion a, .user__info p {
     font-size: 0.75rem;
@@ -173,6 +176,12 @@
   .header__form {
     display: none;
   }
+  .header__form {
+    display: inline;
+  }
+  #CmdMenuClose, #CmdMenu, #fermerMenu {
+    display: none;
+  }
   .hide {
     display: inline;
   }
@@ -183,15 +192,7 @@
 
 @media (max-width: 530px) {
   #LeMenu {
-    padding: 1rem 1.5rem 1rem 1rem;
-    border-radius: 0.75rem;
-    border: 1px solid #878787;
-    background: #FFF;
-    position: fixed;
-    top: 5px;
-    right: 5px;
-    z-index: 100;
-    box-shadow: 4px 4px 16px 0px rgba(18, 18, 18, 0.06);
+    display: none;
   }
   .menu__item .menu__link {
     padding: 0.3125rem;
@@ -209,6 +210,9 @@
   }
   .menu__item {
     display: none;
+  }
+  .menu__item {
+    display: initial;
   }
   .menu__item.hide {
     width: 100%;
@@ -300,6 +304,9 @@
   #fermerMenu {
     height: 15px;
     top: 15px;
+  }
+  header {
+    padding: 1rem;
   }
 }
 header.buisness .header__connexion {

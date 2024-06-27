@@ -26,9 +26,10 @@ const toggleModal = (modalId, displayStyle) => {
   document.getElementById(modalId).style.display = displayStyle;
 };
 
-document.getElementById("submit_resa").addEventListener("click", () => {
-  toggleModal("myModal_cvg", "flex");
-});
+// document.getElementById("submit_resa").addEventListener("click", () => {
+//   //Enregistrer un devis en bdd
+//   //toggleModal("myModal_cvg", "flex");
+// });
 
 document.querySelector(".close").addEventListener("click", () => {
   toggleModal("myModal_cvg", "none");
