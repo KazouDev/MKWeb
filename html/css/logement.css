@@ -621,7 +621,7 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #909090;
-  padding: 2rem 0px 2rem 0px;
+  padding: 2rem;
 }
 .hote .hote__info {
   border-radius: 0.75rem;
@@ -706,10 +706,10 @@
 .asavoir a {
   color: #5669ff;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.75rem;
 }
 .asavoir h3 {
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
