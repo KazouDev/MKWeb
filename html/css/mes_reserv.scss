@@ -53,7 +53,7 @@ $lineHeight: 1.5;
 
 body {
   font-family: "Inter", sans-serif;
-  background-color: $mainBlanc;
+  background-color: rgba(#e6eef9, 0.5);
 }
 
 // Container principal
@@ -464,7 +464,7 @@ input[id="radio-4"]:checked~.glider {
 }
 
 // Classe de test
-.page__tilte {
+.test__TEST {
   display: flex;
   flex-direction: row;
   gap: 1.5rem;

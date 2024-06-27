@@ -13,7 +13,7 @@
 
 body {
   font-family: "Inter", sans-serif;
-  background-color: #ffffff;
+  background-color: rgba(230, 238, 249, 0.5);
 }
 
 .container {
@@ -366,7 +366,7 @@ input[id=radio-4]:checked ~ .glider {
   align-items: center;
 }
 
-.page__tilte {
+.test__TEST {
   display: flex;
   flex-direction: row;
   gap: 1.5rem;
