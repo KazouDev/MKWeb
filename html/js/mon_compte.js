@@ -50,7 +50,7 @@ var date_fin = document.getElementById("date_fin");
 var date_debut = document.getElementById("date_debut");
 var action = document.getElementById("action");
 var actionApi = document.getElementById("action-api");
-
+let name= "";
 closeModalApi.onclick = function () {
     modalEnregApi.style.display = "none";
     document.body.classList.remove("no-scroll");
@@ -154,7 +154,7 @@ modifiers_api.forEach((modifier, k) => {
         //console.log(data);
         
         for (const key in permissions) {
-        let name = '';
+        
           if (key !== "admin") {
             if(key === 'indispo')name = "Modifier la disponibilitée du logement";
             if(key === 'planning')name="Voir disponibilitée du logement";
@@ -212,6 +212,9 @@ gen_api.addEventListener("click", () => {
 
       for (const key in permissions) {
         if (key !== "admin") {
+          if(key === 'indispo')name = "Modifier la disponibilitée du logement";
+            if(key === 'planning')name="Voir disponibilitée du logement";
+            if(key==='lister')name= "Voir la liste de mes logements";
           const logementDiv = document.createElement("div");
           logementDiv.classList.add("logement");
 
@@ -224,7 +227,7 @@ gen_api.addEventListener("click", () => {
           checkbox.name = "check_logement[]";
           checkbox.checked = permissions[key] == 1 ? "checked" : "";
           const p = document.createElement("p");
-          p.textContent = key;
+          p.textContent = name;
           const descriptionDiv = document.createElement("div");
           descriptionDiv.appendChild(p);
           checkbox.classList.add("logementCheckbox-api");
@@ -276,6 +279,7 @@ gen_token.addEventListener("click", () => {
       for (logement of data["logement"]) {
         //console.log(logement);
         //console.log(logement['titre']);
+        
         const logementDiv = document.createElement("div");
         logementDiv.classList.add("logement");
 
