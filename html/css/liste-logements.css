@@ -200,6 +200,7 @@ div.main__container.logements > div.titreLogement > a.ajouter {
     align-items: flex-start !important;
   }
 }
+
 .alert {
   position: sticky;
   color: #ffffff;
@@ -221,4 +222,5 @@ div.main__container.logements > div.titreLogement > a.ajouter {
   display: flex;
   opacity: 1;
   transition: opacity 1s ease-in-out;
+
 }/*# sourceMappingURL=liste-logements.css.map */

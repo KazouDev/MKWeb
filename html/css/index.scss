@@ -33,19 +33,14 @@
     gap: 1rem;
   }
 }
-.main__logement {
-  margin-top: 5rem;
-}
-
 .main__container .list__logements {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 3rem;
 }
 .main__container .list__logements .les__logements {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
   gap: 2rem;
 }
@@ -224,3 +219,21 @@
 .tri__up-dark, .tri__down-dark {
   display: none;
 }
+@media (max-width: 700.98px){
+  .main__container .list__logements .les__logements {
+    justify-content: center;}
+    .card__cont{
+      width: 250px;
+      min-height: 23rem;
+    }
+}
+@media (max-width: 550.98px){
+    .card__cont{
+      width: 220px;
+      min-height: 19rem;
+    }
+    .card__cont img {
+      height: 150px;
+  }
+}
+

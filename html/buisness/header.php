@@ -11,11 +11,9 @@
                 </div>
             </div>
             <div class="header__form">
-                <a href=""><i class="fa-regular fa-eye-slash"></i></a>
                 <div class="header__connexion"><a href="login.php">Connexion</a></div>                    
             </div>
-            <img src="../img/menu.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
-            <img src="../img/fermer.webp" alt="Fermer le menu" id="CmdMenuClose">
+
 
         </div>
     </header>
@@ -38,7 +36,6 @@
         </div>
     </div>
     <div class="header__form">
-        <a href=""><i class="fa-regular fa-eye-slash"></i></a>
             <div class="user__info" id="header__info">
                 <img src="../img/<?= $photo_profil?>" alt="Photo User" class="user__photo">
                 <p><?= $user_info["pseudo"] ?></p>
@@ -54,7 +51,7 @@
             <a href="liste-logement.php" class="menu__link">Mes Logements</a>
         </li>
         <li class="menu__item ">
-            <a href="mes_reserv.php" class="menu__link">Les Réservations</a>
+            <a href="mes_reserv.php" class="menu__link">Réservations</a>
         </li>
         <li class="menu__item ">
             <a href="creer-logement.php" class="menu__link" style="color: #5669FF;">Ajouter un logement</a>
@@ -63,11 +60,11 @@
             <a href="logout.php" class="menu__link" style="color: #FF5656;">Se déconnecter</a>
         </li>
     </ul> 
-    <img src="../img/menu.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
-    <img src="../img/fermer.webp" alt="Fermer le menu" id="CmdMenuClose">
+
+    
 </div>
 </header>
-<script src="../js/header_user.js"></script>
+<script src="../js/header_userPro.js"></script>
 <?php 
     }
 ?>

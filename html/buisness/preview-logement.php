@@ -14,6 +14,7 @@
     inner join sae._langue on sae._langue_proprietaire.id_langue = sae._langue.id
     WHERE sae._langue_proprietaire.id_proprietaire = $id_proprio;";
 
+    $amenagements_list = $_POST["amenagements"] ?? [];
     $titre_logement =  $_POST['titre'] ;
     $ville = $_POST['commune'];
     $departement = $_POST['departement'];
@@ -33,10 +34,10 @@
     $rep_langue = request($query_langue);
 
     $liste_amenagement = [];
-    foreach($amenagements_list ?? [] as $cle => $amenagements){
-        foreach($amenagements as $cle => $amenagement){
-            $liste_amenagement[] = $amenagement;
-        }
+    $ame = request("SELECT amenagement FROM sae._amenagement");
+
+    foreach($amenagements_list ?? [] as $cle => $a){
+           $liste_amenagement[] = $ame[$a - 1]["amenagement"];
     };
     
 
@@ -64,6 +65,7 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/logement.css">
+    <link rel="stylesheet" href="../css/preview.css">
     <title><?= $titre_logement?></title>
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -86,7 +88,7 @@
                     </div>
                     <div class="logement__adr">
                         <h2 id="logement__adresse"><?php echo  $ville . ", " . $departement?></h2>
-                        <a href="#logement__reserver">Réserver</a>
+                        <a id="enregistrer">Enregistrer</a>
                     </div>
                 </div>
                 <div class="logement__photos">
@@ -220,10 +222,13 @@
             </div>
             </div>
         </main>
+        <div class="loading__modal">
+            <span class="loader"></span>
+        </div>
         <?php include_once 'footer.php'; ?>
     </div>
     
-    
-    <script src="js/logement.js"></script>
+    <script src="../js/toast.js"></script>
+    <script src="../js/preview-logement.js"></script>
 </body>
 </html>

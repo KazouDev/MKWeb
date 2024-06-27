@@ -2,7 +2,14 @@
     session_start();
     require_once "../utils.php";
 
-    $id_logement = $_GET['id'];       
+    if(isset($_GET["id_devis_refus"])){
+        $id_devis = $_GET["id_devis_refus"];
+        $sql = "DELETE FROM sae._devis WHERE id = " . $id_devis;
+        $suppression = request($sql);
+        $id_logement = $_GET["id"];
+    }else{
+        $id_logement = $_GET['id']; 
+    }
     $sql = 'SELECT base_tarif, duree_min_res, delai_avant_res FROM sae._logement';
     $sql .= ' WHERE id = ' . $id_logement;
     $res = request($sql,1);           
@@ -159,7 +166,7 @@ EOT;
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/logement.css">
-    <title><?= $titre_logement?></title>
+    <title><?=$titre_logement?></title>
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -319,7 +326,7 @@ EOT;
                         <div class="form__logement">
                             <h2><span  id="logement__prix"><?=$base_tarif?></span> € par  nuit</h2>
                             <h1>Indiquez les dates pour voir les tarifs</h1>
-                            <form action="" method="post">
+                            <form action="devis.php" method="post">
                             <div id="myModal_cvg" class="modal_cvg">
                                 <div class="modal-content">
                                     <span class="close">&times;</span>
@@ -332,9 +339,8 @@ EOT;
                                     </div>
                                 </div>
                             </div>
-
                             <div class="res__fromulaire">
-                                
+                                    <input type="text" name="id_logement" value="<?php echo $id_logement ?>" hidden>
                                     <input type="text" name="dateDebut" hidden>
                                     <input type="text" name="dateFin" hidden>
 
@@ -398,8 +404,7 @@ EOT;
                                     <p><span id="tot-ttc"></span>€</p>
                                 </div>
                                 <!--<input type="submit" id="reset" value="Annuler"> -->
-                                <input type="button" name="submit_resa" id="submit_resa" value="Réserver">
-                                
+                                    <input type="submit" name="submit_resa" id="submit_resa" value="Réserver">
                             </div>
                         </form>
                         </div>

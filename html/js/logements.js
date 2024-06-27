@@ -16,6 +16,7 @@ function handleResize() {
 window.addEventListener('resize', handleResize);
 window.addEventListener('load', handleResize);
 
+
 document.addEventListener('DOMContentLoaded', (event) => {
     const message = sessionStorage.getItem('message');
 

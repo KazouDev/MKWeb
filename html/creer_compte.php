@@ -2,9 +2,9 @@
 session_start();
 require_once "../utils.php";
 
-// if (isset($_SESSION["client_id"])) {
-//     redirect();
-// }
+if (isset($_SESSION["client_id"])) {
+    redirect();
+}
 
 $status = false;
 $passwordMismatch = false;
@@ -97,13 +97,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (isset($_FILES["photo_profil"]["tmp_name"]) && $_FILES["photo_profil"]["tmp_name"] !== "") {
                     $extension = pathinfo($_FILES["photo_profil"]['name'], PATHINFO_EXTENSION);
                     $photo_path = "/compte/profile_$pseudo.$extension";
+                    $photo_path_bdd = "/compte/profile_$pseudo.$extension";
                     move_uploaded_file($_FILES["photo_profil"]["tmp_name"], $photo_path);
                 } else {
                     $extension = pathinfo("img/anonymus.webp", PATHINFO_EXTENSION);
                     $photo_path = "/compte/profile_anonymous.$extension";
+                    $photo_path_bdd = "/compte/profile_anonymous.$extension";
                 }
 
-                request("UPDATE sae._utilisateur SET photo_profile = '$photo_path' WHERE id = $user_id");
+                request("UPDATE sae._utilisateur SET photo_profile = '$photo_path_bdd' WHERE id = $user_id");
+
 
                 insert('sae._compte_client', ["id"], [$user_id]);
                 echo "Utilisateur créé avec succès.";
@@ -210,7 +213,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="connect__input">
                                 <label for="connect__pass">Mot de passe</label>
                                 <input type="password" name="mot_de_passe" id="connect__pass"
-                                    placeholder="Au moins avoir 8 caractères" required>
+                                    placeholder="Au moins 8 caractères" required>
                             </div>
                             <div class="connect__input">
                                 <label for="connect__pass2">Entrez le mot de passe à nouveau</label>
@@ -235,7 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="submit" value="Continuer">
                         </form>
                         <p class="p_ligne">Ou</p>
-                        <p style="align-self: center; text-align:center;">Vous possédez déjà un compte ? <a href=""
+                        <p style="align-self: center; text-align:center;">Vous possédez déjà un compte ? <a href="login.php"
                                 style="color: #5669FF;">Se connecter</a></p>
                     </div>
                     <div class="slider">

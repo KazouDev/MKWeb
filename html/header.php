@@ -17,26 +17,16 @@
                             <a href="index.php" class="menu__link">Logements</a>
                         </li>
                         <li class="menu__item">
-                            <a href="index.php" class="menu__link">À propos</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="index.php" class="menu__link">Contact</a>
-                        </li>
-                        <li class="menu__item">
                             <a href="buisness/index.php" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
                         </li>
-                        <li class="menu__item hide">
-                            <a href="login.php" class="menu__link" style="color: #5669FF;">Connexion</a>
-                        </li>
+
                     </ul>
                 </nav>
             </div>
             <div class="header__form">
-                <a href=""><i class="fa-regular fa-eye-slash" style="color: #222222;"></i></a>
                 <div class="header__connexion"><a href="login.php">Connexion</a></div>                    
             </div>
-            <img src="../img/menu.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
-            <img src="../img/fermer.webp" alt="Fermer le menu" id="CmdMenuClose">
+
 
         </div>
     </header>
@@ -63,35 +53,15 @@
                 <li class="menu__item">
                     <a href="index.php" class="menu__link">Logements</a>
                 </li>
-                <li class="menu__item">
-                    <a href="index.php" class="menu__link">À propos</a>
-                </li>
-                <li class="menu__item">
-                    <a href="index.php" class="menu__link">Contact</a>
-                </li>
+
                 <li class="menu__item">
                     <a href="buisness/index.php" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
                  </li>
-                <li class="menu__item hide">
-                    <a href="consulter_mon_compte.php" class="menu__link">Mon compte</a>
-                </li>
-                <li class="menu__item hide">
-                    <a href="mes_reserv.php" class="menu__link">Mes réservations</a>
-                </li>
-                <li class="menu__item hide">
-                    <a href="" class="menu__link">Mes notifications</a>
-                </li>
-                <li class="menu__item hide">
-                    <a href="buisness/index.php" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
-                </li>
-                <li class="menu__item hide">
-                    <a href="logout.php" class="menu__link" style="color: #FF5656;">Se déconnecter</a>
-                </li>
+                
             </ul>
         </nav>
     </div>
     <div class="header__form">
-        <a href=""><i class="fa-regular fa-eye-slash" style="color: #222222;"></i></a>
             <div class="user__info" id="header__info">
                 <img src="../img<?=$photo_user?>" alt="Photo User" class="user__photo">
                 <p><?= $user_info["pseudo"] ?></p>
@@ -106,18 +76,17 @@
         <li class="menu__item ">
             <a href="mes_reserv.php" class="menu__link">Mes réservations</a>
         </li>
-        <li class="menu__item ">
-            <a href="consulter_mon_compte.php" class="menu__link">Mes notifications</a>
-        </li>
+
         <li class="menu__item ">
             <a href="buisness/index.php" class="menu__link" style="color: #5669FF;">Ajouter mon établissement</a>
         </li>
         <li class="menu__item ">
             <a href="logout.php" class="menu__link" style="color: #FF5656;">Se déconnecter</a>
         </li>
+
+        
     </ul> 
-    <img src="../img/menu.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
-    <img src="../img/fermer.webp" alt="Fermer le menu" id="CmdMenuClose">
+
 </div>
 </header>
 <script src="../js/header_user.js"></script>
