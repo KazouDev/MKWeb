@@ -47,7 +47,6 @@ section {
 section > .top p,
 section h2 {
   margin-left: 0.5rem;
-  font-weight: 300;
   font-size: 2rem;
   letter-spacing: 1px;
 }
@@ -95,11 +94,6 @@ section .field-container.check__list {
   gap: 1.5rem;
   justify-content: flex-start;
 }
-@media screen and (max-width: 600px) {
-  section .field-container {
-    justify-content: center;
-  }
-}
 section .field-container .input__checkbox {
   display: flex;
   justify-content: center;
@@ -126,9 +120,7 @@ section .field-container .info_gen__input {
 }
 @media screen and (max-width: 600px) {
   section .field-container .info_gen__input {
-    width: -moz-fit-content;
-    width: fit-content;
-    max-width: 100%;
+    width: 100%;
   }
 }
 section .field-container .info_gen__input.adresse {
@@ -314,4 +306,20 @@ select {
 
 #form__preview {
   background-color: #dd69fa;
+}
+
+.main__container > .top {
+  padding-top: 2rem;
+}
+
+@media screen and (max-width: 600px) {
+  .main__container > .top {
+    padding-top: 1rem;
+  }
+  section > .top p, section h2 {
+    font-size: 1.5rem;
+  }
+  section .field-container .full-size .info_gen__input {
+    width: 100%;
+  }
 }/*# sourceMappingURL=creer-logement.css.map */

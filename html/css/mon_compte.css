@@ -16,7 +16,8 @@
 .detail_mon_compte__conteneur #identifiant_client {
   color: #222222;
 }
-.detail_mon_compte__conteneur .info_perso_conteneur, .detail_mon_compte__conteneur .adresse_conteneur {
+.detail_mon_compte__conteneur .info_perso_conteneur,
+.detail_mon_compte__conteneur .adresse_conteneur {
   display: flex;
   border-radius: 0.75em;
   flex-direction: column;
@@ -25,7 +26,11 @@
   padding: 1.875em;
   margin-bottom: 2rem;
 }
-.detail_mon_compte__conteneur .photo_conteneur, .detail_mon_compte__conteneur .mdp_conteneur, .detail_mon_compte__conteneur .coord_bancaire_conteneur, .detail_mon_compte__conteneur .identite_conteneur, .detail_mon_compte__conteneur .paiment_conteneur {
+.detail_mon_compte__conteneur .photo_conteneur,
+.detail_mon_compte__conteneur .mdp_conteneur,
+.detail_mon_compte__conteneur .coord_bancaire_conteneur,
+.detail_mon_compte__conteneur .identite_conteneur,
+.detail_mon_compte__conteneur .paiment_conteneur {
   display: flex;
   border-radius: 0.75em;
   flex-direction: column;
@@ -312,15 +317,21 @@ form {
   .detail_mon_compte__conteneur h3 {
     font-size: 1.5rem;
   }
-  .detail_mon_compte__conteneur .info_perso_conteneur, .detail_mon_compte__conteneur .adresse_conteneur {
+  .detail_mon_compte__conteneur .info_perso_conteneur,
+  .detail_mon_compte__conteneur .adresse_conteneur {
     gap: 0.8rem;
     padding: 1.3rem;
     margin-bottom: 1rem;
   }
-  .detail_mon_compte__conteneur .photo_conteneur, .detail_mon_compte__conteneur .mdp_conteneur, .detail_mon_compte__conteneur .coord_bancaire_conteneur, .detail_mon_compte__conteneur .identite_conteneur, .detail_mon_compte__conteneur .paiment_conteneur {
+  .detail_mon_compte__conteneur .photo_conteneur,
+  .detail_mon_compte__conteneur .mdp_conteneur,
+  .detail_mon_compte__conteneur .coord_bancaire_conteneur,
+  .detail_mon_compte__conteneur .identite_conteneur,
+  .detail_mon_compte__conteneur .paiment_conteneur {
     padding: 1.3rem;
   }
-  .detail_mon_compte__conteneur .compte__input input {
+  .detail_mon_compte__conteneur .compte__input input,
+  .detail_mon_compte__conteneur .compte__input select {
     padding: 0.7rem;
   }
   .sauvegarde {
@@ -359,7 +370,9 @@ form {
     align-items: flex-start;
     gap: 1rem;
   }
-  .mdp_conteneur .changer__mdp .ligne .compte__input, .mdp_conteneur .compte__input, #mdp_client {
+  .mdp_conteneur .changer__mdp .ligne .compte__input,
+  .mdp_conteneur .compte__input,
+  #mdp_client {
     gap: 0.8rem;
   }
   .ensemble_flex {
@@ -368,5 +381,101 @@ form {
   .mdp_conteneur .sauvegarde {
     width: 70% !important;
     align-self: center;
+  }
+}
+@media (max-width: 650.98px) {
+  .detail_mon_compte__conteneur h2 {
+    font-size: 1.5rem;
+  }
+  .detail_mon_compte__conteneur h3 {
+    font-size: 1rem;
+  }
+  .detail_mon_compte__conteneur {
+    gap: 1rem;
+  }
+  .detail_mon_compte__conteneur .info_perso_conteneur,
+  .detail_mon_compte__conteneur .adresse_conteneur,
+  .detail_mon_compte__conteneur .photo_conteneur,
+  .detail_mon_compte__conteneur .mdp_conteneur,
+  .detail_mon_compte__conteneur .coord_bancaire_conteneur,
+  .detail_mon_compte__conteneur .identite_conteneur,
+  .detail_mon_compte__conteneur .paiment_conteneur {
+    padding: 1rem;
+  }
+  .detail_mon_compte__conteneur .compte__input {
+    gap: 0.5rem;
+  }
+  .detail_mon_compte__conteneur .compte__input input,
+  .detail_mon_compte__conteneur .compte__input select {
+    padding: 0.5rem;
+  }
+  #compte__email,
+  #compte__complement3 {
+    width: 70%;
+  }
+  .detail_mon_compte__conteneur .compte__input label {
+    font-size: 0.8rem;
+  }
+  .changer_photo label {
+    font-size: 1rem;
+  }
+  .detail_mon_compte__conteneur .compte__input input::-moz-placeholder {
+    font-size: 0.8rem;
+  }
+  .detail_mon_compte__conteneur .compte__input input,
+  .detail_mon_compte__conteneur .compte__input input::placeholder {
+    font-size: 0.8rem;
+  }
+  .sauvegarde {
+    width: 40%;
+  }
+  .ensemble_flex {
+    flex-direction: column;
+  }
+  #photo_client {
+    width: 100%;
+  }
+  #compte__mdp {
+    width: 50%;
+  }
+  .mdp_conteneur .ligne {
+    flex-direction: row;
+  }
+  .changer_photo .ligne .sauvegarde {
+    width: 50%;
+  }
+  .mdp_conteneur .sauvegarde {
+    width: 50% !important;
+  }
+  .detail_mon_compte__conteneur .photo_conteneur, .detail_mon_compte__conteneur .mdp_conteneur, .detail_mon_compte__conteneur .coord_bancaire_conteneur, .detail_mon_compte__conteneur .identite_conteneur, .detail_mon_compte__conteneur .paiment_conteneur {
+    gap: 0.8rem;
+  }
+  .ensemble_flex {
+    padding-bottom: 2rem;
+  }
+}
+@media (max-width: 450.98px) {
+  .detail_mon_compte__conteneur .ligne {
+    gap: 1rem;
+  }
+  .sauvegarde {
+    padding: 0.5rem 0;
+  }
+  .detail_mon_compte__conteneur .compte__input {
+    width: 100%;
+  }
+  #compte__mdp {
+    width: 100%;
+  }
+}
+@media (max-width: 400.98px) {
+  .detail_mon_compte__conteneur .ligne {
+    flex-wrap: wrap;
+  }
+  #compte__email, #compte__complement3 {
+    width: 100%;
+  }
+  .sauvegarde, .changer_photo .ligne .sauvegarde, .mdp_conteneur .sauvegarde {
+    width: 100% !important;
   }
 }/*# sourceMappingURL=mon_compte.css.map */

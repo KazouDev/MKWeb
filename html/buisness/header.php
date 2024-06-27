@@ -13,8 +13,7 @@
             <div class="header__form">
                 <div class="header__connexion"><a href="login.php">Connexion</a></div>                    
             </div>
-            <img src="../img/menuPro.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
-            <img src="../img/fermer.webp" alt="Fermer le menu" id="CmdMenuClose">
+
 
         </div>
     </header>
@@ -52,7 +51,7 @@
             <a href="liste-logement.php" class="menu__link">Mes Logements</a>
         </li>
         <li class="menu__item ">
-            <a href="mes_reserv.php" class="menu__link">Les Réservations</a>
+            <a href="mes_reserv.php" class="menu__link">Réservations</a>
         </li>
         <li class="menu__item ">
             <a href="creer-logement.php" class="menu__link" style="color: #5669FF;">Ajouter un logement</a>
@@ -61,8 +60,8 @@
             <a href="logout.php" class="menu__link" style="color: #FF5656;">Se déconnecter</a>
         </li>
     </ul> 
-    <img src="../img/menuPro.webp" alt="Afficher/Masquer le Menu" id="CmdMenu">
-    <img src="../img/fermer.webp" alt="Fermer le menu" id="CmdMenuClose">
+
+    
 </div>
 </header>
 <script src="../js/header_userPro.js"></script>
