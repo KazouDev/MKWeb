@@ -292,6 +292,9 @@
   }
 }
 @media (max-width: 500px) {
+  .connect__from .mdp_oublie {
+    font-size: 0.8rem;
+  }
   .slider {
     height: 20vh;
   }
@@ -300,13 +303,13 @@
     height: 20vh;
   }
   .connect__from p {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
   .connect__from h1 {
     font-size: 1.2rem;
   }
   .connect__from h1 img {
-    width: 30px;
+    width: 20px;
   }
   .connect__from {
     gap: 5px;
