@@ -61,6 +61,10 @@
   gap: 0.5rem;
 }
 
+.rel {
+  position: relative;
+}
+
 .connect__input label {
   font-size: 1rem;
 }
@@ -71,7 +75,7 @@
   padding: 1rem;
   border-radius: 0.75rem;
   border: 1px solid #222;
-  background: #FFF;
+  background: #fff;
 }
 
 .connect__input select {
@@ -100,16 +104,16 @@
 
 .connect__from .mdp_oublie {
   align-self: flex-end;
-  color: #5669FF;
+  color: #5669ff;
   font-size: 1rem;
 }
 
 .connect__from input[type=submit] {
-  background-color: #5669FF;
+  background-color: #5669ff;
   border-radius: 0.75rem;
   width: 100%;
   padding: 1rem;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 1.25rem;
   cursor: pointer;
 }
@@ -140,7 +144,7 @@
 }
 
 .connect__from .login_invalid {
-  color: #FF6258;
+  color: #ff6258;
   align-self: flex-start;
   font-size: 1rem;
 }
@@ -192,7 +196,8 @@
   width: 45%;
 }
 
-#connect__complement3, #connect__rue {
+#connect__complement3,
+#connect__rue {
   width: 100%;
 }
 
@@ -277,10 +282,12 @@
     margin-left: 0px;
     position: static;
   }
-  .slide, .slider img {
+  .slide,
+  .slider img {
     height: 30vh;
   }
-  .prev, .next {
+  .prev,
+  .next {
     display: none;
   }
 }
@@ -288,7 +295,8 @@
   .slider {
     height: 20vh;
   }
-  .slide, .slider img {
+  .slide,
+  .slider img {
     height: 20vh;
   }
   .connect__from p {
@@ -309,13 +317,17 @@
   .connect__from form {
     gap: 0.5rem;
   }
-  .connect__input input, .connect__input select {
+  .connect__input input,
+  .connect__input select {
     padding: 0.5rem;
   }
   .connect__input input::-moz-placeholder {
     font-size: 0.8rem;
   }
-  .connect__input input::placeholder, .connect__input select, .connect__from input[type=date], .connect__from input[type=file] {
+  .connect__input input::placeholder,
+  .connect__input select,
+  .connect__from input[type=date],
+  .connect__from input[type=file] {
     font-size: 0.8rem;
   }
   .connect__from input[type=submit] {
@@ -324,7 +336,8 @@
   }
 }
 @media (max-width: 350px) {
-  .connect__input__add .connect__input__ligne input, .connect__input__ligne .connect__input {
+  .connect__input__add .connect__input__ligne input,
+  .connect__input__ligne .connect__input {
     width: 100%;
   }
 }
