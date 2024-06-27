@@ -619,7 +619,7 @@ $lineHeight: 1.5;
 .hote {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   border-bottom: 1px solid #909090;
   padding: 2rem 0px 2rem 0px;
   .hote__info {
@@ -705,7 +705,7 @@ $lineHeight: 1.5;
     font-size: $h55Size;
   }
   h3 {
-    font-size: $h6Size;
+    font-size: $h55Size;
     font-weight: $semiboldWeight;
   }
 }
