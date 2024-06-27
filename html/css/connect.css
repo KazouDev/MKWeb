@@ -69,6 +69,13 @@
   font-size: 1rem;
 }
 
+.rel {
+  width: 45%;
+}
+.rel input {
+  width: 100% !important;
+}
+
 .connect__input input,
 .connect__input select {
   width: 100%;
@@ -350,12 +357,13 @@
 
 /* Styles de base pour l'autocomplétion */
 .autocomplete-suggestions {
+  width: 90%;
   max-height: 150px;
   overflow-y: auto;
   background-color: #fff;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
   position: absolute;
-  margin-top: 10px;
+  margin-top: 1px;
   z-index: 500;
 }
 

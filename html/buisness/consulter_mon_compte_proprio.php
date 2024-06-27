@@ -882,7 +882,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                     </div>
                                 <?php endforeach;
                                 ?>
-                                <button type="button" id="generer_token" value="Générer Token">Générer Token</button>
+                                <button type="button" id="generer_token"  class="sauvegarde"value="Générer Token">Générer Token</button>
                             </form>
                     </div>
                     
@@ -990,7 +990,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                     </div>
                                 <?php endforeach;
                                 ?>
-                                <button type="button" id="generer_api" value="Générer clé API">Générer clé API</button>
+                                <button type="button" id="generer_api" class="sauvegarde" value="Générer clé API">Générer clé API</button>
                             </form>
 
                             </div>

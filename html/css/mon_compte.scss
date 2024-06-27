@@ -578,6 +578,26 @@ form {
   .changer_photo .ligne .sauvegarde,
   .mdp_conteneur .sauvegarde {
     width: 100% !important;
+  }}
+@media (max-width: 400.98px){
+    .detail_mon_compte__conteneur .ligne{
+        flex-wrap: wrap;
+    }
+    #compte__email, #compte__complement3 {
+        width: 100%;
+    }
+    .sauvegarde,     .changer_photo .ligne .sauvegarde,     .mdp_conteneur .sauvegarde {
+        width: 100% !important;
+    }
+    
+}
+#generer_token,#generer_api{
+  width:50%;
+  height:3em;
+}
+@media (max-width:100px){
+  #generer_token,#generer_api{
+    width:100%;
   }
 }
 .token {
