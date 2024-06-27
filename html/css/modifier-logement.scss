@@ -149,9 +149,7 @@ $lineHeight: 1.5;
   
       gap: 0.75rem;
   
-      @media screen and (max-width: 600px) {
-        justify-content: center;
-      }
+
   
       .input__checkbox {
         display: flex;
@@ -181,8 +179,7 @@ $lineHeight: 1.5;
         gap: 0.5rem;
   
         @media screen and (max-width: 600px) {
-          width: fit-content;
-          max-width: 100%;
+          width: 100%;
         }
   
         &.adresse {
@@ -389,6 +386,51 @@ $lineHeight: 1.5;
   }
 
 
-  
+  .main__container > .top {
+    padding-top: 2rem;
+  }
+  @media screen and (max-width: 600px) {
+    .main__container > .top {
+      padding-top: 1rem;
+    }
+    section > .top p, section h2 {
+      font-size: 1.5rem;
+  }
+  section .field-container .full-size .info_gen__input{
+    width: 100%;
+  }
+  section .field-container .info_gen__input.adresse{
+    width: 100%;
+  }
+//   section .field-container .info_gen__input .input__input input {
+//     width: 100%;
+// }
+.envoyer{
+  padding: 1rem;
+  width: 40%;
+}
 
-
+.main__container form{
+  padding-bottom: 1.5rem;
+}
+section#section__image input[type=button] {
+  width: 100%;
+}
+section .field-container .amenagement__input{
+  flex-wrap: wrap;
+}
+.ajouter {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+}
+.main__container h1 {
+  font-size: 2rem;
+}
+  }
+  .main__container form{
+    padding-bottom: 2rem;
+  }
+  section > .top p, section h2 {
+    font-weight: 300;
+}

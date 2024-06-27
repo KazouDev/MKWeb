@@ -328,4 +328,23 @@ select {
   section .field-container .full-size .info_gen__input {
     width: 100%;
   }
+  .main__container h1 {
+    font-size: 2rem;
+  }
+  section .field-container .info_gen__input.adresse {
+    width: 100%;
+  }
+  section#section__image input[type=button] {
+    padding: 0.7rem 2rem;
+    width: 100%;
+  }
+  .buttons {
+    padding-bottom: 1rem;
+  }
+  section .field-container .amenagement__input {
+    flex-wrap: wrap;
+  }
+}
+.buttons {
+  padding-bottom: 2rem;
 }/*# sourceMappingURL=creer-logement.css.map */
