@@ -700,6 +700,7 @@ form {
   }
   
   .modal_enreg {
+    font-size: calc(0.5em + 0.5vw);
     display: none;
     justify-content: center;
     align-items: center;
@@ -764,6 +765,11 @@ form {
   
     .description p {
       margin-bottom: 10px;
+      
+    }
+    p{
+      margin-bottom: 10px;
+      
     }
   
     .description img {
@@ -887,10 +893,11 @@ form {
       border-radius: 0.75rem;
       overflow-y: scroll;
       height: 300px;
-      width: 80%;
+      width: 90%;
       overflow-x: hidden;
       margin: 0 auto;
       margin-top: 2%;
+      
     }
     .droits-container {
       border: 1px solid black;
