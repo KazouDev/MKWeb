@@ -311,6 +311,32 @@ form {
   border-radius: 2%;
 }
 
+#compte__code_postal {
+  background-color: rgba(214, 214, 214, 0.4745098039);
+}
+
+/* Styles de base pour l'autocomplétion */
+.autocomplete-suggestions {
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: #fff;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+  position: absolute;
+  margin-top: 95px;
+  z-index: 500;
+}
+
+.autocomplete-suggestion {
+  padding: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.autocomplete-suggestion:hover {
+  background-color: #9aa5ff;
+  z-index: 501;
+}
+
 @media (max-width: 900.98px) {
   .detail_mon_compte__conteneur h2 {
     font-size: 2rem;
@@ -448,7 +474,11 @@ form {
   .mdp_conteneur .sauvegarde {
     width: 50% !important;
   }
-  .detail_mon_compte__conteneur .photo_conteneur, .detail_mon_compte__conteneur .mdp_conteneur, .detail_mon_compte__conteneur .coord_bancaire_conteneur, .detail_mon_compte__conteneur .identite_conteneur, .detail_mon_compte__conteneur .paiment_conteneur {
+  .detail_mon_compte__conteneur .photo_conteneur,
+  .detail_mon_compte__conteneur .mdp_conteneur,
+  .detail_mon_compte__conteneur .coord_bancaire_conteneur,
+  .detail_mon_compte__conteneur .identite_conteneur,
+  .detail_mon_compte__conteneur .paiment_conteneur {
     gap: 0.8rem;
   }
   .ensemble_flex {
@@ -473,10 +503,13 @@ form {
   .detail_mon_compte__conteneur .ligne {
     flex-wrap: wrap;
   }
-  #compte__email, #compte__complement3 {
+  #compte__email,
+  #compte__complement3 {
     width: 100%;
   }
-  .sauvegarde, .changer_photo .ligne .sauvegarde, .mdp_conteneur .sauvegarde {
+  .sauvegarde,
+  .changer_photo .ligne .sauvegarde,
+  .mdp_conteneur .sauvegarde {
     width: 100% !important;
   }
 }
@@ -618,6 +651,7 @@ form {
 }
 
 .modal_enreg {
+  font-size: calc(0.5em + 0.5vw);
   display: none;
   justify-content: center;
   align-items: center;
@@ -668,6 +702,9 @@ form {
   margin-top: 10px;
 }
 .modal_enreg .description p {
+  margin-bottom: 10px;
+}
+.modal_enreg p {
   margin-bottom: 10px;
 }
 .modal_enreg .description img {
@@ -769,7 +806,7 @@ form {
   border-radius: 0.75rem;
   overflow-y: scroll;
   height: 300px;
-  width: 80%;
+  width: 90%;
   overflow-x: hidden;
   margin: 0 auto;
   margin-top: 2%;
