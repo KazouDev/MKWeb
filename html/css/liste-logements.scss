@@ -49,6 +49,7 @@ div.main__container.logements {
         align-items: center;
         justify-content: space-between;
         margin-bottom: 1rem;
+        margin-top: 1rem;
 
         &>div:first-child{
             align-items: center;
@@ -108,7 +109,8 @@ div.main__container.logements {
             gap : 1.875rem;
             &>img{
                 width: 17rem;
-                max-width: 17rem    ;
+                max-width: 17rem ;
+                min-width: 17rem;
                 object-fit: cover;
                 height: 12.5rem;
                 max-height: 12.5rem;
@@ -144,8 +146,12 @@ div.main__container.logements {
                     padding: 0.5rem;
                     background: #69C6FA;
                     align-self: center;
-                    &>img{
-                        width: 25px;
+                    &>a{
+                        &>img{
+                            width: 25px;
+
+                        }
+                        
                     }
                 }
             }
@@ -255,18 +261,29 @@ div.main__container.logements {
     }
 }
 
-div.main__container.logements > div.titreLogement{
-    padding-top: 2rem;
+
+.alert{
+    position: sticky;
+    color: $mainBlanc;
+    border-radius: 12px;
+    padding: 16px 22px 17px 20px;
+    display: flex;
+    align-items: center;
+    background-color: $mainViolet;
+    align-self: center;
+    bottom: 10px;
+  }
+
+
+.hidden {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
 }
-@media(max-width:580px){
-    div.main__container.logements > div.titreLogement{
-        padding-top: 1rem;
-    }
-    .card_logement > div.card_main > div.info_logement > img{
-        max-width: none;
-        width: 100%;
-    }
-    .card_logement > div.card_main > div.info_logement > div.actionInfo > div.detaille_logement {
-        gap: 1rem;
-    }
-}
+
+.fade-in {
+    display: flex;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+  }
+
+
