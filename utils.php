@@ -103,6 +103,26 @@ function client_disconnect(){
   session_destroy();
 }
 
+function update($table, $columns, $values, $condition) {
+  require "connect_db/connect_param.php";
+  try {
+      $connexion = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+      $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $setClause = '';
+      foreach ($columns as $key => $column) {
+          $setClause .= ($key > 0 ? ', ' : '') . "$column = ?";
+      }
+      $sql = "UPDATE $table SET $setClause WHERE $condition";
+      $requete = $connexion->prepare($sql);
+      $requete->execute($values);
+      $connexion = null;
+      return true;
+  } catch(PDOException $e) {
+      $connexion = null;
+      echo "Error : " . $e->getMessage();
+      return false;
+  }
+}
 function business_disconnect(){
   if (session_status() == PHP_SESSION_NONE) {
       session_start();

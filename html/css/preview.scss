@@ -34,3 +34,17 @@ $mainViolet: #5669ff;
   width: 100vw;
   height: 100vh;
 }
+
+.hover {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.hover:hover {
+  cursor: pointer;
+  background: $hoverViolet !important;
+}
+
+.hover.pink:hover {
+  background: #efadff !important;
+}

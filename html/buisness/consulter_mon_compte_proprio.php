@@ -318,7 +318,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     ? $rep_utilisateur["prenom"]
                     : clean_input($_POST["prenom"]);
                 $pseudo = empty($_POST["pseudo"])
-                    ? $rep_utilisateur["pseudo"]
+                    ? $prenom . strtoupper("$nom[0]")
                     : clean_input($_POST["pseudo"]);
                 $civilite = empty($_POST["genre"])
                     ? $rep_utilisateur["civilite"]
@@ -596,6 +596,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/mon_compte.css">
+    <link rel="stylesheet" href="../css/toast.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <title>Mon Compte</title>
@@ -630,13 +631,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <div class="ligne">
                                 <div class="compte__input">
                                     <label for="compte__nom">Nom</label>
-                                    <input type="text" name="nom" id="compte__nom" value="<?= $nom ?>"
+                                    <input type="text" name="nom" required="required" id="compte__nom" value="<?= $nom ?>"
                                         placeholder="Votre nom"
                                         oninput="this.value = this.value.replace(/[^a-zA-Z\s']/g, '');">
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__prenom">Prénom</label>
-                                    <input type="text" name="prenom" id="compte__prenom" value="<?= $prenom ?>"
+                                    <input type="text" required="required" name="prenom" id="compte__prenom" value="<?= $prenom ?>"
                                         placeholder="Votre prénom"
                                         oninput="this.value = this.value.replace(/[^a-zA-Z\s']/g, '');">
                                 </div>
@@ -666,12 +667,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__date_naissance">Date de naissance</label>
-                                    <input type="date" name="date_naissance" id="compte__date_naissance"
+                                    <input required="required" type="date" name="date_naissance" id="compte__date_naissance"
                                         value="<?= $date_naissance ?>" max="<?php echo $dateMin; ?>">
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__telephone">Téléphone portable</label>
-                                    <input type="text" name="telephone" id="compte__telephone" value="<?= $telephone ?>"
+                                    <input required="required" type="text" name="telephone" id="compte__telephone" value="<?= $telephone ?>"
                                         placeholder="Votre numéro"
                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                 </div>
@@ -679,7 +680,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <div class="ligne">
                                 <div class="compte__input">
                                     <label for="compte__email">Adresse e-mail</label>
-                                    <input type="email" name="email" id="compte__email" value="<?= $email ?>"
+                                    <input required="required" type="email" name="email" id="compte__email" value="<?= $email ?>"
                                         placeholder="Ex : exemple@domaine.com">
                                 </div>
                                 <input class="sauvegarde" type="submit" value="Enregistrer">
@@ -697,48 +698,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <input type="hidden" name="form_type" value="adresse">
                             <div class="ligne">
                                 <div class="compte__input">
-                                    <label for="compte__prenom">Pays</label>
-                                    <input type="text" name="pays" id="compte__pays" value="<?= $pays ?>"
-                                        placeholder="Votre pays"
-                                        oninput="this.value = this.value.replace(/[^a-zA-Z\s']/g, '');">
+                                    <label for="compte__pays">Pays</label>
+                                    <input required="required" type="text" name="pays" id="compte__pays" value="<?= $pays ?>" placeholder="Votre pays" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <div id="autocomplete-list-pays" class="autocomplete-suggestions"></div>
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__region">Région</label>
-                                    <input type="text" name="region" id="compte__region" value="<?= $region ?>"
-                                        placeholder="Votre région"
-                                        oninput="this.value = this.value.replace(/[^a-zA-Z\s']/g, '');">
+                                    <input required="required" type="text" name="region" id="compte__region" value="<?= $region ?>" placeholder="Votre région" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <div id="autocomplete-list-regions" class="autocomplete-suggestions"></div>
                                 </div>
                             </div>
                             <div class="ligne">
                                 <div class="compte__input">
                                     <label for="compte__departement">Département</label>
-                                    <input type="text" name="departement" id="compte__departement"
-                                        value="<?= $departement ?>" placeholder="Votre département"
-                                        oninput="this.value = this.value.replace(/[^a-zA-Z\s']/g, '');">
+                                    <input required="required" type="text" name="departement" id="compte__departement" value="<?= $departement ?>" placeholder="Votre département" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <div id="autocomplete-list-departement" class="autocomplete-suggestions"></div>
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__ville">Ville</label>
-                                    <input type="text" name="commune" id="compte__ville" value="<?= $ville ?>"
-                                        placeholder="Votre ville"
-                                        oninput="this.value = this.value.replace(/[^a-zA-Z\s']/g, '');">
+                                    <input required="required" type="text" name="commune" id="compte__ville" value="<?= $ville ?>" placeholder="Votre ville" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <div id="autocomplete-list-ville" class="autocomplete-suggestions"></div>
                                 </div>
                                 <div class="compte__input">
-                                    <label for="compte__ville">Code postal</label>
-                                    <input type="text" name="code_postal" id="compte__code_postal"
-                                        value="<?= $code_postal ?>" placeholder="Votre code postal"
-                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                    <label for="code_postal">Code postal</label>
+                                    <input required="required" type="text" name="code_postal" id="compte__code_postal" value="<?= $code_postal ?>" placeholder="Votre code postal" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                 </div>
                             </div>
                             <div class="ligne">
                                 <div class="compte__input">
                                     <label for="compte__rue">Nom de la rue</label>
-                                    <input type="text" name="rue" id="compte__rue" value="<?= $voie ?>"
+                                    <input required="required" type="text" name="rue" id="compte__rue" value="<?= $voie ?>"
                                         placeholder="Votre rue"
                                         oninput="this.value = this.value.replace(/[^a-zA-Z\s']/g, '');">
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__rue">Numéro de rue</label>
-                                    <input type="number" name="numero" id="compte__rue_numero" value="<?= $numero ?>"
+                                    <input required="required" type="number" name="numero" id="compte__rue_numero" value="<?= $numero ?>"
                                         placeholder="Numéro de votre rue"
                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                 </div>
@@ -888,7 +883,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                     </div>
                                 <?php endforeach;
                                 ?>
-                                <button type="button" id="generer_token" value="Générer Token">Générer Token</button>
+                                <button type="button" id="generer_token"  class="sauvegarde"value="Générer Token">Générer Token</button>
                             </form>
                     </div>
                     
@@ -996,7 +991,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                     </div>
                                 <?php endforeach;
                                 ?>
-                                <button type="button" id="generer_api" value="Générer clé API">Générer clé API</button>
+                                <button type="button" id="generer_api" class="sauvegarde" value="Générer clé API">Générer clé API</button>
                             </form>
 
                             </div>
@@ -1006,6 +1001,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </main>
     </div>
+    <script src="../js/consulter_mon_compte.js"></script>
+    <script src="../js/toast.js"></script>
+</body>
 <?php include "./footer.php";
 $serverName =
     $_SERVER["SERVER_NAME"] .

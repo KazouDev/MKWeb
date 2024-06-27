@@ -147,12 +147,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="connect__input__ligne">
                                 <div class="connect__input">
                                     <label for="connect__name">Nom</label>
-                                    <input type="text" name="nom" id="connect__name" placeholder="Votre nom" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="nom" id="connect__name" placeholder="Votre nom" required oninput="this.value = this.value.replace(/[^a-zA-Z\s-]/g, '');">
                                 </div>
                                 <div class="connect__input">
                                     <label for="connect__surname">Prénom</label>
                                     <input type="text" name="prenom" id="connect__surname" placeholder="Votre prénom"
-                                        required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                        required oninput="this.value = this.value.replace(/[^a-zA-Z\s-]/g, '');">
                                 </div>
                             </div>
                             <div class="connect__input__ligne">
@@ -188,13 +188,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="connect__input connect__input__add">
                                 <label for="connect__pass">Adresse de facturation</label>
                                 <div class="connect__input__ligne">
-                                    <input type="text" name="pays" id="connect__pays" placeholder="Pays" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
-                                    <input type="text" name="region" id="connect__region" placeholder="Région" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
-                                    <input type="text" name="departement" id="connect__departement" placeholder="Département" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
-                                    <input type="text" name="commune" id="connect__ville" placeholder="Ville" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <div class="rel">
+                                         <input type="text" name="pays" id="connect__pays" placeholder="Pays" required oninput="this.value = this.value.replace(/[^a-zA-Z\s-]/g, '');">
+                                    <div id="autocomplete-list-pays" class="autocomplete-suggestions"></div>
+                                    </div>
+                                   <div class="rel">
+                                        <input type="text" name="region" id="connect__region" placeholder="Région" required oninput="this.value = this.value.replace(/[^a-zA-Z\s-]/g, '');">
+                                        <div id="autocomplete-list-region" class="autocomplete-suggestions"></div>
+                                   </div>
+                                    <div class="rel">
+                                        <input type="text" name="departement" id="connect__departement" placeholder="Département" required oninput="this.value = this.value.replace(/[^a-zA-Z\s-]/g, '');">
+                                        <div id="autocomplete-list-departement" class="autocomplete-suggestions"></div>
+                                    </div>
+                                    <div class="rel">
+                                        <input type="text" name="commune" id="connect__ville" placeholder="Ville" required oninput="this.value = this.value.replace(/[^a-zA-Z\s-]/g, '');">
+                                        <div id="autocomplete-list-ville" class="autocomplete-suggestions"></div>
+                                    </div>
                                     <input type="text" name="code" id="connect__code" placeholder="Code postal" required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                     <input type="number" name="numero" id="connect__numero" placeholder="Numéro de rue" required>
-                                    <input type="text" name="rue" id="connect__rue" placeholder="Nom de la rue" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="rue" id="connect__rue" placeholder="Nom de la rue" required oninput="this.value = this.value.replace(/[^a-zA-Z\s-]/g, '');">
                                 </div>
                                 <div class="connect__input__ligne">
                                     <input type="text" name="complement1" id="connect__complement1"
@@ -235,7 +247,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php if ($passwordLengthInvalid): ?>
                                 <p class="login_invalid">Le mot de passe doit contenir au moins 8 caractères.</p>
                             <?php endif; ?>
-                            <input type="submit" value="Continuer">
+                            <input type="submit" class="hover" value="Continuer">
                         </form>
                         <p class="p_ligne">Ou</p>
                         <p style="align-self: center; text-align:center;">Vous possédez déjà un compte ? <a href="login.php"

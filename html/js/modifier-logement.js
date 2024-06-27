@@ -1,6 +1,6 @@
 const previewDiv = document.getElementById("image-preview");
 const imageInput = document.getElementById("image-input");
-const logementForm = document.getElementById("nv-logement");
+const logementForm = document.getElementById("edit-logement");
 
 const btnAddAmenagement = document.getElementById("ajouter__amenagement");
 const divAmenagement = document.getElementById("list__amenagement");
@@ -16,6 +16,7 @@ inputCheckbox.forEach((check) => {
     checkbox.checked = !checkbox.checked;
   });
 });
+
 
 var imageList = [];
 
@@ -46,7 +47,7 @@ btnAddAmenagement.addEventListener("click", () => {
     div.remove();
   });
 
-  input.type = "hidden";
+  input.type = "hidden";    
   input.name = "activite[]";
   input.value = amenagement.name + ";;" + amenagement.distanceID;
 
@@ -62,6 +63,15 @@ btnAddAmenagement.addEventListener("click", () => {
   divAmenagement.appendChild(div);
 });
 
+const boutonsDelete = document.querySelectorAll(".btn__remove_edit");
+boutonsDelete.forEach((element)=>{
+    element.addEventListener("click",function(){
+        element.parentNode.remove();
+    })
+})
+
+
+
 imageInput.addEventListener("change", (e) => {
   const files = e.target.files;
   const preview = document.getElementById("image-preview");
@@ -71,13 +81,12 @@ imageInput.addEventListener("change", (e) => {
     return arr[arr.length - 1];
   });
 
+  console.log(imgPreviews);
+
   if (imgPreviews.length == 0) previewDiv.innerHTML = "";
 
   Array.from(files).forEach((file) => {
     if (!imgPreviews.includes(file.name)) {
-      if (imageList.length > 6) {
-        return;
-      }
       imageList.push(file);
 
       const reader = new FileReader();
@@ -130,21 +139,8 @@ const updateSubmitingButton = () => {
   loadingModal.style.display = isSubmiting ? "flex" : "none";
 };
 
-const prixHT = document.getElementById("prixht");
-const surface = document.getElementById("surface");
-
 submitButton.addEventListener("click", async (e) => {
   e.preventDefault();
-  prixHT.value = prixHT.value.replace(/,/g, ".");
-  if (/^[,.]/.test(prixHT.value)) {
-    prixHT.value = prixHT.value.substring(1);
-  }
-
-  surface.value = surface.value.replace(/,/g, ".");
-  if (/^[,.]/.test(surface.value)) {
-    surface.value = surface.value.substring(1);
-  }
-
   var imgPreviews = Array.from(document.querySelectorAll(".img_preview"));
   if (!logementForm.reportValidity() || isSubmiting) return;
 
@@ -163,7 +159,6 @@ submitButton.addEventListener("click", async (e) => {
     imageInput.name = "images[]";
   } else {
     imageInput.focus();
-    showToast("Image obligatoire", true);
     isSubmiting = false;
     updateSubmitingButton();
     return;
@@ -193,11 +188,9 @@ submitButton.addEventListener("click", async (e) => {
   if (data.results.length > 0) {
     latitudeInput.value = data.results[0].geometry.lat;
     longitudeInput.value = data.results[0].geometry.lng;
-    console.log(data);
   } else {
     console.error("Adresse invalide.");
     document.getElementById("voie").focus();
-    showToast("Adresse invalide", true);
     isSubmiting = false;
     updateSubmitingButton();
     return;
@@ -213,35 +206,29 @@ submitButton.addEventListener("click", async (e) => {
     body: formData,
   });
 
-  fetch("../ajax/creer-logement.ajax.php", {
+  fetch("../ajax/modifier-logement.ajax.php", {
     method: "POST",
   })
-    .then((response) => response.text())
+    .then((response) => response.text() )
     .then((data) => {
-      console.log(data);
+    console.log(data)
       if (data.err == false) {
         isSubmiting = false;
         updateSubmitingButton();
-        window.location.href = "index.php?id=" + data.id;
+        console.log("coucou");
+       
       } else {
         isSubmiting = false;
         updateSubmitingButton();
+        sessionStorage.setItem('message', 'Logement modifié avec succès!');
+        window.location.href = "liste-logement.php" ;
       }
     });
 });
 
+
 previewButton.addEventListener("click", async (e) => {
   e.preventDefault();
-  prixHT.value = prixHT.value.replace(/,/g, ".");
-  if (/^[,.]/.test(prixHT.value)) {
-    prixHT.value = prixHT.value.substring(1);
-  }
-
-  surface.value = surface.value.replace(/,/g, ".");
-  if (/^[,.]/.test(surface.value)) {
-    surface.value = surface.value.substring(1);
-  }
-
   var imgPreviews = Array.from(document.querySelectorAll(".img_preview"));
   if (!logementForm.reportValidity() || isSubmiting) return;
 
@@ -260,7 +247,6 @@ previewButton.addEventListener("click", async (e) => {
     imageInput.name = "images[]";
   } else {
     imageInput.focus();
-    showToast("Image obligatoire", true);
     isSubmiting = false;
     updateSubmitingButton();
     return;
@@ -290,10 +276,10 @@ previewButton.addEventListener("click", async (e) => {
   if (data.results.length > 0) {
     latitudeInput.value = data.results[0].geometry.lat;
     longitudeInput.value = data.results[0].geometry.lng;
-  } else {
+  } else
+   {
     console.error("Adresse invalide.");
     document.getElementById("voie").focus();
-    showToast("Adresse invalide", true);
     isSubmiting = false;
     updateSubmitingButton();
     return;
@@ -307,19 +293,11 @@ previewButton.addEventListener("click", async (e) => {
   await fetch("../ajax/store-form-data.ajax.php", {
     method: "POST",
     body: formData,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      if (data.err == undefined || data.err == false) {
-        isSubmiting = false;
-        updateSubmitingButton();
-        logementForm.submit();
-      } else {
-        isSubmiting = false;
-        updateSubmitingButton();
-      }
-    });
+  });
+
+  isSubmiting = false;
+  updateSubmitingButton();
+  logementForm.submit();
 });
 
 const resetButton = document.getElementById("reset");
@@ -334,112 +312,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("#image-preview .btn__remove").forEach((b) => {
     b.addEventListener("click", () => {
       b.parentElement.remove();
-    });
-  });
-});
-
-const verifyValueInt = (event) => {
-  const key = event.key || event.target.value;
-
-  if (
-    key === "Backspace" ||
-    key === "Tab" ||
-    key === "ArrowLeft" ||
-    key === "ArrowRight"
-  ) {
-    return;
-  }
-
-  if (!/^\d+$/.test(key)) {
-    event.preventDefault();
-  }
-
-  const inputValue = parseInt(event.target.value);
-  if (inputValue > Number.MAX_SAFE_INTEGER) {
-    event.target.value = Number.MAX_SAFE_INTEGER;
-  }
-};
-
-const verifyValueFloat = (event) => {
-  const key = event.key;
-
-  if (
-    key === "Backspace" ||
-    key === "Tab" ||
-    key === "ArrowLeft" ||
-    key === "ArrowRight"
-  ) {
-    return;
-  }
-
-  if (!/[0-9.,]/.test(key)) {
-    event.preventDefault();
-    return;
-  }
-
-  const inputValue = event.target.value;
-  if (/.*[.,].*/.test(inputValue) && (key == "." || key == ",")) {
-    event.preventDefault();
-  }
-  if (/^[,.]/.test(inputValue)) {
-    event.target.value = inputValue.substring(1);
-  }
-
-  if (inputValue > Number.MAX_SAFE_INTEGER) {
-    event.target.value = Number.MAX_SAFE_INTEGER;
-  }
-};
-
-const nbPersonne = document.getElementById("nbpersonne");
-const dureeLoc = document.getElementById("dureeloc");
-const preavis = document.getElementById("preavis");
-
-const chambre = document.getElementById("chambre");
-const simple = document.getElementById("simple");
-const double = document.getElementById("double");
-
-prixHT.addEventListener("keydown", verifyValueFloat);
-prixHT.addEventListener("input", verifyValueFloat);
-
-nbPersonne.addEventListener("keydown", verifyValueInt);
-nbPersonne.addEventListener("input", verifyValueInt);
-
-dureeLoc.addEventListener("keydown", verifyValueInt);
-dureeLoc.addEventListener("input", verifyValueInt);
-
-preavis.addEventListener("keydown", verifyValueInt);
-preavis.addEventListener("input", verifyValueInt);
-
-surface.addEventListener("keydown", verifyValueFloat);
-surface.addEventListener("input", verifyValueFloat);
-
-chambre.addEventListener("keydown", verifyValueInt);
-chambre.addEventListener("input", verifyValueInt);
-
-simple.addEventListener("keydown", verifyValueInt);
-simple.addEventListener("input", verifyValueInt);
-
-double.addEventListener("keydown", verifyValueInt);
-double.addEventListener("input", verifyValueInt);
-
-document.addEventListener("DOMContentLoaded", function () {
-  var selectElements = document.querySelectorAll("select");
-
-  function updateSelectColor(selectElement) {
-    if (selectElement.value) {
-      selectElement.classList.add("selected");
-    } else {
-      selectElement.classList.remove("selected");
-    }
-  }
-
-  selectElements.forEach(function (selectElement) {
-    // Initial check
-    updateSelectColor(selectElement);
-
-    // Update color on change
-    selectElement.addEventListener("change", function () {
-      updateSelectColor(selectElement);
     });
   });
 });

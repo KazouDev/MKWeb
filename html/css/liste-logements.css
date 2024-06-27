@@ -13,6 +13,7 @@ div.main__container.logements > div.titreLogement {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 div.main__container.logements > div.titreLogement > div:first-child {
   align-items: center;
@@ -72,6 +73,7 @@ div.main__container.logements > div.titreLogement > a.ajouter {
 .card_logement > div.card_main > div.info_logement > img {
   width: 17rem;
   max-width: 17rem;
+  min-width: 17rem;
   -o-object-fit: cover;
      object-fit: cover;
   height: 12.5rem;
@@ -105,10 +107,10 @@ div.main__container.logements > div.titreLogement > a.ajouter {
 .card_logement > div.card_main > div.info_logement > div.actionInfo > div.actions > div.edit {
   border-radius: 0.75rem;
   padding: 0.5rem;
-  background: #69C6FA;
+  background: #69c6fa;
   align-self: center;
 }
-.card_logement > div.card_main > div.info_logement > div.actionInfo > div.actions > div.edit > img {
+.card_logement > div.card_main > div.info_logement > div.actionInfo > div.actions > div.edit > a > img {
   width: 25px;
 }
 
@@ -119,7 +121,8 @@ div.main__container.logements > div.titreLogement > a.ajouter {
   color: #ffffff;
 }
 
-.Actif, .Inactif {
+.Actif,
+.Inactif {
   display: flex;
   justify-content: center;
   padding: 15px 25px;
@@ -187,7 +190,8 @@ div.main__container.logements > div.titreLogement > a.ajouter {
   .actions {
     flex-direction: row;
   }
-  #complement1, #complement2 {
+  #complement1,
+  #complement2 {
     text-align: center;
   }
 }
@@ -198,19 +202,39 @@ div.main__container.logements > div.titreLogement > a.ajouter {
     align-items: flex-start !important;
   }
 }
-div.main__container.logements > div.titreLogement {
-  padding-top: 2rem;
+.alert {
+  position: sticky;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 16px 22px 17px 20px;
+  display: flex;
+  align-items: center;
+  background-color: #5669ff;
+  align-self: center;
+  bottom: 10px;
 }
 
-@media (max-width: 580px) {
-  div.main__container.logements > div.titreLogement {
-    padding-top: 1rem;
-  }
-  .card_logement > div.card_main > div.info_logement > img {
-    max-width: none;
-    width: 100%;
-  }
-  .card_logement > div.card_main > div.info_logement > div.actionInfo > div.detaille_logement {
-    gap: 1rem;
-  }
+.hidden {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.fade-in {
+  display: flex;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.hover {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.hover:hover {
+  cursor: pointer;
+  background: #9aa5ff !important;
+}
+
+.hover.blue:hover {
+  background: #90d3fa !important;
 }/*# sourceMappingURL=liste-logements.css.map */

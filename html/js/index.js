@@ -226,6 +226,13 @@ function php_genererListeLogement() {
 
       nb_logement_trouve.textContent = listeLogements.length;
 
+      if (listeLogements.length <= 6) {
+        document.getElementById("decouvrir_plus").style.display = "none";
+      }
+      else {
+        document.getElementById("decouvrir_plus").style.display = "block";
+      }
+
       if (listeLogements.length > 0) {
         /* construction categorie "Nos logements" */
         for (let i = 0; i < listeLogements.length; i++) {

@@ -1,11 +1,4 @@
 @import url("setup.css");
-select {
-  color: rgba(34, 34, 34, 0.5);
-}
-select.selected {
-  color: #222;
-}
-
 .main__container {
   display: flex;
   flex-direction: column;
@@ -37,10 +30,6 @@ select.selected {
 .main__container > .top > i {
   font-size: 1.875rem;
 }
-.main__container > .top > i:hover {
-  cursor: pointer;
-  color: #9aa5ff;
-}
 .main__container h1 {
   text-align: left;
   font-size: 2.25rem;
@@ -58,6 +47,7 @@ section {
 section > .top p,
 section h2 {
   margin-left: 0.5rem;
+  font-weight: 300;
   font-size: 2rem;
   letter-spacing: 1px;
 }
@@ -81,6 +71,9 @@ section .container #image-preview {
 }
 section .container #image-preview img {
   width: 10rem;
+  height: 10rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 section .container #image-preview div {
   position: relative;
@@ -188,7 +181,7 @@ section .field-container #list__amenagement div {
   gap: 1rem;
   font-size: 1rem;
 }
-section .field-container #list__amenagement div .btn__remove {
+section .field-container #list__amenagement div .btn__remove, section .field-container #list__amenagement div .btn__remove_edit {
   color: #ff6258;
 }
 section .field-container #list__amenagement div p {
@@ -205,16 +198,8 @@ section#section__image {
 section#section__image input[type=button] {
   background-color: #79da7d;
   color: #ffffff;
-  width: -moz-fit-content;
-  width: fit-content;
-  border-radius: 0.5rem;
-  padding: 1rem 3rem;
+  width: 30%;
   border: none;
-}
-@media screen and (max-width: 600px) {
-  section#section__image input[type=button] {
-    padding: 0.7rem 2rem;
-  }
 }
 
 input:not([type=checkbox]),
@@ -247,6 +232,7 @@ select {
   border-radius: 0.75rem;
   border: 1px solid #222;
   padding: 1rem;
+  color: rgba(34, 34, 34, 0.5);
   font-size: 1rem;
   font-weight: 300;
   -webkit-appearance: none;
@@ -263,7 +249,7 @@ select {
   cursor: pointer;
   align-self: stretch;
   border-radius: 0.5rem;
-  padding: 1rem 6rem;
+  width: 10%;
   background-color: #79da7d;
   color: #ffffff;
   display: flex;
@@ -273,11 +259,13 @@ select {
 @media screen and (max-width: 600px) {
   .ajouter,
   .envoyer {
-    padding: 0.7rem 2rem;
+    width: 18%;
   }
 }
 
 .envoyer {
+  width: 25%;
+  height: 40px;
   background-color: #5669ff;
 }
 
@@ -318,10 +306,24 @@ select {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 #form__preview {
   background-color: #dd69fa;
+}
+
+.logement__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+.logement__empty h4 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #878787;
+  text-align: center;
 }
 
 .main__container > .top {
@@ -332,48 +334,41 @@ select {
   .main__container > .top {
     padding-top: 1rem;
   }
-  section > .top p,
-  section h2 {
+  section > .top p, section h2 {
     font-size: 1.5rem;
   }
   section .field-container .full-size .info_gen__input {
     width: 100%;
   }
-  .main__container h1 {
-    font-size: 2rem;
-  }
   section .field-container .info_gen__input.adresse {
     width: 100%;
   }
-  section#section__image input[type=button] {
-    padding: 0.7rem 2rem;
-    width: 100%;
+  .envoyer {
+    padding: 1rem;
+    width: 40%;
   }
-  .buttons {
-    padding-bottom: 1rem;
+  .main__container form {
+    padding-bottom: 1.5rem;
+  }
+  section#section__image input[type=button] {
+    width: 100%;
   }
   section .field-container .amenagement__input {
     flex-wrap: wrap;
   }
+  .ajouter {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  .main__container h1 {
+    font-size: 2rem;
+  }
 }
-.buttons {
+.main__container form {
   padding-bottom: 2rem;
 }
 
-.hover {
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
-}
-
-.hover:hover {
-  cursor: pointer;
-  background-color: #9aa5ff !important;
-}
-
-.hover.pink:hover {
-  background: #efadff !important;
-}
-
-.hover.green:hover {
-  background: #ade5ae !important;
-}/*# sourceMappingURL=creer-logement.css.map */
+section > .top p, section h2 {
+  font-weight: 300;
+}/*# sourceMappingURL=modifier-logement.css.map */

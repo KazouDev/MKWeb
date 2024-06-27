@@ -14,7 +14,6 @@
     inner join sae._langue on sae._langue_proprietaire.id_langue = sae._langue.id
     WHERE sae._langue_proprietaire.id_proprietaire = $id_proprio;";
 
-    $amenagements_list = $_POST["amenagements"] ?? [];
     $titre_logement =  $_POST['titre'] ;
     $ville = $_POST['commune'];
     $departement = $_POST['departement'];
@@ -33,14 +32,10 @@
 
     $rep_langue = request($query_langue);
 
-    $liste_amenagement = [];
-    $ame = request("SELECT amenagement FROM sae._amenagement");
-
-    foreach($amenagements_list ?? [] as $cle => $a){
-           $liste_amenagement[] = $ame[$a - 1]["amenagement"];
-    };
+    $idsAmenagementStrings = implode(",", array_map('intval', $_SESSION["form_data"]["amenagements"]));
+    $queryAmenagement = "SELECT amenagement FROM sae._amenagement  WHERE id IN ($idsAmenagementStrings)";    
     
-
+    $liste_amenagement = request($queryAmenagement,false);
     $liste_langue = [];
     foreach($rep_langue as $cle => $langues){
         foreach($langues as $cle => $langue){
@@ -65,8 +60,8 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/logement.css">
-    <link rel="stylesheet" href="../css/preview.css">
     <title><?= $titre_logement?></title>
+    <link rel="stylesheet" href="../css/preview.css">
     <script src="https://kit.fontawesome.com/7f17ac2dfc.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -96,6 +91,12 @@
                         <?php foreach($_SESSION["form_images"] ?? [] as $key=>$photo) { ?>
                             <img src="<?="../img".$photo?>" alt="Photo logement">
                         <?php } ?>
+                        <?php if(isset($_SESSION["form_data"]["img-preview"])){
+                            foreach($_SESSION["form_data"]["img-preview"] as $src) {?>
+                            <img src="<?="../img".$src?>" alt="Photo logement">
+
+                         <?php   }
+                        } ?>
                     </div>
                 </div>
                 <div class="logement-container">
@@ -133,7 +134,7 @@
                                     <div class="logement__propose">
                                         <ul>
                                             <?php foreach($liste_amenagement as $a) { ?>
-                                                <li class="proposition"><?php echo $a ?></li>
+                                                <li class="proposition"><?php echo $a["amenagement"] ?></li>
                                             <?php } ?>
                                         </ul>
                                         <a href="">Conditions d’annulation</a>
@@ -228,7 +229,7 @@
         <?php include_once 'footer.php'; ?>
     </div>
     
-    <script src="../js/toast.js"></script>
-    <script src="../js/preview-logement.js"></script>
+    
+    <script src="../js/preview-logement-edit.js"></script>
 </body>
 </html>

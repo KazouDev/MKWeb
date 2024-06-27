@@ -619,7 +619,7 @@
 .hote {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   border-bottom: 1px solid #909090;
   padding: 2rem 0px 2rem 0px;
 }
@@ -709,7 +709,7 @@
   font-size: 1rem;
 }
 .asavoir h3 {
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
@@ -919,8 +919,7 @@
     max-width: none;
   }
   .environs #environs__map {
-    width: 20rem;
-    height: 20rem;
+    width: 100%;
   }
   .environs .environs__details {
     width: 100%;
@@ -1179,5 +1178,57 @@ input:focus {
   }
   to {
     opacity: 1;
+  }
+}
+@media (max-width: 1200px) {
+  .logement-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .form__logement {
+    position: initial;
+    align-self: center;
+  }
+  .logement__res {
+    align-self: center;
+  }
+}
+@media (max-width: 800px) {
+  .details__nom {
+    flex-direction: column;
+  }
+  .logement__details {
+    padding-right: 0rem;
+  }
+}
+@media (max-width: 500px) {
+  .logement__nom {
+    margin-bottom: 1rem;
+  }
+  .card__cont {
+    width: 100%;
+    min-height: 15rem;
+  }
+  .main__container.logement {
+    gap: 1rem;
+  }
+  .logement__adr a {
+    padding: 0.7rem;
+    font-size: 0.75rem;
+  }
+  .form__logement {
+    gap: 0.8rem;
+    padding: 1rem;
+  }
+  #appear_calcul {
+    width: 100%;
+  }
+  .apropos button {
+    padding: 0.7rem;
+  }
+}
+@media (max-width: 450px) {
+  container-calendar #calendar th, #container-calendar #calendar td {
+    padding: 5px;
   }
 }/*# sourceMappingURL=logement.css.map */
