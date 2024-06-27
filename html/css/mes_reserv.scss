@@ -75,6 +75,7 @@ body {
   box-shadow: 4px 4px 16px rgba(18, 18, 18, 0.06);
   padding: 0.75rem;
   border-radius: 99px; // juste un grand nombre pour créer un effet pilule
+
   * {
     z-index: 2;
   }
@@ -110,28 +111,30 @@ input[type="radio"] {
 }
 
 // Styles des inputs radio cochés
-input[type="radio"]:checked + label {
+input[type="radio"]:checked+label {
   color: var(--primary-color);
-  & > .notification {
+
+  &>.notification {
     background-color: var(--primary-color);
     color: #fff;
   }
 }
 
-input[id="radio-1"]:checked ~ .glider {
+input[id="radio-1"]:checked~.glider {
   transform: translateX(0);
 }
 
-input[id="radio-2"]:checked ~ .glider {
+input[id="radio-2"]:checked~.glider {
   transform: translateX(100%);
 }
 
-input[id="radio-3"]:checked ~ .glider {
+input[id="radio-3"]:checked~.glider {
   transform: translateX(200%);
 }
-input[id="radio-4"]:checked ~ .glider {
-    transform: translateX(300%);
-  }
+
+input[id="radio-4"]:checked~.glider {
+  transform: translateX(300%);
+}
 
 // Glider
 .glider {
@@ -145,21 +148,14 @@ input[id="radio-4"]:checked ~ .glider {
   transition: 0.25s ease-out;
 }
 
-// Media queries
-@media (max-width: 900px) {
-  .tabs {
-    transform: scale(0.8);
-  }
-}
+
 
 @media (max-width: 750px) {
   .mes__reserv__titre h1 {
     font-size: $h3Size;
   }
 
-  .tabs {
-    transform: scale(0.7);
-  }
+
 
   .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix h4 {
     font-size: $h5Size !important;
@@ -296,7 +292,7 @@ input[id="radio-4"]:checked ~ .glider {
         font-weight: $normalWeight;
       }
 
-      > h4 {
+      >h4 {
         font-size: $h4Size;
         font-weight: $semiboldWeight;
       }
@@ -384,7 +380,7 @@ input[id="radio-4"]:checked ~ .glider {
         font-weight: $lightWeight;
       }
 
-      > h4 {
+      >h4 {
         font-size: $h4Size;
         font-weight: $normalWeight;
       }
@@ -473,4 +469,258 @@ input[id="radio-4"]:checked ~ .glider {
   flex-direction: row;
   gap: 1.5rem;
   align-items: center;
+}
+
+@media (max-width: 1000.98px) {
+  .mes__reserv__titre {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .tab,
+  .glider {
+    width: 180px;
+  }
+}
+
+@media (max-width: 770.98px) {
+  .card__reserv {
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    align-items: center;
+  }
+
+  .tab,
+  .glider {
+    width: 150px;
+  }
+
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix :last-child {
+    font-size: 1.5rem;
+  }
+
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description>h4,
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
+    font-size: 1.2rem;
+  }
+
+  .card__reserv .mes__reserv__date {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card__reserv .mes__reserv__date i {
+    display: none;
+  }
+
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description {
+    gap: 0.8rem;
+  }
+
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description>h4,
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
+    font-size: 1rem;
+  }
+
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description>h4,
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
+    font-size: 1rem;
+  }
+
+  .card__reserv img {
+
+    height: 170px;
+    width: 180px;
+  }
+
+}
+
+@media (max-width: 636.98px) {
+  .tabs {
+    flex-direction: column;
+    border-radius: 5%;
+    padding: 0.5rem;
+    position: sticky;
+    top: 30px;
+  }
+
+  .mes__reserv__titre {
+    flex-direction: row;
+    padding-top: 1rem;
+
+  }
+
+  .mes__reserv__titre h1 {
+    font-size: 1.5rem;
+  }
+
+  .glider {
+    display: none;
+  }
+
+  .tab {
+    width: 130px;
+    height: 40px;
+    justify-content: space-between;
+  }
+
+  .card__reserv {
+    flex-direction: column;
+    width: 70%;
+    align-items: flex-start;
+
+  }
+
+  .card__reserv img {
+    width: 100%;
+  }
+
+  .mes__reserv__titre {
+    height: 50px;
+  }
+}
+
+@media (max-width: 536.98px) {
+  .tab {
+    width: 110px;
+    height: 30px;
+    font-size: 1rem;
+  }
+
+  .tabs {
+    gap: 0.8rem;
+  }
+
+  .card__reserv {
+    flex-direction: column;
+    width: 60%;
+    align-items: flex-start;
+  }
+
+}
+
+@media (max-width: 500.98px) {
+  .card__reserv .mes__reserv__cont_desc_prix {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+
+  .card__reserv {
+    width: 70%;
+  }
+
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix :last-child {
+    color: $mainViolet;
+  }
+
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 450.98px) {
+  .tab {
+    width: 90px;
+    height: 20px;
+    font-size: 0.8rem;
+  }
+
+  .notification {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-left: 0.35rem;
+
+  }
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description p {
+    padding: 0.3rem 1rem;
+}
+}
+.mes__reserv__titre{
+  padding-top: 2rem;
+}
+@media (max-width: 1200.98px){
+  .buisness_mes_reserv_line .buisness_left_big_box {
+    gap: 4rem;
+}
+.buisness_mes_reserv_line .ligne__status{
+  width: 70%;
+}
+}
+@media (max-width: 1000.98px){
+  .buisness_mes_reserv_line .buisness_left_big_box {
+    gap: 2rem;
+}
+.buisness_mes_reserv_line p {
+  font-size: 0.8rem;
+}
+.buisness_mes_reserv_line h4{
+  font-size: 1.2rem;
+}
+.buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h5, .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h4  {
+  font-size: 1rem;
+}
+.icon-right {
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+.buisness_mes_reserv_line .buisness_left_big_box{
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+}
+@media (max-width: 640.98px){
+  .mes__reserv__titre {
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+}
+.buisness_mes_reserv_line .ligne__status {
+  width: 80%;
+}
+.buisness_mes_reserv_line h4 {
+  font-size: 1rem;
+}
+.buisness_mes_reserv_line p {
+  text-align: center;}
+  .icon-right{
+    padding: 0.75rem;
+  }
+  .buisness_mes_reserv_line .buisness_left_big_box{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .icon-right{
+    margin: initial;
+    align-self: flex-start;
+  }
+  .buisness_mes_reserv_line .ligne__status {
+    width: 100%;
+}
+}
+@media (max-width: 500.98px){
+  .buisness_mes_reserv_line .ligne__status {
+    flex-direction: column;
+    width: 60%;
+  }
+  .buisness_mes_reserv_line .buisness_left_big_box {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.buisness_mes_reserv_line .ligne__status{
+  gap: 1rem;
+}
+.buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box {
+  gap: 0.3rem;
+}
+.buisness_mes_reserv_line .buisness_left_big_box {
+  gap: 0.5rem;
+}
+.buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h5, .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h4,.buisness_mes_reserv_line h4 {
+  font-size: 0.8rem;
+}
+}
+.mes_reserv__numero h5{
+  color: $mainViolet;
 }

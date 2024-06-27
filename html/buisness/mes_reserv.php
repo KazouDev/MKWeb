@@ -122,9 +122,9 @@ function formatDateWithShortMonth($date)
             <div class="main__container reserv">
                 <div class="mes__reserv__titre">
                     <div class="page__tilte">
-                        <h1>Les réservations</h1>
+                        <h1>Réservations</h1>
                     </div>
-                    <div class="container">
+
                         <div class="tabs">
                             <input type="radio" id="radio-1" name="tabs" checked />
                             <label class="tab" for="radio-1" data-category="venir">À venir<span class="notification"><?php echo $avenir; ?></span></label>
@@ -136,8 +136,7 @@ function formatDateWithShortMonth($date)
                             <label class="tab" for="radio-4" data-category="annu">Annulée<span class="notification"><?php echo $annulé; ?></span></label>
                             <span class="glider"></span>
                         </div>
-                    </div>
-                </div>
+  
                 <?php if (empty($results)) { ?>
                     <div class="mes__reserv__empty">
                         <h4>Vous n'avez pas encore de réservations</h4>

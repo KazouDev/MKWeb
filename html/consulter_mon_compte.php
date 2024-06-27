@@ -192,11 +192,11 @@
                             <div class="ligne">
                             <div class="compte__input">
                                     <label for="compte__nom">Nom</label>
-                                    <input type="text" name="nom" id="compte__nom" value="<?= $nom ?>" placeholder="Votre nom" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="nom" id="compte__nom" value="<?= $nom ?>" placeholder="Votre nom" oninput="this.value = this.value.replace(/[^a-zA-Z\s']/g, '');">
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__prenom">Prénom</label>
-                                    <input type="text" name="prenom" id="compte__prenom" value="<?= $prenom ?>"  placeholder="Votre prénom" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="prenom" id="compte__prenom" value="<?= $prenom ?>"  placeholder="Votre prénom" oninput="this.value = this.value.replace(/[^a-zA-Z\s']/g, '');">
                                 </div>
                                 
                                 <div class="compte__input">
@@ -241,21 +241,21 @@
                             <div class="ligne">
                                 <div class="compte__input">
                                     <label for="compte__prenom">Pays</label>
-                                    <input type="text" name="pays" id="compte__pays" value="<?= $pays ?>" placeholder="Votre pays" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="pays" id="compte__pays" value="<?= $pays ?>" placeholder="Votre pays" oninput="this.value = this.value.replace(/[^a-zA-Z\s']/g, '');">
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__region">Région</label>
-                                    <input type="text" name="region" id="compte__region" value="<?= $region ?>" placeholder="Votre région" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="region" id="compte__region" value="<?= $region ?>" placeholder="Votre région" oninput="this.value = this.value.replace(/[^a-zA-Z\s']/g, '');">
                                 </div>
                             </div>
                             <div class="ligne">
                                 <div class="compte__input">
                                     <label for="compte__departement">Département</label>
-                                    <input type="text" name="departement" id="compte__departement" value="<?= $departement ?>" placeholder="Votre département" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="departement" id="compte__departement" value="<?= $departement ?>" placeholder="Votre département" oninput="this.value = this.value.replace(/[^a-zA-Z\s']/g, '');">
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__ville">Ville</label>
-                                    <input type="text" name="commune" id="compte__ville" value="<?= $ville ?>" placeholder="Votre ville" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="commune" id="compte__ville" value="<?= $ville ?>" placeholder="Votre ville" oninput="this.value = this.value.replace(/[^a-zA-Z\s']/g, '');">
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__ville">Code postal</label>
@@ -265,7 +265,7 @@
                             <div class="ligne">
                                 <div class="compte__input">
                                     <label for="compte__rue">Nom de la rue</label>
-                                    <input type="text" name="rue" id="compte__rue" value="<?= $voie ?>" placeholder="Votre rue" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <input type="text" name="rue" id="compte__rue" value="<?= $voie ?>" placeholder="Votre rue" oninput="this.value = this.value.replace(/[^a-zA-Z\s']/g, '');">
                                 </div>
                                 <div class="compte__input">
                                     <label for="compte__rue">Numéro de rue</label>

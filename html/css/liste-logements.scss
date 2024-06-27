@@ -255,3 +255,18 @@ div.main__container.logements {
     }
 }
 
+div.main__container.logements > div.titreLogement{
+    padding-top: 2rem;
+}
+@media(max-width:580px){
+    div.main__container.logements > div.titreLogement{
+        padding-top: 1rem;
+    }
+    .card_logement > div.card_main > div.info_logement > img{
+        max-width: none;
+        width: 100%;
+    }
+    .card_logement > div.card_main > div.info_logement > div.actionInfo > div.detaille_logement {
+        gap: 1rem;
+    }
+}
