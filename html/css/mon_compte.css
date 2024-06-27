@@ -529,7 +529,7 @@ form {
   height: 3em;
 }
 
-@media (max-width: 100px) {
+@media (max-width: 1000px) {
   #generer_token, #generer_api {
     width: 100%;
   }
@@ -575,14 +575,23 @@ form {
   align-items: center;
 }
 
+.sauvegarde {
+  transition: 0.3s ease-in-out;
+}
+
+.sauvegarde:hover {
+  background: #9aa5ff;
+}
+
 /* CSS */
+/*
 #generer_token,
 #generer_api {
-  background-color: #ffffff;
-  border: 2px solid #222222;
+  background-color: $mainBlanc;
+  border: 2px solid $mainNoir;
   border-radius: 30px;
-  box-shadow: #222222 4px 4px 0 0;
-  color: #222222;
+  box-shadow: $mainNoir 4px 4px 0 0;
+  color: $mainNoir;
   cursor: pointer;
   display: inline-block;
   font-weight: 600;
@@ -600,14 +609,7 @@ form {
   background-color: #fff;
   box-shadow: none;
   transform: translateY(2px);
-}
-
-@media (min-width: 768px) {
-  #generer_token {
-    min-width: 120px;
-    padding: 0 25px;
-  }
-}
+}*/
 .token_conteneur {
   position: relative;
 }
