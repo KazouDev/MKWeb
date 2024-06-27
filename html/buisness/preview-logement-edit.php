@@ -83,7 +83,7 @@
                     </div>
                     <div class="logement__adr">
                         <h2 id="logement__adresse"><?php echo  $ville . ", " . $departement?></h2>
-                        <a id="enregistrer">Enregistrer</a>
+                        <a id="enregistrer" class="hover">Enregistrer</a>
                     </div>
                 </div>
                 <div class="logement__photos">

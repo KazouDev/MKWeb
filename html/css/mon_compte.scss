@@ -578,26 +578,31 @@ form {
   .changer_photo .ligne .sauvegarde,
   .mdp_conteneur .sauvegarde {
     width: 100% !important;
-  }}
-@media (max-width: 400.98px){
-    .detail_mon_compte__conteneur .ligne{
-        flex-wrap: wrap;
-    }
-    #compte__email, #compte__complement3 {
-        width: 100%;
-    }
-    .sauvegarde,     .changer_photo .ligne .sauvegarde,     .mdp_conteneur .sauvegarde {
-        width: 100% !important;
-    }
-    
+  }
 }
-#generer_token,#generer_api{
-  width:50%;
-  height:3em;
+@media (max-width: 400.98px) {
+  .detail_mon_compte__conteneur .ligne {
+    flex-wrap: wrap;
+  }
+  #compte__email,
+  #compte__complement3 {
+    width: 100%;
+  }
+  .sauvegarde,
+  .changer_photo .ligne .sauvegarde,
+  .mdp_conteneur .sauvegarde {
+    width: 100% !important;
+  }
 }
-@media (max-width:1000px){
-  #generer_token,#generer_api{
-    width:100%;
+#generer_token,
+#generer_api {
+  width: 50%;
+  height: 3em;
+}
+@media (max-width: 1000px) {
+  #generer_token,
+  #generer_api {
+    width: 100%;
   }
 }
 .token {
@@ -640,14 +645,11 @@ form {
     align-items: center;
   }
 }
-.sauvegarde{
+.sauvegarde {
   transition: 0.3s ease-in-out;
-  
 }
-.sauvegarde:hover{
+.sauvegarde:hover {
   background: $hoverViolet;
-  //transform: rotate3d(1, 1, 1, 360deg) scale(5) translate(100px,100px) ;
-
 }
 
 #generer_token {

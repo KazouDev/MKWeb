@@ -107,7 +107,7 @@ div.main__container.logements > div.titreLogement > a.ajouter {
 .card_logement > div.card_main > div.info_logement > div.actionInfo > div.actions > div.edit {
   border-radius: 0.75rem;
   padding: 0.5rem;
-  background: #69C6FA;
+  background: #69c6fa;
   align-self: center;
 }
 .card_logement > div.card_main > div.info_logement > div.actionInfo > div.actions > div.edit > a > img {
@@ -121,7 +121,8 @@ div.main__container.logements > div.titreLogement > a.ajouter {
   color: #ffffff;
 }
 
-.Actif, .Inactif {
+.Actif,
+.Inactif {
   display: flex;
   justify-content: center;
   padding: 15px 25px;
@@ -189,7 +190,8 @@ div.main__container.logements > div.titreLogement > a.ajouter {
   .actions {
     flex-direction: row;
   }
-  #complement1, #complement2 {
+  #complement1,
+  #complement2 {
     text-align: center;
   }
 }
@@ -221,4 +223,18 @@ div.main__container.logements > div.titreLogement > a.ajouter {
   display: flex;
   opacity: 1;
   transition: opacity 1s ease-in-out;
+}
+
+.hover {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.hover:hover {
+  cursor: pointer;
+  background: #9aa5ff !important;
+}
+
+.hover.blue:hover {
+  background: #90d3fa !important;
 }/*# sourceMappingURL=liste-logements.css.map */

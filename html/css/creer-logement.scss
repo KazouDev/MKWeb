@@ -32,6 +32,13 @@ $semiboldWeight: 600;
 $boldWeight: 700;
 $lineHeight: 1.5;
 
+select {
+  color: rgba(34, 34, 34, 0.5);
+  &.selected {
+    color: #222;
+  }
+}
+
 .main__container {
   display: flex;
   flex-direction: column;
@@ -65,6 +72,10 @@ $lineHeight: 1.5;
       }
     }
     & > i {
+      &:hover {
+        cursor: pointer;
+        color: $hoverViolet;
+      }
       font-size: 1.875rem;
     }
   }
@@ -143,8 +154,6 @@ section {
     }
 
     gap: 0.75rem;
-
-
 
     .input__checkbox {
       display: flex;
@@ -296,7 +305,6 @@ select {
   border-radius: 0.75rem;
   border: 1px solid #222;
   padding: 1rem;
-  color: rgba(34, 34, 34, 0.5);
   font-size: $h55Size;
   font-weight: $lightWeight;
   appearance: none;
@@ -375,29 +383,48 @@ select {
   .main__container > .top {
     padding-top: 1rem;
   }
-  section > .top p, section h2 {
+  section > .top p,
+  section h2 {
     font-size: 1.5rem;
-}
-section .field-container .full-size .info_gen__input{
-  width: 100%;
-}
-.main__container h1 {
-  font-size: 2rem;
-}
-section .field-container .info_gen__input.adresse {
-  width: 100%;
-}
-section#section__image input[type=button] {
-  padding: 0.7rem 2rem;
-  width: 100%;
-}
-.buttons {
-  padding-bottom: 1rem;
-}
-section .field-container .amenagement__input{
-  flex-wrap: wrap;
-}
+  }
+  section .field-container .full-size .info_gen__input {
+    width: 100%;
+  }
+  .main__container h1 {
+    font-size: 2rem;
+  }
+  section .field-container .info_gen__input.adresse {
+    width: 100%;
+  }
+  section#section__image input[type="button"] {
+    padding: 0.7rem 2rem;
+    width: 100%;
+  }
+  .buttons {
+    padding-bottom: 1rem;
+  }
+  section .field-container .amenagement__input {
+    flex-wrap: wrap;
+  }
 }
 .buttons {
   padding-bottom: 2rem;
+}
+
+.hover {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.hover:hover {
+  cursor: pointer;
+  background-color: $hoverViolet !important;
+}
+
+.hover.pink:hover {
+  background: #efadff !important;
+}
+
+.hover.green:hover {
+  background: #ade5ae !important;
 }

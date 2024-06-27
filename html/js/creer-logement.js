@@ -421,3 +421,25 @@ simple.addEventListener("input", verifyValueInt);
 
 double.addEventListener("keydown", verifyValueInt);
 double.addEventListener("input", verifyValueInt);
+
+document.addEventListener("DOMContentLoaded", function () {
+  var selectElements = document.querySelectorAll("select");
+
+  function updateSelectColor(selectElement) {
+    if (selectElement.value) {
+      selectElement.classList.add("selected");
+    } else {
+      selectElement.classList.remove("selected");
+    }
+  }
+
+  selectElements.forEach(function (selectElement) {
+    // Initial check
+    updateSelectColor(selectElement);
+
+    // Update color on change
+    selectElement.addEventListener("change", function () {
+      updateSelectColor(selectElement);
+    });
+  });
+});

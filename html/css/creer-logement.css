@@ -1,4 +1,11 @@
 @import url("setup.css");
+select {
+  color: rgba(34, 34, 34, 0.5);
+}
+select.selected {
+  color: #222;
+}
+
 .main__container {
   display: flex;
   flex-direction: column;
@@ -29,6 +36,10 @@
 }
 .main__container > .top > i {
   font-size: 1.875rem;
+}
+.main__container > .top > i:hover {
+  cursor: pointer;
+  color: #9aa5ff;
 }
 .main__container h1 {
   text-align: left;
@@ -236,7 +247,6 @@ select {
   border-radius: 0.75rem;
   border: 1px solid #222;
   padding: 1rem;
-  color: rgba(34, 34, 34, 0.5);
   font-size: 1rem;
   font-weight: 300;
   -webkit-appearance: none;
@@ -322,7 +332,8 @@ select {
   .main__container > .top {
     padding-top: 1rem;
   }
-  section > .top p, section h2 {
+  section > .top p,
+  section h2 {
     font-size: 1.5rem;
   }
   section .field-container .full-size .info_gen__input {
@@ -347,4 +358,22 @@ select {
 }
 .buttons {
   padding-bottom: 2rem;
+}
+
+.hover {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.hover:hover {
+  cursor: pointer;
+  background-color: #9aa5ff !important;
+}
+
+.hover.pink:hover {
+  background: #efadff !important;
+}
+
+.hover.green:hover {
+  background: #ade5ae !important;
 }/*# sourceMappingURL=creer-logement.css.map */

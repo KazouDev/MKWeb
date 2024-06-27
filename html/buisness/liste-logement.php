@@ -32,7 +32,7 @@
                     <div>
                         <h1>Mes Logements</h1>
                     </div>
-                    <a href="creer-logement.php" class="ajouter">
+                    <a href="creer-logement.php" class="ajouter hover">
                         <i class="fa-regular fa-plus"></i>
                         <p>Ajouter</p>
                     </a>
@@ -106,7 +106,7 @@
                                                 
                                                 <div class="actions">
                                                     
-                                                    <div class="edit">
+                                                    <div class="edit hover blue">
                                                         <a href="modifier-logement.php?id=<?=$logement["id"]?>">
                                                             <img src="../img/edit.png" alt="image pour éditer un logement " title="edit">
                                                         </a>

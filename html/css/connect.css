@@ -376,4 +376,14 @@
 .autocomplete-suggestion:hover {
   background-color: #9aa5ff;
   z-index: 501;
+}
+
+.hover {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.hover:hover {
+  cursor: pointer;
+  background-color: #9aa5ff !important;
 }/*# sourceMappingURL=connect.css.map */

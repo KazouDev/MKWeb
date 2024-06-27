@@ -242,7 +242,7 @@
                                 <option value=<?= $distance["id"]?>><?=ucfirst($distance["perimetre"])?></option>
                             <?php } ?>
                             </select>
-                            <button type="button" class="ajouter" id="ajouter__amenagement">Ajouter</button>
+                            <button type="button" class="ajouter hover green" id="ajouter__amenagement">Ajouter</button>
                         </div>
                     </div>
                 </section>
@@ -269,14 +269,14 @@
                         </div>
                     </div>
                     <input type="file" id="image-input" accept=".jpg,.jpeg,.png,.webp" hidden multiple>
-                    <input type="button" value="Ajouter une image" onclick="document.getElementById('image-input').click();" />
+                    <input type="button" class="hover green" value="Ajouter une image" onclick="document.getElementById('image-input').click();" />
                 </section>
                 <div class="buttons">
-                    <button id="form__preview" class="envoyer">
+                    <button id="form__preview" class="envoyer hover pink">
                         Prévisualiser
                     </button>
 
-                    <button id="form__submit" class="envoyer">
+                    <button id="form__submit" class="envoyer hover">
                         Enregistrer
                     </button>
                 </div>

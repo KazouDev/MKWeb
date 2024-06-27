@@ -322,7 +322,7 @@ $lineHeight: 1.5;
 @media (max-width: 500px) {
   .connect__from .mdp_oublie {
     font-size: 0.8rem;
-}
+  }
   .slider {
     height: 20vh;
   }
@@ -396,4 +396,14 @@ $lineHeight: 1.5;
 .autocomplete-suggestion:hover {
   background-color: #9aa5ff;
   z-index: 501;
+}
+
+.hover {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.hover:hover {
+  cursor: pointer;
+  background-color: $hoverViolet !important;
 }

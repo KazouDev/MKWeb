@@ -111,28 +111,28 @@ input[type="radio"] {
 }
 
 // Styles des inputs radio cochés
-input[type="radio"]:checked+label {
+input[type="radio"]:checked + label {
   color: var(--primary-color);
 
-  &>.notification {
+  & > .notification {
     background-color: var(--primary-color);
     color: #fff;
   }
 }
 
-input[id="radio-1"]:checked~.glider {
+input[id="radio-1"]:checked ~ .glider {
   transform: translateX(0);
 }
 
-input[id="radio-2"]:checked~.glider {
+input[id="radio-2"]:checked ~ .glider {
   transform: translateX(100%);
 }
 
-input[id="radio-3"]:checked~.glider {
+input[id="radio-3"]:checked ~ .glider {
   transform: translateX(200%);
 }
 
-input[id="radio-4"]:checked~.glider {
+input[id="radio-4"]:checked ~ .glider {
   transform: translateX(300%);
 }
 
@@ -148,14 +148,10 @@ input[id="radio-4"]:checked~.glider {
   transition: 0.25s ease-out;
 }
 
-
-
 @media (max-width: 750px) {
   .mes__reserv__titre h1 {
     font-size: $h3Size;
   }
-
-
 
   .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__prix h4 {
     font-size: $h5Size !important;
@@ -292,7 +288,7 @@ input[id="radio-4"]:checked~.glider {
         font-weight: $normalWeight;
       }
 
-      >h4 {
+      > h4 {
         font-size: $h4Size;
         font-weight: $semiboldWeight;
       }
@@ -380,7 +376,7 @@ input[id="radio-4"]:checked~.glider {
         font-weight: $lightWeight;
       }
 
-      >h4 {
+      > h4 {
         font-size: $h4Size;
         font-weight: $normalWeight;
       }
@@ -501,7 +497,7 @@ input[id="radio-4"]:checked~.glider {
     font-size: 1.5rem;
   }
 
-  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description>h4,
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description > h4,
   .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
     font-size: 1.2rem;
   }
@@ -519,22 +515,20 @@ input[id="radio-4"]:checked~.glider {
     gap: 0.8rem;
   }
 
-  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description>h4,
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description > h4,
   .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
     font-size: 1rem;
   }
 
-  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description>h4,
+  .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description > h4,
   .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description h4 {
     font-size: 1rem;
   }
 
   .card__reserv img {
-
     height: 170px;
     width: 180px;
   }
-
 }
 
 @media (max-width: 636.98px) {
@@ -549,7 +543,6 @@ input[id="radio-4"]:checked~.glider {
   .mes__reserv__titre {
     flex-direction: row;
     padding-top: 1rem;
-
   }
 
   .mes__reserv__titre h1 {
@@ -570,7 +563,6 @@ input[id="radio-4"]:checked~.glider {
     flex-direction: column;
     width: 70%;
     align-items: flex-start;
-
   }
 
   .card__reserv img {
@@ -598,7 +590,6 @@ input[id="radio-4"]:checked~.glider {
     width: 60%;
     align-items: flex-start;
   }
-
 }
 
 @media (max-width: 500.98px) {
@@ -631,74 +622,75 @@ input[id="radio-4"]:checked~.glider {
     width: 1.5rem;
     height: 1.5rem;
     margin-left: 0.35rem;
-
   }
   .card__reserv .mes__reserv__cont_desc_prix .mes__reserv__description p {
     padding: 0.3rem 1rem;
+  }
 }
-}
-.mes__reserv__titre{
+.mes__reserv__titre {
   padding-top: 2rem;
 }
-@media (max-width: 1200.98px){
+@media (max-width: 1200.98px) {
   .buisness_mes_reserv_line .buisness_left_big_box {
     gap: 4rem;
+  }
+  .buisness_mes_reserv_line .ligne__status {
+    width: 70%;
+  }
 }
-.buisness_mes_reserv_line .ligne__status{
-  width: 70%;
-}
-}
-@media (max-width: 1000.98px){
+@media (max-width: 1000.98px) {
   .buisness_mes_reserv_line .buisness_left_big_box {
     gap: 2rem;
+  }
+  .buisness_mes_reserv_line p {
+    font-size: 0.8rem;
+  }
+  .buisness_mes_reserv_line h4 {
+    font-size: 1.2rem;
+  }
+  .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h5,
+  .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h4 {
+    font-size: 1rem;
+  }
+  .icon-right {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+  .buisness_mes_reserv_line .buisness_left_big_box {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
 }
-.buisness_mes_reserv_line p {
-  font-size: 0.8rem;
-}
-.buisness_mes_reserv_line h4{
-  font-size: 1.2rem;
-}
-.buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h5, .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h4  {
-  font-size: 1rem;
-}
-.icon-right {
-  font-size: 1rem;
-  padding: 0.5rem;
-}
-.buisness_mes_reserv_line .buisness_left_big_box{
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-}
-@media (max-width: 640.98px){
+@media (max-width: 640.98px) {
   .mes__reserv__titre {
     padding-top: 1rem;
     margin-bottom: 1rem;
-}
-.buisness_mes_reserv_line .ligne__status {
-  width: 80%;
-}
-.buisness_mes_reserv_line h4 {
-  font-size: 1rem;
-}
-.buisness_mes_reserv_line p {
-  text-align: center;}
-  .icon-right{
+  }
+  .buisness_mes_reserv_line .ligne__status {
+    width: 80%;
+  }
+  .buisness_mes_reserv_line h4 {
+    font-size: 1rem;
+  }
+  .buisness_mes_reserv_line p {
+    text-align: center;
+  }
+  .icon-right {
     padding: 0.75rem;
   }
-  .buisness_mes_reserv_line .buisness_left_big_box{
+  .buisness_mes_reserv_line .buisness_left_big_box {
     flex-direction: column;
     align-items: flex-start;
   }
-  .icon-right{
+  .icon-right {
     margin: initial;
     align-self: flex-start;
   }
   .buisness_mes_reserv_line .ligne__status {
     width: 100%;
+  }
 }
-}
-@media (max-width: 500.98px){
+@media (max-width: 500.98px) {
   .buisness_mes_reserv_line .ligne__status {
     flex-direction: column;
     width: 60%;
@@ -707,20 +699,35 @@ input[id="radio-4"]:checked~.glider {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+  }
+  .buisness_mes_reserv_line .ligne__status {
+    gap: 1rem;
+  }
+  .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box {
+    gap: 0.3rem;
+  }
+  .buisness_mes_reserv_line .buisness_left_big_box {
+    gap: 0.5rem;
+  }
+  .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h5,
+  .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h4,
+  .buisness_mes_reserv_line h4 {
+    font-size: 0.8rem;
+  }
 }
-.buisness_mes_reserv_line .ligne__status{
-  gap: 1rem;
-}
-.buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box {
-  gap: 0.3rem;
-}
-.buisness_mes_reserv_line .buisness_left_big_box {
-  gap: 0.5rem;
-}
-.buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h5, .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h4,.buisness_mes_reserv_line h4 {
-  font-size: 0.8rem;
-}
-}
-.mes_reserv__numero h5{
+.mes_reserv__numero h5 {
   color: $mainViolet;
+}
+
+.hover {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.hover:hover {
+  cursor: pointer;
+}
+
+.hover.pink:hover {
+  background-color: #efadff !important;
 }

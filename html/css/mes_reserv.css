@@ -527,7 +527,8 @@ input[id=radio-4]:checked ~ .glider {
   .buisness_mes_reserv_line h4 {
     font-size: 1.2rem;
   }
-  .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h5, .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h4 {
+  .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h5,
+  .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h4 {
     font-size: 1rem;
   }
   .icon-right {
@@ -587,10 +588,25 @@ input[id=radio-4]:checked ~ .glider {
   .buisness_mes_reserv_line .buisness_left_big_box {
     gap: 0.5rem;
   }
-  .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h5, .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h4, .buisness_mes_reserv_line h4 {
+  .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h5,
+  .buisness_mes_reserv_line .buisness_left_big_box .buisness_left_box h4,
+  .buisness_mes_reserv_line h4 {
     font-size: 0.8rem;
   }
 }
 .mes_reserv__numero h5 {
   color: #5669ff;
+}
+
+.hover {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.hover:hover {
+  cursor: pointer;
+}
+
+.hover.pink:hover {
+  background-color: #efadff !important;
 }/*# sourceMappingURL=mes_reserv.css.map */
