@@ -10,6 +10,7 @@
   animation: slideInRight 0.3s ease-in-out forwards, fadeOut 0.5s ease-in-out forwards 3s;
   transform: translateX(110%);
   background: #5669ff;
+  color: #e1ebf4;
 }
 
 .toast.closing {

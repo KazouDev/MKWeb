@@ -1,6 +1,9 @@
 const showToast = (message, error = false, duration = 2000) => {
   let box = document.createElement("div");
-  box.classList.add("toast", "error");
+  box.classList.add("toast");
+  if (error) {
+    box.classList.add("error");
+  }
   box.innerHTML = ` <div class="toast-content-wrapper"> 
                       <div class="toast-message">${message}</div> 
                       <div class="toast-progress"></div> 

@@ -29,6 +29,7 @@ if (isset($_GET["token"])) {
             foreach($status as $s){
                 $nom;
                 $status_event = "CONFIRMED";
+                $desc = "Votre logement \"$titre\", situé à l'adresse $adresse est réservé ce jour-ci. \n";
                 switch ($s["statut"]){
                     case 'R':
                         $nom = "Réservation";
@@ -36,12 +37,12 @@ if (isset($_GET["token"])) {
                     case 'D':
                         $nom = "Devis en cours";
                         $status_event = "TENTATIVE";
+                        $desc = "Votre logement \"$titre\", situé à l'adresse $adresse à un devis en cours ce jour-ci. \n";
                         break;
                     case 'I':
                         $nom = "Indisponible";
+                        $desc = "Votre logement \"$titre\", situé à l'adresse $adresse est indisponible ce jour-ci. \n";
                         break;
-                    default:
-                        $nom = "Invalide";
                 }
                 print "BEGIN:VEVENT\n";
                 print "DTSTART:" . gmdate('Ymd', strtotime($s['date'])) . "\n";
@@ -49,7 +50,7 @@ if (isset($_GET["token"])) {
                 print "SUMMARY:" . $nom.": ". $titre . "\n";
                 print "LOCATION:".$adresse."\n";
                 print "STATUS:".$status_event."\n";
-                print "DESCRIPTION:Description ici pour bientôt\n";
+                print "DESCRIPTION:$desc";
                 print "END:VEVENT\n";
             }
             
