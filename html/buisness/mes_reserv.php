@@ -173,7 +173,7 @@ function formatDateWithShortMonth($date)
                                         <h4><?php echo formatDateWithShortMonth($date_debut) ?> – <?php echo formatDateWithShortMonth($date_fin) ?></h4>
                                         <p class="<?php echo $statusChip["status_class"] ?>"><?php echo $statusChip["status"] ?></p>
                                     </div>
-                                    <a href="" class="icon-right hover pink"><i class="fa-regular fa-eye"></i></a>
+                                    <a  href="detail_reservation.php?id=<?php echo $result["numero_de_reservation"] ?>" class="icon-right hover pink bouton_devis"><i class="fa-regular fa-eye"></i></a>
                                 </div>
                             </div>
                         </div>

@@ -7,6 +7,9 @@
         $sql = "DELETE FROM sae._devis WHERE id = " . $id_devis;
         $suppression = request($sql);
         $id_logement = $_GET["id"];
+        if(isset($_SESSION["id_devis_en_cours"])){
+            unset($_SESSION['id_devis_en_cours']);
+        }
     }else{
         $id_logement = $_GET['id']; 
     }
@@ -374,25 +377,25 @@ EOT;
                                 <div class="logement__calcules" >
                                     <div class="calcules__ligne">
                                         <div class="ttc__jours">
-                                            <p id="prix__TTC" class="calcules__under"></p>
+                                            <p id="base_tarif_pour_nuit" class="calcules__under"></p>
                                             <p class="calcules__under">€  x</p>
                                             <p id="nb_jours" class="calcules__under"></p>
                                             <p class="calcules__under">nuits</p>
                                         </div>
                                         <div class="ttc_prix">
-                                            <p id="prix__total"></p>
-                                            <p>€  HT</p>
+                                            <p id="prix__total_des_nuits"></p>
+                                            <p>€  TTC</p>
                                         </div>
                                     </div>
                                     <div class="calcules__ligne">
-                                        <p class="calcules__under">Frais</p>
+                                        <p class="calcules__under">Frais (1%)</p>
                                         <div class="frais">
                                             <p id="frais__total"> </p>
-                                            <p>€</p>
+                                            <p>€ TTC</p>
                                         </div>
                                     </div>
                                     <div class="calcules__ligne">
-                                        <p class="calcules__under">Taxes</p>
+                                        <p class="calcules__under">Taxes de séjour</p>
                                         <div class="frais">
                                             <p id="taxes__total"></p>
                                             <p>€</p>
