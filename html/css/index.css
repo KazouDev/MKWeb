@@ -261,4 +261,16 @@
 .hover:hover {
   cursor: pointer;
   background-color: #9aa5ff !important;
+}
+
+.hover {
+  cursor: pointer;
+}
+
+#executeRecherche:hover {
+  background-color: #9aa5ff !important;
+}
+
+.card__cont:hover {
+  border: 1px solid #9aa5ff;
 }/*# sourceMappingURL=index.css.map */

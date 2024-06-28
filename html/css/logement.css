@@ -1231,4 +1231,19 @@ input:focus {
   container-calendar #calendar th, #container-calendar #calendar td {
     padding: 5px;
   }
+}
+#logement__reserver .form__logement {
+  cursor: pointer;
+}
+
+#logement__reserver .form__logement:hover {
+  border: 1px solid #9aa5ff;
+}
+
+.card__reserv {
+  cursor: pointer;
+}
+
+.card__reserv:hover {
+  border: 1px solid #9aa5ff;
 }/*# sourceMappingURL=logement.css.map */

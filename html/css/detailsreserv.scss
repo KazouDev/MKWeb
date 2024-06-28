@@ -696,3 +696,9 @@ i.jaune {
   }
 }
 
+.telecharger img, .telecharger .couleur{
+  cursor: pointer;
+}
+.telecharger .couleur:hover{
+  text-decoration: underline;
+}

@@ -1260,3 +1260,15 @@ input:focus {
     padding: 5px;
 
   }}
+  #logement__reserver .form__logement{
+    cursor: pointer;
+  }
+  #logement__reserver .form__logement:hover{
+    border: 1px solid #9aa5ff ;
+  }
+  .card__reserv{
+    cursor: pointer;
+  }
+  .card__reserv:hover{
+    border: 1px solid #9aa5ff ;
+  }
