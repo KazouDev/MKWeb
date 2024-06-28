@@ -101,14 +101,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     move_uploaded_file($_FILES["photo_profil"]["tmp_name"], $photo_path);
                 } else {
                     $extension = pathinfo("img/anonymus.webp", PATHINFO_EXTENSION);
-                    $photo_path = "/compte/profile_anonymous.$extension";
+                    $photo_path = "img/compte/profile_anonymous.$extension";
                     $photo_path_bdd = "/compte/profile_anonymous.$extension";
                 }
 
                 request("UPDATE sae._utilisateur SET photo_profile = '$photo_path_bdd' WHERE id = $user_id");
 
 
-                insert('sae._compte_client', ["id"], [$user_id]);
+                insert('sae._compte_client', ["id"], [$user_id], false);
                 echo "Utilisateur créé avec succès.";
                 $_SESSION["client_id"] = $user_id;
                 $_SESSION["photo_user"] = $photo_path;
