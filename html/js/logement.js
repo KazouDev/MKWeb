@@ -77,10 +77,10 @@ const verifyAndFetch = () => {
         document.getElementById("appear_calcul").style.display = "block";
         var responseData = JSON.parse(xhr.responseText);
 
-        document.getElementById("prix__total").innerHTML = responseData.prix_ht;
+        document.getElementById("prix__total_des_nuits").innerHTML = responseData.prix_ttc;
         document.getElementsByName("prix_ht")[0].value = responseData.prix_ht;
 
-        document.getElementById("prix__TTC").innerHTML =
+        document.getElementById("base_tarif_pour_nuit").innerHTML =
           responseData.base_tarif;
 
         document.getElementById("nb_jours").innerHTML =
@@ -97,8 +97,8 @@ const verifyAndFetch = () => {
         document.getElementById("taxes__total").innerHTML = responseData.taxe;
         document.getElementsByName("taxe")[0].value = responseData.taxe;
 
-        document.getElementById("tot-ttc").innerHTML = responseData.prix_ttc;
-        document.getElementsByName("prix_ttc")[0].value = responseData.prix_ttc;
+        document.getElementById("tot-ttc").innerHTML = responseData.prix_total_ttc;
+        document.getElementsByName("prix_ttc")[0].value = responseData.prix_total_ttc;
       }
     };
 

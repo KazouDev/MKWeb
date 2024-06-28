@@ -621,7 +621,7 @@ $lineHeight: 1.5;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #909090;
-  padding: 2rem 0px 2rem 0px;
+  padding: 2rem;
   .hote__info {
     border-radius: 0.75rem;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
@@ -702,10 +702,10 @@ $lineHeight: 1.5;
   a {
     color: $mainViolet;
     cursor: pointer;
-    font-size: $h55Size;
+    font-size: $h6Size;
   }
   h3 {
-    font-size: $h55Size;
+    font-size: $h6Size;
     font-weight: $semiboldWeight;
   }
 }
@@ -1260,3 +1260,15 @@ input:focus {
     padding: 5px;
 
   }}
+  #logement__reserver .form__logement{
+    cursor: pointer;
+  }
+  #logement__reserver .form__logement:hover{
+    border: 1px solid #9aa5ff ;
+  }
+  .card__reserv{
+    cursor: pointer;
+  }
+  .card__reserv:hover{
+    border: 1px solid #9aa5ff ;
+  }

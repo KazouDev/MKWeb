@@ -6,7 +6,7 @@ require_once "../utils.php";
 $id = client_connected_or_redirect();
 
 // Requête SQL pour récupérer les réservations du client
-$query = "SELECT sae._reservation.id, sae._reservation.id_logement, sae._reservation.date_annulation, sae._reservation.prix_ttc, sae._logement.titre, sae._reservation.date_debut, sae._reservation.date_fin, sae._adresse.commune, img.*
+$query = "SELECT sae._reservation.id, sae._reservation.id_logement, sae._reservation.date_annulation, sae._reservation.prix_total, sae._logement.titre, sae._reservation.date_debut, sae._reservation.date_fin, sae._adresse.commune, img.*
 FROM sae._reservation 
 INNER JOIN sae._logement ON sae._reservation.id_logement = sae._logement.id
 INNER JOIN sae._adresse ON sae._logement.id_adresse = sae._adresse.id
@@ -154,7 +154,7 @@ function formatDateWithShortMonth($date)
                                         <p class="<?php echo $statusChip["status_class"] ?>"><?php echo $statusChip["status"] ?></p>
                                     </div>
                                     <div class="mes__reserv__prix">
-                                        <h4 class="mes__reserv__prix_color"><?php echo $result["prix_ttc"] . "€"; ?></h4>                                    </div>
+                                        <h4 class="mes__reserv__prix_color"><?php echo str_replace('.', ',', $result["prix_total"]) . "€"; ?></h4>                                    </div>
                                 </div>
                             </div>
                         </a>

@@ -245,3 +245,12 @@ $hoverViolet: #9aa5ff;
   cursor: pointer;
   background-color: $hoverViolet !important;
 }
+.hover{
+  cursor: pointer;
+}
+#executeRecherche:hover{
+  background-color: $hoverViolet !important;
+}
+.card__cont:hover{
+  border: 1px solid #9aa5ff ;
+}

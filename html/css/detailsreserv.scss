@@ -377,7 +377,7 @@ i.jaune {
   align-items: flex-start;
   gap: 1rem;
   h2 {
-    font-size: $h5Size;
+    font-size: $h6Size;
     font-weight: $semiboldWeight;
   }
   a {
@@ -462,7 +462,7 @@ i.jaune {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  a img {
+  img {
     width: 2.5rem;
     height: 2.5rem;
   }
@@ -696,3 +696,9 @@ i.jaune {
   }
 }
 
+.telecharger img, .telecharger .couleur{
+  cursor: pointer;
+}
+.telecharger .couleur:hover{
+  text-decoration: underline;
+}

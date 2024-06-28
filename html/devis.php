@@ -11,13 +11,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date_fin = $_POST["dateFin"];
     $nb_occupant = $_POST["nombre_personnesDevis"];
     $taxe_sejour = $_POST["taxe"];
-    $taxe_commission = $_POST["frais"];
+    $taxe_commission = ($_POST["frais"]);
     $prix_ht = $_POST["prix_ht"];
-    $prix_ttc = $_POST["prix_ttc"];
-    $prix_total = intval($prix_ttc) + intval($taxe_commission) + intval($taxe_sejour);
+    $prix_ht_numeric = str_replace(',', '.', $prix_ht);
+    $taxe_comission_numeric = str_replace(',', '.', $taxe_commission);
+    $prix_ttc = floatval($prix_ht_numeric * 1.1);
+    $prix_total = floatval($prix_ttc) + floatval($taxe_comission_numeric) + floatval($taxe_sejour);
     $date_devis = date('Y-m-d');
     $nb_nuit = $_POST["nb_nuit"];
-
 
 
     // Requête pour vérifier les chevauchements dans la table _devis
@@ -33,6 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $devis = request($sql_devis, false);
     $reservation = request($sql_reservation, false);
+
+    $taxe_comission_bdd = str_replace(',', '.', $taxe_commission);
+    $taxe_sejour_bdd = str_replace(',', '.', $taxe_sejour);
+    $prix_total_bdd = str_replace(',', '.', $prix_total);
+
+    $prix_ttc_pour_les_nuits_bdd = str_replace(',', '.', $prix_ht_numeric * 1.1);
+
 
     //Si pas de réservation ni de devis on créer le devis
     if(count($devis)==0 && count($reservation)==0){
@@ -50,6 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'prix_ttc',
             'prix_total'
         ];
+
         $values = [
             intval($id_logement),
             intval($id_client),
@@ -57,11 +66,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $date_debut,
             $date_fin,
             floatval($nb_occupant),
-            floatval($taxe_sejour),
-            floatval($taxe_commission),
+            (float)$taxe_sejour_bdd,
+            (float)$taxe_comission_bdd,
             floatval($prix_ht),
-            floatval($prix_ttc),
-            floatval($prix_total)
+            (float)$prix_ttc_pour_les_nuits_bdd,
+            floatval($prix_total_bdd)
         ];
 
         $insert_devis = insert($table, $columns, $values);
@@ -154,11 +163,11 @@ else {
 
     $prixParNuit = request($sql, true);
 
-    $prixHTTNuit = number_format(round($reservation["prix_ht"] / $prixParNuit["nb_nuit"], 2), 2, ",", "");
+    $prixHTTNuit = number_format(round($reservation["prix_ht"] / $nb_nuit, 2), 2, ",", "");
 
-    $prixTTCnuit = number_format(round($reservation["prix_ttc"] / $prixParNuit["nb_nuit"], 2), 2, ",", "");
-
-    $reservationPrixTTC = number_format($reservation["prix_ttc"], 2, ",", "");
+    $prixTTCnuit = number_format(round(($reservation["prix_ht"] / $nb_nuit) * 1.1, 2), 2, ",", "");
+    $prixTTCnuit_numeric = number_format(round(($reservation["prix_ht"] / $nb_nuit) * 1.1, 2), 2, ".", "");
+    $reservationPrixTTC = number_format($prixTTCnuit_numeric * $nb_nuit, 2, ",", "");
 
     $taxeSejour = number_format($reservation["taxe_sejour"], 2, ",", "");
 
@@ -251,7 +260,7 @@ else {
                                 <div class="separation2"></div>
                                 <div>
                                     <p class="gras">Nombre de nuits</p>
-                                    <p><?= $prixParNuit["nb_nuit"] ?></p>
+                                    <p><?= $nb_nuit ?></p>
                                 </div>
                                 <div class="separation2"></div>
                                 <div>
@@ -285,7 +294,7 @@ else {
                                     <p>Location TTC</p>
                                     <p class="texteGras"><?= $reservationPrixTTC ?> €</p>
                                 </div>
-                                <p>Prix par nuit TTC × <?= $prixParNuit["nb_nuit"] ?> nuits</p>
+                                <p>Prix par nuit TTC × <?= $nb_nuit ?> nuits</p>
                             </div>
                             <div class="partiemontant__soustitre">
                                 <div>
@@ -295,7 +304,7 @@ else {
                                 <p>Services supplémentaires d'hébergement</p>
                             </div>
                             <div class="partiemontant__sanssoustitre">
-                                <p>Taxe de séjour (2,88 € × nuits)</p>
+                                <p>Taxe de séjour (1€ × nuits x occupant)</p>
                                 <p class="texteGras"><?= $taxeSejour ?> €</p>
                             </div>
                             <div class="partiemontant__sanssoustitre">
@@ -330,153 +339,9 @@ else {
                                 <input type="submit" name="acceptButton" id="acceptButton" value="Accepter">
                             </a>
                 </div>
-                <div class="telecharger">
-                    <img src="img/downloads.webp" alt="Download" id="downloadImage">
-                    <p>
-                        La version imprimable de votre confirmation contient toutes les informations importantes de votre réservation. Elle peut être utilisée lors de votre arrivée dans le logement. <br><br> 
-                        Pour la télécharger, <span class="couleur" id="downloadLink">cliquez ici.</span>
-                    </p>
-                </div>
         </main>
         <?php require_once "footer.php" ?>
     </div>
-    <div id="pdf-content" hidden>
-        <div class="container" id="container">
-            <div class="invoice" id="invoice">
-                <div class="row">
-                    <div class="col-7">
-                        <div class="header__logo">                            
-                            <a href="./index.php" class="header__name">ALHaiZ Breizh</a>
-                        </div>
-                    </div>
-                    <div class="col-5">
-                        <h1 class="document-type display-4">FACTURE</h1>
-                        <p class="text-right"><strong>Référence facture :</strong></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-7">
-                        <p class="addressMySam">
-                            <strong>MYSAM</strong><br />
-                            8 avenue de la Martelle<br />
-                            81150 Terssac
-                        </p>
-                    </div>
-                    <div class="col-5">
-                        <br /><br /><br />
-                        <p class="addressDriver">
-                            <strong>Société VTC</strong><br />
-                            Réf. Client <em>Référence client</em><br />
-                            Prénom NOM<br />
-                            adresse<br />
-                            code postal VILLE
-                        </p>
-                    </div>
-                </div>
-                <br />
-                <br />
-                <br />
-                <h6>Frais de services MYSAM du date au date</h6>
-                <br />
-                <br />
-                <br />
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>TVA</th>
-                            <th class="text-right">Total HT</th>
-                            <th class="text-right">Total TTC</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Frais de service MySam à 5% pour la période du date au date</td>
-                            <td>20%</td>
-                            <td class="text-right">0,00€</td>
-                            <td class="text-right">0,00€</td>
-                        </tr>
-                        <tr>
-                            <td>Frais de service MySam à 10% pour la période du date au date</td>
-                            <td>20%</td>
-                            <td class="text-right">0,00€</td>
-                            <td class="text-right">0,00€</td>
-                        </tr>
-                        <tr>
-                            <td>Pénalités d'annulation</td>
-                            <td>20%</td>
-                            <td class="text-right">0,00€</td>
-                            <td class="text-right">0,00€</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="row">
-                    <div class="col-8"></div>
-                    <div class="col-4">
-                        <table class="table table-sm text-right">
-                            <tr>
-                                <td><strong>Total HT</strong></td>
-                                <td class="text-right">0,00€</td>
-                            </tr>
-                            <tr>
-                                <td>TVA 20%</td>
-                                <td class="text-right">0,00€</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Total TTC</strong></td>
-                                <td class="text-right">0,00€</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </body>
 </html>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const downloadImage = document.getElementById("downloadImage");
-    const downloadLink = document.getElementById("downloadLink");
-    
-    function generatePDF() {
-        var pdfContent = document.getElementById("pdf-content").innerHTML;
-        var windowObject = window.open();
-
-        windowObject.document.write('<html><head><title>Invoice</title>');
-        windowObject.document.write('<style>');
-        windowObject.document.write('body { background: #ccc; padding: 30px; font-size: 0.9em;  font-family: "Plus Jakarta San", sans-serif;}');
-        windowObject.document.write('h6 { font-size: 1em; }');
-        windowObject.document.write('.row { display: flex; flex-wrap: nowrap; }');
-        windowObject.document.write('.col-7, .col-5, .col-8, .col-4 { position: relative; width: 100%; }');
-        windowObject.document.write('.col-7 { flex: 0 0 58.333333%; max-width: 58.333333%; }');
-        windowObject.document.write('.col-5 { flex: 0 0 41.666667%; max-width: 41.666667%; }');
-        windowObject.document.write('.col-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }');
-        windowObject.document.write('.col-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }');
-        windowObject.document.write('.logo { width: 4cm; }');
-        windowObject.document.write('.document-type { text-align: right; color: #444; }');
-        windowObject.document.write('.conditions { font-size: 0.7em; color: #666; }');
-        windowObject.document.write('.bottom-page { font-size: 0.7em; }');
-        windowObject.document.write('.header__logo { max-height: 50px; max-width: 300px; display: flex; justify-content: flex-start; align-items: center; column-gap: 5px; }');
-        windowObject.document.write('.header__logo img { max-width: 100%; height: 50px; }');
-        windowObject.document.write('.header__name { color: #5669FF; text-transform: lowercase; font-size: 2em; letter-spacing: 3px; font-weight: 700; }');
-        windowObject.document.write('table { width: 100%; margin-bottom: 1rem; color: #212529; border-collapse: collapse; }');
-        windowObject.document.write('.table th, .table td { padding: 0.75rem; vertical-align: top; border-top: 1px solid #dee2e6; }');
-        windowObject.document.write('.table-striped tbody tr:nth-of-type(odd) { background-color: rgba(0, 0, 0, 0.05); }');
-        windowObject.document.write('.text-right { text-align: right !important; }');
-        windowObject.document.write('.table-sm td, .table-sm th { padding: 0.3rem; }');
-        windowObject.document.write('</style>');
-        windowObject.document.write('</head><body>');
-        windowObject.document.write(pdfContent);
-        windowObject.document.write('</body></html>');
-
-        windowObject.document.close();
-        windowObject.focus();
-        windowObject.print();
-        windowObject.close();
-    }
-
-    downloadImage.addEventListener("click", generatePDF);
-    downloadLink.addEventListener("click", generatePDF);
-});
-    </script>

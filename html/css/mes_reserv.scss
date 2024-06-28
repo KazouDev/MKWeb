@@ -53,7 +53,6 @@ $lineHeight: 1.5;
 
 body {
   font-family: "Inter", sans-serif;
-  background-color: rgba(#e6eef9, 0.5);
 }
 
 // Container principal
@@ -72,7 +71,8 @@ body {
   display: flex;
   position: relative;
   background-color: #fff;
-  box-shadow: 4px 4px 16px rgba(18, 18, 18, 0.06);
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
   padding: 0.75rem;
   border-radius: 99px; // juste un grand nombre pour créer un effet pilule
 
@@ -353,10 +353,10 @@ input[id="radio-4"]:checked ~ .glider {
   display: flex;
   flex-direction: row;
   gap: 2rem;
-  box-shadow: 4px 4px 16px rgba(18, 18, 18, 0.06);
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
   border-radius: 0.75rem;
   margin-bottom: 2rem;
-  border: 1px solid #909090;
 
   .mes__reserv__cont_desc_prix {
     display: flex;

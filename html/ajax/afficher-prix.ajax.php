@@ -24,9 +24,9 @@ $jour = $interval->days + 1;
 
 $nuit = empty($jour) ? 0 : $jour - 1;
 $prix_ht = $base_tarif * (empty($nuit) ? 1 : $nuit) ;//* $nombre_personne;
-$prix_ttc = $prix_ht * 1.20;
-$frais = $prix_ttc * 0.01;
-$taxe = $nuit + $nombre_personne;
+$prix_ttc = $prix_ht * 1.10;
+$frais = ($prix_ttc * 0.01) * 1.2;
+$taxe = $nuit * $nombre_personne;
 
 
 
@@ -49,6 +49,7 @@ $response = array(
     'taxe'=>number_format($taxe,2,',',' ' ),
     'nombre_jour' => $jour,
     'nombre_nuit'=> $nuit,
+    'prix_total_ttc'=> number_format($prix_total,2,',',' ' ),
 );
 
 print json_encode($response);

@@ -334,7 +334,7 @@ i.jaune {
   gap: 1rem;
 }
 .asavoir h2 {
-  font-size: 1.25rem;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 .asavoir a {
@@ -416,7 +416,7 @@ i.jaune {
   justify-content: space-between;
   align-items: center;
 }
-.telecharger a img {
+.telecharger img {
   width: 2.5rem;
   height: 2.5rem;
 }
@@ -602,4 +602,12 @@ i.jaune {
 }
 .button_accept_devis input[type=submit]#acceptButton:hover {
   background-color: #43a047;
+}
+
+.telecharger img, .telecharger .couleur {
+  cursor: pointer;
+}
+
+.telecharger .couleur:hover {
+  text-decoration: underline;
 }/*# sourceMappingURL=detailsreserv.css.map */
