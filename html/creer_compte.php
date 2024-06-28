@@ -110,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 insert('sae._compte_client', ["id"], [$user_id], false);
                 $_SESSION["client_id"] = $user_id;
-                $_SESSION["photo_user"] = $photo_path;
+                $_SESSION["photo_user"] = $photo_path_bdd;
                 redirect();
                 exit;
             }
