@@ -133,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $extension = pathinfo($_FILES["photo_profil"]['name'], PATHINFO_EXTENSION);
                     $photo_path = "../img/compte/profile_$pseudo.$extension";
                     $photo_path_bdd = "/compte/profile_$pseudo.$extension";
-                    move_uploaded_file($_FILES["photo_profil"]["tmp_name"], $photo_path_bdd);
+                    move_uploaded_file($_FILES["photo_profil"]["tmp_name"], $photo_path);
                 } else {
                     $extension = pathinfo("img/anonymus.webp", PATHINFO_EXTENSION);
                     $photo_path = "../img/compte/profile_anonymous.$extension";
@@ -161,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if (insert('sae._compte_proprietaire', $proprio_columns, $proprio_values, false)) {
                         insert('sae._carte_identite', $piece_columns, $piece_values, false);
                         $_SESSION["business_id"] = $proprio['id'];
-                        $_SESSION["business_photo"] = $photo_path_bdd;
+                        $_SESSION["business_photo"] = $photo_path;
                         redirect();
                         exit;
                     }
