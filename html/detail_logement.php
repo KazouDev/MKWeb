@@ -5,8 +5,25 @@
     if(isset($_GET["id_devis_refus"])){
         $id_devis = $_GET["id_devis_refus"];
         $sql = "DELETE FROM sae._devis WHERE id = " . $id_devis;
+        $res = "SELECT date_debut, date_fin FROM sae._devis WHERE id = " . $id_devis;
+        $devis = request($res);
         $suppression = request($sql);
         $id_logement = $_GET["id"];
+
+        $begin = new DateTime($devis["date_debut"]);
+        $end = new DateTime($devis["date_fin"]);
+        $end = $end->modify('+1 day');
+
+        $interval = new DateInterval('P1D');
+        $daterange = new DatePeriod($begin, $interval, $end);
+
+        foreach ($daterange as $date) {
+            $d = $date->format('Y-m-d');
+
+            $sql = "DELETE FROM sae._calendrier WHERE id_logement = $id_logement AND date = '$d'";
+            
+            request($d);
+        }
     }else{
         $id_logement = $_GET['id']; 
     }
@@ -62,6 +79,7 @@
             );
     
             insert('sae._reservation_prix_par_nuit', array_keys($resa_prix_par_nuit), array_values($resa_prix_par_nuit),0);
+
             header('Location: detail_reservation.php?id=' . $id_resa);
             die;
 

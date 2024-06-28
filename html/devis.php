@@ -65,14 +65,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ];
 
         $insert_devis = insert($table, $columns, $values);
-    }
-    else{
+        $_SESSION["id_devis_en_cours"] = $insert_devis;
+        $begin = new DateTime($date_debut);
+        $end = new DateTime($date_fin);
+        $end = $end->modify('+1 day');
+
+        $interval = new DateInterval('P1D');
+        $daterange = new DatePeriod($begin, $interval, $end);
+
+        foreach ($daterange as $date) {
+            $d = $date->format('Y-m-d');
+            $sql = "INSERT INTO sae._calendrier (date, id_logement, statut, prix) VALUES ('$d', $id_logement, 'D', 0.0)
+                ON CONFLICT (date, id_logement) DO UPDATE SET statut = 'D'";
+
+            request($sql);
+        }
+    } else{
+        if (isset($_SESSION["id_devis_en_cours"])){
+            $insert_devis = intval($_SESSION["id_devis_en_cours"]);
+        } else {
+            header('Location: index.php');
+            die;
+        }
         //Message d'erreur car date indispo surement
-        var_dump("Erreur");
     }
 }
 
-$insert_devis;
 $sql = "SELECT d.*, u.photo_profile 
         FROM sae._devis d
         INNER JOIN sae._logement l ON l.id = d.id_logement

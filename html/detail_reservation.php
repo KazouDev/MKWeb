@@ -38,6 +38,20 @@ if (isset($_GET["id_devis"])) {
         'nb_nuit' => $_GET["nb_nuit"]
     );
 
+    $begin = new DateTime($devis['date_debut']);
+    $end = new DateTime($devis['date_fin']);
+    $end = $end->modify('+1 day');
+
+    $interval = new DateInterval('P1D');
+    $daterange = new DatePeriod($begin, $interval, $end);
+
+    foreach ($daterange as $date) {
+        $id_logement =  $devis['id_logement'];
+        $d = $date->format('Y-m-d');
+        $sql = "UPDATE sae._calendrier SET statut = 'R' WHERE id_logement = $id_logement AND date = '$d'";
+        request($sql);
+    }
+
     insert('sae._reservation_prix_par_nuit', array_keys($resa_prix_par_nuit), array_values($resa_prix_par_nuit), 0);
 
     //Récupérer la réservation pour l'affichage

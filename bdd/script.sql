@@ -284,14 +284,14 @@ ALTER TABLE _image
 CREATE OR REPLACE FUNCTION insert_cal_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
-    DELETE FROM _calendrier
+    DELETE FROM sae._calendrier
     WHERE id_logement = NEW.id_logement AND date = NEW.date;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_cal_trigger
-BEFORE INSERT ON _calendrier
+BEFORE INSERT ON sae._calendrier
 FOR EACH ROW
 EXECUTE PROCEDURE insert_cal_trigger();
 
