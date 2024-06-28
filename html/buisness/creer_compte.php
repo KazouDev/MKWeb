@@ -133,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $extension = pathinfo($_FILES["photo_profil"]['name'], PATHINFO_EXTENSION);
                     $photo_path = "../img/compte/profile_$pseudo.$extension";
                     $photo_path_bdd = "/compte/profile_$pseudo.$extension";
-                    move_uploaded_file($_FILES["photo_profil"]["tmp_name"], $photo_path);
+                    move_uploaded_file($_FILES["photo_profil"]["tmp_name"], $photo_path_bdd);
                 } else {
                     $extension = pathinfo("img/anonymus.webp", PATHINFO_EXTENSION);
                     $photo_path = "../img/compte/profile_anonymous.$extension";
