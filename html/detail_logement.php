@@ -13,8 +13,8 @@
             unset($_SESSION['id_devis_en_cours']);
         }
 
-        $begin = new DateTime($devis["date_debut"]);
-        $end = new DateTime($devis["date_fin"]);
+        $begin = new DateTime($devis[0]["date_debut"]);
+        $end = new DateTime($devis[0]["date_fin"]);
         $end = $end->modify('+1 day');
 
         $interval = new DateInterval('P1D');
