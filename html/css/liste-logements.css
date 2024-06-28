@@ -236,4 +236,12 @@ div.main__container.logements > div.titreLogement > a.ajouter {
 
 .hover.blue:hover {
   background: #90d3fa !important;
+}
+
+.card_logement:hover {
+  border: 1px solid #9aa5ff;
+}
+
+.card_logement {
+  cursor: pointer;
 }/*# sourceMappingURL=liste-logements.css.map */

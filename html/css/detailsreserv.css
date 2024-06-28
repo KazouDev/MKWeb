@@ -602,4 +602,12 @@ i.jaune {
 }
 .button_accept_devis input[type=submit]#acceptButton:hover {
   background-color: #43a047;
+}
+
+.telecharger img, .telecharger .couleur {
+  cursor: pointer;
+}
+
+.telecharger .couleur:hover {
+  text-decoration: underline;
 }/*# sourceMappingURL=detailsreserv.css.map */

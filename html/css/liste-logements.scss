@@ -280,3 +280,9 @@ div.main__container.logements {
 .hover.blue:hover {
   background: #90d3fa !important;
 }
+.card_logement:hover{
+  border: 1px solid $hoverViolet;
+}
+.card_logement{
+  cursor: pointer;
+}
