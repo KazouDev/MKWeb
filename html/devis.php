@@ -12,10 +12,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nb_occupant = $_POST["nombre_personnesDevis"];
     $taxe_sejour = $_POST["taxe"];
     $taxe_commission = ($_POST["frais"]);
+    $taxe_comission_numeric = str_replace(',', '.', $taxe_commission);
     $prix_ht = $_POST["prix_ht"];
     $prix_ht_numeric = str_replace(',', '.', $prix_ht);
-    $taxe_comission_numeric = str_replace(',', '.', $taxe_commission);
-    $prix_ttc = floatval($prix_ht_numeric * 1.1);
+    $prix_ht_numeric = str_replace(' ', '', $prix_ht_numeric);
+    $prix_ttc = $prix_ht_numeric * 1.1;
     $prix_total = floatval($prix_ttc) + floatval($taxe_comission_numeric) + floatval($taxe_sejour);
     $date_devis = date('Y-m-d');
     $nb_nuit = $_POST["nb_nuit"];
@@ -68,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             floatval($nb_occupant),
             (float)$taxe_sejour_bdd,
             (float)$taxe_comission_bdd,
-            floatval($prix_ht),
+            (float)$prix_ht_numeric,
             (float)$prix_ttc_pour_les_nuits_bdd,
             floatval($prix_total_bdd)
         ];
@@ -167,6 +168,7 @@ else {
 
     $prixTTCnuit = number_format(round(($reservation["prix_ht"] / $nb_nuit) * 1.1, 2), 2, ",", "");
     $prixTTCnuit_numeric = number_format(round(($reservation["prix_ht"] / $nb_nuit) * 1.1, 2), 2, ".", "");
+    $prixTTCnuit_numeric = str_replace(' ', '', $prixTTCnuit_numeric);
     $reservationPrixTTC = number_format($prixTTCnuit_numeric * $nb_nuit, 2, ",", "");
 
     $taxeSejour = number_format($reservation["taxe_sejour"], 2, ",", "");
