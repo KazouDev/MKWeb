@@ -8,7 +8,7 @@
         <div class="header__container">
             <div class="header__nav">
                 <div class="header__logo">
-                    <a href="./index.php"><img src="../img/trisquel.webp" alt="Logo trisquel"></a>
+                    <a href="./index.php"><img src="img/trisquel.webp" alt="Logo trisquel"></a>
                     <a href="./index.php" class="header__name">ALHaiZ Breizh</a>
                 </div>
                 <nav class="header__menu" id="LeMenu">
@@ -30,7 +30,7 @@
 
         </div>
     </header>
-    <script src="../js/header.js"></script>
+    <script src="js/header.js"></script>
 <?php 
     } else {
         require_once '../utils.php';
@@ -45,7 +45,7 @@
 <div class="header__container">
     <div class="header__nav">
         <div class="header__logo">
-            <a href="index.php"><img src="../img/trisquel.webp" alt="Logo trisquel"></a>
+            <a href="index.php"><img src="img/trisquel.webp" alt="Logo trisquel"></a>
             <a href="index.php" class="header__name">ALHaiZ Breizh</a>
         </div>
         <nav class="header__menu menu" id="LeMenu">
@@ -63,13 +63,13 @@
     </div>
     <div class="header__form">
             <div class="user__info" id="header__info">
-                <img src="../img<?=$photo_user?>" alt="Photo User" class="user__photo">
+                <img src="img<?=$photo_user?>" alt="Photo User" class="user__photo">
                 <p><?= $user_info["pseudo"] ?></p>
-                <img src="../img/fleche.webp" alt="Ouvrir le menu" class="user__down">
+                <img src="img/fleche.webp" alt="Ouvrir le menu" class="user__down">
             </div>                   
     </div>
     <ul class="header__menu-user" id="menu-user">
-        <img src="../img/fermer.webp" alt="Fermer le menu" id="fermerMenu">
+        <img src="img/fermer.webp" alt="Fermer le menu" id="fermerMenu">
         <li class="menu__item ">
             <a href="consulter_mon_compte.php" class="menu__link">Mon compte</a>
         </li>
