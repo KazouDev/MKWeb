@@ -90,10 +90,10 @@ div.main__container.logements {
   display: flex;
   flex-direction: row;
   gap: 2rem;
-  box-shadow: 4px 4px 16px rgba(18, 18, 18, 0.06);
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
   border-radius: 0.75rem;
   margin-bottom: 2rem;
-  border: 1px solid #909090;
   & > div.card_main {
     display: flex;
     flex-direction: row;
