@@ -161,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if (insert('sae._compte_proprietaire', $proprio_columns, $proprio_values, false)) {
                         insert('sae._carte_identite', $piece_columns, $piece_values, false);
                         $_SESSION["business_id"] = $proprio['id'];
-                        $_SESSION["business_photo"] = $photo_path;
+                        $_SESSION["business_photo"] = $photo_path_bdd;
                         redirect();
                         exit;
                     }
