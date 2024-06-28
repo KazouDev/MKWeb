@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user_id) {
                 if (isset($_FILES["photo_profil"]["tmp_name"]) && $_FILES["photo_profil"]["tmp_name"] !== "") {
                     $extension = pathinfo($_FILES["photo_profil"]['name'], PATHINFO_EXTENSION);
-                    $photo_path = "/compte/profile_$pseudo.$extension";
+                    $photo_path = "img/compte/profile_$pseudo.$extension";
                     $photo_path_bdd = "/compte/profile_$pseudo.$extension";
                     move_uploaded_file($_FILES["photo_profil"]["tmp_name"], $photo_path);
                 } else {
