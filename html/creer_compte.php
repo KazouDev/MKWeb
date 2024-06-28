@@ -109,7 +109,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
                 insert('sae._compte_client', ["id"], [$user_id], false);
-                echo "Utilisateur créé avec succès.";
                 $_SESSION["client_id"] = $user_id;
                 $_SESSION["photo_user"] = $photo_path;
                 redirect();
