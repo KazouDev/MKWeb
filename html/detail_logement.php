@@ -25,7 +25,7 @@
 
             $sql = "DELETE FROM sae._calendrier WHERE id_logement = $id_logement AND date = '$d'";
             
-            request($d);
+            request($sql);
         }
     }else{
         $id_logement = $_GET['id']; 
